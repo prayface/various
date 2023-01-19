@@ -1,0 +1,31 @@
+@font-face {
+  font-family: "ui-icon"; /* Project id 3276931 */
+  src: url('iconfont.woff2?t=1674023182940') format('woff2'),
+       url('iconfont.woff?t=1674023182940') format('woff'),
+       url('iconfont.ttf?t=1674023182940') format('truetype');
+}
+
+.ui-icon {
+  font-family: "ui-icon" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-Close:before {
+  content: "\e608";
+}
+
+.icon-Arrow:before {
+  content: "\e60b";
+}
+
+.icon-ArrowBold:before {
+  content: "\e60c";
+}
+
+.icon-Loading:before {
+  content: "\e60a";
+}
+
