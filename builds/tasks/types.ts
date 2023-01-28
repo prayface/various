@@ -1,8 +1,8 @@
 module.exports = (function () {
     //* 第三方依赖引入
     const { join, resolve, relative } = require("path");
-    const { readFileSync, writeFileSync } = require("fs");
     const { Project } = require("ts-morph");
+    const fs = require("fs-extra");
     const glob = require("fast-glob");
     const consola = require("consola");
     const vueCompiler = require("vue/compiler-sfc");
@@ -28,7 +28,7 @@ module.exports = (function () {
         //? 解析Vue文件, 并将vue和js添加到sourceFiles中
         filePaths.map((file: any) => {
             if (file.endsWith(".vue")) {
-                const SFC = vueCompiler.parse(readFileSync(file, "utf-8"));
+                const SFC = vueCompiler.parse(fs.readFileSync(file, "utf-8"));
                 if (SFC.descriptor.scriptSetup) {
                     return sourceFiles.push(
                         morph.createSourceFile(
@@ -82,8 +82,8 @@ module.exports = (function () {
         const result = await morph.emitToMemory({ emitOnlyDtsFiles: true });
         for (const file of result.getFiles()) {
             if (file.filePath.includes("/packages")) {
-                writeFileSync(join(OUTPUT, "es", file.filePath.split("/packages").slice(-1)[0]), file.text);
-                writeFileSync(join(OUTPUT, "lib", file.filePath.split("/packages").slice(-1)[0]), file.text);
+                fs.writeFileSync(join(OUTPUT, "es", file.filePath.split("/packages").slice(-1)[0]), file.text);
+                fs.writeFileSync(join(OUTPUT, "lib", file.filePath.split("/packages").slice(-1)[0]), file.text);
             }
         }
 
