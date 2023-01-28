@@ -1,16 +1,18 @@
 module.exports = (function () {
     //* 第三方依赖引入
+    const fs = require("fs-extra");
     const { resolve } = require("path");
-    const { copyFile } = require("fs/promises");
+
     //* 常量引入
-    const { OUTPUT, DIRNAME } = require("../constants.ts");
+    const { OUTPUT, DIRNAME, PACKAGES } = require("../constants.ts");
 
     //! 文件copy处理
     const copy = (cb: () => void) => {
         Promise.all([
-            copyFile(resolve(DIRNAME, "package.json"), resolve(OUTPUT, "package.json")),
-            copyFile(resolve(DIRNAME, "README.md"), resolve(OUTPUT, "README.md")),
-            copyFile(resolve(DIRNAME, "types/global.d.ts"), resolve(OUTPUT, "global.d.ts")),
+            fs.copy(resolve(DIRNAME, "package.json"), resolve(OUTPUT, "package.json")),
+            fs.copy(resolve(DIRNAME, "README.md"), resolve(OUTPUT, "README.md")),
+            fs.copy(resolve(DIRNAME, "types/global.d.ts"), resolve(OUTPUT, "global.d.ts")),
+            fs.copy(resolve(PACKAGES, "icons"), resolve(OUTPUT, "icons")),
         ]);
 
         cb && cb();

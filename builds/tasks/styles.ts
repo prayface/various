@@ -13,8 +13,8 @@ module.exports = (function () {
     const { OUTPUT, PACKAGES } = require("../constants.ts");
 
     //! Less编译, Css兼容和压缩处理
-    const styles = (cb: () => void) => {
-        Gulp.src(resolve(PACKAGES, "**/style/*.less"))
+    const styles = () => {
+        return Gulp.src(resolve(PACKAGES, "**/style/*.less"))
             .pipe(GulpLess(DartLess))
             .pipe(Autoprefixer({ cascade: false }))
             .pipe(
@@ -32,8 +32,6 @@ module.exports = (function () {
                 })
             )
             .pipe(Gulp.dest(resolve(OUTPUT, "style")));
-
-        cb && cb();
     };
 
     return styles;
