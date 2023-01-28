@@ -4,6 +4,7 @@
 
 <script>
 import { UiIcon } from "@various";
+import "@various/styles/normalize.less";
 import "@various/components/icon/style/icon.less";
 export default {
     setup() {},
