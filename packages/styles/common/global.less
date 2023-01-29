@@ -1,4 +1,36 @@
 //* 遮罩层样式
+.ui-mask {
+    background-color: var(--ui-mask-deep);
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s;
+    font-size: 48px;
+    position: absolute;
+    z-index: 6666;
+    display: flex;
+    height: 100%;
+    width: 100%;
+    color: var(--uis-color-9);
+    left: 0;
+    top: 0;
+    &.v-enter-from,
+    &.v-leave-to {
+        opacity: 0;
+    }
+
+    &.v-enter-to,
+    &.v-leave-from {
+        opacity: 1;
+    }
+
+    &.ui-global-mask {
+        position: fixed;
+    }
+
+    .ui-mash-icon {
+        animation: rotate 1s linear infinite;
+    }
+}
 
 //* 滚动条样式
 

@@ -8,28 +8,28 @@
     {
       "icon_id": "30419690",
       "name": "close",
-      "font_class": "Close",
+      "font_class": "close",
       "unicode": "e608",
       "unicode_decimal": 58888
     },
     {
       "icon_id": "31712005",
       "name": "arrow",
-      "font_class": "Arrow",
+      "font_class": "arrow",
       "unicode": "e60b",
       "unicode_decimal": 58891
     },
     {
       "icon_id": "31712006",
       "name": "arrow-bold",
-      "font_class": "ArrowBold",
+      "font_class": "arrowbold",
       "unicode": "e60c",
       "unicode_decimal": 58892
     },
     {
       "icon_id": "28543190",
       "name": "loading",
-      "font_class": "Loading",
+      "font_class": "loading",
       "unicode": "e60a",
       "unicode_decimal": 58890
     }
