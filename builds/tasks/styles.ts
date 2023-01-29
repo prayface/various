@@ -14,7 +14,7 @@ module.exports = (function () {
 
     //! Less编译, Css兼容和压缩处理
     const styles = () => {
-        return Gulp.src([resolve(PACKAGES, "styles/normalize.less"), resolve(PACKAGES, "components/**/style/*.less")], { allowEmpty: true })
+        return Gulp.src([resolve(PACKAGES, "styles/*.less"), resolve(PACKAGES, "components/**/style/*.less")], { allowEmpty: true })
             .pipe(GulpLess(DartLess))
             .pipe(Autoprefixer({ cascade: false }))
             .pipe(
