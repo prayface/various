@@ -1,7 +1,8 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 
-import "@various/icons/iconfont.js";
+import "various-ui/icons/iconfont";
+import "various-ui/styles/normalize.css";
 
 const app = createApp(App);
 

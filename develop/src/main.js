@@ -1,7 +1,7 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 
-import "@various/styles/index.less";
+import "@various/styles/normalize.less";
 import "@various/icons/iconfont.js";
 import VariousUI from "@various";
 

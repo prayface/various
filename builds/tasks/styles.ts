@@ -31,7 +31,7 @@ module.exports = (function () {
                     };
                 })
             )
-            .pipe(Gulp.dest(resolve(OUTPUT, "style")));
+            .pipe(Gulp.dest(resolve(OUTPUT, "styles")));
     };
 
     return styles;
