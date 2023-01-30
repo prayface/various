@@ -1,40 +1,67 @@
 <template>
-    <div class="app" v-loading="loading">
-        <UiIcon name="Close" />
-        <UiButton :loading="true" @click="open('function')">开启遮罩</UiButton>
-        <UiButton :loading="loading" @click="open('directive')">开启指令遮罩</UiButton>
-    </div>
+    <header></header>
+    <main>
+        <aside>
+            <template v-for="route in $router.options.routes">
+                <RouterLink :to="route.path" exact-active-class>{{ route.name }}</RouterLink>
+            </template>
+        </aside>
+        <article>
+            <div class="title">{{ $route.name }}</div>
+            <RouterView />
+        </article>
+    </main>
 </template>
 
-<script setup>
-import { ref } from "vue";
-import { $loading } from "@various";
-const loading = ref(false);
-const open = (name) => {
-    switch (name) {
-        case "directive": {
-            loading.value = true;
-            setTimeout(() => {
-                loading.value = false;
-            }, 2000);
-            break;
-        }
+<script setup></script>
 
-        case "function": {
-            $loading.open();
-            setTimeout(() => {
-                $loading.close();
-            }, 2000);
-            break;
+<style lang="less">
+header {
+    width: 100%;
+    height: 55px;
+    font-size: 20px;
+    text-align: center;
+    font-weight: bold;
+    line-height: 55px;
+    border-bottom: 1px solid var(--uis-color-3);
+}
+
+main {
+    width: 1440px;
+    margin: 0 auto;
+    display: flex !important;
+    align-items: flex-start;
+    aside {
+        width: 240px;
+        margin-top: 64px;
+        a {
+            width: 100%;
+            margin: 8px 0 0;
+            border: 1px solid var(--uis-color-4);
+            display: block;
+            padding: 8px 20px;
+            border-radius: 4px;
+            &:hover {
+                border-color: var(--ui-color-7);
+            }
+
+            &.router-link-active {
+                border-color: var(--ui-color-7);
+                background: var(--ui-color-1);
+            }
         }
     }
-};
-</script>
 
-<style lang="less" scoped>
-.app {
-    width: 100%;
-    height: 520px;
-    background: #000;
+    article {
+        flex: 1;
+        margin-left: 80px;
+        .title {
+            margin: 0 0 20px;
+            font-size: 36px;
+            line-height: 64px;
+            font-weight: bold;
+            border-bottom: 1px solid var(--uis-color-3);
+        }
+    }
 }
 </style>
