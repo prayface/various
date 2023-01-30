@@ -33,6 +33,7 @@
     --ui-mask-opaque: rgb(255, 255, 255);
 
     // 常规字体大小与圆角
+    --ui-button-size: auto // 默认按钮最小尺寸
     --ui-font-line: 22px; // 默认字体行高
     --ui-font-size: 14px; // 默认字体大小
     --ui-spacing: 16px; // 默认间距
@@ -42,15 +43,18 @@
     // 中尺寸
     .ui-middle {
         --ui-size: 48px;
+        --ui-button-size: 88px;
     }
 
     // 大尺寸
     .ui-large {
         --ui-size: 56px;
+        --ui-button-size: 144px;
     }
 
     // 小尺寸
     .ui-small {
         --ui-size: 32px;
+        --ui-font-size: 12px;
     }
 }

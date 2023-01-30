@@ -1,6 +1,5 @@
 .ui-button {
     display: inline-block;
-    overflow: hidden;
     border-radius: var(--ui-radius);
     vertical-align: top;
     button {
@@ -11,6 +10,8 @@
         display: flex;
         padding: 0 var(--ui-spacing);
         font-size: var(--ui-font-size);
+        min-width: var(--ui-button-size);
+        transition: all 0.2s;
         align-items: center;
         justify-content: center;
         border-radius: var(--ui-radius);
@@ -19,5 +20,36 @@
 
     .ui-mask {
         font-size: 24px;
+    }
+
+    &.ui-button-disabled {
+        .ui-mash-icon {
+            display: none;
+        }
+    }
+
+    &.ui-button-pierced {
+        button {
+            color: var(--uis-color-9);
+            background: var(--uis-color-1);
+            border-color: var(--uis-color-4);
+            &:hover {
+                color: var(--ui-color-7);
+                border-color: var(--ui-color-7);
+            }
+        }
+
+        .ui-mask {
+            background: transparent;
+        }
+
+        &.ui-button-disabled,
+        &.ui-button-loading {
+            button {
+                color: var(--uis-color-4);
+                background: var(--uis-color-2);
+                border-color: var(--uis-color-2);
+            }
+        }
     }
 }

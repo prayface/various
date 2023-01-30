@@ -19,6 +19,4 @@ const styles = computed(() => {
         height: define.height ? `${define.height}px` : "100%",
     };
 });
-
-console.log(define.show);
 </script>

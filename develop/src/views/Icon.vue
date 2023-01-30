@@ -1,1 +1,0 @@
-<template>Icon</template>
