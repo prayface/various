@@ -1,8 +1,8 @@
 <template>
     <div class="app" v-loading="loading">
         <UiIcon name="Close" />
-        <button @click="open('function')">开启遮罩</button>
-        <button @click="open('directive')">开启指令遮罩</button>
+        <UiButton :loading="true" @click="open('function')">开启遮罩</UiButton>
+        <UiButton :loading="loading" @click="open('directive')">开启指令遮罩</UiButton>
     </div>
 </template>
 
