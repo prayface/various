@@ -1,0 +1,39 @@
+.ui-scrollbar {
+    position: relative;
+    .ui-scrollbar-container {
+        position: absolute;
+        .ui-scrollbar-bar {
+            cursor: pointer;
+            background: var(--uis-color-3);
+            border-radius: 9999px;
+            &:hover {
+                background: var(--uis-color-4);
+            }
+        }
+    }
+
+    .ui-scrollbar-content {
+        float: left;
+        min-width: 100%;
+    }
+
+    .ui-scrollbar-x {
+        left: 0;
+        width: 100%;
+        bottom: 0;
+        height: 6px;
+        .ui-scrollbar-bar {
+            height: 100%;
+        }
+    }
+
+    .ui-scrollbar-y {
+        top: 0;
+        right: 0;
+        width: 6px;
+        height: 100%;
+        .ui-scrollbar-bar {
+            width: 100%;
+        }
+    }
+}
