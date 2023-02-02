@@ -63,9 +63,11 @@ const trigger = (trigger: string, show: boolean) => {
 };
 //* 鼠标移入窗口中的触发函数
 const triggerView = (show: boolean) => {
-    timer.value && clearTimeout(timer.value);
-    if (!show) {
-        view.hidden();
+    if (define.trigger == "hover") {
+        timer.value && clearTimeout(timer.value);
+        if (!show) {
+            view.hidden();
+        }
     }
 };
 
