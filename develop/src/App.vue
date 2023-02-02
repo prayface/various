@@ -13,11 +13,22 @@
             <RouterView />
         </article>
     </main>
+    <footer></footer>
 </template>
 
 <script setup></script>
 
 <style lang="less">
+footer {
+    width: 100%;
+    height: 200px;
+    bottom: 0;
+    z-index: 1;
+    position: sticky;
+    background: var(--uis-color-2);
+    border-top: 1px solid var(--uis-color-3);
+}
+
 header {
     top: 0;
     width: 100%;
@@ -65,12 +76,41 @@ main {
     article {
         flex: 1;
         margin-left: 40px;
-        .title {
+        > .title {
             margin: 0 0 20px;
             font-size: 36px;
             line-height: 64px;
             font-weight: bold;
             border-bottom: 1px solid var(--uis-color-3);
+        }
+
+        > * > section {
+            margin-top: 60px;
+            > .title {
+                margin: 0 0 8px;
+                font-size: 24px;
+                line-height: 48px;
+                font-weight: bold;
+            }
+
+            > .content {
+                margin-top: 20px;
+                padding: 30px 36px;
+                border: 1px solid var(--uis-color-3);
+            }
+
+            > .descript {
+                p {
+                    line-height: 22px;
+                    > span {
+                        background-color: var(--uis-color-3);
+                        border-radius: 2px;
+                        display: inline-block;
+                        padding: 0 4px;
+                        margin: 0 4px;
+                    }
+                }
+            }
         }
     }
 }

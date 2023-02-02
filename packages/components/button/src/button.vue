@@ -1,6 +1,6 @@
 <template>
     <div class="ui-button" v-loading="disabled" :class="classNameContainer">
-        <button :type="type" :class="classNameButton" :style="styles" :disabled="disabled" @click.stop="click">
+        <button :type="type" :class="classNameButton" :style="styles" :disabled="disabled" @click="click">
             <!-- 按钮图标 -->
             <UiIcon :name="icon" v-if="icon" />
             <!-- 内容插槽 -->

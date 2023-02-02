@@ -1,0 +1,25 @@
+.ui-tooltip-content {
+    background-color: var(--uis-color-1);
+    border-radius: var(--ui-radius);
+    transition: opacity 0.2s;
+    box-shadow: var(--ui-box-shadow);
+    position: absolute;
+    padding: 8px var(--ui-spacing);
+    z-index: 66;
+    border: 1px solid var(--ui-box-border);
+    inset: 0 auto auto 0;
+    &.v-enter-from,
+    &.v-leave-to {
+        opacity: 0;
+    }
+
+    &.v-enter-to,
+    &.v-leave-from {
+        opacity: 1;
+    }
+}
+
+.ui-tooltip {
+    vertical-align: top;
+    display: inline-block;
+}
