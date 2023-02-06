@@ -22,9 +22,6 @@
 footer {
     width: 100%;
     height: 200px;
-    bottom: 0;
-    z-index: 1;
-    position: sticky;
     background: var(--uis-color-2);
     border-top: 1px solid var(--uis-color-3);
 }
@@ -45,7 +42,7 @@ header {
 
 main {
     width: 1440px;
-    margin: 0 auto;
+    margin: 0 auto 60px;
     display: flex !important;
     align-items: flex-start;
     .aside {
@@ -108,7 +105,21 @@ main {
                         display: inline-block;
                         padding: 0 4px;
                         margin: 0 4px;
+                        &.warn {
+                            margin: 0 4px 0 0;
+                            color: var(--uis-color-1);
+                            background-color: var(--ui-danger-1);
+                        }
                     }
+                }
+            }
+
+            > table {
+                width: 100%;
+                tr td,
+                tr th {
+                    padding: 8px 12px;
+                    border-bottom: 1px solid var(--uis-color-3);
                 }
             }
         }
