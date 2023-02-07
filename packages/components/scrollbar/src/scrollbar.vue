@@ -84,8 +84,12 @@ const init = () => {
         //* 5. 存在Y轴滚动条时挂载wheel事件
         if (scrollbarY.value.size) {
             container.value.onwheel = (ev: WheelEvent) => {
-                scroll.value.real.top = dispostWheel(scroll.value.real.top + ev.deltaY, abs.height, real.height);
-                scroll.value.abs.top = scroll.value.real.top * real.ratioY;
+                const offsetY = dispostWheel(scroll.value.real.top + ev.deltaY, abs.height, real.height);
+                if (scroll.value.real.top != offsetY) {
+                    scroll.value.real.top = dispostWheel(scroll.value.real.top + ev.deltaY, abs.height, real.height);
+                    scroll.value.abs.top = scroll.value.real.top * real.ratioY;
+                    ev.preventDefault();
+                }
             };
         }
     }
