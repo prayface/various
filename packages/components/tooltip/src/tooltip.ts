@@ -1,4 +1,4 @@
-import { PropType } from "vue";
+import { ExtractDefaultPropTypes, PropType } from "vue";
 
 export const TooltipType = {
     direction: { type: String as PropType<"top" | "left" | "right" | "bottom">, default: "right" },
@@ -13,3 +13,5 @@ export const TooltipType = {
     align: { type: String as PropType<"top" | "center" | "bottom">, default: "top" },
     mode: { type: String as PropType<"fixed" | "follow">, default: "fixed" },
 } as const;
+
+export type TooltipProps = ExtractDefaultPropTypes<typeof TooltipType>;

@@ -6,6 +6,20 @@
   "description": "ui-modules图标库",
   "glyphs": [
     {
+      "icon_id": "30419704",
+      "name": "success",
+      "font_class": "success",
+      "unicode": "e616",
+      "unicode_decimal": 58902
+    },
+    {
+      "icon_id": "14629285",
+      "name": "warning-circle",
+      "font_class": "warning",
+      "unicode": "e630",
+      "unicode_decimal": 58928
+    },
+    {
       "icon_id": "30419690",
       "name": "close",
       "font_class": "close",
@@ -25,6 +39,13 @@
       "font_class": "arrowbold",
       "unicode": "e60c",
       "unicode_decimal": 58892
+    },
+    {
+      "icon_id": "30419691",
+      "name": "error",
+      "font_class": "error",
+      "unicode": "e607",
+      "unicode_decimal": 58887
     },
     {
       "icon_id": "28543190",

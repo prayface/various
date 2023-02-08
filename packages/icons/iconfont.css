@@ -1,8 +1,8 @@
 @font-face {
   font-family: "ui-icon"; /* Project id 3276931 */
-  src: url('iconfont.woff2?t=1674960173249') format('woff2'),
-       url('iconfont.woff?t=1674960173249') format('woff'),
-       url('iconfont.ttf?t=1674960173249') format('truetype');
+  src: url('iconfont.woff2?t=1675846467214') format('woff2'),
+       url('iconfont.woff?t=1675846467214') format('woff'),
+       url('iconfont.ttf?t=1675846467214') format('truetype');
 }
 
 .ui-icon {
@@ -11,6 +11,14 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-success:before {
+  content: "\e616";
+}
+
+.icon-warning:before {
+  content: "\e630";
 }
 
 .icon-close:before {
@@ -23,6 +31,10 @@
 
 .icon-arrowbold:before {
   content: "\e60c";
+}
+
+.icon-error:before {
+  content: "\e607";
 }
 
 .icon-loading:before {

@@ -1,8 +1,15 @@
 //* 窗口容器样式
-#ui-windows {
+#ui-windows,
+#ui-messages {
     inset: 0 auto auto 0;
     width: 100%;
     position: absolute;
+}
+
+#ui-messages {
+    z-index: 6666;
+    display: flex;
+    flex-direction: column;
 }
 
 //* 遮罩层样式
@@ -38,7 +45,3 @@
         animation: rotate 1s linear infinite;
     }
 }
-
-//* 滚动条样式
-
-//* 禁用状态样式
