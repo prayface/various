@@ -1,7 +1,8 @@
 import { ExtractPropTypes, PropType } from "vue";
+import { UiTypes } from "../../../constants";
 
-export const TooltipType = {
-    direction: { type: String as PropType<"top" | "left" | "right" | "bottom">, default: "right" },
+export const UiTooltipType = {
+    direction: { type: String as PropType<UiTypes.direction>, default: "right" },
     disabled: { type: Boolean, default: false },
     visible: { type: Boolean, default: false },
     offsetX: { type: Number },
@@ -10,8 +11,8 @@ export const TooltipType = {
     content: { type: String }, //? 窗口内容, 可被slot#content替换
     effect: { type: String }, //? Tooltip主题
     width: { type: Number, default: 200 }, //? 最大宽度
-    align: { type: String as PropType<"top" | "center" | "bottom">, default: "top" },
+    align: { type: String as PropType<UiTypes.align>, default: "top" },
     mode: { type: String as PropType<"fixed" | "follow">, default: "fixed" },
 } as const;
 
-export type TooltipProps = ExtractPropTypes<typeof TooltipType>;
+export type UiTooltipProps = ExtractPropTypes<typeof UiTooltipType>;

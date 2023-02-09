@@ -6,8 +6,8 @@
 
 <script lang="ts" setup>
 import { computed } from "vue";
-import { IconType } from "./icon";
+import { UiIconType } from "./icon";
 
-const define = defineProps(IconType);
+const define = defineProps(UiIconType);
 const IconName = computed(() => `#icon-${define.name}`);
 </script>

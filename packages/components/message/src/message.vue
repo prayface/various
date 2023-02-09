@@ -10,9 +10,9 @@
 <script lang="ts" setup>
 import UiIcon from "@various/components/icon";
 import { computed } from "vue";
-import { messageType } from "./message";
+import { UiMessageType } from "./message";
 
-const define = defineProps(messageType);
+const define = defineProps(UiMessageType);
 const styles = computed(() => {
     return {
         transform: `translateY(${define.offset}px)`,

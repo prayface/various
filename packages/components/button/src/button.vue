@@ -11,11 +11,11 @@
 
 <script lang="ts" setup>
 import UiIcon from "@various/components/icon";
-import { ButtonType } from "./button";
+import { UiButtonType } from "./button";
 import { computed } from "vue";
 
 const emit = defineEmits(["click"]);
-const define = defineProps(ButtonType);
+const define = defineProps(UiButtonType);
 const styles = computed(() => (define.width ? `min-width: ${define.width}px` : ""));
 const disabled = computed(() => define.loading || define.disabled);
 

@@ -11,12 +11,12 @@
 
 <script lang="ts" setup>
 import { computed } from "vue";
-import { TooltipType } from "./tooltip";
+import { UiTooltipType } from "./tooltip";
 
 import TooltipFixed from "./fixed.vue";
 import TooltipFollow from "./follow.vue";
 
-const define = defineProps(TooltipType);
+const define = defineProps(UiTooltipType);
 const component = computed(() => {
     switch (define.mode) {
         case "follow":

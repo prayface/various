@@ -13,12 +13,12 @@
 
 <script lang="ts" setup>
 import { node, dispost } from "../../../utils";
-import { TooltipType } from "./tooltip";
+import { UiTooltipType } from "./tooltip";
 import { computed, nextTick, onBeforeUnmount, watch, ref } from "vue";
 
 const main = ref<HTMLElement | undefined>();
 const container = ref<HTMLElement | undefined>();
-const define = defineProps(TooltipType);
+const define = defineProps(UiTooltipType);
 const timer = ref<NodeJS.Timer | null>();
 const show = ref<boolean>(false);
 

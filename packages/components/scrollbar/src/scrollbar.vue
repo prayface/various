@@ -14,14 +14,14 @@
 
 <script lang="ts" setup>
 import { computed, onMounted, ref } from "vue";
-import { ScrollbarType } from "./scrollbar";
+import { UiScrollbarType } from "./scrollbar";
 
 const scroll = ref({ real: { top: 0, left: 0 }, abs: { top: 0, left: 0 }, drag: false });
 const scrollbarX = ref({ size: 0, offset: 0, drag: false });
 const scrollbarY = ref({ size: 0, offset: 0, drag: false });
 const container = ref<HTMLDivElement | null>();
 const content = ref<HTMLDivElement | null>();
-const define = defineProps(ScrollbarType);
+const define = defineProps(UiScrollbarType);
 
 //* 滚动条容器样式
 const styles = computed(() => {
