@@ -1,4 +1,4 @@
-import type { ExtractDefaultPropTypes, PropType } from "vue";
+import type { ExtractPropTypes, PropType } from "vue";
 
 export const ButtonType = {
     disabled: { type: Boolean, default: false },
@@ -10,4 +10,4 @@ export const ButtonType = {
     icon: String,
 } as const;
 
-export type ButtonProps = ExtractDefaultPropTypes<typeof ButtonType>;
+export type ButtonProps = ExtractPropTypes<typeof ButtonType>;

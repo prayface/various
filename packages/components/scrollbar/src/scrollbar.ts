@@ -1,4 +1,4 @@
-import type { ExtractDefaultPropTypes } from "vue";
+import type { ExtractPropTypes } from "vue";
 
 export const ScrollbarType = {
     noresize: { type: Boolean, default: false },
@@ -7,4 +7,4 @@ export const ScrollbarType = {
     width: { type: Number },
 } as const;
 
-export type ScrollbarProps = ExtractDefaultPropTypes<typeof ScrollbarType>;
+export type ScrollbarProps = ExtractPropTypes<typeof ScrollbarType>;

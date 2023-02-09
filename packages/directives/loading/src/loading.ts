@@ -1,4 +1,4 @@
-import { ExtractDefaultPropTypes } from "vue";
+import { ExtractPropTypes } from "vue";
 
 export const LoadingType = {
     className: { type: String, default: "" },
@@ -9,4 +9,4 @@ export const LoadingType = {
     icon: { type: String, default: "loading" },
 } as const;
 
-export type LoadingProps = ExtractDefaultPropTypes<typeof LoadingType>;
+export type LoadingProps = ExtractPropTypes<typeof LoadingType>;

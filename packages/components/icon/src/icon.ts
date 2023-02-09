@@ -1,4 +1,4 @@
-import type { ExtractDefaultPropTypes } from "vue";
+import type { ExtractPropTypes } from "vue";
 
 export const IconType = { name: String } as const;
-export type IconProps = ExtractDefaultPropTypes<typeof IconType>;
+export type IconProps = ExtractPropTypes<typeof IconType>;
