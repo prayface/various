@@ -72,10 +72,6 @@ const view = {
         timer.value && clearTimeout(timer.value);
         timer.value = setTimeout(() => {
             show.value = false;
-            //* 隐藏窗口前将窗口调回原位置
-            if (container.value && main.value) {
-                node.append(main.value, container.value);
-            }
         }, delay);
     },
 };
