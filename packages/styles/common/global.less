@@ -45,3 +45,103 @@
         animation: rotate 1s linear infinite;
     }
 }
+
+// 表单控制层样式
+.ui-form-control {
+    background-color: rgb(var(--uis-color-1));
+    border-radius: var(--ui-radius);
+    line-height: calc(var(--ui-size) - 2px);
+    transition: all 0.2s;
+    font-size: var(--ui-font-size);
+    position: relative;
+    height: var(--ui-size);
+    border: 1px solid var(--uis-color-4);
+    width: 100%;
+    &:hover,
+    &:focus {
+        border-color: var(--ui-color-7);
+    }
+
+    &::placeholder {
+        color: var(--uis-color-4);
+    }
+
+    &:focus::placeholder {
+        color: transparent;
+    }
+}
+
+// 表单候选项样式
+.ui-form-candidates {
+    transform-origin: center top;
+    background-color: var(--uis-color-1);
+    border-radius: var(--ui-radius);
+    transition: opacity 0.2s, transform 0.3s;
+    box-shadow: var(--ui-box-shadow);
+    position: absolute;
+    z-index: 66;
+    border: 1px solid var(--ui-box-border);
+    inset: 0 auto auto 0;
+    &.v-enter-from,
+    &.v-leave-to {
+        opacity: 0;
+        transform: scaleY(0);
+    }
+
+    &.v-enter-to,
+    &.v-leave-from {
+        opacity: 1;
+        transform: scaleY(1);
+    }
+
+    > .ui-form-candidates-triangle {
+        position: absolute;
+        border-style: solid;
+        border-width: 4px 0 4px 6px;
+        border-color: transparent transparent transparent #fff;
+    }
+
+    > .ui-form-candidate-container {
+        > .ui-form-candidate {
+            cursor: pointer;
+            height: var(--ui-size);
+            padding: 0 var(--ui-spacing);
+            transition: all 0.2s;
+            white-space: nowrap;
+            line-height: var(--ui-size);
+            &:hover,
+            &.ui-active {
+                background: var(--ui-color-1);
+                color: var(--ui-color-7);
+            }
+
+            &:last-child {
+                border-radius: 0 0 var(--ui-radius) var(--ui-radius);
+            }
+
+            &:first-child {
+                border-radius: var(--ui-radius) var(--ui-radius) 0 0;
+            }
+        }
+    }
+}
+
+// 禁用样式
+.ui-disabled {
+    .ui-form-control {
+        background-color: var(--uis-color-2);
+        border-color: var(--uis-color-2);
+        cursor: not-allowed;
+    }
+}
+
+// 只读样式
+.ui-readonly {
+    .ui-form-control {
+        background-color: var(--uis-color-2);
+        border-color: var(--uis-color-2);
+        &:focus::placeholder {
+            color: var(--uis-color-4);
+        }
+    }
+}

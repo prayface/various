@@ -1,0 +1,33 @@
+.ui-input {
+    width: 264px;
+    display: inline-block;
+    .ui-mask {
+        font-size: 20px;
+    }
+
+    .ui-form-control {
+        margin: 0;
+        outline: none;
+        padding: 0 var(--ui-spacing);
+    }
+
+    .ui-input-clearable {
+        transition: all 0.2s;
+        transform: translate(0, -50%);
+        font-size: 24px;
+        position: absolute;
+        cursor: pointer;
+        color: var(--uis-color-4);
+        right: 4px;
+        top: 50%;
+        &:hover {
+            color: var(--ui-color-7);
+        }
+    }
+}
+
+.ui-input.ui-clearable {
+    .ui-form-control {
+        padding: 0 32px 0 var(--ui-spacing);
+    }
+}

@@ -23,7 +23,7 @@ const dispost = {
                 if (result.offsetY - container.height < window.scrollY && main.top + main.height + container.height + 8 < innerHeight) {
                     result.rotate = "-90deg";
                     result.offsetY = main.top + main.height + 8;
-                    result.triangle = `-6px auto auto ${dispostTriangleAlign(container.width, option.align)}`;
+                    result.triangle = `-7px auto auto ${dispostTriangleAlign(container.width, option.align)}`;
                     result.transform = "none";
                 }
 
@@ -76,7 +76,7 @@ const dispost = {
                     rotate: "-90deg",
                     offsetX: dispostBoundaryAlign(option.align, container.width, main.width, { offset: main.left, inner: innerWidth, scroll: window.scrollX }),
                     offsetY: main.top + main.height + 8,
-                    triangle: `-6px auto auto ${dispostTriangleAlign(container.width, option.align)}`,
+                    triangle: `-7px auto auto ${dispostTriangleAlign(container.width, option.align)}`,
                     transform: "none",
                 };
                 //* 超出边界处理

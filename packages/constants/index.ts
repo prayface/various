@@ -3,4 +3,5 @@ export namespace UiTypes {
     export type type = "success" | "warning" | "info" | "error";
     export type align = "top" | "center" | "bottom";
     export type direction = "top" | "left" | "right" | "bottom";
+    export type candidate = { label: any; value: any };
 }
