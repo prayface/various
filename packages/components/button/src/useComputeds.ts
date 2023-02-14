@@ -13,7 +13,7 @@ export default (define: UiButtonProps) => {
         classNameContainer: computed(() => {
             if (define.loading) return `ui-button-loading ui-button-${define.mode}`;
             else if (define.disabled) return `ui-button-disabled ui-button-${define.mode}`;
-            else `ui-button-${define.mode}`;
+            else return `ui-button-${define.mode}`;
         }),
     };
 };
