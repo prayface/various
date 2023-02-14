@@ -1,5 +1,5 @@
 import Input from "./src/input.vue";
-import { register } from "../../utils";
+import { register } from "@various/utils";
 
 Input.name = "UiInput";
 

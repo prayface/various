@@ -1,4 +1,4 @@
-import { register } from "../../utils";
+import { register } from "@various/utils";
 import Tooltip from "./src/tooltip.vue";
 
 Tooltip.name = "UiTooltip";

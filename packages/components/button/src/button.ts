@@ -1,5 +1,5 @@
 import { ExtractPropTypes, PropType } from "vue";
-import { UiTypes } from "../../../constants";
+import { UiTypes } from "@various/constants";
 
 export const UiButtonType = {
     disabled: { type: Boolean, default: false },
@@ -12,3 +12,6 @@ export const UiButtonType = {
 } as const;
 
 export type UiButtonProps = ExtractPropTypes<typeof UiButtonType>;
+export const UiButtonEmits = {
+    click: (ev: MouseEvent | Event) => ev,
+};

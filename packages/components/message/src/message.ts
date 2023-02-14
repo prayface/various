@@ -1,5 +1,5 @@
 import { PropType, ExtractPropTypes } from "vue";
-import { UiTypes } from "../../../constants";
+import { UiTypes } from "@various/constants";
 
 export const UiMessageType = {
     message: { type: String, required: true },

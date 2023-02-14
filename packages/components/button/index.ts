@@ -1,5 +1,5 @@
 import Button from "./src/button.vue";
-import { register } from "../../utils";
+import { register } from "@various/utils";
 
 Button.name = "UiButton";
 

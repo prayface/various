@@ -13,6 +13,8 @@
 </template>
 
 <script lang="ts" setup>
+import useUtils from "./useUtils";
+import useComputeds from "./useComputeds";
 import { computed, onMounted, ref } from "vue";
 import { UiScrollbarType } from "./scrollbar";
 
@@ -23,16 +25,9 @@ const container = ref<HTMLDivElement | null>();
 const content = ref<HTMLDivElement | null>();
 const define = defineProps(UiScrollbarType);
 
-//* 滚动条容器样式
-const styles = computed(() => {
-    const result = {
-        width: define.width ? `${define.width}px` : "100%",
-        height: define.height ? `${define.height}px` : "100%",
-        overflow: "hidden",
-    };
+const { styles } = useComputeds(define);
+const { dispostSize, dispostWheel } = useUtils();
 
-    return result;
-});
 //* 滚动条内容样式
 const stylesContent = computed(() => {
     return {
@@ -93,20 +88,6 @@ const init = () => {
             };
         }
     }
-};
-
-//* 计算Bar尺寸和滚动条偏移
-const dispostSize = (rw: number, aw: number, ratio: number) => {
-    if (rw <= aw) return { size: 0, offset: 0, drag: false };
-    else if (ratio * aw < 20) return { size: 20, offset: 10, drag: false };
-    else return { size: ratio * aw, offset: 0, drag: false };
-};
-
-//* 计算当前滚动位置
-const dispostWheel = (offset: number, size: number, max: number) => {
-    if (offset < 0) return 0;
-    else if (offset + size > max) return max - size;
-    else return offset;
 };
 
 //* 响应滚动条滑块拖动事件

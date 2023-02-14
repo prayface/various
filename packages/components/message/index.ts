@@ -1,7 +1,7 @@
 import Message from "./src/message.vue";
 import { UiMessageOption } from "./src/message";
 import { createApp } from "vue";
-import { node } from "../../utils";
+import { node } from "@various/utils";
 
 const UiMessage = (option: UiMessageOption, callBack: Function | undefined) => {
     //* 1. 创建Vue实例和包裹容器

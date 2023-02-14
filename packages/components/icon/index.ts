@@ -1,5 +1,5 @@
 import Icon from "./src/icon.vue";
-import { register } from "../../utils";
+import { register } from "@various/utils";
 
 Icon.name = "UiIcon";
 

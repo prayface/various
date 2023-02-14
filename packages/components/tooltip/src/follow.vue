@@ -1,10 +1,10 @@
 <template>
-    <div v-show="!visible" class="ui-tooltip" ref="main" @mouseenter="trigger(true, $event)" @mouseleave="trigger(false, $event)" @mousemove="trigger(true, $event)">
+    <div v-show="!visible" class="ui-tooltip" ref="main" v-on="hanlders">
         <slot name="default"></slot>
     </div>
 
     <Transition>
-        <div class="ui-tooltip-container" v-if="show" ref="container" :style="styles" :class="className" @mouseenter="triggerView(true)" @mouseleave="triggerView(false)">
+        <div class="ui-tooltip-container" v-if="view.visible" ref="container" :style="styles" :class="className" v-on="containerHanlders">
             <slot name="content" v-if="$slots.content"></slot>
             <template v-else>{{ content }}</template>
         </div>
@@ -12,46 +12,30 @@
 </template>
 
 <script lang="ts" setup>
-import { node, dispost } from "../../../utils";
+import useUtils from "./useUtils";
+import useComputeds from "./useComputeds";
+import { node, dispost } from "@various/utils";
 import { UiTooltipType } from "./tooltip";
-import { computed, nextTick, onBeforeUnmount, watch, ref } from "vue";
+import { nextTick, onBeforeUnmount, watch, ref, reactive, toRefs } from "vue";
 
-const main = ref<HTMLElement | undefined>();
-const container = ref<HTMLElement | undefined>();
 const define = defineProps(UiTooltipType);
-const timer = ref<NodeJS.Timer | null>();
-const show = ref<boolean>(false);
-
-const className = computed(() => {
-    return define.effect ? `ui-effect-${define.effect}` : "";
-});
-const styles = computed(() => {
-    return {
-        "max-width": define.width + "px",
-    };
-});
-
-//* 触发函数
-const trigger = (show: boolean, ev: MouseEvent) => {
-    if (define.disabled) return;
-    else return show ? view.show(ev) : view.hidden();
-};
-//* 鼠标移入窗口中的触发函数
-const triggerView = (show: boolean) => {
-    timer.value && clearTimeout(timer.value);
-    if (!show) {
-        view.hidden();
-    }
-};
+const timer = ref<NodeJS.Timer | undefined>();
 
 //* 视图控制器
-const view = {
-    //* 显示窗口
-    show: (ev: MouseEvent) => {
-        show.value = true;
+const view = reactive({
+    visible: false, //* 是否显示
+    hidden: (delay: number = 200) => {
         timer.value && clearTimeout(timer.value);
+        timer.value = setTimeout(() => {
+            view.visible = false;
+        }, delay);
+    },
+    show: (ev?: MouseEvent) => {
+        timer.value && clearTimeout(timer.value);
+        timer.value = undefined;
+        view.visible = true;
         nextTick(() => {
-            if (container.value) {
+            if (container.value && ev) {
                 //* 将content添加到视图容器中
                 node.append("ui-windows", container.value);
                 //* 根据配置计算当前窗口位置
@@ -67,13 +51,23 @@ const view = {
             }
         });
     },
-    //* 隐藏窗口
-    hidden: (delay: number = 200) => {
-        timer.value && clearTimeout(timer.value);
-        timer.value = setTimeout(() => {
-            show.value = false;
-        }, delay);
-    },
+});
+
+//* 工具函数和计算属性初始化
+const { className, styles } = useComputeds(define);
+const { triggerView, trigger, container, main } = useUtils(define, view);
+
+//* ui-tooltip的处理函数
+const hanlders = {
+    mouseenter: (ev: MouseEvent) => trigger("follow", true, ev),
+    mouseleave: (ev: MouseEvent) => trigger("follow", false, ev),
+    mousemove: (ev: MouseEvent) => trigger("follow", true, ev),
+};
+
+//* ui-tooltip-container的处理函数
+const containerHanlders = {
+    mouseenter: () => triggerView(true, timer.value),
+    mouseleave: () => triggerView(false, timer.value),
 };
 
 //* 侦听器, 用于侦听visible属性, 对窗口进行隐藏
@@ -85,7 +79,7 @@ const stop = watch(
 );
 
 //* 将视图控制器暴露出去
-defineExpose({ view });
+defineExpose({ ...toRefs(view) });
 //* 组件销毁前, 判断是否存在窗口残留, 存在则移除DOM
 onBeforeUnmount(() => {
     stop && stop();

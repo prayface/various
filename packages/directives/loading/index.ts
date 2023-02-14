@@ -1,5 +1,5 @@
 import { createApp, App, ComponentPublicInstance } from "vue";
-import { register } from "../../utils";
+import { register } from "@various/utils";
 import Loading from "./src/loading.vue";
 
 interface EL extends HTMLElement {

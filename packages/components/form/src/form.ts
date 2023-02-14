@@ -1,6 +1,6 @@
 import { ExtractPropTypes, InjectionKey, PropType } from "vue";
 import { Emitter } from "mitt";
-import { UiTypes } from "../../../constants";
+import { UiTypes } from "@various/constants";
 
 export type UiFormVerifyResult = boolean | { verify: boolean; message: string };
 

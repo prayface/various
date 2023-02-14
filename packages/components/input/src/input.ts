@@ -1,5 +1,5 @@
 import { PropType, ExtractPropTypes } from "vue";
-import { UiTypes } from "../../../constants";
+import { UiTypes } from "@various/constants";
 
 export const UiInputType = {
     autocomplete: { type: String, values: ["off", "on"], default: "off" },
@@ -22,7 +22,7 @@ export const UiInputEmits = {
     change: (ev: Event) => ev,
     clear: (ev: any) => ev,
     input: (ev: InputEvent | Event) => ev,
-    click: (ev: MouseEvent | Event) => ev,
+    click: (ev: PointerEvent | Event) => ev,
     focus: (ev: FocusEvent | Event) => ev,
     blur: (ev: FocusEvent | Event) => ev,
 };

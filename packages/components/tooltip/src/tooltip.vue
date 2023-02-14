@@ -17,6 +17,7 @@ import TooltipFixed from "./fixed.vue";
 import TooltipFollow from "./follow.vue";
 
 const define = defineProps(UiTooltipType);
+const attrs = computed(() => define);
 const component = computed(() => {
     switch (define.mode) {
         case "follow":
@@ -25,6 +26,4 @@ const component = computed(() => {
             return TooltipFixed;
     }
 });
-
-const attrs = computed(() => define);
 </script>

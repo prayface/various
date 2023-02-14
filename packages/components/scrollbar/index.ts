@@ -1,5 +1,5 @@
 import Scrollbar from "./src/scrollbar.vue";
-import { register } from "../../utils";
+import { register } from "@various/utils";
 
 Scrollbar.name = "UiScrollbar";
 

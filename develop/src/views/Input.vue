@@ -61,7 +61,6 @@
                 <p>候选项<span>candidate</span>支持<span>() => UiTypes.candidate[]</span>和<span>UiTypes.candidate[]</span>类型</p>
             </div>
             <div class="content">
-                <p>1. () => UiTypes.candidate[]的候选项</p>
                 <UiInput v-model="value" :candidate="candidate" />
             </div>
         </section>

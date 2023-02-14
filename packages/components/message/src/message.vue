@@ -13,10 +13,11 @@ import { computed } from "vue";
 import { UiMessageType } from "./message";
 
 const define = defineProps(UiMessageType);
+
+const className = computed(() => `ui-message-${define.type}`);
 const styles = computed(() => {
     return {
         transform: `translateY(${define.offset}px)`,
     };
 });
-const className = computed(() => `ui-message-${define.type}`);
 </script>
