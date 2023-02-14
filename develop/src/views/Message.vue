@@ -71,6 +71,8 @@
 
 <script setup>
 import { $message } from "@various";
+
+console.log($message);
 </script>
 
 <style lang="less">
