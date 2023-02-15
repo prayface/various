@@ -1,3 +1,4 @@
+//* 默认状态
 .ui-button {
     display: inline-block;
     border-radius: var(--ui-radius);
@@ -5,7 +6,7 @@
     button {
         color: var(--uis-color-1);
         cursor: pointer;
-        border: 1px solid var(--ui-color-7);
+        border: 1px solid var(--ui-topic-color);
         height: var(--ui-size);
         display: flex;
         padding: 0 var(--ui-spacing);
@@ -15,41 +16,34 @@
         align-items: center;
         justify-content: center;
         border-radius: var(--ui-radius);
-        background-color: var(--ui-color-7);
+        background-color: var(--ui-topic-color);
     }
+}
 
+//* 朴素的按钮
+.ui-button.ui-button-simple {
+    button {
+        background-color: var(--uis-color-1);
+        color: var(--ui-topic-color);
+        &:hover,
+        &:focus {
+            background-color: var(--ui-topic-color);
+            color: var(--uis-color-1);
+        }
+    }
+}
+
+//* 加载和禁用状态样式
+.ui-button.ui-loading-status,
+.ui-button.ui-disabled-status {
     .ui-mask {
         font-size: 24px;
     }
+}
 
-    &.ui-button-disabled {
-        .ui-mash-icon {
-            display: none;
-        }
-    }
-
-    &.ui-button-pierced {
-        button {
-            color: var(--uis-color-9);
-            background: var(--uis-color-1);
-            border-color: var(--uis-color-4);
-            &:hover {
-                color: var(--ui-color-7);
-                border-color: var(--ui-color-7);
-            }
-        }
-
-        .ui-mask {
-            background: transparent;
-        }
-
-        &.ui-button-disabled,
-        &.ui-button-loading {
-            button {
-                color: var(--uis-color-4);
-                background: var(--uis-color-2);
-                border-color: var(--uis-color-2);
-            }
-        }
+//* 禁用状态样式
+.ui-button.ui-disabled-status {
+    .ui-mask-icon {
+        display: none;
     }
 }

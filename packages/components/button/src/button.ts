@@ -2,13 +2,14 @@ import { ExtractPropTypes, PropType } from "vue";
 import { UiTypes } from "@various/constants";
 
 export const UiButtonType = {
+    nativeType: { type: String as PropType<"button" | "submit" | "reset">, default: "submit" },
     disabled: { type: Boolean, default: false },
     loading: { type: Boolean, default: false },
-    width: Number,
+    simple: { type: Boolean, default: false },
+    width: { type: Number },
+    type: { type: String as PropType<UiTypes.type>, default: "info" },
     size: { type: String as PropType<UiTypes.size>, default: "default" },
-    type: { type: String as PropType<"button" | "submit" | "reset">, default: "submit" },
-    mode: { type: String as PropType<"pierced" | "entity">, default: "entity" },
-    icon: String,
+    icon: { type: String },
 } as const;
 
 export type UiButtonProps = ExtractPropTypes<typeof UiButtonType>;

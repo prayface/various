@@ -23,9 +23,8 @@
     --uis-color-9: rgb(48, 55, 66);
 
     // 错误颜色
-    --ui-danger-1: rgb(234, 62, 55);
+    --ui-danger-1: rgb(207, 36, 36);
     --ui-danger-1-005: rgb(254, 244, 244);
-    --ui-danger-2: rgb(207, 36, 36);
 
     // 成功颜色
     --ui-success-1: rgb(0, 177, 55);
@@ -43,31 +42,45 @@
 
     // 阴影效果
     --ui-box-shadow: 0px 4px 8px 0px rgba(105, 1, 98, 0.05);
-    --ui-box-border: rgba(277, 277, 277, 0.3)
+    --ui-box-border: rgba(277, 277, 277, 0.3);
 
-    // 常规字体大小与圆角
-    --ui-button-size: auto // 默认按钮最小尺寸
+    // 图标配置
+    --ui-icon-color: var(--uis-color-4); // 默认图标颜色
+    --ui-icon-active-color: var(--ui-color-7); // 默认图标激活颜色
+
+    // 按钮组件配置
+    --ui-button-size: auto; // 默认按钮最小尺寸
+
+    // 滚动条组件配置
+    --ui-scrollbar-color: var(--uis-color-3); // 默认滚动条滑块颜色
+    --ui-scrollbar-active-color: var(--uis-color-4); // 默认滚动条滑块激活颜色
+
+    // 表单配置
+    --ui-form-placeholder-color: var(--uis-color-4); // 默认提示文本颜色
+    --ui-form-candidate-color: var(--ui-color-1); // 候选项背景色
+    --ui-form-message-color: var(--uis-color-4); // 默认校验提示文本颜色
+    --ui-form-color: var(--uis-color-1); // 默认表单背景颜色
+
+    // 常规主题色配置
+    --ui-topic-color: var(--ui-color-7); // 主题色
+    --ui-subtopic-color: var(--ui-color-1); // 副主题色
+
+    // 常规边框配置
+    --ui-border-color: var(--uis-color-4); // 默认边框颜色
+    --ui-border-active-color: var(--ui-color-7); // 默认边框激活颜色
+
+    // 常规字体配置
+    --ui-font-active-color: var(--ui-color-7); // 默认文本激活颜色
+    --ui-font-color: var(--uis-color-9); // 默认文字颜色
     --ui-font-line: 22px; // 默认字体行高
     --ui-font-size: 14px; // 默认字体大小
+
+    // 其他常规配置
     --ui-spacing: 16px; // 默认间距
     --ui-radius: 4px; // 默认圆角
     --ui-size: 40px; // 默认尺寸
 
-    // 中尺寸
-    .ui-middle {
-        --ui-size: 48px;
-        --ui-button-size: 88px;
-    }
-
-    // 大尺寸
-    .ui-large {
-        --ui-size: 56px;
-        --ui-button-size: 144px;
-    }
-
-    // 小尺寸
-    .ui-small {
-        --ui-size: 32px;
-        --ui-font-size: 12px;
-    }
+    @import "./size.less";
+    @import "./type.less";
+    @import "./status.less";
 }

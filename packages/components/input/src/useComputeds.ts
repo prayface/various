@@ -34,8 +34,8 @@ export default (define: UiInputProps) => {
             // 初始化输出
             const result: string[] = [];
             // 判断是否是禁用或只读状态
-            if (define.disabled) result.push("ui-disabled");
-            else if (define.readonly) result.push("ui-readonly");
+            if (define.disabled) result.push("ui-disabled-status");
+            else if (define.readonly) result.push("ui-readonly-status");
             // 判断是否需要添加size类名
             if (define.size != "default") result.push(`ui-${define.size}`);
             // 判断是否需要添加clearable类名

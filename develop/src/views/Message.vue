@@ -12,10 +12,10 @@
             <div class="title">不同状态</div>
             <div class="descript">用来显示「成功、警告、消息、错误」类的操作反馈。</div>
             <div class="content">
-                <UiButton @click="$message.success('success')">success</UiButton>
-                <UiButton @click="$message.warning('warning')">warning</UiButton>
-                <UiButton @click="$message.error('error')">error</UiButton>
-                <UiButton @click="$message.info('info')">info</UiButton>
+                <UiButton type="success" simple @click="$message.success('success')">success</UiButton>
+                <UiButton type="warning" simple @click="$message.warning('warning')">warning</UiButton>
+                <UiButton type="error" simple @click="$message.error('error')">error</UiButton>
+                <UiButton simple @click="$message.info('info')">info</UiButton>
             </div>
         </section>
 

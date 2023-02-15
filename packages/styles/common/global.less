@@ -24,7 +24,7 @@
     display: flex;
     height: 100%;
     width: 100%;
-    color: var(--uis-color-9);
+    color: var(--ui-font-color);
     left: 0;
     top: 0;
     &.v-enter-from,
@@ -41,29 +41,29 @@
         position: fixed;
     }
 
-    .ui-mash-icon {
+    .ui-mask-icon {
         animation: rotate 1s linear infinite;
     }
 }
 
 // 表单控制层样式
 .ui-form-control {
-    background-color: rgb(var(--uis-color-1));
+    background-color: var(--ui-form-color);
     border-radius: var(--ui-radius);
     line-height: calc(var(--ui-size) - 2px);
     transition: all 0.2s;
     font-size: var(--ui-font-size);
     position: relative;
     height: var(--ui-size);
-    border: 1px solid var(--uis-color-4);
+    border: 1px solid var(--ui-border-color);
     width: 100%;
     &:hover,
     &:focus {
-        border-color: var(--ui-color-7);
+        border-color: var(--ui-border-active-color);
     }
 
     &::placeholder {
-        color: var(--uis-color-4);
+        color: var(--ui-form-placeholder-color);
     }
 
     &:focus::placeholder {
@@ -111,8 +111,8 @@
             line-height: var(--ui-size);
             &:hover,
             &.ui-active {
-                background: var(--ui-color-1);
-                color: var(--ui-color-7);
+                background: var(--ui-form-candidate-color);
+                color: var(--ui-font-active-color);
             }
 
             &:last-child {
@@ -127,21 +127,17 @@
 }
 
 // 禁用样式
-.ui-disabled {
+.ui-disabled-status {
     .ui-form-control {
-        background-color: var(--uis-color-2);
-        border-color: var(--uis-color-2);
         cursor: not-allowed;
     }
 }
 
 // 只读样式
-.ui-readonly {
+.ui-readonly-status {
     .ui-form-control {
-        background-color: var(--uis-color-2);
-        border-color: var(--uis-color-2);
         &:focus::placeholder {
-            color: var(--uis-color-4);
+            color: var(--ui-form-placeholder-color);
         }
     }
 }

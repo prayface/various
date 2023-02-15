@@ -1,0 +1,39 @@
+.ui-form-item {
+    > .ui-form-container {
+        position: relative;
+        > .ui-form-message {
+            transition: all 0.2s;
+            transform: translateY(100%);
+            font-size: 12px;
+            position: absolute;
+            bottom: -4px;
+            color: var(--ui-font-color);
+            left: 0;
+            &.v-enter-from,
+            &.v-leave-to {
+                opacity: 0;
+                transform: translateY(50%);
+            }
+
+            &.v-enter-to,
+            &.v-leave-from {
+                opacity: 1;
+                transform: translateY(100%);
+            }
+        }
+    }
+}
+
+.ui-form-item.ui-form-row {
+    display: inline-flex;
+    align-items: center;
+    > .ui-form-name {
+        margin: 0 8px 0 0;
+    }
+}
+
+.ui-form-item.ui-form-column {
+    > .ui-form-name {
+        margin: 0 0 8px;
+    }
+}

@@ -15,7 +15,12 @@ export const UiFormType = {
     rules: { type: Object as PropType<{ [name: string]: UiFormRule[] }>, default: () => {} },
 } as const;
 
-export const UiFormItemType = { prop: String, label: String, width: Number } as const;
+export const UiFormItemType = {
+    prop: String,
+    label: String,
+    width: Number,
+    direction: { type: String as PropType<"row" | "column">, default: "row" },
+} as const;
 
 export type UiFormProps = ExtractPropTypes<typeof UiFormType>;
 export type UiFormItemProps = ExtractPropTypes<typeof UiFormItemType>;

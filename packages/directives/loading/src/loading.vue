@@ -1,7 +1,7 @@
 <template>
     <Transition>
         <div class="ui-mask" :class="className" :style="styles" v-if="show">
-            <UiIcon class="ui-mash-icon" :name="icon" />
+            <UiIcon class="ui-mask-icon" :name="icon" />
             <div class="ui-mask-content" v-if="content">{{ content }}</div>
         </div>
     </Transition>

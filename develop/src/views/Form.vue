@@ -7,24 +7,38 @@
                 <p>在每一个<span>form</span>组件中, 你需要一个<span>form-item</span>组件作为输入项的容器, 用于获取值与验证值。</p>
             </div>
             <div class="content">
-                <UiForm :rules="rules1">
-                    <UiFormItem prop="name"></UiFormItem>
+                <UiForm :rules="rules" :data="data">
+                    <UiFormItem prop="name" ref="item">
+                        <UiInput v-model="data.name" />
+                    </UiFormItem>
+
+                    <UiFormItem prop="name" direction="column">
+                        <UiInput v-model="data.age" />
+                    </UiFormItem>
                 </UiForm>
 
-                <UiForm :rules="rules2">
-                    <UiFormItem prop="name"></UiFormItem>
-                </UiForm>
+                <UiButton @click="item && item.show()">触发校验</UiButton>
+                <UiButton @click="item && item.hidden()">隐藏校验</UiButton>
             </div>
         </section>
     </div>
 </template>
 
 <script setup>
-const rules1 = {
-    name: [{ message: "测试文本1" }],
-};
+import { ref, reactive } from "vue";
+import { UiFormItem } from "@various";
 
-const rules2 = {
-    name: [{ message: "测试文本2" }],
-};
+const item = ref();
+const rules = ref({});
+const data = reactive({ age: 18, name: "" });
 </script>
+
+<style lang="less">
+.form {
+    .ui-form {
+        .ui-form-item {
+            margin: 0 0 40px;
+        }
+    }
+}
+</style>

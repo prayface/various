@@ -14,7 +14,7 @@ import { UiMessageType } from "./message";
 
 const define = defineProps(UiMessageType);
 
-const className = computed(() => `ui-message-${define.type}`);
+const className = computed(() => `ui-${define.type}-type`);
 const styles = computed(() => {
     return {
         transform: `translateY(${define.offset}px)`,

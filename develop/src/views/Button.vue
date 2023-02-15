@@ -8,19 +8,21 @@
             <div class="content">
                 <p>
                     <UiButton @click="click" size="large">最大尺寸</UiButton>
-                    <UiButton @click="click" size="large" mode="pierced">最大尺寸</UiButton>
-                </p>
-                <p>
                     <UiButton @click="click" size="middle">大尺寸</UiButton>
-                    <UiButton @click="click" size="middle" mode="pierced">大尺寸</UiButton>
-                </p>
-                <p>
                     <UiButton @click="click">默认尺寸</UiButton>
-                    <UiButton @click="click" mode="pierced">默认尺寸</UiButton>
+                    <UiButton @click="click" size="small">最小尺寸</UiButton>
                 </p>
                 <p>
-                    <UiButton @click="click" size="small">最小尺寸</UiButton>
-                    <UiButton @click="click" size="small" mode="pierced">最小尺寸</UiButton>
+                    <UiButton @click="click">info</UiButton>
+                    <UiButton @click="click" type="error">error</UiButton>
+                    <UiButton @click="click" type="warning">warning</UiButton>
+                    <UiButton @click="click" type="success">success</UiButton>
+                </p>
+                <p>
+                    <UiButton @click="click" simple>info</UiButton>
+                    <UiButton @click="click" type="error" simple>error</UiButton>
+                    <UiButton @click="click" type="warning" simple>warning</UiButton>
+                    <UiButton @click="click" type="success" simple>success</UiButton>
                 </p>
             </div>
         </section>
@@ -30,8 +32,18 @@
                 <p>你可以使用<span>disabled</span>属性来定义按钮是否被禁用。 该属性接收一个<span>Boolean</span>类型的值</p>
             </div>
             <div class="content">
-                <UiButton @click="click" :disabled="true">啊! 我被禁用了</UiButton>
-                <UiButton @click="click" mode="pierced" :disabled="true">啊! 我也被禁用了</UiButton>
+                <p>
+                    <UiButton @click="click" disabled>啊! 我被禁用了</UiButton>
+                    <UiButton @click="click" type="error" disabled>啊! 我被禁用了</UiButton>
+                    <UiButton @click="click" type="warning" disabled>啊! 我被禁用了</UiButton>
+                    <UiButton @click="click" type="success" disabled>啊! 我被禁用了</UiButton>
+                </p>
+                <p>
+                    <UiButton @click="click" disabled simple>啊! 我也被禁用了</UiButton>
+                    <UiButton @click="click" type="error" disabled simple>啊! 我也被禁用了</UiButton>
+                    <UiButton @click="click" type="warning" disabled simple>啊! 我也被禁用了</UiButton>
+                    <UiButton @click="click" type="success" disabled simple>啊! 我也被禁用了</UiButton>
+                </p>
             </div>
         </section>
         <section>
@@ -41,8 +53,18 @@
                 <p>通过设置<span>loading</span>属性为<span>true</span>来显示加载中的状态</p>
             </div>
             <div class="content">
-                <UiButton @click="click" :loading="true">啊! 我正在加载中</UiButton>
-                <UiButton @click="click" mode="pierced" :loading="true">啊! 我也正在加载中</UiButton>
+                <p>
+                    <UiButton @click="click" loading>啊! 我正在加载中</UiButton>
+                    <UiButton @click="click" type="error" loading>啊! 我正在加载中</UiButton>
+                    <UiButton @click="click" type="warning" loading>啊! 我正在加载中</UiButton>
+                    <UiButton @click="click" type="success" loading>啊! 我正在加载中</UiButton>
+                </p>
+                <p>
+                    <UiButton @click="click" loading simple>啊! 我也正在加载中</UiButton>
+                    <UiButton @click="click" type="error" loading simple>啊! 我也正在加载中</UiButton>
+                    <UiButton @click="click" type="warning" loading simple>啊! 我也正在加载中</UiButton>
+                    <UiButton @click="click" type="success" loading simple>啊! 我也正在加载中</UiButton>
+                </p>
             </div>
         </section>
         <section>
@@ -54,6 +76,34 @@
                     <th>类型</th>
                     <th>可选值</th>
                     <th>默认值</th>
+                </tr>
+                <tr>
+                    <td>size</td>
+                    <td>按钮的尺寸</td>
+                    <td>string</td>
+                    <td>large | middle | default | small</td>
+                    <td>default</td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>按钮的类型</td>
+                    <td>string</td>
+                    <td>success | warning | error | info</td>
+                    <td>info</td>
+                </tr>
+                <tr>
+                    <td>simple</td>
+                    <td>按钮的简单模式</td>
+                    <td>boolean</td>
+                    <td>--</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>icon</td>
+                    <td>按钮左侧的小图标</td>
+                    <td>string</td>
+                    <td>--</td>
+                    <td>--</td>
                 </tr>
                 <tr>
                     <td>disabled</td>
@@ -77,32 +127,11 @@
                     <td>--</td>
                 </tr>
                 <tr>
-                    <td>size</td>
-                    <td>按钮的尺寸</td>
-                    <td>string</td>
-                    <td>large | middle | default | small</td>
-                    <td>default</td>
-                </tr>
-                <tr>
-                    <td>type</td>
+                    <td>nativeType</td>
                     <td>原生按钮的Type属性</td>
                     <td>string</td>
                     <td>button | submit | reset</td>
                     <td>button</td>
-                </tr>
-                <tr>
-                    <td>mode</td>
-                    <td>按钮的模式, 当前支持镂空按钮(pierced)和实体按钮(entity)</td>
-                    <td>string</td>
-                    <td>pierced | entity</td>
-                    <td>entity</td>
-                </tr>
-                <tr>
-                    <td>icon</td>
-                    <td>按钮左侧的小图标</td>
-                    <td>string</td>
-                    <td>--</td>
-                    <td>--</td>
                 </tr>
             </table>
         </section>
@@ -119,6 +148,13 @@ const click = () => {
 .button {
     section {
         margin-bottom: 20px;
+        .content {
+            p {
+                display: flex;
+                align-items: center;
+            }
+        }
+
         .ui-button {
             margin-right: 8px;
         }
