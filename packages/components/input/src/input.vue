@@ -21,8 +21,9 @@
 <script lang="ts" setup>
 import UiIcon from "@various/components/icon";
 import useComputeds from "./useComputeds";
+import { UiFormEmitterKey } from "@various/constants";
 import { node, dispost } from "@various/utils";
-import { ref, reactive, toRefs, nextTick } from "vue";
+import { ref, reactive, toRefs, nextTick, inject } from "vue";
 import { UiInputType, UiInputEmits } from "./input";
 
 // node
@@ -61,6 +62,7 @@ const view = reactive({
 });
 
 // 初始化Props和Emits
+const emitter = inject(UiFormEmitterKey);
 const define = defineProps(UiInputType);
 const emits = defineEmits(UiInputEmits);
 // 计算属性获取
@@ -68,7 +70,10 @@ const { attrs, styles, className, candidates } = useComputeds(define);
 
 // 批量事件声明
 const handles = {
-    change: (ev: Event) => emits("change", ev),
+    change: (ev: Event) => {
+        emits("change", ev);
+        define.name && emitter?.emit(define.name, "change");
+    },
     input: (ev: InputEvent | Event) => {
         const target = ev.target as HTMLInputElement;
         emits("update:modelValue", target.value);
@@ -82,6 +87,7 @@ const handles = {
     blur: (ev: FocusEvent | Event) => {
         emits("blur", ev);
         define.candidate && view.hidden();
+        define.name && emitter?.emit(define.name, "blur");
     },
 };
 
@@ -89,6 +95,7 @@ const handles = {
 const clear = () => {
     emits("update:modelValue", "");
     emits("clear", "clear");
+    define.name && emitter?.emit(define.name, "change");
 };
 
 // 候选项选择事件
@@ -96,6 +103,7 @@ const onCandidate = (value: String, ev: Event) => {
     emits("update:modelValue", value);
     emits("change", ev);
     emits("input", ev);
+    define.name && emitter?.emit(define.name, "change");
 };
 
 // 事件暴露

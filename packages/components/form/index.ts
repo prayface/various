@@ -1,5 +1,5 @@
 import Form from "./src/form.vue";
-import FormItem from "./src/form-item.vue";
+import FormItem from "./src/form-item/form-item.vue";
 import { register } from "@various/utils";
 
 Form.name = "UiForm";

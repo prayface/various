@@ -7,17 +7,13 @@
 <script lang="ts" setup>
 import mitt from "mitt";
 import { provide } from "vue";
-import { UiFormType, UiFormEmitter } from "./form";
+import { UiFormType, UiFormRulesKey } from "./form";
+import { UiFormEmitterKey, UiFormDataKey } from "@various/constants";
 
 const emitter = mitt();
 const define = defineProps(UiFormType);
 
-for (const i in define.rules) {
-    const rules = define.rules[i];
-    emitter.on(i, () => {
-        console.log(rules);
-    });
-}
-
-provide(UiFormEmitter, emitter);
+provide(UiFormEmitterKey, emitter);
+provide(UiFormDataKey, define.data);
+provide(UiFormRulesKey, define.rules);
 </script>

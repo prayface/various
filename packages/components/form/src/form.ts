@@ -1,18 +1,24 @@
-import { ExtractPropTypes, InjectionKey, PropType } from "vue";
-import { Emitter } from "mitt";
+import { ExtractPropTypes, PropType } from "vue";
+import { InjectionKey } from "vue";
 import { UiTypes } from "@various/constants";
 
-export type UiFormVerifyResult = boolean | { verify: boolean; message: string };
+export type UiFormVerifyResult = { verify: boolean; message?: string; type?: UiTypes.type };
 
 export interface UiFormRule {
-    trigger?: "change" | "input" | "reminder";
-    verify?: () => UiFormVerifyResult;
+    trigger: "change" | "input" | "reminder";
+    verify: (data: { [name: string]: any }) => UiFormVerifyResult;
 }
 
 export const UiFormType = {
     size: { type: String as PropType<UiTypes.size>, default: "default" },
-    data: { type: Object as PropType<{ [name: string]: any }>, default: () => {} },
-    rules: { type: Object as PropType<{ [name: string]: UiFormRule[] }>, default: () => {} },
+    data: {
+        type: Object as PropType<{ [name: string]: any }>,
+        default: () => {},
+    },
+    rules: {
+        type: Object as PropType<{ [name: string]: UiFormRule[] }>,
+        default: () => {},
+    },
 } as const;
 
 export const UiFormItemType = {
@@ -24,4 +30,4 @@ export const UiFormItemType = {
 
 export type UiFormProps = ExtractPropTypes<typeof UiFormType>;
 export type UiFormItemProps = ExtractPropTypes<typeof UiFormItemType>;
-export const UiFormEmitter: InjectionKey<Emitter<any>> = Symbol("UiFormEmitterKey");
+export const UiFormRulesKey: InjectionKey<{ [name: string]: UiFormRule[] }> = Symbol("UiFormRulesKey");
