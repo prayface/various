@@ -2,10 +2,10 @@ import { ExtractPropTypes, PropType } from "vue";
 import { InjectionKey } from "vue";
 import { UiTypes } from "@various/constants";
 
-export type UiFormVerifyResult = { verify: boolean; message?: string; type?: UiTypes.type };
+export type UiFormVerifyResult = { verify: boolean; message: string; type?: UiTypes.type };
 
 export interface UiFormRule {
-    trigger: "change" | "input" | "reminder";
+    trigger: "change" | "blur";
     verify: (data: { [name: string]: any }) => UiFormVerifyResult;
 }
 

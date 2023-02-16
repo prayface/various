@@ -10,5 +10,10 @@ export default (define: UiFormItemProps, status: Ref<string>) => {
                 return `ui-form-${define.direction}`;
             }
         }),
+
+        styles: computed(() => {
+            if (define.width) return { width: define.width + "px" };
+            else return {};
+        }),
     };
 };

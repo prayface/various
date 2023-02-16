@@ -1,6 +1,6 @@
 <template>
     <div class="ui-form-item" :class="className">
-        <div class="ui-form-name" v-if="label">{{ label }}</div>
+        <div class="ui-form-name" v-if="label" :style="styles">{{ label }}</div>
         <div class="ui-form-container">
             <slot />
             <Transition>
@@ -13,7 +13,7 @@
 <script lang="ts" setup>
 import { UiTypes, UiFormDataKey, UiFormEmitterKey } from "@various/constants";
 import { inject, onUnmounted, ref } from "vue";
-import { UiFormRulesKey, UiFormItemType } from "../form";
+import { UiFormRulesKey, UiFormItemType, UiFormVerifyResult } from "../form";
 import useComputeds from "./useComputeds";
 import useUtils from "./useUtils";
 
@@ -27,12 +27,14 @@ const data = inject(UiFormDataKey) || {};
 const status = ref<UiTypes.type>("info");
 
 //* 计算属性与工具函数获取
-const { className } = useComputeds(define, status);
+const { className, styles } = useComputeds(define, status);
 const { timer, content, visible, trigger, hidden, verify } = useUtils(define, rules, data, status);
 
 //* 根据prop、emitter和rule注册响应函数
 if (rules && define.prop && rules[define.prop]) {
     emitter?.on(define.prop, async (type: string) => verify(type));
+    emitter?.on(`trigger:${define.prop}`, (error: UiFormVerifyResult) => trigger(error.message, error.type || "error"));
+    emitter?.on(`reset:${define.prop}`, () => hidden());
 }
 
 //* 暴露隐藏函数与触发函数

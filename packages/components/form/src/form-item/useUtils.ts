@@ -50,7 +50,6 @@ export default (define: UiFormItemProps, rules: { [name: string]: UiFormRule[] }
         //* 5. 获取校验失败列表
         const error = result.filter((value) => !value.verify);
         //* 6. 根据是否存在校验失败选择触发提示or隐藏提示
-        console.log(error);
         if (error.length) {
             trigger(error[0].message || "", error[0].type || "error");
         } else {

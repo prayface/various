@@ -2,7 +2,7 @@ import { ExtractPropTypes, PropType } from "vue";
 import { UiTypes } from "@various/constants";
 
 export const UiButtonType = {
-    nativeType: { type: String as PropType<"button" | "submit" | "reset">, default: "submit" },
+    nativeType: { type: String as PropType<"button" | "submit" | "reset">, default: "button" },
     disabled: { type: Boolean, default: false },
     loading: { type: Boolean, default: false },
     simple: { type: Boolean, default: false },
