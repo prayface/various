@@ -1,5 +1,5 @@
+import _ from "lodash";
 import { computed } from "vue";
-import { isArray, isFunction } from "lodash";
 import { UiInputProps } from "./input";
 
 export default (define: UiInputProps) => {
@@ -18,10 +18,10 @@ export default (define: UiInputProps) => {
 
         //* 候选项
         candidates: computed(() => {
-            if (isArray(define.candidate)) return define.candidate;
-            else if (isFunction(define.candidate)) {
+            if (_.isArray(define.candidate)) return define.candidate;
+            else if (_.isFunction(define.candidate)) {
                 const result = define.candidate();
-                if (isArray(result)) {
+                if (_.isArray(result)) {
                     return result;
                 }
             }
