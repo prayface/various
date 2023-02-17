@@ -1,42 +1,34 @@
 :root {
-    // 主要颜色
-    --ui-color-1: rgb(249, 226, 255);
-    --ui-color-2: rgb(244, 202, 255);
-    --ui-color-3: rgb(227, 162, 244);
-    --ui-color-4: rgb(206, 125, 227);
-    --ui-color-5: rgb(174, 89, 196);
-    --ui-color-6: rgb(149, 61, 171);
-    --ui-color-7: rgb(117, 22, 141);
-    --ui-color-8: rgb(94, 10, 116);
-    --ui-color-9: rgb(58, 1, 85);
-    --ui-color-10: rgb(24, 0, 35);
+    // 主色
+    --ui-main-color: rgb(84, 73, 219);
+    --ui-main-color-005: rgba(84, 73, 219, 0.05); // 主色的5%透明度
+    --ui-main-active-color: rgb(83, 100, 230); // 主色的激活色
 
-    // 次级颜色
-    --uis-color-1: rgb(255, 255, 255);
-    --uis-color-2: rgb(245, 245, 245);
-    --uis-color-3: rgb(227, 227, 227);
-    --uis-color-4: rgb(199, 199, 199);
-    --uis-color-5: rgb(184, 187, 193);
-    --uis-color-6: rgb(156, 163, 175);
-    --uis-color-7: rgb(100, 110, 125);
-    --uis-color-8: rgb(70, 79, 91);
-    --uis-color-9: rgb(48, 55, 66);
+    // 辅助色
+    --uic-disabled: rgb(245, 245, 245); // 禁用色
+    --uic-auxiliary: rgb(227, 227, 227); // 常规辅助色
+    --uic-auxiliary-active: rgb(199, 199, 199); // 常规辅助激活色
+    --uic-font-1: rgb(64, 64, 64); // 标题文本色
+    --uic-font-2: rgb(132, 132, 132); // 默认文本色
+    --uic-font-3: rgb(153, 153, 153); // 降级文本色
 
     // 错误颜色
-    --ui-danger-1: rgb(207, 36, 36);
-    --ui-danger-1-005: rgb(254, 244, 244);
+    --ui-error: rgb(207, 36, 36);
+    --ui-error-005: rgb(254, 244, 244);
+    --ui-error-active: rgb(209, 62, 62); // 激活色
 
     // 成功颜色
-    --ui-success-1: rgb(0, 177, 55);
-    --ui-success-1-005: rgb(242, 251, 245);
+    --ui-success: rgb(0, 177, 55);
+    --ui-success-005: rgb(242, 251, 245);
+    --ui-success-active: rgb(19, 179, 69); // 激活色
 
     // 警告颜色
-    --ui-warning-1: rgb(255, 156, 0);
-    --ui-warning-1-005: rgb(255, 250, 242);
+    --ui-warning: rgb(255, 156, 0);
+    --ui-warning-005: rgb(255, 250, 242);
+    --ui-warning-active: rgb(250, 165, 28); // 激活色
 
     // 半透明遮罩
     --ui-mask-deep: fade(rgb(255, 255, 255), 80%);
-    --ui-mask-shallow: fade(rgb(255, 255, 255), 50%);
     // 不透明遮罩
     --ui-mask-opaque: rgb(255, 255, 255);
 
@@ -45,33 +37,34 @@
     --ui-box-border: rgba(277, 277, 277, 0.3);
 
     // 图标配置
-    --ui-icon-color: var(--uis-color-4); // 默认图标颜色
-    --ui-icon-active-color: var(--ui-color-7); // 默认图标激活颜色
+    --ui-icon-color: var(--uic-auxiliary); // 默认图标颜色
+    --ui-icon-active-color: var(--ui-main-color); // 默认图标激活颜色
 
     // 按钮组件配置
     --ui-button-size: auto; // 默认按钮最小尺寸
 
     // 滚动条组件配置
-    --ui-scrollbar-color: var(--uis-color-3); // 默认滚动条滑块颜色
-    --ui-scrollbar-active-color: var(--uis-color-4); // 默认滚动条滑块激活颜色
+    --ui-scrollbar-color: var(--uic-auxiliary); // 默认滚动条滑块颜色
+    --ui-scrollbar-active-color: var(--uic-auxiliary-active); // 默认滚动条滑块激活颜色
 
     // 表单配置
-    --ui-form-placeholder-color: var(--uis-color-4); // 默认提示文本颜色
-    --ui-form-candidate-color: var(--ui-color-1); // 候选项背景色
+    --ui-form-placeholder-color: var(--uic-auxiliary); // 默认提示文本颜色
+    --ui-form-candidate-color: var(--ui-main-color-005); // 候选项背景色
     --ui-form-message-color: var(--ui-font-color); // 默认校验提示文本颜色
-    --ui-form-color: var(--uis-color-1); // 默认表单背景颜色
+    --ui-form-color: #fff; // 默认表单背景颜色
 
     // 常规主题色配置
-    --ui-topic-color: var(--ui-color-7); // 主题色
-    --ui-subtopic-color: var(--ui-color-1); // 副主题色
+    --ui-topic-color: var(--ui-main-color); // 主题色
+    --ui-topic-active-color: var(--ui-main-active-color); // 主题激活色
+    --ui-subtopic-color: var(--ui-main-color-005); // 副主题色
 
     // 常规边框配置
-    --ui-border-color: var(--uis-color-4); // 默认边框颜色
-    --ui-border-active-color: var(--ui-color-7); // 默认边框激活颜色
+    --ui-border-color: var(--uic-auxiliary); // 默认边框颜色
+    --ui-border-active-color: var(--ui-main-color); // 默认边框激活颜色
 
     // 常规字体配置
-    --ui-font-active-color: var(--ui-color-7); // 默认文本激活颜色
-    --ui-font-color: var(--uis-color-9); // 默认文字颜色
+    --ui-font-active-color: var(--ui-main-color); // 默认文本激活颜色
+    --ui-font-color: var(--uic-font-2); // 默认文字颜色
     --ui-font-line: 22px; // 默认字体行高
     --ui-font-size: 14px; // 默认字体大小
 

@@ -4,7 +4,7 @@
     border-radius: var(--ui-radius);
     vertical-align: top;
     button {
-        color: var(--uis-color-1);
+        color: #fff;
         cursor: pointer;
         border: 1px solid var(--ui-topic-color);
         height: var(--ui-size);
@@ -17,18 +17,21 @@
         justify-content: center;
         border-radius: var(--ui-radius);
         background-color: var(--ui-topic-color);
+        &:hover {
+            background-color: var(--ui-topic-active-color);
+        }
     }
 }
 
 //* 朴素的按钮
 .ui-button.ui-button-simple {
     button {
-        background-color: var(--uis-color-1);
+        background-color: #fff;
         color: var(--ui-topic-color);
         &:hover,
         &:focus {
             background-color: var(--ui-topic-color);
-            color: var(--uis-color-1);
+            color: #fff;
         }
     }
 }

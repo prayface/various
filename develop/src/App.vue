@@ -22,8 +22,8 @@
 footer {
     width: 100%;
     height: 200px;
-    background: var(--uis-color-2);
-    border-top: 1px solid var(--uis-color-3);
+    background: var(--uic-disabled);
+    border-top: 1px solid var(--uic-auxiliary);
 }
 
 header {
@@ -37,7 +37,7 @@ header {
     background: #fff;
     font-weight: bold;
     line-height: 55px;
-    border-bottom: 1px solid var(--uis-color-3);
+    border-bottom: 1px solid var(--uic-auxiliary);
 }
 
 main {
@@ -55,17 +55,18 @@ main {
         a {
             width: 100%;
             margin: 8px 0 0;
-            border: 1px solid var(--uis-color-4);
+            border: 1px solid var(--uic-auxiliary);
             display: block;
             padding: 8px 20px;
             border-radius: 4px;
             &:hover {
-                border-color: var(--ui-color-7);
+                border-color: var(--ui-main-color);
             }
 
             &.router-link-active {
-                border-color: var(--ui-color-7);
-                background: var(--ui-color-1);
+                color: var(--ui-main-color);
+                border-color: var(--ui-main-color);
+                background: var(--ui-main-color-005);
             }
         }
     }
@@ -74,16 +75,18 @@ main {
         flex: 1;
         margin-left: 40px;
         > .title {
+            color: var(--uic-font-1);
             margin: 0 0 20px;
             font-size: 36px;
             line-height: 64px;
             font-weight: bold;
-            border-bottom: 1px solid var(--uis-color-3);
+            border-bottom: 1px solid var(--uic-font-1);
         }
 
         > * > section {
             margin-top: 60px;
             > .title {
+                color: var(--uic-font-1);
                 margin: 0 0 8px;
                 font-size: 24px;
                 line-height: 48px;
@@ -93,22 +96,22 @@ main {
             > .content {
                 margin-top: 20px;
                 padding: 30px 36px;
-                border: 1px solid var(--uis-color-3);
+                border: 1px solid var(--uic-auxiliary);
             }
 
             > .descript {
                 p {
                     line-height: 22px;
                     > span {
-                        background-color: var(--uis-color-3);
+                        background-color: var(--uic-auxiliary);
                         border-radius: 2px;
                         display: inline-block;
                         padding: 0 4px;
                         margin: 0 4px;
                         &.warn {
                             margin: 0 4px 0 0;
-                            color: var(--uis-color-1);
-                            background-color: var(--ui-danger-1);
+                            color: #fff;
+                            background-color: var(--ui-error);
                         }
                     }
                 }
@@ -119,7 +122,7 @@ main {
                 tr td,
                 tr th {
                     padding: 8px 12px;
-                    border-bottom: 1px solid var(--uis-color-3);
+                    border-bottom: 1px solid var(--uic-auxiliary);
                 }
             }
         }
