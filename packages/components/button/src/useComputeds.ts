@@ -10,7 +10,7 @@ export default (define: UiButtonProps) => {
         //* 类名
         className: computed(() => {
             //* 1. 数据初始化
-            const result = [];
+            const result: string[] = [];
             //* 2. 根据需求添加类名
             if (define.simple) result.push("ui-button-simple");
             if (define.size != "default") result.push(`ui-${define.size}`);
