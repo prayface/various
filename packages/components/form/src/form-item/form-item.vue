@@ -19,9 +19,9 @@ import useUtils from "./useUtils";
 
 //* 获取Props、emitter和rules数据
 const define = defineProps(UiFormItemType);
-const emitter = inject(UiFormEmitterKey);
-const rules = inject(UiFormRulesKey) || {};
-const data = inject(UiFormDataKey) || {};
+const emitter = define.prop ? inject(UiFormEmitterKey) : null;
+const rules = define.prop ? inject(UiFormRulesKey) || {} : {};
+const data = define.prop ? inject(UiFormDataKey) || {} : {};
 
 //* 初始化页面数据
 const status = ref<UiTypes.type>("info");

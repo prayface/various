@@ -62,9 +62,9 @@ const view = reactive({
 });
 
 // 初始化Props和Emits
-const emitter = inject(UiFormEmitterKey);
-const define = defineProps(UiInputType);
 const emits = defineEmits(UiInputEmits);
+const define = defineProps(UiInputType);
+const emitter = define.name ? inject(UiFormEmitterKey) : null;
 // 计算属性获取
 const { attrs, styles, className, candidates } = useComputeds(define);
 
@@ -72,7 +72,7 @@ const { attrs, styles, className, candidates } = useComputeds(define);
 const handles = {
     change: (ev: Event) => {
         emits("change", ev);
-        define.name && emitter?.emit(define.name, "change");
+        emitter?.emit(define.name || "", "change");
     },
     input: (ev: InputEvent | Event) => {
         const target = ev.target as HTMLInputElement;
@@ -87,7 +87,7 @@ const handles = {
     blur: (ev: FocusEvent | Event) => {
         emits("blur", ev);
         define.candidate && view.hidden();
-        define.name && emitter?.emit(define.name, "blur");
+        emitter?.emit(define.name || "", "blur");
     },
 };
 
@@ -95,7 +95,7 @@ const handles = {
 const clear = () => {
     emits("update:modelValue", "");
     emits("clear", "clear");
-    define.name && emitter?.emit(define.name, "change");
+    emitter?.emit(define.name || "", "change");
 };
 
 // 候选项选择事件
@@ -103,7 +103,7 @@ const onCandidate = (value: String, ev: Event) => {
     emits("update:modelValue", value);
     emits("change", ev);
     emits("input", ev);
-    define.name && emitter?.emit(define.name, "change");
+    emitter?.emit(define.name || "", "change");
 };
 
 // 事件暴露
