@@ -28,8 +28,8 @@ const container = ref<HTMLDivElement>();
 
 const define = defineProps(UiCarouselType);
 const styles = computed(() => {
-    if (_.isNaN(define.height)) return { height: define.height };
-    else return { height: define.height + "px" };
+    if (_.isNumber(define.height)) return { height: define.height + "px" };
+    else return { height: define.height };
 });
 
 //* 响应式变量
