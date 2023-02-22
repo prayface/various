@@ -54,7 +54,7 @@ const skip = (index: number) => {
         skipTimer = setTimeout(() => {
             skipTimer = undefined;
             skipSet(key, 1, false);
-        }, 300);
+        }, 500);
     } else if (define.loop && schedules.length > 2 && index >= schedules.length) {
         //* 触发跳转动画
         skipSet(0, schedules.length, true);
@@ -63,14 +63,14 @@ const skip = (index: number) => {
         skipTimer = setTimeout(() => {
             skipTimer = undefined;
             skipSet(0, 0, false);
-        }, 300);
+        }, 500);
     } else if (index >= 0 && index <= schedules.length) {
         active.value = index;
         container.value.style.transition = `all 0.5s ease-in-out`;
         container.value.style.transform = `translate(-${active.value * 100}%, 0)`;
         skipTimer = setTimeout(() => {
             skipTimer = undefined;
-        }, 300);
+        }, 500);
     }
 };
 
