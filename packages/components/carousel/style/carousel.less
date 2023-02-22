@@ -18,7 +18,7 @@
         border-radius: 50%;
         align-items: center;
         background: rgba(255, 255, 255, 0.3);
-        transition: all 0.3s;
+        transition: all 0.3s ease-in-out;
         transform: translate(0, -50%);
         font-size: 20px;
         position: absolute;
@@ -55,13 +55,9 @@
             height: 5px;
             margin: 0 16px;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.3s ease-in-out;
             border-radius: 9999px;
             background-color: var(--uic-font-3);
-        }
-
-        .ui-carousel-schedule:hover {
-            width: 72px;
         }
 
         .ui-carousel-schedule.active {

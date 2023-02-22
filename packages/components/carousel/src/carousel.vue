@@ -66,7 +66,7 @@ const skip = (index: number) => {
         }, 300);
     } else if (index >= 0 && index <= schedules.length) {
         active.value = index;
-        container.value.style.transition = `all 0.3s`;
+        container.value.style.transition = `all 0.5s ease-in-out`;
         container.value.style.transform = `translate(-${active.value * 100}%, 0)`;
         skipTimer = setTimeout(() => {
             skipTimer = undefined;
@@ -79,7 +79,7 @@ const skipSet = (key: number, number: number, animation: boolean) => {
     //* 判断是否向下执行
     if (!container.value || !schedules[key]) return;
     //* 是否需要添加过渡效果
-    if (animation) container.value.style.transition = "all 0.3s";
+    if (animation) container.value.style.transition = "all 0.5s ease-in-out";
     else container.value.style.transition = "none";
     //* 触发样式变更
     schedules[key].style.transform = `translate(${number * 100}%, 0)`;

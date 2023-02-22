@@ -51,10 +51,8 @@ const mouseenter = () => {
 const mouseleave = () => {
     //* 判断是否向下执行
     if (!container.value || !content.value || !main.value) return;
-    //* 判断是否达到无缝滚动条件
-    if (content.value.offsetWidth > main.value.offsetWidth) {
-        frame = window.requestAnimationFrame(animation);
-    }
+    //* 无缝滚动
+    frame = window.requestAnimationFrame(animation);
 };
 
 onMounted(() => mouseleave());
