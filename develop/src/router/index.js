@@ -8,6 +8,7 @@ export const routes = [
     { path: "/message", name: "Message", component: () => import("../views/Message.vue") },
     { path: "/tooltip", name: "Tooltip", component: () => import("../views/Tooltip.vue") },
     { path: "/scrollbar", name: "Scrollbar", component: () => import("../views/Scrollbar.vue") },
+    { path: "/carousel", name: "Carousel", component: () => import("../views/Carousel.vue") },
 ];
 
 export default createRouter({

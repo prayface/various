@@ -8,6 +8,7 @@ declare module "@vue/runtime-core" {
         UiScrollbar: typeof import("various-ui")["UiScrollbar"];
         UiForm: typeof import("various-ui")["UiForm"];
         UiInput: typeof import("various-ui")["UiInput"];
+        UiCarousel: typeof import("various-ui")["UiCarousel"];
         VLoading: typeof import("various-ui")["VLoading"];
         $loading: typeof import("various-ui")["$loading"];
         $message: typeof import("various-ui")["$message"];

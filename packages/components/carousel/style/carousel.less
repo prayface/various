@@ -1,0 +1,85 @@
+.ui-carousel {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    > .ui-carousel-container {
+        height: 100%;
+        position: relative;
+        > * {
+            inset: 0 0 0 0;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+        }
+    }
+
+    > .ui-carousel-control {
+        justify-content: center;
+        border-radius: 50%;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.3);
+        transition: all 0.3s;
+        transform: translate(0, -50%);
+        font-size: 20px;
+        position: absolute;
+        display: flex;
+        opacity: 0;
+        border: 1px solid #000;
+        cursor: pointer;
+        height: 48px;
+        color: #000;
+        width: 48px;
+        &.ui-carousel-left-control {
+            inset: 50% auto auto 0;
+            .ui-icon {
+                transform: rotate(90deg);
+            }
+        }
+
+        &.ui-carousel-right-control {
+            inset: 50% 0 auto auto;
+            .ui-icon {
+                transform: rotate(-90deg);
+            }
+        }
+    }
+
+    > .ui-carousel-schedules {
+        align-items: center;
+        transform: translateX(-50%);
+        position: absolute;
+        display: flex;
+        inset: auto auto 20px 50%;
+        .ui-carousel-schedule {
+            width: 4px;
+            height: 5px;
+            margin: 0 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-radius: 9999px;
+            background-color: var(--uic-font-3);
+        }
+
+        .ui-carousel-schedule:hover {
+            width: 72px;
+        }
+
+        .ui-carousel-schedule.active {
+            width: 72px;
+            background-color: var(--ui-main-color);
+        }
+    }
+}
+
+.ui-carousel:hover {
+    > .ui-carousel-control {
+        opacity: 1;
+        &.ui-carousel-left-control {
+            transform: translate(100%, -50%);
+        }
+
+        &.ui-carousel-right-control {
+            transform: translate(-100%, -50%);
+        }
+    }
+}
