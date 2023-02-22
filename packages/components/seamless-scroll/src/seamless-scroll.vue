@@ -1,5 +1,5 @@
 <template>
-    <div class="ui-seamless-scroll" :style="styles" ref="main">
+    <div class="ui-seamless-scroll" :style="styles" ref="main" @mouseenter="mouseenter" @mouseleave="mouseleave">
         <div class="ui-seamless-scroll-container" ref="container">
             <div class="ui-seamless-scroll-content" ref="content">
                 <slot />
@@ -44,15 +44,20 @@ const animation = () => {
     frame = window.requestAnimationFrame(animation);
 };
 
-onMounted(() => {
+const mouseenter = () => {
+    frame && window.cancelAnimationFrame(frame);
+};
+
+const mouseleave = () => {
     //* 判断是否向下执行
     if (!container.value || !content.value || !main.value) return;
     //* 判断是否达到无缝滚动条件
     if (content.value.offsetWidth > main.value.offsetWidth) {
         frame = window.requestAnimationFrame(animation);
     }
-});
+};
 
+onMounted(() => mouseleave());
 onUnmounted(() => {
     frame && window.cancelAnimationFrame(frame);
 });
