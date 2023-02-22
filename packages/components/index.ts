@@ -6,3 +6,4 @@ export * from "./scrollbar";
 export * from "./form";
 export * from "./input";
 export * from "./carousel";
+export * from "./seamless-scroll";

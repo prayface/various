@@ -9,6 +9,7 @@ export const routes = [
     { path: "/tooltip", name: "Tooltip", component: () => import("../views/Tooltip.vue") },
     { path: "/scrollbar", name: "Scrollbar", component: () => import("../views/Scrollbar.vue") },
     { path: "/carousel", name: "Carousel", component: () => import("../views/Carousel.vue") },
+    { path: "/seamless-scroll", name: "SeamlessScroll", component: () => import("../views/SeamlessScroll.vue") },
 ];
 
 export default createRouter({
