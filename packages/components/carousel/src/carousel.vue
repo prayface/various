@@ -12,7 +12,9 @@
         </div>
 
         <div class="ui-carousel-schedules">
-            <div class="ui-carousel-schedule" v-for="(schedule, index) in schedules" :key="index" :class="{ active: index == active }" @click="skip(index)"></div>
+            <template v-for="(schedule, index) in schedules" :key="index">
+                <div class="ui-carousel-schedule" :class="{ active: index == active }" @click="skip(index)"></div>
+            </template>
         </div>
     </div>
 </template>
@@ -48,12 +50,12 @@ const skip = (index: number) => {
         //* 当前激活的Key初始化
         const key = schedules.length - 1;
         //* 触发跳转动画
-        skipSet(key, 1, true);
+        skipSet(key, -1, true);
         //* 变量值初始化
         active.value = key;
         skipTimer = setTimeout(() => {
             skipTimer = undefined;
-            skipSet(key, 1, false);
+            skipSet(key, key, false);
         }, 500);
     } else if (define.loop && schedules.length > 2 && index >= schedules.length) {
         //* 触发跳转动画
@@ -83,7 +85,7 @@ const skipSet = (key: number, number: number, animation: boolean) => {
     else container.value.style.transition = "none";
     //* 触发样式变更
     schedules[key].style.transform = `translate(${number * 100}%, 0)`;
-    container.value.style.transform = `translate(-${number * 100}%, 0)`;
+    container.value.style.transform = `translate(${number * -100}%, 0)`;
 };
 
 //* 鼠标移入停止自动播放
