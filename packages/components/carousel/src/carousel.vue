@@ -50,22 +50,14 @@ const skip = (index: number) => {
         //* 当前激活的Key初始化
         const key = schedules.length - 1;
         //* 触发跳转动画
-        skipSet(key, -1, true);
+        skipSet(key, -1);
         //* 变量值初始化
         active.value = key;
-        skipTimer = setTimeout(() => {
-            skipTimer = undefined;
-            skipSet(key, key, false);
-        }, 500);
     } else if (define.loop && schedules.length > 2 && index >= schedules.length) {
         //* 触发跳转动画
-        skipSet(0, schedules.length, true);
+        skipSet(0, schedules.length);
         //* 变量值设置
         active.value = 0;
-        skipTimer = setTimeout(() => {
-            skipTimer = undefined;
-            skipSet(0, 0, false);
-        }, 500);
     } else if (index >= 0 && index <= schedules.length) {
         active.value = index;
         container.value.style.transition = `all 0.5s ease-in-out`;
@@ -77,15 +69,32 @@ const skip = (index: number) => {
 };
 
 //* 跳转样式设置
-const skipSet = (key: number, number: number, animation: boolean) => {
+const skipSet = (key: number, number: number) => {
     //* 判断是否向下执行
     if (!container.value || !schedules[key]) return;
-    //* 是否需要添加过渡效果
-    if (animation) container.value.style.transition = "all 0.5s ease-in-out";
-    else container.value.style.transition = "none";
-    //* 触发样式变更
-    schedules[key].style.transform = `translate(${number * 100}%, 0)`;
+    //* 克隆节点
+    const dom = schedules[key].cloneNode(true) as HTMLElement;
+    //* 设置克隆节点的样式
+    dom.style.transform = `translate(${number * 100}%, 0)`;
+    //* 将节点添加入DOM容器中
+    container.value.appendChild(dom);
+    //* 添加过渡效果
+    container.value.style.transition = "all 0.5s ease-in-out";
+    //* 添加样式触发过渡效果
     container.value.style.transform = `translate(${number * -100}%, 0)`;
+    //* 过渡结束移出克隆节点
+    skipTimer = setTimeout(() => {
+        //* 释放定时器内存
+        skipTimer = undefined;
+        //* 判断是否可向下执行
+        if (!container.value) return;
+        //* 取消过渡样式
+        container.value.style.transition = "none";
+        //* 回归正确位置
+        container.value.style.transform = `translate(${key * -100}%, 0)`;
+        //* 移出克隆节点
+        container.value.removeChild(dom);
+    }, 500);
 };
 
 //* 鼠标移入停止自动播放
