@@ -14,7 +14,7 @@ const init = (el: EL, config: any) => {
 
     //* 检测是否需要添加Position
     if (el.style.position == "") {
-        el.style.position = "relative";
+        el.classList.add("ui-relative");
     }
 
     //* 缓存Loading并将Loading插入Dom中
