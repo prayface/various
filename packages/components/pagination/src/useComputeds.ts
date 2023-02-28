@@ -19,7 +19,7 @@ export default (define: UiPaginationProps) => {
     //* 分页控制器
     const controls = computed(() => {
         //* 初始化数据
-        const result = [];
+        const result: { type: "item" | "skip"; value: number; active: boolean }[] = [];
         //* 1. 当分页总数小于等于9时, 展示全部
         if (total.value <= 9) {
             for (let i = 1; i <= total.value; i++) {
@@ -33,14 +33,14 @@ export default (define: UiPaginationProps) => {
                 }
 
                 //* 2.2. 补充剩余控制器
-                result.push({ type: "skip", value: 1 });
+                result.push({ type: "skip", value: 1, active: false });
                 result.push({ type: "item", value: total.value - 1, active: total.value - 1 == define.modelValue });
                 result.push({ type: "item", value: total.value, active: total.value == define.modelValue });
             } else if (define.modelValue >= total.value - 3) {
                 //* 3.1. 补充前置控制器
                 result.push({ type: "item", value: 1, active: 1 == define.modelValue });
                 result.push({ type: "item", value: 2, active: 2 == define.modelValue });
-                result.push({ type: "skip", value: -1 });
+                result.push({ type: "skip", value: -1, active: false });
 
                 //* 3.2. 当前分页大于等于最后4页时, 展示total - 5 ~ total分页
                 for (let i = total.value - 5; i <= total.value; i++) {
@@ -50,7 +50,7 @@ export default (define: UiPaginationProps) => {
                 //* 4.1. 补充前置控制器
                 result.push({ type: "item", value: 1, active: 1 == define.modelValue });
                 result.push({ type: "item", value: 2, active: 2 == define.modelValue });
-                result.push({ type: "skip", value: 1 });
+                result.push({ type: "skip", value: 1, active: false });
 
                 //* 4.2. 当前分页前后的控制器
                 for (let i = define.modelValue - 1; i <= define.modelValue + 1; i++) {
@@ -58,7 +58,7 @@ export default (define: UiPaginationProps) => {
                 }
 
                 //* 4.3. 补充剩余控制器
-                result.push({ type: "skip", value: -1 });
+                result.push({ type: "skip", value: -1, active: false });
                 result.push({ type: "item", value: total.value - 1, active: total.value - 1 == define.modelValue });
                 result.push({ type: "item", value: total.value, active: total.value == define.modelValue });
             }
