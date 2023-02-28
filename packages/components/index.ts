@@ -7,3 +7,4 @@ export * from "./form";
 export * from "./input";
 export * from "./carousel";
 export * from "./seamless-scroll";
+export * from "./pagination";

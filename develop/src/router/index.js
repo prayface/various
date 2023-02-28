@@ -10,6 +10,7 @@ export const routes = [
     { path: "/scrollbar", name: "Scrollbar", component: () => import("../views/Scrollbar.vue") },
     { path: "/carousel", name: "Carousel", component: () => import("../views/Carousel.vue") },
     { path: "/seamless-scroll", name: "SeamlessScroll", component: () => import("../views/SeamlessScroll.vue") },
+    { path: "/pagination", name: "Pagination", component: () => import("../views/Pagination.vue") },
 ];
 
 export default createRouter({
