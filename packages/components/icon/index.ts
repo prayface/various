@@ -3,6 +3,6 @@ import { register } from "@various/utils";
 
 Icon.name = "UiIcon";
 
-export const UiIcon = register.use(Icon, "component");
+export const UiIcon = register.use(Icon, "component") as InstanceType<typeof Icon>;
 export * from "./src/icon";
 export default UiIcon;

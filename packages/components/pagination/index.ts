@@ -3,6 +3,6 @@ import Pagination from "./src/pagination.vue";
 
 Pagination.name = "UiPagination";
 
-export const UiPagination = register.use(Pagination, "component");
+export const UiPagination = register.use(Pagination, "component") as InstanceType<typeof Pagination>;
 export * from "./src/pagination";
 export default UiPagination;

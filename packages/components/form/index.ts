@@ -5,7 +5,7 @@ import { register } from "@various/utils";
 Form.name = "UiForm";
 FormItem.name = "UiFormItem";
 
-export const UiForm = register.use(Form, "component");
-export const UiFormItem = register.use(FormItem, "component");
+export const UiForm = register.use(Form, "component") as InstanceType<typeof Form>;
+export const UiFormItem = register.use(FormItem, "component") as InstanceType<typeof FormItem>;
 export * from "./src/form";
 export default UiForm;
