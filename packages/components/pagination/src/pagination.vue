@@ -1,6 +1,6 @@
 <template>
     <div class="ui-pagination" v-if="total">
-        <div class="ui-pagination-items">{{ info }}</div>
+        <div class="ui-pagination-items" v-if="items">{{ info }}</div>
         <div class="ui-pagination-controls">
             <!-- 前进控制器 -->
             <div class="ui-pagination-control" @click="handover(modelValue - 1)">

@@ -3,6 +3,6 @@ import { register } from "@various/utils";
 
 Carousel.name = "UiCarousel";
 
-export const UiCarousel = register.use(Carousel, "component") as InstanceType<typeof Carousel>;
+export const UiCarousel = register.use(Carousel, "component") as typeof Carousel;
 export * from "./src/carousel";
 export default UiCarousel;
