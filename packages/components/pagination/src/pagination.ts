@@ -12,5 +12,5 @@ export type UiPaginationProps = ExtractPropTypes<typeof UiPaginationType>;
 
 export const UiPaginationEmits = {
     "update:modelValue": (key: number) => key,
-    change: (key: number) => key,
+    change: (key?: number) => key,
 };

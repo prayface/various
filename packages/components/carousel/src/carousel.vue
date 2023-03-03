@@ -12,7 +12,7 @@
         </div>
 
         <div class="ui-carousel-schedules">
-            <template v-for="(schedule, index) in schedules" :key="index">
+            <template v-for="(, index) in schedules" :key="index">
                 <div class="ui-carousel-schedule" :class="{ active: index == active }" @click="skip(index)"></div>
             </template>
         </div>

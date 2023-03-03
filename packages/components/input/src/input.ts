@@ -20,10 +20,10 @@ export type UiInputProps = ExtractPropTypes<typeof UiInputType>;
 
 export const UiInputEmits = {
     "update:modelValue": (ev: any) => ev,
-    change: (ev: Event) => ev,
-    clear: (ev: any) => ev,
-    input: (ev: InputEvent | Event) => ev,
-    click: (ev: PointerEvent | Event) => ev,
-    focus: (ev: FocusEvent | Event) => ev,
-    blur: (ev: FocusEvent | Event) => ev,
+    change: (ev?: Event) => ev,
+    clear: (ev?: any) => ev,
+    input: (ev?: InputEvent | Event) => ev,
+    click: (ev?: PointerEvent | Event) => ev,
+    focus: (ev?: FocusEvent | Event) => ev,
+    blur: (ev?: FocusEvent | Event) => ev,
 };
