@@ -1,5 +1,5 @@
 <template>
-    <div class="ui-carousel" :style="styles" ref="main" @mouseenter="mouseenter" @mouseleave="mouseleave">
+    <div class="ui-carousel" :style="styles" ref="main">
         <div class="ui-carousel-container" ref="container">
             <slot />
         </div>
@@ -97,20 +97,20 @@ const skipSet = (key: number, number: number) => {
     }, 500);
 };
 
-//* 鼠标移入停止自动播放
-const mouseenter = () => {
-    timer && clearInterval(timer);
-};
+// //* 鼠标移入停止自动播放
+// const mouseenter = () => {
+//     timer && clearInterval(timer);
+// };
 
-//* 鼠标移出开始自动播放
-const mouseleave = () => {
-    timer && clearInterval(timer);
-    if (define.autoplay) {
-        timer = setInterval(() => {
-            skip(active.value + 1);
-        }, define.delay);
-    }
-};
+// //* 鼠标移出开始自动播放
+// const mouseleave = () => {
+//     timer && clearInterval(timer);
+//     if (define.autoplay) {
+//         timer = setInterval(() => {
+//             skip(active.value + 1);
+//         }, define.delay);
+//     }
+// };
 
 //* 侦听器
 const stop = watch(
