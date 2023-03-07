@@ -1,7 +1,7 @@
 <template>
     <div class="ui-carousel" :style="styles" ref="main">
         <div class="ui-carousel-container" ref="container">
-            <slot />
+            <slot></slot>
         </div>
 
         <div class="ui-carousel-control ui-carousel-left-control" @click="skip(active - 1)">
@@ -12,8 +12,8 @@
         </div>
 
         <div class="ui-carousel-schedules">
-            <template v-for="(, index) in schedules" :key="index">
-                <div class="ui-carousel-schedule" :class="{ active: index == active }" @click="skip(index)"></div>
+            <template v-for="(schedule, index) in schedules" :key="index">
+                <div class="ui-carousel-schedule" :class="{ active: index == active }" @click="skip(index, schedule)"></div>
             </template>
         </div>
     </div>
@@ -42,7 +42,7 @@ let timer: NodeJS.Timer | undefined = undefined;
 let skipTimer: NodeJS.Timer | undefined = undefined;
 
 //* 跳转函数
-const skip = (index: number) => {
+const skip = (index: number, data?: any) => {
     //* 判断是否向下执行
     if (index == active.value || !container.value || skipTimer) return;
     //* 边界值处理
@@ -144,5 +144,11 @@ onMounted(() => {
 onUnmounted(() => {
     stop && stop();
     timer && clearInterval(timer);
+});
+
+defineExpose({
+    skip: skip,
+    next: skip(active.value + 1),
+    back: skip(active.value - 1),
 });
 </script>
