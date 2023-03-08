@@ -148,7 +148,7 @@ onUnmounted(() => {
 
 defineExpose({
     skip: skip,
-    next: skip(active.value + 1),
-    back: skip(active.value - 1),
+    next: () => skip(active.value + 1),
+    back: () => skip(active.value - 1),
 });
 </script>
