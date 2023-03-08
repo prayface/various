@@ -11,6 +11,7 @@ export const routes = [
     { path: "/carousel", name: "Carousel", component: () => import("../views/Carousel.vue") },
     { path: "/seamless-scroll", name: "SeamlessScroll", component: () => import("../views/SeamlessScroll.vue") },
     { path: "/pagination", name: "Pagination", component: () => import("../views/Pagination.vue") },
+    { path: "/textarea", name: "Textarea", component: () => import("../views/Textarea.vue") },
 ];
 
 export default createRouter({

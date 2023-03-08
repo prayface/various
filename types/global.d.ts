@@ -11,6 +11,7 @@ declare module "@vue/runtime-core" {
         UiCarousel: typeof import("various-ui")["UiCarousel"];
         UiSeamlessScroll: typeof import("various-ui")["UiSeamlessScroll"];
         UiPagination: typeof import("various-ui")["UiPagination"];
+        UiTextarea: typeof import("various-ui")["UiTextarea"];
         VLoading: typeof import("various-ui")["VLoading"];
         $loading: typeof import("various-ui")["$loading"];
         $message: typeof import("various-ui")["$message"];
