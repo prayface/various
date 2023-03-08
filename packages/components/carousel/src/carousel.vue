@@ -97,6 +97,10 @@ const skipSet = (key: number, number: number) => {
     }, 500);
 };
 
+// 前进
+const next = () => skip(active.value + 1);
+const back = () => skip(active.value - 1);
+
 // //* 鼠标移入停止自动播放
 // const mouseenter = () => {
 //     timer && clearInterval(timer);
@@ -146,9 +150,5 @@ onUnmounted(() => {
     timer && clearInterval(timer);
 });
 
-defineExpose({
-    skip: skip,
-    next: () => skip(active.value + 1),
-    back: () => skip(active.value - 1),
-});
+defineExpose({ skip: skip, next: next, back: back });
 </script>
