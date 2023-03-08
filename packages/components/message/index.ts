@@ -11,7 +11,7 @@ const UiMessage = (option: UiMessageOption, callBack: Function | undefined) => {
     app.mount(container);
     //* 3. 为容器添加css样式
     container.style.left = "50%";
-    container.style.position = "absolute";
+    container.style.position = "fixed";
     container.style.transform = `translateX(-50%)`;
     container.style.transition = "all 0.4s";
     //* 4. 将容器添加到#ui-messages中
