@@ -58,7 +58,7 @@ const skip = (index: number, data?: any) => {
         skipSet(0, schedules.length);
         //* 变量值设置
         active.value = 0;
-    } else if (index >= 0 && index <= schedules.length) {
+    } else if (index >= 0 && index < schedules.length) {
         active.value = index;
         container.value.style.transition = `all 0.5s ease-in-out`;
         container.value.style.transform = `translate(-${active.value * 100}%, 0)`;
