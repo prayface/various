@@ -73,6 +73,7 @@ main {
 
     article {
         flex: 1;
+        width: 0;
         margin-left: 40px;
         > .title {
             color: var(--uic-font-1);

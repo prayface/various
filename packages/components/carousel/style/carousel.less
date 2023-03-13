@@ -1,15 +1,21 @@
 .ui-carousel {
-    width: 100%;
     overflow: hidden;
     position: relative;
     > .ui-carousel-container {
-        height: 100%;
         position: relative;
-        > * {
-            inset: 0 0 0 0;
-            width: 100%;
-            height: 100%;
+
+        .ui-carousel-auxiliary {
             position: absolute;
+        }
+
+        .ui-carousel-header-auxiliary {
+            inset: 0 auto auto 0;
+            transform: translate3d(-100%, 0, 0);
+        }
+
+        .ui-carousel-footer-auxiliary {
+            inset: 0 0 auto auto;
+            transform: translate3d(100%, 0, 0);
         }
     }
 
@@ -63,6 +69,19 @@
         .ui-carousel-schedule.active {
             width: 72px;
             background-color: var(--ui-main-color);
+        }
+    }
+}
+
+.ui-carousel.ui-default-carousel {
+    .ui-carousel-container {
+        width: 100%;
+        height: 100%;
+        > * {
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            position: absolute;
         }
     }
 }
