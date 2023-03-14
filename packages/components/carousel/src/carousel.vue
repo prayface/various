@@ -31,7 +31,7 @@ export default defineComponent({
         expose({
             skip: (number: number) => component.value?.skip(number),
             next: () => component.value?.next(),
-            back: () => component.value?.back,
+            back: () => component.value?.back(),
         });
 
         return { attrs, module };
