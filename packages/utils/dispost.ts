@@ -4,7 +4,54 @@ interface BoundaryAlignConfig {
     inner: number;
 }
 
-const dispost = {
+const dispostBoundaryAlign = (align: string, container: number, main: number, config: BoundaryAlignConfig) => {
+    const diff = container - main;
+    switch (align) {
+        case "center": {
+            const offsetX = config.offset - diff / 2;
+            if (offsetX + container > config.inner && config.offset - diff > config.scroll) {
+                return config.offset - diff;
+            } else if (offsetX < config.scroll && config.offset + container < config.inner) {
+                return config.offset;
+            } else {
+                return offsetX;
+            }
+        }
+
+        case "bottom": {
+            const offsetX = config.offset - diff;
+            if (offsetX < config.scroll && config.offset + container < config.inner) {
+                return config.offset;
+            } else {
+                return offsetX;
+            }
+        }
+
+        default: {
+            if (config.offset + container > config.inner && config.offset - diff > config.scroll) {
+                return config.offset - diff;
+            } else {
+                return config.offset;
+            }
+        }
+    }
+};
+
+const dispostTriangleAlign = (size: number, align: string) => {
+    switch (align) {
+        case "top": {
+            return "8px";
+        }
+        case "center": {
+            return `${size / 2 - 4}px`;
+        }
+        case "bottom": {
+            return `${size - 16}px`;
+        }
+    }
+};
+
+export default {
     //? 相对于当前容器的边界算法
     elementToContainerBoundary: (main: DOMRect, container: DOMRect, option: { direction: string; align: string }) => {
         const innerWidth = window.innerWidth + window.scrollX;
@@ -140,52 +187,3 @@ const dispost = {
         return Object.assign(result, { toJSON: () => result });
     },
 };
-
-const dispostBoundaryAlign = (align: string, container: number, main: number, config: BoundaryAlignConfig) => {
-    const diff = container - main;
-    switch (align) {
-        case "center": {
-            const offsetX = config.offset - diff / 2;
-            if (offsetX + container > config.inner && config.offset - diff > config.scroll) {
-                return config.offset - diff;
-            } else if (offsetX < config.scroll && config.offset + container < config.inner) {
-                return config.offset;
-            } else {
-                return offsetX;
-            }
-        }
-
-        case "bottom": {
-            const offsetX = config.offset - diff;
-            if (offsetX < config.scroll && config.offset + container < config.inner) {
-                return config.offset;
-            } else {
-                return offsetX;
-            }
-        }
-
-        default: {
-            if (config.offset + container > config.inner && config.offset - diff > config.scroll) {
-                return config.offset - diff;
-            } else {
-                return config.offset;
-            }
-        }
-    }
-};
-
-const dispostTriangleAlign = (size: number, align: string) => {
-    switch (align) {
-        case "top": {
-            return "8px";
-        }
-        case "center": {
-            return `${size / 2 - 4}px`;
-        }
-        case "bottom": {
-            return `${size - 16}px`;
-        }
-    }
-};
-
-export default dispost;

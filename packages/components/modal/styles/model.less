@@ -1,0 +1,45 @@
+.ui-modal {
+    inset: 0;
+    z-index: 66;
+    display: flex;
+    position: fixed;
+    background-color: var(--ui-mask-deep);
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s;
+    > .ui-modal-container {
+        position: relative;
+        box-shadow: var(--ui-box-shadow);
+        border-radius: var(--ui-radius);
+        background-color: #fff;
+        > .ui-modal-header {
+            line-height: 40px;
+            font-weight: bold;
+            font-size: 32px;
+            position: relative;
+            margin: 0 0 28px;
+        }
+
+        > .ui-modal-close {
+            transition: all 0.3s;
+            font-size: 48px;
+            position: absolute;
+            cursor: pointer;
+            right: 20px;
+            top: 20px;
+            &:hover {
+                color: var(--ui-main-color);
+            }
+        }
+    }
+}
+
+.ui-modal.v-enter-from,
+.ui-modal.v-leave-to {
+    opacity: 0;
+}
+
+.ui-modal.v-enter-to,
+.ui-modal.v-leave-from {
+    opacity: 1;
+}
