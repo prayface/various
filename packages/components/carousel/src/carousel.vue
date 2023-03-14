@@ -1,5 +1,5 @@
 <template>
-    <component :is="module" v-bind="attrs" ref="component">
+    <component :is="module" v-bind="attrs" ref="main">
         <slot></slot>
     </component>
 </template>
@@ -17,7 +17,7 @@ export default defineComponent({
     },
     props: UiCarouselPropsOption,
     setup(define, { expose }) {
-        const component = ref<InstanceType<typeof defaultVue> | InstanceType<typeof multipleViewVue>>();
+        const main = ref<InstanceType<typeof defaultVue> | InstanceType<typeof multipleViewVue>>();
         const attrs = computed(() => define);
         const module = computed(() => {
             switch (define.mode) {
@@ -29,12 +29,12 @@ export default defineComponent({
         });
 
         expose({
-            skip: (number: number) => component.value?.skip(number),
-            next: () => component.value?.next(),
-            back: () => component.value?.back(),
+            skip: (number: number) => main.value?.skip(number),
+            next: () => main.value?.next(),
+            back: () => main.value?.back(),
         });
 
-        return { attrs, module };
+        return { main, attrs, module };
     },
 });
 </script>

@@ -19,9 +19,13 @@
             <div class="title">基本用法</div>
             <div class="descript">
                 <p>每一个页面的内容是完全可定制的，把你想要展示的内容放在<span>默认插槽</span>内。</p>
+                <p>
+                    <UiButton @click="next">next</UiButton>
+                    <UiButton @click="back">back</UiButton>
+                </p>
             </div>
             <div class="content">
-                <UiCarousel :height="200" mode="multiple-view" style="margin: 0 -32px">
+                <UiCarousel :height="200" mode="multiple-view" style="margin: 0 -32px" ref="carousel">
                     <div style="background-color: aquamarine; width: 500px; margin: 0 32px">1</div>
                     <div style="background-color: bisque; width: 500px; margin: 0 32px">2</div>
                     <div style="background-color: brown; width: 500px; margin: 0 32px">3</div>
@@ -34,3 +38,17 @@
         </section>
     </div>
 </template>
+
+<script setup>
+import { ref } from "vue";
+
+const carousel = ref();
+
+const next = () => {
+    carousel.value.next();
+};
+
+const back = () => {
+    carousel.value.back();
+};
+</script>
