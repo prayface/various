@@ -47,9 +47,13 @@ export default class Composable {
                 emitter?.emit(define.name || "", "blur");
             },
             wheel: (ev: WheelEvent) => {
-                const node = ev.target as HTMLTextAreaElement;
-                node.scrollTo({ top: node.scrollTop + ev.deltaY });
-                this.refs.offset = this.control.value.scrollTop * this.refs.ratio;
+                if (!this.main.value || !this.control.value) return;
+                if (this.control.value.scrollHeight > this.main.value.clientHeight) {
+                    const node = ev.target as HTMLTextAreaElement;
+                    node.scrollTo({ top: node.scrollTop + ev.deltaY });
+                    this.refs.offset = this.control.value.scrollTop * this.refs.ratio;
+                    ev.preventDefault();
+                }
             },
         };
     }
