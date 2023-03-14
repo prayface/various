@@ -1,5 +1,6 @@
 .ui-textarea {
-    textarea {
+    position: relative;
+    > .ui-form-control {
         color: var(--ui-font-color);
         margin: 0;
         resize: none;
@@ -9,5 +10,22 @@
         padding: 16px var(--ui-spacing);
         overflow: hidden;
         line-height: var(--ui-font-line);
+    }
+
+    > .ui-textarea-scroll {
+        position: absolute;
+        top: 1px;
+        right: 1px;
+        width: 6px;
+        height: 100%;
+        .ui-textarea-scroll-bar {
+            width: 100%;
+            cursor: pointer;
+            background: var(--ui-scrollbar-color);
+            border-radius: 9999px;
+            &:hover {
+                background: var(--ui-scrollbar-active-color);
+            }
+        }
     }
 }

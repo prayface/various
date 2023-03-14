@@ -13,5 +13,5 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 
-const value = ref("");
+const value = ref("asd基本用法as从顶部出现, 3秒后自动消失。基本用法as, 3秒后自动消失。基本用法as从顶部出现,");
 </script>
