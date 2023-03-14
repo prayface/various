@@ -34,7 +34,7 @@ export default defineComponent({
     emits: UiModalEmits,
     props: UiModalPropsOption,
     components: { UiIcon },
-    setup(define, { emit }) {
+    setup(define, { emit, expose }) {
         // 响应式变量
         const container = ref<HTMLDivElement>();
         const refs = reactive<Refs>({
@@ -44,7 +44,7 @@ export default defineComponent({
         // 实例化工具类
         const composable = new Composable(refs);
         // 获取处理函数
-        const mthods = composable.useMethods(define, emit);
+        const methods = composable.useMethods(define, emit);
         // 获取计算属性
         const computeds = composable.useComputeds(define);
 
@@ -53,9 +53,12 @@ export default defineComponent({
             node.append("ui-windows", container.value);
         });
 
+        // 导出公共方法
+        expose({ ...methods });
+
         return {
             container,
-            ...mthods,
+            ...methods,
             ...computeds,
             ...toRefs(refs),
         };
