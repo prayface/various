@@ -20,7 +20,7 @@
 import UiIcon from "@various/components/icon";
 import composable from "../composable";
 import { ref, onMounted, onBeforeUnmount } from "vue";
-import { UiCarouselType } from "../carousel";
+import { UiCarouselPropsOption } from "../carousel";
 
 // DOM响应式变量声明
 const main = ref<HTMLDivElement>();
@@ -33,7 +33,7 @@ const skipTimer = ref<NodeJS.Timer>();
 const autoTimer = ref<NodeJS.Timer>();
 
 // 获取Props配置
-const define = defineProps(UiCarouselType);
+const define = defineProps(UiCarouselPropsOption);
 
 // 静态变量计算
 const delay = define.transitionDelay / 1000;

@@ -1,6 +1,6 @@
 import { ExtractPropTypes, PropType } from "vue";
 
-export const UiCarouselType = {
+export const UiCarouselPropsOption = {
     mode: { type: String as PropType<"default" | "multiple-view">, default: "default" }, // 轮播图的模式
     arrow: { type: String as PropType<"always" | "hover" | "never">, default: "hover" }, // 切换箭头显示时期
 
@@ -16,7 +16,7 @@ export const UiCarouselType = {
     pagination: { type: Boolean, default: true }, // 是否开启分页器
 } as const;
 
-export type UiCarouselProps = ExtractPropTypes<typeof UiCarouselType>;
+export type UiCarouselProps = ExtractPropTypes<typeof UiCarouselPropsOption>;
 export const UiCarouselEmits = {
     change: (ev?: any) => ev,
 };
