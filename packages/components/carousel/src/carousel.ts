@@ -1,7 +1,7 @@
 import { ExtractPropTypes, PropType } from "vue";
 
 export const UiCarouselType = {
-    mode: { type: String as PropType<"default">, default: "default" }, // 轮播图的模式
+    mode: { type: String as PropType<"default" | "multiple-view">, default: "default" }, // 轮播图的模式
     arrow: { type: String as PropType<"always" | "hover" | "never">, default: "hover" }, // 切换箭头显示时期
 
     delay: { type: Number, default: 3000 }, // 自动切换的间隔
