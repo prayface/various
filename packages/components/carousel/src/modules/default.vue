@@ -61,7 +61,7 @@ const init = () => {
         //* 获取node节点
         const node = container.value.children[i] as HTMLElement;
         //* 设置node的偏移
-        node.style.transform = `translate3d(${config.size}px, 0, 0)`;
+        node.style.transform = `translate3d(${100 * i}px, 0, 0)`;
         //* 偏移量计算
         config.size += node.clientWidth;
         //* 缓存node节点
