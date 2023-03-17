@@ -75,7 +75,7 @@ const init = () => {
         if (nodeHeader && nodeFooter) {
             //* 样式调整
             nodeHeader.style.transform = "translate3d(-100%, 0, 0)";
-            nodeFooter.style.transform = `translate3d(${config.size}px, 0, 0)`;
+            nodeFooter.style.transform = `translate3d(${container.value.children.length * 100}%, 0, 0)`;
             //* 插入node
             container.value.insertBefore(nodeHeader, childrens.value[0]);
             container.value.appendChild(nodeFooter);
