@@ -66,6 +66,10 @@ const init = () => {
         config.size += node.clientWidth;
         //* 缓存node节点
         childrens.value.push(node);
+        //* 调高第一张轮播的层级
+        if (i == 0) {
+            node.style.zIndex = "1";
+        }
     }
 
     //* 无限滚动的辅助内容生成
