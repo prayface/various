@@ -1,19 +1,31 @@
 import { UiModalProps, UiModalEmits } from "./modal";
-import { computed } from "vue";
+import { computed, ComputedRef } from "vue";
 import { UiEmitFn } from "@various/constants";
 import _ from "lodash";
 
-export type Refs = {
+export type UiModalConstructorRefs = {
     open: Boolean;
 };
 
 export default class {
-    refs: Refs;
-    constructor(refs: Refs) {
+    refs: UiModalConstructorRefs;
+
+    methods: {
+        openModal: () => void;
+        closeModal: () => void;
+    };
+
+    computeds: {
+        style: ComputedRef<{ [name: string]: any }>;
+    };
+
+    constructor(refs: UiModalConstructorRefs, define: UiModalProps, emit: UiEmitFn<typeof UiModalEmits>) {
         this.refs = refs;
+        this.methods = this.#useMethods(emit);
+        this.computeds = this.#useComputeds(define);
     }
 
-    useComputeds(define: UiModalProps) {
+    #useComputeds(define: UiModalProps) {
         return {
             //? 样式
             style: computed(() => {
@@ -31,16 +43,16 @@ export default class {
         };
     }
 
-    useMethods(define: UiModalProps, emits: UiEmitFn<typeof UiModalEmits>) {
+    #useMethods(emit: UiEmitFn<typeof UiModalEmits>) {
         return {
             openModal: () => {
                 this.refs.open = true;
-                emits("open");
+                emit("open");
             },
 
             closeModal: () => {
                 this.refs.open = false;
-                emits("close");
+                emit("close");
             },
         };
     }

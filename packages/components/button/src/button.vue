@@ -1,15 +1,6 @@
 <template>
-    <a class="ui-button" v-loading="disabled" :target="target" :class="className" :href="href" v-if="href">
-        <button :type="nativeType" :style="styles" :disabled="disabled" @click="!disabled && emit('click', $event)">
-            <!-- 按钮图标 -->
-            <UiIcon :name="icon" v-if="icon" />
-            <!-- 内容插槽 -->
-            <slot></slot>
-        </button>
-    </a>
-
-    <div class="ui-button" v-loading="disabled" :class="className" v-else>
-        <button :type="nativeType" :style="styles" :disabled="disabled" @click="!disabled && emit('click', $event)">
+    <div class="ui-button" v-loading="disabled" :class="className">
+        <button :type="nativeType" :style="style" :disabled="disabled" @click="!disabled && $emit('click', $event)">
             <!-- 按钮图标 -->
             <UiIcon :name="icon" v-if="icon" />
             <!-- 内容插槽 -->
@@ -18,13 +9,26 @@
     </div>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts">
+import { defineComponent } from "vue";
+import { UiButtonPropsOption, UiButtonEmits } from "./button";
+
+import Composable from "./composable";
 import UiIcon from "@various/components/icon";
-import useComputeds from "./useComputeds";
-import { UiButtonType, UiButtonEmits } from "./button";
+import VLoading from "@various/directives/loading";
 
-const emit = defineEmits(UiButtonEmits);
-const define = defineProps(UiButtonType);
-
-const { styles, disabled, className } = useComputeds(define);
+export default defineComponent({
+    name: "UiButton",
+    emits: UiButtonEmits,
+    props: UiButtonPropsOption,
+    directives: { VLoading },
+    components: { UiIcon },
+    setup(define) {
+        //* 实例化组合函数
+        const composable = new Composable(define);
+        return {
+            ...composable.computeds,
+        };
+    },
+});
 </script>

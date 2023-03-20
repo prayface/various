@@ -3,8 +3,8 @@ import App from "./App.vue";
 
 import router from "./router";
 
+import "virtual:svg-icons-register";
 import "@various/styles/index.less";
-import "@various/icons/iconfont.js";
 import VariousUI from "@various";
 
 const app = createApp(App);

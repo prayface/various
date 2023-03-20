@@ -1,15 +1,15 @@
 <template>
-    <div class="ui-input" v-loading="loading" :class="className" :style="styles" ref="main">
+    <div class="ui-input" v-loading="loading" :class="className" :style="style" ref="main">
         <!-- Input主体 -->
         <input class="ui-form-control" v-bind="attrs" v-on="handles" />
         <!-- 清空按钮 -->
         <UiIcon name="error" class="ui-input-clearable" v-if="clearable && modelValue" @click="clear" />
         <!-- 候选项 -->
         <Transition>
-            <div class="ui-form-candidates" v-if="view.visible" ref="container">
+            <div class="ui-form-candidates" v-if="visible" ref="container">
                 <div class="ui-form-candidates-triangle" ref="triangle"></div>
                 <div class="ui-form-candidate-container">
-                    <div class="ui-form-candidate" v-for="(value, index) in candidates" :key="index" :class="{ 'ui-active': value.value == modelValue }" @mousedown="onCandidate(value.value, $event)">
+                    <div class="ui-form-candidate" v-for="(value, index) in candidates" :key="index" :class="{ 'ui-active': value.value == modelValue }" @mousedown="cutCandidate(value.value, $event)">
                         {{ value.label }}
                     </div>
                 </div>
@@ -18,94 +18,43 @@
     </div>
 </template>
 
-<script lang="ts" setup>
-import UiIcon from "@various/components/icon";
-import useComputeds from "./useComputeds";
+<script lang="ts">
+import { defineComponent, reactive, inject, toRefs } from "vue";
+import { UiInputPropsOption, UiInputEmits } from "./input";
 import { UiFormEmitterKey } from "@various/constants";
-import { node, dispost } from "@various/utils";
-import { ref, reactive, toRefs, nextTick, inject } from "vue";
-import { UiInputType, UiInputEmits } from "./input";
+import Composable, { UiInputConstructorRefs } from "./composable";
+import VLoading from "@various/directives/loading";
 
-// node
-const main = ref<HTMLElement | undefined>();
-const triangle = ref<HTMLElement | undefined>();
-const container = ref<HTMLElement | undefined>();
+export default defineComponent({
+    name: "UiInput",
+    emits: UiInputEmits,
+    props: UiInputPropsOption,
+    directives: { VLoading },
+    setup(define, { emit, expose }) {
+        //* 初始化mitt
+        const emitter = define.name ? inject(UiFormEmitterKey) : undefined;
 
-// 候选项视图控制器
-const view = reactive({
-    visible: false,
-    show: () => {
-        view.visible = true;
-        nextTick(() => {
-            if (!main.value || !container.value) return;
-            // 将content添加到视图容器中
-            node.append("ui-windows", container.value);
-            // 根据配置计算当前窗口位置
-            const rect = dispost.elementToContainerBoundary(dispost.elementToBodyRect(main.value), dispost.elementToBodyRect(container.value), {
-                direction: "bottom",
-                align: "top",
-            });
-            // 将窗口位置添加入窗口中
-            if (rect) {
-                container.value.style.inset = `${rect.offsetY}px auto auto ${rect.offsetX}px`;
-                container.value.style.transform = rect.transform;
-                if (rect.triangle && triangle.value) {
-                    triangle.value.style.inset = rect.triangle;
-                    triangle.value.style.transform = `rotate(${rect.rotate})`;
-                }
-            }
+        //* 初始化响应式变量
+        const refs = reactive<UiInputConstructorRefs>({
+            main: undefined,
+            visible: false,
+            triangle: undefined,
+            container: undefined,
         });
-    },
-    hidden: () => {
-        view.visible = false;
+
+        //* 实例化组合函数
+        const composable = new Composable(refs, define, emit, emitter);
+
+        //* 暴露公共方法
+        expose({ show: composable.methods.show, hidden: composable.methods.hidden, clear: composable.methods.clear });
+
+        return {
+            clear: composable.methods.clear,
+            handles: composable.handles,
+            cutCandidate: composable.methods.cutCandidate,
+            ...composable.computeds,
+            ...toRefs(refs),
+        };
     },
 });
-
-// 初始化Props和Emits
-const emits = defineEmits(UiInputEmits);
-const define = defineProps(UiInputType);
-const emitter = define.name ? inject(UiFormEmitterKey) : null;
-// 计算属性获取
-const { attrs, styles, className, candidates } = useComputeds(define);
-
-// 批量事件声明
-const handles = {
-    change: (ev: Event) => {
-        emits("change", ev);
-        emitter?.emit(define.name || "", "change");
-    },
-    input: (ev: InputEvent | Event) => {
-        const target = ev.target as HTMLInputElement;
-        emits("update:modelValue", target.value);
-        emits("input", ev as InputEvent);
-    },
-    click: (ev: PointerEvent | Event) => emits("click", ev),
-    focus: (ev: FocusEvent | Event) => {
-        emits("focus", ev);
-        define.candidate && view.show();
-    },
-    blur: (ev: FocusEvent | Event) => {
-        emits("blur", ev);
-        define.candidate && view.hidden();
-        emitter?.emit(define.name || "", "blur");
-    },
-};
-
-// 清空事件
-const clear = () => {
-    emits("update:modelValue", "");
-    emits("clear", "clear");
-    emitter?.emit(define.name || "", "change");
-};
-
-// 候选项选择事件
-const onCandidate = (value: String, ev: Event) => {
-    emits("update:modelValue", value);
-    emits("change", ev);
-    emits("input", ev);
-    emitter?.emit(define.name || "", "change");
-};
-
-// 事件暴露
-defineExpose({ ...toRefs(view), clear });
 </script>

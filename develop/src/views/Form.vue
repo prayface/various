@@ -8,11 +8,11 @@
             </div>
             <div class="content">
                 <UiForm :rules="rules" :data="data" ref="form">
-                    <UiFormItem prop="name" label="名称" width="40">
+                    <UiFormItem prop="name" label="名称" :width="40">
                         <UiInput v-model="data.name" name="name" :loading="loading1" />
                     </UiFormItem>
 
-                    <UiFormItem prop="age" label="年龄" width="40">
+                    <UiFormItem prop="age" label="年龄" :width="40">
                         <UiInput v-model="data.age" name="age" />
                     </UiFormItem>
 
@@ -35,7 +35,7 @@
             </div>
             <div class="content">
                 <UiForm :rules="{}" :data="data">
-                    <UiFormItem label="名称" width="40" ref="item">
+                    <UiFormItem label="名称" :width="40" ref="item">
                         <UiInput v-model="data.name" :loading="loading1" />
                     </UiFormItem>
 
@@ -57,11 +57,11 @@
             </div>
             <div class="content">
                 <UiForm :rules="{}" :data="data">
-                    <UiFormItem label="名称" width="40" direction="row">
+                    <UiFormItem label="名称" :width="40" direction="row">
                         <UiInput v-model="data.name" :loading="loading1" />
                     </UiFormItem>
 
-                    <UiFormItem label="名称" width="40" direction="column">
+                    <UiFormItem label="名称" :width="40" direction="column">
                         <UiInput v-model="data.name" :loading="loading1" />
                     </UiFormItem>
                 </UiForm>
@@ -147,7 +147,6 @@
 
 <script setup>
 import { ref, reactive } from "vue";
-import { UiFormItem } from "@various";
 
 const form = ref(null);
 const item = ref(null);

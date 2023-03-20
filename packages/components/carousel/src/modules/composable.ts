@@ -1,9 +1,17 @@
 import _ from "lodash";
-import { computed } from "vue";
-import { UiCarouselProps } from "./carousel";
+import { computed, ComputedRef } from "vue";
+import { UiCarouselProps } from "../carousel";
 
 export default class {
-    static useComputeds(define: UiCarouselProps) {
+    computeds: {
+        style: ComputedRef<{ [name: string]: any }>;
+    };
+
+    constructor(define: UiCarouselProps) {
+        this.computeds = this.#useComputeds(define);
+    }
+
+    #useComputeds(define: UiCarouselProps) {
         return {
             style: computed(() => {
                 const result: { [name: string]: any } = {};

@@ -25,7 +25,7 @@
 <script lang="ts">
 import { defineComponent, reactive, toRefs, ref, onMounted } from "vue";
 import { UiModalPropsOption, UiModalEmits } from "./modal";
-import Composable, { Refs } from "./composable";
+import Composable, { UiModalConstructorRefs } from "./composable";
 import { node } from "@various/utils";
 import UiIcon from "@various/components/icon";
 
@@ -37,16 +37,12 @@ export default defineComponent({
     setup(define, { emit, expose }) {
         // 响应式变量
         const container = ref<HTMLDivElement>();
-        const refs = reactive<Refs>({
+        const refs = reactive<UiModalConstructorRefs>({
             open: false,
         });
 
         // 实例化工具类
-        const composable = new Composable(refs);
-        // 获取处理函数
-        const methods = composable.useMethods(define, emit);
-        // 获取计算属性
-        const computeds = composable.useComputeds(define);
+        const composable = new Composable(refs, define, emit);
 
         onMounted(() => {
             if (!container.value) return;
@@ -54,12 +50,12 @@ export default defineComponent({
         });
 
         // 导出公共方法
-        expose({ ...methods });
+        expose({ ...composable.methods });
 
         return {
             container,
-            ...methods,
-            ...computeds,
+            ...composable.methods,
+            ...composable.computeds,
             ...toRefs(refs),
         };
     },

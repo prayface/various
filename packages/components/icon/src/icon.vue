@@ -1,14 +1,23 @@
 <template>
-    <svg class="ui-icon" aria-hidden="true" @click="emits('click', $event)">
-        <use :xlink:href="IconName"></use>
+    <svg class="ui-icon" aria-hidden="true" @click="$emit('click', $event)">
+        <use :xlink:href="name"></use>
     </svg>
 </template>
 
-<script lang="ts" setup>
-import { computed } from "vue";
-import { UiIconType, UiIconEmits } from "./icon";
+<script lang="ts">
+import { computed, defineComponent } from "vue";
+import { UiIconEmits, UiIconPropsOption } from "./icon";
 
-const emits = defineEmits(UiIconEmits);
-const define = defineProps(UiIconType);
-const IconName = computed(() => `#icon-${define.name}`);
+export default defineComponent({
+    name: "UiIcon",
+    emits: UiIconEmits,
+    props: UiIconPropsOption,
+    setup(define) {
+        const name = computed(() => {
+            return `#icon-${define.name}`;
+        });
+
+        return { name };
+    },
+});
 </script>

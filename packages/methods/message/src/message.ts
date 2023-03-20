@@ -1,7 +1,7 @@
 import { PropType, ExtractPropTypes } from "vue";
 import { UiTypes } from "@various/constants";
 
-export const UiMessageType = {
+export const UiMessagePropsOption = {
     message: { type: String, required: true },
     type: { type: String as PropType<UiTypes.type>, default: "info" },
     icon: { type: String },
@@ -9,7 +9,7 @@ export const UiMessageType = {
     offset: { type: Number, default: 20 },
 } as const;
 
-export type UiMessageProps = ExtractPropTypes<typeof UiMessageType>;
+export type UiMessageProps = ExtractPropTypes<typeof UiMessagePropsOption>;
 export type UiMessageOption = {
     message: string;
     offset?: number;

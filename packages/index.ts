@@ -1,6 +1,7 @@
 import { App } from "vue";
 import { register } from "./utils";
 
+export * from "./methods";
 export * from "./components";
 export * from "./directives";
 

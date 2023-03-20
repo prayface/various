@@ -1,7 +1,7 @@
 import { PropType, ExtractPropTypes } from "vue";
 import { UiTypes } from "@various/constants";
 
-export const UiInputType = {
+export const UiInputPropsOption = {
     autocomplete: { type: String, values: ["off", "on"], default: "off" },
     placeholder: { type: String, default: "Please input" } /**提示文本 */,
     modelValue: { type: [String, Number] as PropType<string | number>, required: true },
@@ -16,7 +16,7 @@ export const UiInputType = {
     name: { type: String },
 } as const;
 
-export type UiInputProps = ExtractPropTypes<typeof UiInputType>;
+export type UiInputProps = ExtractPropTypes<typeof UiInputPropsOption>;
 
 export const UiInputEmits = {
     "update:modelValue": (ev: any) => ev,

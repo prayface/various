@@ -18,7 +18,7 @@
 
 <script lang="ts" setup>
 import UiIcon from "@various/components/icon";
-import composable from "../composable";
+import Composable from "./composable";
 import { ref, onMounted, onBeforeUnmount } from "vue";
 import { UiCarouselPropsOption } from "../carousel";
 
@@ -39,8 +39,11 @@ const define = defineProps(UiCarouselPropsOption);
 const delay = define.transitionDelay / 1000;
 const delayUp = define.transitionDelay * 1.1;
 
+// 实例化组合类
+const composable = new Composable(define);
+
 // 计算数据获取
-const { style } = composable.useComputeds(define);
+const { style } = composable.computeds;
 
 // 初始化函数
 const init = () => {
@@ -100,6 +103,6 @@ onBeforeUnmount(() => {
     autoTimer && clearInterval(autoTimer.value);
 });
 
-// 函数到处
+// 函数导出
 defineExpose({ skip, next, back });
 </script>

@@ -8,12 +8,24 @@ export namespace UiTypes {
     export type align = "top" | "center" | "bottom";
     export type direction = "top" | "left" | "right" | "bottom";
     export type candidate = { label: any; value: any };
+    export type verifyResult = {
+        verify: boolean;
+        message: string;
+        type?: UiTypes.type;
+    };
+    export type verifyRule = {
+        trigger: "change" | "blur";
+        verify: (data: { [name: string]: any }) => verifyResult;
+    };
 }
 
 // 表单触发器Key
 export const UiFormEmitterKey: InjectionKey<Emitter<any>> = Symbol("UiFormEmitterKey");
 // 表单数据Key
 export const UiFormDataKey: InjectionKey<{ [name: string]: any }> = Symbol("UiFormDataKey");
+// 表单校验规则Key
+export const UiFormRulesKey: InjectionKey<{ [name: string]: UiTypes.verifyRule[] }> = Symbol("UiFormRulesKey");
+
 // Emit获取器
 export type UiEmitFn<Options = EmitsOptions, Event extends keyof Options = keyof Options> = Options extends Array<infer V>
     ? (event: V, ...args: any[]) => void

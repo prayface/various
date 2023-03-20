@@ -11,11 +11,9 @@ import defaultVue from "./modules/default.vue";
 import multipleViewVue from "./modules/multiple-view.vue";
 
 export default defineComponent({
-    components: {
-        defaultVue,
-        multipleViewVue,
-    },
+    name: "UiCarousel",
     props: UiCarouselPropsOption,
+    components: { defaultVue, multipleViewVue },
     setup(define, { expose }) {
         const main = ref<InstanceType<typeof defaultVue> | InstanceType<typeof multipleViewVue>>();
         const attrs = computed(() => define);
@@ -28,11 +26,13 @@ export default defineComponent({
             }
         });
 
-        expose({
-            skip: (number: number) => main.value?.skip(number),
-            next: () => main.value?.next(),
-            back: () => main.value?.back(),
-        });
+        // 公共方法声明
+        const skip = (number: number) => main.value?.skip(number);
+        const next = () => main.value?.next();
+        const back = () => main.value?.back();
+
+        // 公共方法导出
+        expose({ skip, next, back });
 
         return { main, attrs, module };
     },

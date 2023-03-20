@@ -56,3 +56,5 @@ export const $loading = {
         }
     },
 };
+
+export default VLoading;

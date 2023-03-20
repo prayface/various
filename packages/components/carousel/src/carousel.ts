@@ -17,6 +17,7 @@ export const UiCarouselPropsOption = {
 } as const;
 
 export type UiCarouselProps = ExtractPropTypes<typeof UiCarouselPropsOption>;
+
 export const UiCarouselEmits = {
     change: (ev?: any) => ev,
 };

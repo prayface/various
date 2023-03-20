@@ -3,7 +3,7 @@ import { UiMessageOption } from "./src/message";
 import { createApp } from "vue";
 import { node } from "@various/utils";
 
-const UiMessage = (option: UiMessageOption, callBack: Function | undefined) => {
+const UiMessage = (option: UiMessageOption, callBack?: Function) => {
     //* 1. 创建Vue实例和包裹容器
     const app = createApp(Message, option);
     const container = document.createElement("div");
@@ -46,19 +46,19 @@ const reset = (offset: number) => {
     }
 };
 
-UiMessage.success = (message: string, callBack: Function | undefined) => {
+UiMessage.success = (message: string, callBack?: Function) => {
     return UiMessage({ icon: "success", type: "success", message: message }, callBack);
 };
 
-UiMessage.warning = (message: string, callBack: Function | undefined) => {
+UiMessage.warning = (message: string, callBack?: Function) => {
     return UiMessage({ icon: "warning", type: "warning", message: message }, callBack);
 };
 
-UiMessage.error = (message: string, callBack: Function | undefined) => {
+UiMessage.error = (message: string, callBack?: Function) => {
     return UiMessage({ icon: "error", type: "error", message: message }, callBack);
 };
 
-UiMessage.info = (message: string, callBack: Function | undefined) => {
+UiMessage.info = (message: string, callBack?: Function) => {
     return UiMessage({ type: "info", message: message }, callBack);
 };
 
