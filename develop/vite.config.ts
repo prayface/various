@@ -5,6 +5,9 @@ import { defineConfig } from "vite";
 
 export default () => {
     return defineConfig({
+        server: {
+            host: "0.0.0.0",
+        },
         plugins: [
             VuePlugin(),
             createSvgIconsPlugin({

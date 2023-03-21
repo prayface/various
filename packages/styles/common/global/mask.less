@@ -1,0 +1,29 @@
+//* 遮罩层样式
+.ui-mask {
+    background-color: var(--ui-mask-color);
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s;
+    position: absolute;
+    z-index: 6666;
+    display: flex;
+    color: var(--ui-font-color);
+    inset: 0 0 0 0;
+    .ui-mask-icon {
+        animation: uiRotateAnimation 1s linear infinite;
+    }
+
+    .ui-mask-context {
+        margin-top: 4px;
+    }
+}
+
+.ui-mask.v-enter-from,
+.ui-mask.v-leave-to {
+    opacity: 0;
+}
+
+.ui-mask.v-enter-to,
+.ui-mask.v-leave-from {
+    opacity: 1;
+}

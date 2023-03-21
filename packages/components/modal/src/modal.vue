@@ -25,8 +25,8 @@
 <script lang="ts">
 import { defineComponent, reactive, toRefs, ref, onMounted } from "vue";
 import { UiModalPropsOption, UiModalEmits } from "./modal";
-import Composable, { UiModalConstructorRefs } from "./composable";
 import { node } from "@various/utils";
+import Composable, { UiModalConstructorRefs } from "./composable";
 import UiIcon from "@various/components/icon";
 
 export default defineComponent({
@@ -46,7 +46,7 @@ export default defineComponent({
 
         onMounted(() => {
             if (!container.value) return;
-            node.append("ui-windows", container.value);
+            node.append("ui-modals", container.value);
         });
 
         // 导出公共方法

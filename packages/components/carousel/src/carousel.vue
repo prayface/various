@@ -15,7 +15,7 @@ export default defineComponent({
     props: UiCarouselPropsOption,
     components: { defaultVue, multipleViewVue },
     setup(define, { expose }) {
-        const main = ref<InstanceType<typeof defaultVue> | InstanceType<typeof multipleViewVue>>();
+        const main = ref<InstanceType<typeof defaultVue | typeof multipleViewVue>>();
         const attrs = computed(() => define);
         const module = computed(() => {
             switch (define.mode) {
@@ -26,13 +26,12 @@ export default defineComponent({
             }
         });
 
-        // 公共方法声明
-        const skip = (number: number) => main.value?.skip(number);
-        const next = () => main.value?.next();
-        const back = () => main.value?.back();
-
         // 公共方法导出
-        expose({ skip, next, back });
+        expose({
+            cutCarousel: (number: number) => main.value?.cutCarousel(number),
+            triggerNext: () => main.value?.triggerNext(),
+            triggerBack: () => main.value?.triggerBack(),
+        });
 
         return { main, attrs, module };
     },

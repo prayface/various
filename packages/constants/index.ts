@@ -6,12 +6,13 @@ export namespace UiTypes {
     export type size = "default" | "middle" | "large" | "small";
     export type type = "success" | "warning" | "info" | "error";
     export type align = "top" | "center" | "bottom";
+    export type loading = boolean | { is: boolean; context?: string };
     export type direction = "top" | "left" | "right" | "bottom";
     export type candidate = { label: any; value: any };
     export type verifyResult = {
+        type?: UiTypes.type;
         verify: boolean;
         message: string;
-        type?: UiTypes.type;
     };
     export type verifyRule = {
         trigger: "change" | "blur";

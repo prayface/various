@@ -12,9 +12,17 @@ module.exports = (function () {
     //* 常量引入
     const { OUTPUT, PACKAGES } = require("../constants.ts");
 
+    //* 待打包的less目录列表
+    const resource = [
+        resolve(PACKAGES, "styles/*.less"),
+        resolve(PACKAGES, "methods/**/style/*.less"),
+        resolve(PACKAGES, "directives/**/style/*.less"),
+        resolve(PACKAGES, "components/**/style/*.less"),
+    ];
+
     //! Less编译, Css兼容和压缩处理
     const styles = () => {
-        return Gulp.src([resolve(PACKAGES, "styles/*.less"), resolve(PACKAGES, "components/**/style/*.less")], { allowEmpty: true })
+        return Gulp.src(resource, { allowEmpty: true })
             .pipe(GulpLess(DartLess))
             .pipe(Autoprefixer({ cascade: false }))
             .pipe(

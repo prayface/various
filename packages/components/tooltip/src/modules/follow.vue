@@ -95,6 +95,8 @@ export default defineComponent({
             timer.value && clearTimeout(timer.value);
             refs.container && node.remove("ui-windows", refs.container);
         });
+
+        
         return {
             ...composable.computeds,
             hanlders: hanlders,

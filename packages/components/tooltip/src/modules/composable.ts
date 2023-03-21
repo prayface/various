@@ -2,9 +2,9 @@ import { UiTooltipProps,UiTooltipViewType } from "../tooltip";
 import { computed, ComputedRef } from "vue";
 
 export type UiTooltipConstructorRefs = {
-    main: HTMLElement | undefined;
-    triangle: HTMLElement | undefined;
-    container: HTMLElement | undefined;
+    main?: HTMLElement;
+    triangle?: HTMLElement;
+    container?: HTMLElement;
 };
 
 export default class {

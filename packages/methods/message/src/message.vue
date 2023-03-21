@@ -10,10 +10,12 @@
 <script lang="ts">
 import { defineComponent, computed } from "vue";
 import { UiMessagePropsOption } from "./message";
+import UiIcon from "@various/components/icon";
 
 export default defineComponent({
     name: "UiMessage",
     props: UiMessagePropsOption,
+    components: { UiIcon },
     setup(define) {
         return {
             className: computed(() => `ui-${define.type}-type`),

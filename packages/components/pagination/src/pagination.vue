@@ -3,21 +3,21 @@
         <div class="ui-pagination-items" v-if="items">{{ info }}</div>
         <div class="ui-pagination-controls">
             <!-- 前进控制器 -->
-            <div class="ui-pagination-control" @click="skip(modelValue - 1)">
+            <div class="ui-pagination-control" @click="cutNumber(modelValue - 1)">
                 <UiIcon name="arrow" class="ui-pagination-next" />
             </div>
 
-            <template v-for="(control, index) in controls" :key="index">
+            <template v-for="control in controls" :key="control.type + control.value">
                 <!-- 跳跃控制器 -->
-                <div v-if="control.type == 'skip'" class="ui-pagination-control" @click="skip(modelValue + skip * control.value)">...</div>
+                <div v-if="control.type == 'skip'" class="ui-pagination-control" @click="cutNumber(modelValue + skip * control.value)">...</div>
                 <!-- 选择控制器 -->
-                <div v-else class="ui-pagination-control" :class="{ 'ui-active': control.active }" @click="skip(control.value)">
+                <div v-else class="ui-pagination-control" :class="{ 'ui-active': control.active }" @click="cutNumber(control.value)">
                     {{ control.value }}
                 </div>
             </template>
 
             <!-- 后退控制器 -->
-            <div class="ui-pagination-control" @click="skip(modelValue + 1)">
+            <div class="ui-pagination-control" @click="cutNumber(modelValue + 1)">
                 <UiIcon name="arrow" class="ui-pagination-back" />
             </div>
         </div>
@@ -40,7 +40,7 @@ export default defineComponent({
         const composable = new Composable(define, emit);
 
         //* 导出公共方法
-        expose({ skip: composable.methods.skip });
+        expose({ ...composable.methods });
 
         return {
             ...composable.computeds,

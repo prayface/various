@@ -1,9 +1,9 @@
 import { App } from "vue";
 import { register } from "./utils";
 
-export * from "./methods";
-export * from "./components";
 export * from "./directives";
+export * from "./components";
+export * from "./methods";
 
 //! import引入Various时, 通过use全局引入
 export default {

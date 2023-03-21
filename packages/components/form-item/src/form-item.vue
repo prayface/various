@@ -41,7 +41,7 @@ export default defineComponent({
 
         //* 根据prop、emitter和rule注册响应函数
         if (rules && define.prop && rules[define.prop]) {
-            emitter?.on(define.prop, async (type: string) => methods.verify(type));
+            emitter?.on(define.prop, async (type: string) => methods.validator(type));
             emitter?.on(`trigger:${define.prop}`, (error: UiTypes.verifyResult) => methods.trigger(error.message, error.type || "error"));
             emitter?.on(`reset:${define.prop}`, () => methods.hidden());
         }

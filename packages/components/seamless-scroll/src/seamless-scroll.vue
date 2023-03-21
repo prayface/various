@@ -12,7 +12,6 @@
 </template>
 
 <script lang="ts" >
-import _ from "lodash";
 import { defineComponent,  reactive, onMounted, onUnmounted } from "vue";
 import { UiSeamlessScrollPropsOption } from "./seamless-scroll";
 import Composable, { UiSeamlessScrollConstructorRefs } from "./composable";
@@ -20,14 +19,14 @@ export default defineComponent({
     name: "UiSeamlessScroll",
     props: UiSeamlessScrollPropsOption,
     setup(define, { expose }) {
-        console.log(typeof(window.cancelAnimationFrame));
+
         //* 初始化响应式变量
         const refs = reactive<UiSeamlessScrollConstructorRefs>({
             main: undefined,
             content: undefined,
             container: undefined,
             offset: 0,
-            frame: null,
+            frame: undefined,
         });
 
         //* 实例化组合函数
@@ -38,9 +37,6 @@ export default defineComponent({
         onUnmounted(() => {
             composable.refs.frame && window.cancelAnimationFrame(composable.refs.frame);
         });
-
-        //* 公共方法导出
-        expose({ ...composable.methods });
 
         return {
             ...composable.computeds,

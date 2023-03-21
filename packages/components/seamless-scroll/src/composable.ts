@@ -3,11 +3,11 @@ import { UiSeamlessScrollProps } from "./seamless-scroll";
 import { computed, ComputedRef } from "vue";
 
 export type UiSeamlessScrollConstructorRefs = {
-    main: HTMLDivElement | undefined;
-    content: HTMLDivElement | undefined;
-    container: HTMLDivElement | undefined;
+    main?: HTMLDivElement;
+    content?: HTMLDivElement;
+    container?: HTMLDivElement;
     offset: number,
-    frame: Function,
+    frame?: number,
 };
 
 export default class {
