@@ -21,6 +21,8 @@ export default class {
 
     methods: {
         init: () => void;
+        triggerNext: () => void;
+        triggerBack: () => void;
         cutCarousel: (number: number, data?: any) => void;
     };
 
