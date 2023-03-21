@@ -9,7 +9,6 @@ export const UiButtonPropsOption = {
     width: { type: Number },
     type: { type: String as PropType<UiTypes.type>, default: "info" },
     size: { type: String as PropType<UiTypes.size>, default: "default" },
-    icon: { type: String },
 } as const;
 
 export type UiButtonProps = ExtractPropTypes<typeof UiButtonPropsOption>;

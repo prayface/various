@@ -1,0 +1,35 @@
+//* 窗口容器
+#ui-windows {
+    inset: 0 auto auto 0;
+    width: 100%;
+    z-index: 66;
+    position: absolute;
+}
+
+//* 模态框容器
+#ui-modals {
+    inset: 0 auto auto 0;
+    width: 100%;
+    z-index: 666;
+    position: absolute;
+}
+
+//* 消息提示容器
+#ui-messages {
+    inset: 0 auto auto 0;
+    width: 100%;
+    z-index: 6666;
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+}
+
+// 定位样式
+.ui-relative {
+    position: relative;
+}
+
+@import "./form.less";
+@import "./mask.less";
+@import "./disabled.less";
+@import "./readonly.less";

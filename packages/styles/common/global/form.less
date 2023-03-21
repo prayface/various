@@ -1,51 +1,3 @@
-//* 窗口容器样式
-#ui-windows,
-#ui-messages {
-    inset: 0 auto auto 0;
-    width: 100%;
-    position: absolute;
-}
-
-#ui-messages {
-    z-index: 6666;
-    display: flex;
-    flex-direction: column;
-}
-
-//* 遮罩层样式
-.ui-mask {
-    background-color: var(--ui-mask-deep);
-    justify-content: center;
-    align-items: center;
-    transition: all 0.2s;
-    font-size: 48px;
-    position: absolute;
-    z-index: 6666;
-    display: flex;
-    height: 100%;
-    width: 100%;
-    color: var(--ui-font-color);
-    left: 0;
-    top: 0;
-    &.v-enter-from,
-    &.v-leave-to {
-        opacity: 0;
-    }
-
-    &.v-enter-to,
-    &.v-leave-from {
-        opacity: 1;
-    }
-
-    &.ui-global-mask {
-        position: fixed;
-    }
-
-    .ui-mask-icon {
-        animation: rotate 1s linear infinite;
-    }
-}
-
 // 表单控制层样式
 .ui-form-control {
     background-color: var(--ui-form-color);
@@ -122,27 +74,6 @@
             &:first-child {
                 border-radius: var(--ui-radius) var(--ui-radius) 0 0;
             }
-        }
-    }
-}
-
-// 定位样式
-.ui-relative {
-    position: relative;
-}
-
-// 禁用样式
-.ui-disabled-status {
-    .ui-form-control {
-        cursor: not-allowed;
-    }
-}
-
-// 只读样式
-.ui-readonly-status {
-    .ui-form-control {
-        &:focus::placeholder {
-            color: var(--ui-form-placeholder-color);
         }
     }
 }

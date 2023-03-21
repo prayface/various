@@ -1,5 +1,5 @@
 <template>
-    <div class="ui-input" v-loading="loading" :class="className" :style="style" ref="main">
+    <div class="ui-input" :class="className" :style="style" ref="main">
         <!-- Input主体 -->
         <input class="ui-form-control" v-bind="attrs" v-on="handles" />
         <!-- 清空按钮 -->
@@ -15,6 +15,12 @@
                 </div>
             </div>
         </Transition>
+        <!-- 遮罩层 -->
+        <Transition>
+            <div class="ui-mask ui-loading" v-if="['disabled', 'readonly', 'loading'].includes(status.name)">
+                <UiIcon name="loading" class="ui-mask-icon" v-show="status.is" />
+            </div>
+        </Transition>
     </div>
 </template>
 
@@ -23,13 +29,13 @@ import { defineComponent, reactive, inject, toRefs } from "vue";
 import { UiInputPropsOption, UiInputEmits } from "./input";
 import { UiFormEmitterKey } from "@various/constants";
 import Composable, { UiInputConstructorRefs } from "./composable";
-import VLoading from "@various/directives/loading";
+import UiIcon from "@various/components/icon";
 
 export default defineComponent({
     name: "UiInput",
     emits: UiInputEmits,
     props: UiInputPropsOption,
-    directives: { VLoading },
+    components: { UiIcon },
     setup(define, { emit, expose }) {
         //* 初始化mitt
         const emitter = define.name ? inject(UiFormEmitterKey) : undefined;

@@ -33,6 +33,7 @@ export default class {
     computeds: {
         style: ComputedRef<{ width?: string }>;
         attrs: ComputedRef<{ [name: string]: any }>;
+        status: ComputedRef<{ is: boolean; name: string }>;
         className: ComputedRef<string>;
         candidates: ComputedRef<UiTypes.candidate[]>;
     };
@@ -97,53 +98,73 @@ export default class {
     }
 
     #useComputeds(define: UiInputProps) {
-        return {
-            //? 标签响应式属性
-            attrs: computed(() => {
-                //* 过滤define
-                return {
-                    type: define.type,
-                    value: define.modelValue,
-                    disabled: define.disabled,
-                    readonly: define.readonly,
-                    placeholder: define.placeholder,
-                    autocomplete: define.autocomplete,
-                };
-            }),
+        //? 组件状态
+        const status = computed(() => {
+            if (define.loading) {
+                return { is: true, name: "loading" };
+            } else if (define.disabled) {
+                return { is: false, name: "disabled" };
+            } else if (define.readonly) {
+                return { is: false, name: "readonly" };
+            } else {
+                return { is: false, name: "default" };
+            }
+        });
 
-            //? 候选项
-            candidates: computed(() => {
-                if (_.isArray(define.candidate)) return define.candidate;
-                else if (_.isFunction(define.candidate)) {
-                    const result = define.candidate();
-                    if (_.isArray(result)) {
-                        return result;
-                    }
+        //? 标签响应式属性
+        const attrs = computed(() => {
+            //* 过滤define
+            return {
+                type: define.type,
+                value: define.modelValue,
+                disabled: ["disabled", "loading"].includes(status.value.name),
+                readonly: status.value.name == "readonly",
+                placeholder: define.placeholder,
+                autocomplete: define.autocomplete,
+            };
+        });
+
+        //? 样式
+        const style = computed(() => {
+            if (define.width) return { width: define.width + "px" };
+            else return {};
+        });
+
+        //? 候选项
+        const candidates = computed(() => {
+            if (_.isArray(define.candidate)) return define.candidate;
+            else if (_.isFunction(define.candidate)) {
+                const result = define.candidate();
+                if (_.isArray(result)) {
+                    return result;
                 }
+            }
 
-                return [];
-            }),
+            return [];
+        });
 
-            //? 类名
-            className: computed(() => {
-                //* 初始化输出列表
-                const result: string[] = [];
-                //* 判断是否是禁用或只读状态
-                if (define.disabled) result.push("ui-disabled-status");
-                else if (define.readonly) result.push("ui-readonly-status");
-                //* 判断是否需要添加size类名
-                if (define.size != "default") result.push(`ui-${define.size}`);
-                //* 判断是否需要添加clearable类名
-                if (define.clearable) result.push("ui-clearable");
+        //? 类名
+        const className = computed(() => {
+            //* 初始化输出列表
+            const result: string[] = [];
+            //* 判断是否是禁用或只读状态
+            if (status.value.name == "disabled") result.push("ui-disabled-status");
+            else if (status.value.name == "readonly") result.push("ui-readonly-status");
+            else if (status.value.name == "loading") result.push("ui-loading-status");
+            //* 判断是否需要添加size类名
+            if (define.size != "default") result.push(`ui-${define.size}`);
+            //* 判断是否需要添加clearable类名
+            if (define.clearable) result.push("ui-clearable");
 
-                return result.join(" ");
-            }),
+            return result.join(" ");
+        });
 
-            //? 样式
-            style: computed(() => {
-                if (define.width) return { width: define.width + "px" };
-                else return {};
-            }),
+        return {
+            candidates,
+            className,
+            status,
+            attrs,
+            style,
         };
     }
 

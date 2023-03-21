@@ -3,21 +3,21 @@ import { computed, ComputedRef } from "vue";
 import { UiEmitFn } from "@various/constants";
 import { UiPaginationProps, UiPaginationEmits } from "./pagination";
 
+type UiPaginationOption = {
+    type: "item" | "skip";
+    value: number;
+    active: boolean;
+};
+
 export default class {
     computeds: {
         info: ComputedRef<string>;
         total: ComputedRef<number>;
-        controls: ComputedRef<
-            {
-                type: "item" | "skip";
-                value: number;
-                active: boolean;
-            }[]
-        >;
+        controls: ComputedRef<UiPaginationOption[]>;
     };
 
     methods: {
-        skip: (number: number) => void;
+        cutNumber: (number: number) => void;
     };
 
     constructor(define: UiPaginationProps, emit: UiEmitFn<typeof UiPaginationEmits>) {
@@ -43,7 +43,7 @@ export default class {
         //* 分页控制器
         const controls = computed(() => {
             //* 初始化数据
-            const result: { type: "item" | "skip"; value: number; active: boolean }[] = [];
+            const result: UiPaginationOption[] = [];
             //* 1. 当分页总数小于等于9时, 展示全部
             if (total.value <= 9) {
                 for (let i = 1; i <= total.value; i++) {
@@ -74,7 +74,7 @@ export default class {
                     //* 4.1. 补充前置控制器
                     result.push({ type: "item", value: 1, active: 1 == define.modelValue });
                     result.push({ type: "item", value: 2, active: 2 == define.modelValue });
-                    result.push({ type: "skip", value: 1, active: false });
+                    result.push({ type: "skip", value: -1, active: false });
 
                     //* 4.2. 当前分页前后的控制器
                     for (let i = define.modelValue - 1; i <= define.modelValue + 1; i++) {
@@ -82,7 +82,7 @@ export default class {
                     }
 
                     //* 4.3. 补充剩余控制器
-                    result.push({ type: "skip", value: -1, active: false });
+                    result.push({ type: "skip", value: 1, active: false });
                     result.push({ type: "item", value: total.value - 1, active: total.value - 1 == define.modelValue });
                     result.push({ type: "item", value: total.value, active: total.value == define.modelValue });
                 }
@@ -96,7 +96,8 @@ export default class {
 
     #useMethods(define: UiPaginationProps, emit: UiEmitFn<typeof UiPaginationEmits>) {
         return {
-            skip: (number: number) => {
+            //? 通过页码切换分页
+            cutNumber: (number: number) => {
                 if (!_.isNumber(number) || number == define.modelValue) return;
                 if (number <= 0) {
                     emit("update:modelValue", 1);

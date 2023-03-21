@@ -1,22 +1,33 @@
 import VuePlugin from "@vitejs/plugin-vue"; // vue编译插件
-import AutoImportPlugin from "vite-plugin-imp"; // 测试插件
+import { createStyleImportPlugin } from "vite-plugin-style-import";
+import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
 import { defineConfig } from "vite";
+import { existsSync } from "fs";
+import { resolve } from "path";
 
 export default () => {
     return defineConfig({
+        server: {
+            host: "0.0.0.0",
+        },
         plugins: [
             VuePlugin(),
-            AutoImportPlugin({
-                libList: [
+            createStyleImportPlugin({
+                libs: [
                     {
-                        libName: "various-ui",
-                        style(name) {
-                            if (name.startsWith("ui")) {
-                                return `various-ui/styles/${name.slice(3)}.css`;
-                            }
+                        libraryName: "various-ui",
+                        esModule: true,
+                        resolveStyle: (name) => {
+                            const result = `various-ui/styles/${name.split(/^ui-|v-/).slice(-1)[0]}.css`;
+                            if (existsSync(resolve(__dirname, "node_modules", result))) return result;
+                            else return "";
                         },
                     },
                 ],
+            }),
+            createSvgIconsPlugin({
+                iconDirs: [resolve(__dirname, "node_modules/various-ui/icons")],
+                symbolId: "icon-[name]",
             }),
         ],
     });
