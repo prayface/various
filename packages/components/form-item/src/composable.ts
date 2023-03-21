@@ -20,8 +20,8 @@ export default class {
     methods: {
         show: (content: string, type?: UiTypes.type) => void;
         hidden: () => void;
-        verify: (name: string) => Promise<void>;
         trigger: (content: string, type?: UiTypes.type) => void;
+        validator: (name: string) => Promise<void>;
     };
 
     computeds: {
@@ -82,7 +82,7 @@ export default class {
         };
 
         //* 校验函数
-        const verify = async (name: string) => {
+        const validator = async (name: string) => {
             //* 1. 数据初始化
             const verifys: (Promise<UiTypes.verifyResult> | UiTypes.verifyResult)[] = []; // 校验列表
             const rule = rules[define.prop as string].filter((value) => value.trigger == name || name == "all"); // 筛选校验规则
@@ -102,6 +102,6 @@ export default class {
             }
         };
 
-        return { show, hidden, trigger, verify };
+        return { show, hidden, trigger, validator };
     }
 }
