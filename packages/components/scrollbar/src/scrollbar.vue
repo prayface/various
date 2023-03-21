@@ -1,5 +1,5 @@
 <template>
-    <div class="ui-scrollbar" ref="container" :style="styles">
+    <div class="ui-scrollbar" ref="container" :style="style">
         <div class="ui-scrollbar-content" ref="content" :style="stylesContent">
             <slot></slot>
         </div>
@@ -13,20 +13,24 @@
 </template>
 
 <script lang="ts" setup>
-import useUtils from "./useUtils";
-import useComputeds from "./useComputeds";
+import Composable from "./composable";
 import { computed, onMounted, ref } from "vue";
-import { UiScrollbarType } from "./scrollbar";
+import { UiScrollPropsOption } from "./scrollbar";
+
 
 const scroll = ref({ real: { top: 0, left: 0 }, abs: { top: 0, left: 0 }, drag: false });
 const scrollbarX = ref({ size: 0, offset: 0, drag: false });
 const scrollbarY = ref({ size: 0, offset: 0, drag: false });
 const container = ref<HTMLDivElement | null>();
 const content = ref<HTMLDivElement | null>();
-const define = defineProps(UiScrollbarType);
+const define = defineProps(UiScrollPropsOption);
 
-const { styles } = useComputeds(define);
-const { dispostSize, dispostWheel } = useUtils();
+//* 实例化组合类
+const composable = new Composable(define);
+
+const { style } = composable.computeds;
+const { dispostSize, dispostWheel } = composable.methods;
+
 
 //* 滚动条内容样式
 const stylesContent = computed(() => {

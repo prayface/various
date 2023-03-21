@@ -1,7 +1,7 @@
-import { PropType, ExtractPropTypes } from "vue";
+import { ExtractPropTypes, PropType } from "vue";
 import { UiTypes } from "@various/constants";
 
-export const UiTextareaType = {
+export const UiTextareaPropsOption = {
     placeholder: { type: String, default: "Please input" } /**提示文本 */,
     modelValue: { type: [String, Number] as PropType<string | number>, required: true },
     clearable: { type: Boolean, default: false } /**是否可清空 */,
@@ -15,7 +15,7 @@ export const UiTextareaType = {
     rows: { type: Number, default: 3 },
 } as const;
 
-export type UiTextareaProps = ExtractPropTypes<typeof UiTextareaType>;
+export type UiTextareaProps = ExtractPropTypes<typeof UiTextareaPropsOption>;
 
 export const UiTextareaEmits = {
     "update:modelValue": (ev: any) => ev,

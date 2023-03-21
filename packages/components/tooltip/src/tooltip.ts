@@ -1,7 +1,7 @@
 import { ExtractPropTypes, PropType } from "vue";
 import { UiTypes } from "@various/constants";
 
-export const UiTooltipType = {
+export const UiTooltipPropsOption = {
     direction: { type: String as PropType<UiTypes.direction>, default: "right" },
     disabled: { type: Boolean, default: false },
     visible: { type: Boolean, default: false },
@@ -15,7 +15,7 @@ export const UiTooltipType = {
     mode: { type: String as PropType<"fixed" | "follow">, default: "fixed" },
 } as const;
 
-export type UiTooltipProps = ExtractPropTypes<typeof UiTooltipType>;
+export type UiTooltipProps = ExtractPropTypes<typeof UiTooltipPropsOption>;
 export type UiTooltipViewType = {
     visible: boolean;
     hidden: (delay?: number) => void;
