@@ -6,15 +6,17 @@ export type UiSeamlessScrollConstructorRefs = {
     main?: HTMLDivElement;
     content?: HTMLDivElement;
     container?: HTMLDivElement;
-    offset: number,
-    frame?: number,
+    offset: number;
+    frame?: number;
 };
 
 export default class {
     refs: UiSeamlessScrollConstructorRefs;
+
     computeds: {
         style: ComputedRef<{ [name: string]: any }>;
     };
+
     methods: {
         animation: () => void;
         mouseenter: () => void;
@@ -33,7 +35,7 @@ export default class {
                 //* 高度处理
                 if (_.isNumber(define.height)) return { height: define.height + "px" };
                 else return { height: define.height };
-            })
+            }),
         };
     }
 
@@ -53,15 +55,17 @@ export default class {
                 //* 触发下一帧绘制
                 this.refs.frame = window.requestAnimationFrame(this.methods.animation);
             },
-            mouseenter : () => {
+
+            mouseenter: () => {
                 this.refs.frame && window.cancelAnimationFrame(this.refs.frame);
             },
-            mouseleave : () => {
+
+            mouseleave: () => {
                 //* 判断是否向下执行
                 if (!this.refs.container || !this.refs.content || !this.refs.main) return;
                 //* 无缝滚动
                 this.refs.frame = window.requestAnimationFrame(this.methods.animation);
-            }
-        }
+            },
+        };
     }
 }

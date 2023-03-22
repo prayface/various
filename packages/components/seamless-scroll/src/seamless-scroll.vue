@@ -11,15 +11,14 @@
     </div>
 </template>
 
-<script lang="ts" >
-import { defineComponent,  reactive, onMounted, onUnmounted } from "vue";
+<script lang="ts">
+import { defineComponent, reactive, onMounted, onUnmounted } from "vue";
 import { UiSeamlessScrollPropsOption } from "./seamless-scroll";
 import Composable, { UiSeamlessScrollConstructorRefs } from "./composable";
 export default defineComponent({
     name: "UiSeamlessScroll",
     props: UiSeamlessScrollPropsOption,
-    setup(define, { expose }) {
-
+    setup(define) {
         //* 初始化响应式变量
         const refs = reactive<UiSeamlessScrollConstructorRefs>({
             main: undefined,
@@ -31,7 +30,6 @@ export default defineComponent({
 
         //* 实例化组合函数
         const composable = new Composable(refs, define);
-
 
         onMounted(() => composable.methods.mouseleave());
         onUnmounted(() => {
