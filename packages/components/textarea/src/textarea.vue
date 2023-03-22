@@ -6,11 +6,7 @@
         <UiIcon name="error" class="ui-textarea-clearable" v-if="clearable && modelValue" @click="clear" />
         <!-- 滚动条容器 -->
         <div class="ui-textarea-scroll" v-show="scrollsize">
-            <div
-                class="ui-textarea-scroll-bar"
-                :style="{ height: scrollsize + 'px', transform: `translateY(${offset}px)` }"
-                @mousedown="onMousedown"
-            ></div>
+            <div class="ui-textarea-scroll-bar" :style="scrollbarStyle" @mousedown="onMousedown"></div>
         </div>
     </div>
 </template>
@@ -43,11 +39,10 @@ export default defineComponent({
         //* 实例化组合函数
         const composable = new Composable(refs, define, emit, emitter);
 
-        onMounted(() => {
-            composable.methods.init;
-        });
+        //* 挂载函数
+        onMounted(() => composable.methods.init());
 
-        //* 暴露公共方法
+        //* 导出方法
         expose({ clear: composable.methods.clear });
 
         return {

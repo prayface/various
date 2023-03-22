@@ -42,7 +42,7 @@ export default class {
         this.refs = refs;
         this.methods = this.#useMethods(define, emit, emitter);
         this.computeds = this.#useComputeds(define);
-        this.handles = this.#useOnHanlder(define, emit, emitter);
+        this.handles = this.#useOnHandles(define, emit, emitter);
     }
 
     #useMethods(define: UiInputProps, emit: UiEmitFn<typeof UiInputEmits>, emitter?: Emitter<any>) {
@@ -55,10 +55,14 @@ export default class {
                     //* 将内容添加到视图容器中
                     node.append("ui-windows", this.refs.container);
                     //* 根据配置计算当前窗口位置
-                    const rect = dispost.elementToContainerBoundary(dispost.elementToBodyRect(this.refs.main), dispost.elementToBodyRect(this.refs.container), {
-                        direction: "bottom",
-                        align: "top",
-                    });
+                    const rect = dispost.elementToContainerBoundary(
+                        dispost.elementToBodyRect(this.refs.main),
+                        dispost.elementToBodyRect(this.refs.container),
+                        {
+                            direction: "bottom",
+                            align: "top",
+                        }
+                    );
                     //* 将窗口位置添加入窗口中
                     if (rect) {
                         this.refs.container.style.inset = `${rect.offsetY}px auto auto ${rect.offsetX}px`;
@@ -168,7 +172,7 @@ export default class {
         };
     }
 
-    #useOnHanlder(define: UiInputProps, emit: UiEmitFn<typeof UiInputEmits>, emitter?: Emitter<any>) {
+    #useOnHandles(define: UiInputProps, emit: UiEmitFn<typeof UiInputEmits>, emitter?: Emitter<any>) {
         return {
             change: (ev: Event) => {
                 emit("change", ev);

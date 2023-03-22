@@ -16,7 +16,3 @@ export const UiTooltipPropsOption = {
 } as const;
 
 export type UiTooltipProps = ExtractPropTypes<typeof UiTooltipPropsOption>;
-export const UiTooltipEmits = {
-    hidden: (delay?: number) => { },
-    show: (ev?: MouseEvent) => { },
-};

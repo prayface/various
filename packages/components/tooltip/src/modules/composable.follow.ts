@@ -1,6 +1,5 @@
-import { UiTooltipProps, UiTooltipEmits } from "../tooltip";
-import { nextTick, computed, ComputedRef, watch, WatchStopHandle } from "vue";
-import { UiEmitFn } from "@various/constants";
+import { UiTooltipProps } from "../tooltip";
+import { nextTick, watch, WatchStopHandle } from "vue";
 import { node, dispost } from "@various/utils";
 
 export type UiTooltipConstructorRefs = {
@@ -16,48 +15,47 @@ export default class {
     watchs: {
         stop: WatchStopHandle;
     };
+
     methods: {
         show: (ev?: MouseEvent) => void;
         hidden: (delay?: number) => void;
         trigger: (trigger: string, show: boolean, ev?: MouseEvent) => void;
         triggerView: (show: boolean, timer: NodeJS.Timer | undefined) => void;
-        hanlders: () => void;
-        containerHanlders: () => void;
     };
 
-    computeds: {
-        style: ComputedRef<string>;
-        className: ComputedRef<string>;
+    handles: {
+        mainHandles: {
+            mousemove: (ev: MouseEvent) => void;
+            mouseenter: (ev: MouseEvent) => void;
+            mouseleave: (ev: MouseEvent) => void;
+        };
+
+        containerHandles: {
+            mouseenter: () => void;
+            mouseleave: () => void;
+        };
     };
 
-    constructor(refs: UiTooltipConstructorRefs, define: UiTooltipProps, emit: UiEmitFn<typeof UiTooltipEmits>) {
+    constructor(refs: UiTooltipConstructorRefs, define: UiTooltipProps) {
         this.refs = refs;
-        this.computeds = this.#useComputeds(define);
-        this.methods = this.#useMethods(define, emit);
+        this.methods = this.#useMethods(define);
+        this.handles = this.#useOnHandles();
         this.watchs = this.#useWatch(define);
     }
 
     #useWatch(define: UiTooltipProps) {
         return {
             //* 侦听器, 用于侦听visible属性, 对窗口进行隐藏
-            stop: watch(() => define.visible,
+            stop: watch(
+                () => define.visible,
                 () => {
                     define.visible && this.refs.container && this.methods.hidden(0);
-                })
+                }
+            ),
         };
     }
 
-    #useComputeds(define: UiTooltipProps) {
-        return {
-            //* 样式
-            style: computed(() => (define.width ? `min-width: ${define.width}px` : "")),
-            //* 类名
-            className: computed(() => {
-                return define.effect ? `ui-effect-${define.effect}` : "";
-            }),
-        };
-    }
-    #useMethods(define: UiTooltipProps, emit: UiEmitFn<typeof UiTooltipEmits>) {
+    #useMethods(define: UiTooltipProps) {
         return {
             //* 视图控制器 显示
             show: (ev?: MouseEvent) => {
@@ -90,7 +88,6 @@ export default class {
                 }, delay);
             },
 
-
             //* 触发函数
             trigger: (trigger: string, show: boolean, ev?: MouseEvent) => {
                 if ((define.mode == "fixed" && define.trigger != trigger) || define.disabled) return;
@@ -104,6 +101,7 @@ export default class {
                     }
                 }
             },
+
             //* 鼠标移入窗口中的触发函数
             triggerView: (show: boolean, timer: NodeJS.Timer | undefined) => {
                 if (define.trigger != "click") {
@@ -114,22 +112,23 @@ export default class {
                     }
                 }
             },
+        };
+    }
+
+    #useOnHandles() {
+        return {
             //* ui-tooltip的处理函数
-            hanlders: () => {
-                return {
-                    mouseenter: (ev: MouseEvent) => this.methods.trigger("follow", true, ev),
-                    mouseleave: (ev: MouseEvent) => this.methods.trigger("follow", false, ev),
-                    mousemove: (ev: MouseEvent) => this.methods.trigger("follow", true, ev),
-                }
+            mainHandles: {
+                mouseenter: (ev: MouseEvent) => this.methods.trigger("follow", true, ev),
+                mouseleave: (ev: MouseEvent) => this.methods.trigger("follow", false, ev),
+                mousemove: (ev: MouseEvent) => this.methods.trigger("follow", true, ev),
             },
 
             //* ui-tooltip-container的处理函数
-            containerHanlders: () => {
-                return {
-                    mouseenter: () => this.methods.triggerView(true, this.refs.timer),
-                    mouseleave: () => this.methods.triggerView(false, this.refs.timer),
-                }
-            }
+            containerHandles: {
+                mouseenter: () => this.methods.triggerView(true, this.refs.timer),
+                mouseleave: () => this.methods.triggerView(false, this.refs.timer),
+            },
         };
     }
 }

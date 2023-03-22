@@ -1,6 +1,5 @@
-import { UiTooltipProps, UiTooltipEmits } from "../tooltip";
-import { nextTick, computed, ComputedRef, watch, WatchStopHandle } from "vue";
-import { UiEmitFn } from "@various/constants";
+import { UiTooltipProps } from "../tooltip";
+import { nextTick, watch, WatchStopHandle } from "vue";
 import { node, dispost } from "@various/utils";
 
 export type UiTooltipConstructorRefs = {
@@ -16,48 +15,47 @@ export default class {
     watchs: {
         stop: WatchStopHandle;
     };
+
     methods: {
         show: (ev?: MouseEvent) => void;
         hidden: (delay?: number) => void;
         trigger: (trigger: string, show: boolean, ev?: MouseEvent) => void;
         triggerView: (show: boolean, timer: NodeJS.Timer | undefined) => void;
-        hanlders: () => void;
-        containerHanlders: () => void;
     };
 
-    computeds: {
-        style: ComputedRef<string>;
-        className: ComputedRef<string>;
+    handles: {
+        mainHandles: {
+            click: () => void;
+            mouseenter: () => void;
+            mouseleave: () => void;
+        };
+
+        containerHandles: {
+            mouseenter: () => void;
+            mouseleave: () => void;
+        };
     };
 
-    constructor(refs: UiTooltipConstructorRefs, define: UiTooltipProps, emit: UiEmitFn<typeof UiTooltipEmits>) {
+    constructor(refs: UiTooltipConstructorRefs, define: UiTooltipProps) {
         this.refs = refs;
-        this.computeds = this.#useComputeds(define);
-        this.methods = this.#useMethods(define, emit);
+        this.methods = this.#useMethods(define);
+        this.handles = this.#useOnHandles();
         this.watchs = this.#useWatch(define);
     }
 
     #useWatch(define: UiTooltipProps) {
         return {
             //* 侦听器, 用于侦听visible属性, 对窗口进行隐藏
-            stop: watch(() => define.visible,
+            stop: watch(
+                () => define.visible,
                 () => {
                     define.visible && this.refs.container && this.methods.hidden(0);
-                })
+                }
+            ),
         };
     }
 
-    #useComputeds(define: UiTooltipProps) {
-        return {
-            //* 样式
-            style: computed(() => (define.width ? `min-width: ${define.width}px` : "")),
-            //* 类名
-            className: computed(() => {
-                return define.effect ? `ui-effect-${define.effect}` : "";
-            }),
-        };
-    }
-    #useMethods(define: UiTooltipProps, emit: UiEmitFn<typeof UiTooltipEmits>) {
+    #useMethods(define: UiTooltipProps) {
         return {
             //* 视图控制器 显示
             show: (ev?: MouseEvent) => {
@@ -65,26 +63,25 @@ export default class {
                 this.refs.timer = undefined;
                 this.refs.viewVisible = true;
                 nextTick(() => {
-                    if (this.refs.main && this.refs.container) {
-                        //* 将content添加到视图容器中
-                        node.append("ui-windows", this.refs.container);
-                        //* 根据配置计算当前窗口位置
-                        const rect = dispost.elementToContainerBoundary(
-                            dispost.elementToBodyRect(this.refs.main),
-                            dispost.elementToBodyRect(this.refs.container),
-                            {
-                                direction: define.direction,
-                                align: define.align,
-                            }
-                        );
-                        //* 将窗口位置添加入窗口中
-                        if (rect) {
-                            this.refs.container.style.inset = `${rect.offsetY}px auto auto ${rect.offsetX}px`;
-                            this.refs.container.style.transform = rect.transform;
-                            if (rect.triangle && this.refs.triangle) {
-                                this.refs.triangle.style.inset = rect.triangle;
-                                this.refs.triangle.style.transform = `rotate(${rect.rotate})`;
-                            }
+                    if (!this.refs.main || !this.refs.container) return;
+                    //* 将content添加到视图容器中
+                    node.append("ui-windows", this.refs.container);
+                    //* 根据配置计算当前窗口位置
+                    const rect = dispost.elementToContainerBoundary(
+                        dispost.elementToBodyRect(this.refs.main),
+                        dispost.elementToBodyRect(this.refs.container),
+                        {
+                            direction: define.direction,
+                            align: define.align,
+                        }
+                    );
+                    //* 将窗口位置添加入窗口中
+                    if (rect) {
+                        this.refs.container.style.inset = `${rect.offsetY}px auto auto ${rect.offsetX}px`;
+                        this.refs.container.style.transform = rect.transform;
+                        if (rect.triangle && this.refs.triangle) {
+                            this.refs.triangle.style.inset = rect.triangle;
+                            this.refs.triangle.style.transform = `rotate(${rect.rotate})`;
                         }
                     }
                 });
@@ -97,7 +94,6 @@ export default class {
                     this.refs.viewVisible = false;
                 }, delay);
             },
-
 
             //* 触发函数
             trigger: (trigger: string, show: boolean, ev?: MouseEvent) => {
@@ -112,6 +108,7 @@ export default class {
                     }
                 }
             },
+
             //* 鼠标移入窗口中的触发函数
             triggerView: (show: boolean, timer: NodeJS.Timer | undefined) => {
                 if (define.trigger != "click") {
@@ -122,22 +119,23 @@ export default class {
                     }
                 }
             },
+        };
+    }
+
+    #useOnHandles() {
+        return {
             //* ui-tooltip的处理函数
-            hanlders: () => {
-                return {
-                    click: () => this.methods.trigger("click", true),
-                    mouseenter: () => this.methods.trigger("hover", true),
-                    mouseleave: () => this.methods.trigger("hover", false),
-                }
+            mainHandles: {
+                click: () => this.methods.trigger("click", true),
+                mouseenter: () => this.methods.trigger("hover", true),
+                mouseleave: () => this.methods.trigger("hover", false),
             },
 
             //* ui-tooltip-container的处理函数
-            containerHanlders: () => {
-                return {
-                    mouseenter: () => this.methods.triggerView(true, this.refs.timer),
-                    mouseleave: () => this.methods.triggerView(false, this.refs.timer),
-                }
-            }
+            containerHandles: {
+                mouseenter: () => this.methods.triggerView(true, this.refs.timer),
+                mouseleave: () => this.methods.triggerView(false, this.refs.timer),
+            },
         };
     }
 }

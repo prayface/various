@@ -3,12 +3,11 @@ import { computed, ComputedRef } from "vue";
 import { UiEmitFn } from "@various/constants";
 import { UiTextareaProps, UiTextareaEmits } from "./textarea";
 
-
 export type UiTextareaConstructorRefs = {
     main?: HTMLElement;
     container?: HTMLElement;
-    scrollsize: number; 
-    ratio: number; 
+    scrollsize: number;
+    ratio: number;
     offset: number;
 };
 
@@ -32,19 +31,20 @@ export default class {
 
     computeds: {
         attrs: ComputedRef<{ [name: string]: any }>;
-        className: ComputedRef<string>;
         style: ComputedRef<{ width?: string }>;
+        className: ComputedRef<string>;
+        scrollbarStyle: ComputedRef<{ height: string; transform: string }>;
     };
 
     constructor(refs: UiTextareaConstructorRefs, define: UiTextareaProps, emit: UiEmitFn<typeof UiTextareaEmits>, emitter?: Emitter<any>) {
         this.refs = refs;
-        this.handles = this.#useOnHanlder(define, emit, emitter);
+        this.handles = this.#useOnHandles(define, emit, emitter);
         this.methods = this.#useMethods(define, emit, emitter);
         this.computeds = this.#useComputeds(define);
     }
 
     //* 主体响应事件声明
-    #useOnHanlder(define: UiTextareaProps, emit: UiEmitFn<typeof UiTextareaEmits>, emitter?: Emitter<any>) {
+    #useOnHandles(define: UiTextareaProps, emit: UiEmitFn<typeof UiTextareaEmits>, emitter?: Emitter<any>) {
         return {
             click: (ev: PointerEvent | Event) => emit("click", ev),
             focus: (ev: FocusEvent | Event) => emit("focus", ev),
@@ -93,6 +93,12 @@ export default class {
                 };
             }),
 
+            //* 样式
+            style: computed(() => {
+                if (define.width) return { width: define.width + "px" };
+                else return {};
+            }),
+
             //* 类名
             className: computed(() => {
                 // 初始化输出
@@ -108,10 +114,9 @@ export default class {
                 return result.join(" ");
             }),
 
-            //* 样式
-            style: computed(() => {
-                if (define.width) return { width: define.width + "px" };
-                else return {};
+            //* 滚动条滑块样式
+            scrollbarStyle: computed(() => {
+                return { height: this.refs.scrollsize + "px", transform: `translateY(${this.refs.offset}px)` };
             }),
         };
     }
@@ -130,11 +135,13 @@ export default class {
                     this.refs.scrollsize = 0;
                 }
             },
+
             clear: () => {
                 emit("update:modelValue", "");
                 emit("clear", "clear");
                 emitter?.emit(define.name || "", "change");
             },
+
             onMousedown: (ev: MouseEvent) => {
                 const offset = this.refs.offset;
                 const size = ev.y;
