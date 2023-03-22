@@ -13,7 +13,7 @@ declare module "@vue/runtime-core" {
         UiPagination: typeof import("various-ui")["UiPagination"];
         UiTextarea: typeof import("various-ui")["UiTextarea"];
         UiModal: typeof import("various-ui")["UiModal"];
-        VLoading: typeof import("various-ui")["VLoading"];
+        vLoading: typeof import("various-ui")["vLoading"];
         $loading: typeof import("various-ui")["$loading"];
         $message: typeof import("various-ui")["$message"];
     }

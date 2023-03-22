@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts" setup>
-import { $message, UiButton, VLoading as vLoading } from "various-ui";
+import { $message, UiButton, vLoading } from "various-ui";
 </script>
 
 <style lang="less" scoped>

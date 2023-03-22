@@ -37,7 +37,7 @@ const directive = {
 };
 
 export * from "./src/loading";
-export const VLoading = register.use(directive, "directive");
+export const vLoading = register.use(directive, "directive");
 export const $loading = {
     open: (config: any) => {
         const el = document.body as EL;
@@ -57,4 +57,4 @@ export const $loading = {
     },
 };
 
-export default VLoading;
+export default vLoading;
