@@ -1,7 +1,7 @@
 <template>
     <Transition>
-        <div class="ui-modal" v-show="open" ref="container">
-            <div class="ui-modal-container" ref="main" :style="style">
+        <div class="ui-modal" v-show="open" ref="main">
+            <div class="ui-modal-container" ref="container" :style="style">
                 <!-- 关闭按钮 -->
                 <div class="ui-modal-close" v-if="close">
                     <UiIcon name="error" @click="closeModal" />
@@ -14,7 +14,7 @@
                 </div>
 
                 <!-- 内容 -->
-                <div class="ui-modal-content">
+                <div class="ui-modal-content" ref="content">
                     <slot></slot>
                 </div>
             </div>
@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs, ref, onMounted } from "vue";
+import { defineComponent, reactive, toRefs, onMounted, onUnmounted } from "vue";
 import { UiModalPropsOption, UiModalEmits } from "./modal";
 import { node } from "@various/utils";
 import Composable, { UiModalConstructorRefs } from "./composable";
@@ -36,24 +36,31 @@ export default defineComponent({
     components: { UiIcon },
     setup(define, { emit, expose }) {
         // 响应式变量
-        const container = ref<HTMLDivElement>();
         const refs = reactive<UiModalConstructorRefs>({
             open: false,
+            main: undefined,
+            container: undefined,
         });
 
         // 实例化工具类
         const composable = new Composable(refs, define, emit);
 
+        // 挂载函数
         onMounted(() => {
-            if (!container.value) return;
-            node.append("ui-modals", container.value);
+            if (!refs.main) return;
+            node.append("ui-modals", refs.main);
+        });
+
+        // 卸载函数
+        onUnmounted(() => {
+            document.body.style.overflow = "";
+            refs.main && node.remove("ui-modals", refs.main);
         });
 
         // 导出公共方法
         expose({ ...composable.methods });
 
         return {
-            container,
             ...composable.methods,
             ...composable.computeds,
             ...toRefs(refs),

@@ -1,10 +1,12 @@
 import { UiModalProps, UiModalEmits } from "./modal";
-import { computed, ComputedRef } from "vue";
+import { computed, ComputedRef, nextTick } from "vue";
 import { UiEmitFn } from "@various/constants";
 import _ from "lodash";
 
 export type UiModalConstructorRefs = {
     open: Boolean;
+    main?: HTMLDivElement;
+    container?: HTMLDivElement;
 };
 
 export default class {
@@ -44,13 +46,31 @@ export default class {
     }
 
     #useMethods(emit: UiEmitFn<typeof UiModalEmits>) {
+        const init = () => {
+            nextTick(() => {
+                if (!this.refs.container || !this.refs.main) return;
+                if (this.refs.container.offsetHeight >= window.innerHeight) {
+                    this.refs.main.style.alignItems = "flex-start";
+                } else {
+                    this.refs.main.style.alignItems = "center";
+                }
+            });
+        };
+
         return {
             openModal: () => {
+                if (!this.refs.main) return;
+                window.addEventListener("resize", init);
+                document.body.style.overflow = "hidden";
                 this.refs.open = true;
                 emit("open");
+                init();
             },
 
             closeModal: () => {
+                if (!this.refs.main) return;
+                window.removeEventListener("resize", init);
+                document.body.style.overflow = "";
                 this.refs.open = false;
                 emit("close");
             },

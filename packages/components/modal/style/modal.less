@@ -1,13 +1,18 @@
 .ui-modal {
     inset: 0;
+    width: 100%;
+    height: 100%;
     display: flex;
+    padding: 80px 0;
     position: fixed;
-    background-color: var(--ui-mask-color);
-    justify-content: center;
+    overflow-y: auto;
     align-items: center;
-    transition: all 0.2s;
+    justify-content: center;
+    background-color: var(--ui-mask-color);
+    transition: all 0.3s;
     > .ui-modal-container {
         position: relative;
+        transition: margin-top 0.5s;
         box-shadow: var(--ui-box-shadow);
         border-radius: var(--ui-radius);
         background-color: #fff;
@@ -36,9 +41,15 @@
 .ui-modal.v-enter-from,
 .ui-modal.v-leave-to {
     opacity: 0;
+    > .ui-modal-container {
+        margin-top: -40px;
+    }
 }
 
 .ui-modal.v-enter-to,
 .ui-modal.v-leave-from {
     opacity: 1;
+    > .ui-modal-container {
+        margin-top: 0;
+    }
 }
