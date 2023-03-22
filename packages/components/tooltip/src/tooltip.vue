@@ -9,21 +9,29 @@
     </component>
 </template>
 
-<script lang="ts" setup>
-import { computed } from "vue";
-import { UiTooltipType } from "./tooltip";
+<script lang="ts">
+import { defineComponent, computed } from "vue";
+import { UiTooltipPropsOption } from "./tooltip";
 
-import TooltipFixed from "./fixed.vue";
-import TooltipFollow from "./follow.vue";
+import TooltipFixed from "./modules/fixed.vue";
+import TooltipFollow from "./modules/follow.vue";
 
-const define = defineProps(UiTooltipType);
-const attrs = computed(() => define);
-const component = computed(() => {
-    switch (define.mode) {
-        case "follow":
-            return TooltipFollow;
-        default:
-            return TooltipFixed;
-    }
+export default defineComponent({
+    name: "UiTooltip",
+    props: UiTooltipPropsOption,
+    components: { TooltipFixed, TooltipFollow },
+    setup(define) {
+        const attrs = computed(() => define);
+        const component = computed(() => {
+            switch (define.mode) {
+                case "follow":
+                    return TooltipFollow;
+                default:
+                    return TooltipFixed;
+            }
+        });
+
+        return { attrs, component };
+    },
 });
 </script>

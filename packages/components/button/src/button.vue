@@ -27,6 +27,7 @@ export default defineComponent({
     setup(define) {
         //* 实例化组合函数
         const composable = new Composable(define);
+        
         return {
             ...composable.computeds,
         };

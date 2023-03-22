@@ -1,57 +1,73 @@
 import { Emitter } from "mitt";
-import { computed, Ref } from "vue";
+import { computed, ComputedRef } from "vue";
 import { UiEmitFn } from "@various/constants";
 import { UiTextareaProps, UiTextareaEmits } from "./textarea";
 
-//! 导出函数
-export default class Composable {
-    static refs: { [name: string]: any };
-    static main: Ref<HTMLElement>;
-    static control: Ref<HTMLTextAreaElement>;
+export type UiTextareaConstructorRefs = {
+    main?: HTMLElement;
+    container?: HTMLElement;
+    scrollsize: number;
+    ratio: number;
+    offset: number;
+};
 
-    constructor(args: { [name: string]: any }) {
-        Composable.refs = args.refs;
-        Composable.main = args.main;
-        Composable.control = args.control;
-    }
+export default class {
+    refs: UiTextareaConstructorRefs;
 
-    static init() {
-        // 判断是否允许向下执行
-        if (!this.main.value || !this.control.value) return;
-        if (this.control.value.scrollHeight > this.main.value.clientHeight) {
-            this.refs.ratio = (this.main.value.clientHeight - 2) / this.control.value.scrollHeight;
-            this.refs.size = this.refs.ratio * (this.main.value.clientHeight - 2);
-            this.refs.offset = this.control.value.scrollTop * this.refs.ratio;
-        } else {
-            this.refs.size = 0;
-        }
+    handles: {
+        click: (ev: PointerEvent | Event) => void;
+        focus: (ev: FocusEvent | Event) => void;
+        change: (ev: Event) => void;
+        input: (ev: InputEvent) => void;
+        blur: (ev: FocusEvent | Event) => void;
+        wheel: (ev: WheelEvent) => void;
+    };
+
+    methods: {
+        init: () => void;
+        clear: () => void;
+        onMousedown: (ev: MouseEvent) => void;
+    };
+
+    computeds: {
+        attrs: ComputedRef<{ [name: string]: any }>;
+        style: ComputedRef<{ width?: string }>;
+        className: ComputedRef<string>;
+        scrollbarStyle: ComputedRef<{ height: string; transform: string }>;
+    };
+
+    constructor(refs: UiTextareaConstructorRefs, define: UiTextareaProps, emit: UiEmitFn<typeof UiTextareaEmits>, emitter?: Emitter<any>) {
+        this.refs = refs;
+        this.handles = this.#useOnHandles(define, emit, emitter);
+        this.methods = this.#useMethods(define, emit, emitter);
+        this.computeds = this.#useComputeds(define);
     }
 
     //* 主体响应事件声明
-    static useOnHanlder(define: UiTextareaProps, emits: UiEmitFn<typeof UiTextareaEmits>, emitter?: Emitter<any>) {
+    #useOnHandles(define: UiTextareaProps, emit: UiEmitFn<typeof UiTextareaEmits>, emitter?: Emitter<any>) {
         return {
-            click: (ev: PointerEvent | Event) => emits("click", ev),
-            focus: (ev: FocusEvent | Event) => emits("focus", ev),
+            click: (ev: PointerEvent | Event) => emit("click", ev),
+            focus: (ev: FocusEvent | Event) => emit("focus", ev),
             change: (ev: Event) => {
-                emits("change", ev);
+                emit("change", ev);
                 emitter?.emit(define.name || "", "change");
             },
             input: (ev: InputEvent) => {
                 const target = ev.target as HTMLInputElement;
-                emits("update:modelValue", target.value);
-                emits("input", ev);
-                this.init();
+                emit("update:modelValue", target.value);
+                emit("input", ev);
+                this.methods.init();
             },
             blur: (ev: FocusEvent | Event) => {
-                emits("blur", ev);
+                emit("blur", ev);
                 emitter?.emit(define.name || "", "blur");
             },
             wheel: (ev: WheelEvent) => {
-                if (!this.main.value || !this.control.value) return;
-                if (this.control.value.scrollHeight > this.main.value.clientHeight) {
+                if (!this.refs.main || !this.refs.container) return;
+                if (this.refs.container.scrollHeight > this.refs.main.clientHeight) {
                     const node = ev.target as HTMLTextAreaElement;
                     node.scrollTo({ top: node.scrollTop + ev.deltaY });
-                    this.refs.offset = this.control.value.scrollTop * this.refs.ratio;
+                    this.refs.offset = this.refs.container.scrollTop * this.refs.ratio;
                     ev.preventDefault();
                 }
             },
@@ -59,7 +75,7 @@ export default class Composable {
     }
 
     //* 静态属性声明
-    static useComputeds(define: UiTextareaProps) {
+    #useComputeds(define: UiTextareaProps) {
         return {
             //* 标签响应式属性
             attrs: computed(() => {
@@ -77,6 +93,12 @@ export default class Composable {
                 };
             }),
 
+            //* 样式
+            style: computed(() => {
+                if (define.width) return { width: define.width + "px" };
+                else return {};
+            }),
+
             //* 类名
             className: computed(() => {
                 // 初始化输出
@@ -92,23 +114,34 @@ export default class Composable {
                 return result.join(" ");
             }),
 
-            //* 样式
-            styles: computed(() => {
-                if (define.width) return { width: define.width + "px" };
-                else return {};
+            //* 滚动条滑块样式
+            scrollbarStyle: computed(() => {
+                return { height: this.refs.scrollsize + "px", transform: `translateY(${this.refs.offset}px)` };
             }),
         };
     }
 
     //* 事件声明
-    static useMethods(define: UiTextareaProps, emits: UiEmitFn<typeof UiTextareaEmits>, emitter?: Emitter<any>) {
+    #useMethods(define: UiTextareaProps, emit: UiEmitFn<typeof UiTextareaEmits>, emitter?: Emitter<any>) {
         return {
-            init: () => this.init(),
+            init: () => {
+                // 判断是否允许向下执行
+                if (!this.refs.main || !this.refs.container) return;
+                if (this.refs.container.scrollHeight > this.refs.main.clientHeight) {
+                    this.refs.ratio = (this.refs.main.clientHeight - 2) / this.refs.container.scrollHeight;
+                    this.refs.scrollsize = this.refs.ratio * (this.refs.main.clientHeight - 2);
+                    this.refs.offset = this.refs.container.scrollTop * this.refs.ratio;
+                } else {
+                    this.refs.scrollsize = 0;
+                }
+            },
+
             clear: () => {
-                emits("update:modelValue", "");
-                emits("clear", "clear");
+                emit("update:modelValue", "");
+                emit("clear", "clear");
                 emitter?.emit(define.name || "", "change");
             },
+
             onMousedown: (ev: MouseEvent) => {
                 const offset = this.refs.offset;
                 const size = ev.y;
@@ -116,11 +149,11 @@ export default class Composable {
                 document.onmousemove = (ev: MouseEvent) => {
                     this.refs.offset = offset + ev.y - size;
                     if (this.refs.offset < 0) this.refs.offset = 0;
-                    else if (this.refs.offset > this.main.value.clientHeight - this.refs.size - 2) {
-                        this.refs.offset = this.main.value.clientHeight - this.refs.size - 2;
+                    else if (this.refs.main && this.refs.offset > this.refs.main.clientHeight - this.refs.scrollsize - 2) {
+                        this.refs.offset = this.refs.main.clientHeight - this.refs.scrollsize - 2;
                     }
 
-                    this.control.value.scrollTo({ top: this.refs.offset / this.refs.ratio });
+                    this.refs.container?.scrollTo({ top: this.refs.offset / this.refs.ratio });
                 };
 
                 document.onmouseup = () => {
