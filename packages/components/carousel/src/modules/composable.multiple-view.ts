@@ -26,10 +26,10 @@ export default class {
         this.refs = refs;
         this.delay = define.transitionDelay / 1000;
         this.delayUp = define.transitionDelay * 1.1;
-        this.methods = this.#useMthods(define);
+        this.methods = this.#useMethods(define);
     }
 
-    #useMthods(define: UiCarouselProps) {
+    #useMethods(define: UiCarouselProps) {
         //? 初始化函数
         const init = () => {
             //* 获取模块容器失败则取消后续操作
