@@ -25,14 +25,14 @@
                 </p>
             </div>
             <div class="content">
-                <UiCarousel :height="200" mode="multiple-view" style="margin: 0 -32px" ref="carousel">
-                    <div style="background-color: aquamarine; width: 500px; margin: 0 32px">1</div>
-                    <div style="background-color: bisque; width: 500px; margin: 0 32px">2</div>
-                    <div style="background-color: brown; width: 500px; margin: 0 32px">3</div>
-                    <div style="background-color: burlywood; width: 500px; margin: 0 32px">4</div>
+                <UiCarousel :height="200" mode="multiple-view" ref="carousel">
+                    <div style="background-color: aquamarine; width: 500px; margin: 0 32px 0 0">1</div>
+                    <div style="background-color: bisque; width: 320px; margin: 0 32px">2</div>
+                    <div style="background-color: brown; width: 1400px; margin: 0 32px">3</div>
+                    <div style="background-color: burlywood; width: 200px; margin: 0 32px">4</div>
                     <div style="background-color: cadetblue; width: 500px; margin: 0 32px">5</div>
-                    <div style="background-color: violet; width: 500px; margin: 0 32px">6</div>
-                    <div style="background-color: tomato; width: 500px; margin: 0 32px">7</div>
+                    <div style="background-color: violet; width: 100px; margin: 0 32px">6</div>
+                    <div style="background-color: tomato; width: 500px; margin: 0 0 0 32px">7</div>
                 </UiCarousel>
             </div>
         </section>

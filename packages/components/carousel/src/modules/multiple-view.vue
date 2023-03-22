@@ -6,11 +6,11 @@
         </div>
 
         <!-- 轮播图左侧箭头 -->
-        <div class="ui-carousel-control ui-carousel-left-control" @click="cutCarousel(active - 1)" v-if="arrow != 'never' && controls">
+        <div class="ui-carousel-control ui-carousel-left-control" @click="cutCarousel(-1)" v-if="arrow != 'never' && controls">
             <UiIcon name="arrow" />
         </div>
         <!-- 轮播图右侧箭头 -->
-        <div class="ui-carousel-control ui-carousel-right-control" @click="cutCarousel(active + 1)" v-if="arrow != 'never' && controls">
+        <div class="ui-carousel-control ui-carousel-right-control" @click="cutCarousel(1)" v-if="arrow != 'never' && controls">
             <UiIcon name="arrow" />
         </div>
     </div>
@@ -35,7 +35,6 @@ export default defineComponent({
             skipTimer: undefined,
             autoTimer: undefined,
             controls: false,
-            active: 0,
         });
 
         //* 实例化响应式变量
@@ -43,12 +42,20 @@ export default defineComponent({
         const composableDefault = new ComposableDefault(refs, define);
 
         //* 挂载函数
-        onMounted(() => composableDefault.methods.init());
+        onMounted(() => {
+            //* 检测是否向下执行
+            if (!refs.main) return;
+            //* 初始化函数
+            composableDefault.methods.init();
+            //* 当窗口尺寸发送变化时, 触发初始化函数
+            refs.main.onresize = () => composableDefault.methods.init();
+        });
 
         //* 卸载函数
         onUnmounted(() => {
             refs.skipTimer && clearTimeout(refs.skipTimer);
             refs.autoTimer && clearInterval(refs.autoTimer);
+            refs.main && (refs.main.onresize = null);
         });
 
         //* 导出函数
