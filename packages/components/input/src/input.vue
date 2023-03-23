@@ -9,9 +9,11 @@
             <div class="ui-form-candidates" v-if="visible" ref="container">
                 <div class="ui-form-candidates-triangle" ref="triangle"></div>
                 <div class="ui-form-candidate-container">
-                    <div class="ui-form-candidate" v-for="(value, index) in candidates" :key="index" :class="{ 'ui-active': value.value == modelValue }" @mousedown="cutCandidate(value.value, $event)">
-                        {{ value.label }}
-                    </div>
+                    <template v-for="value in candidates">
+                        <div class="ui-form-candidate" :class="{ 'ui-active': value.value == modelValue }" @click="cutCandidate(value.value, $event)">
+                            {{ value.label }}
+                        </div>
+                    </template>
                 </div>
             </div>
         </Transition>
@@ -25,9 +27,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, inject, toRefs } from "vue";
+import { defineComponent, reactive, inject, toRefs, onUnmounted } from "vue";
 import { UiInputPropsOption, UiInputEmits } from "./input";
 import { UiFormEmitterKey } from "@various/constants";
+import { node } from "@various/utils";
 import Composable, { UiInputConstructorRefs } from "./composable";
 import UiIcon from "@various/components/icon";
 
@@ -52,13 +55,20 @@ export default defineComponent({
         const composable = new Composable(refs, define, emit, emitter);
 
         //* 暴露公共方法
-        expose({ show: composable.methods.show, hidden: composable.methods.hidden, clear: composable.methods.clear });
+        expose({ clear: composable.methods.clear });
+
+        //* 销毁事件
+        onUnmounted(() => {
+            if (!refs.container) return;
+            //* 将内容从视图容器中移除
+            node.remove("ui-windows", refs.container);
+        });
 
         return {
             clear: composable.methods.clear,
-            handles: composable.handles,
             cutCandidate: composable.methods.cutCandidate,
             ...composable.computeds,
+            ...composable.handles,
             ...toRefs(refs),
         };
     },

@@ -40,6 +40,16 @@ const node = {
             }
         }
     },
+
+    //? 检测当前节点是否在给定节点之中
+    includes: (current: HTMLElement | null, container: HTMLElement): boolean => {
+        if (!current) return false;
+        else if (current == container) {
+            return true;
+        } else {
+            return node.includes(current.parentElement, container);
+        }
+    },
 };
 
 export default node;
