@@ -30,7 +30,8 @@
                 <p>表单的<span>form-item</span>组件允许通过修改<span>UiFormRulesVerify.type</span>来对校验提示的类型进行调整</p>
                 <p>现支持配置项有: info | warning | success | error</p>
                 <p>
-                    <span class="warn">注</span>当<span>UiFormRulesVerify.type</span>配置为<span>info</span>, <span>success</span>, <span>warning</span>时, 表单的<span>validator</span>不对对其进行校验
+                    <span class="warn">注</span>当<span>UiFormRulesVerify.type</span>配置为<span>info</span>, <span>success</span>,
+                    <span>warning</span>时, 表单的<span>validator</span>不对对其进行校验
                 </p>
             </div>
             <div class="content">
@@ -79,15 +80,8 @@
                     <th>默认值</th>
                 </tr>
                 <tr>
-                    <td>size</td>
-                    <td>表单内组件的尺寸, 但未实现~~</td>
-                    <td>string</td>
-                    <td>large | middle | default | small</td>
-                    <td>default</td>
-                </tr>
-                <tr>
                     <td>data</td>
-                    <td>表单的数据, UiFormRule的verify回调接收data</td>
+                    <td>表单的数据, UiTypes.verifyRule的verify回调接收data</td>
                     <td>{ [name: string]: any }</td>
                     <td>--</td>
                     <td>--</td>
@@ -95,7 +89,7 @@
                 <tr>
                     <td>rules</td>
                     <td>表单的校验规则</td>
-                    <td>{ [name: string]: UiFormRule[] }</td>
+                    <td>{ [name: string]: UiTypes.verifyRule[] }</td>
                     <td>--</td>
                     <td>--</td>
                 </tr>
