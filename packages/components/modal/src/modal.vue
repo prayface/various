@@ -4,7 +4,7 @@
             <div class="ui-modal-container" ref="container" :style="style">
                 <!-- 关闭按钮 -->
                 <div class="ui-modal-close" v-if="close">
-                    <UiIcon name="error" @click="closeModal" />
+                    <UiIcon name="close" @click="closeModal" />
                 </div>
 
                 <!-- 头部信息 -->
