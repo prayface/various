@@ -161,6 +161,63 @@
                 </tr>
             </table>
         </section>
+
+        <section>
+            <div class="title">事件</div>
+            <table>
+                <tr>
+                    <th>名称</th>
+                    <th>说明</th>
+                    <th>回调参数</th>
+                </tr>
+                <tr>
+                    <td>change</td>
+                    <td>change事件回调</td>
+                    <td>(event?: Event) => void</td>
+                </tr>
+                <tr>
+                    <td>clear</td>
+                    <td>清空事件回调</td>
+                    <td>(event?: any) => void</td>
+                </tr>
+                <tr>
+                    <td>input</td>
+                    <td>input事件回调</td>
+                    <td>(event?: InputEvent | Event) => void</td>
+                </tr>
+                <tr>
+                    <td>click</td>
+                    <td>click事件回调</td>
+                    <td>(event?: PointerEvent | Event) => void</td>
+                </tr>
+                <tr>
+                    <td>focus</td>
+                    <td>focus事件回调</td>
+                    <td>(event?: FocusEvent | Event) => void</td>
+                </tr>
+                <tr>
+                    <td>blur</td>
+                    <td>blur事件回调</td>
+                    <td>(event?: FocusEvent | Event) => void</td>
+                </tr>
+            </table>
+        </section>
+
+        <section>
+            <div class="title">方法</div>
+            <table>
+                <tr>
+                    <th>名称</th>
+                    <th>说明</th>
+                    <th>回调参数</th>
+                </tr>
+                <tr>
+                    <td>clear</td>
+                    <td>清空输入框内容</td>
+                    <td>() => void</td>
+                </tr>
+            </table>
+        </section>
     </div>
 </template>
 

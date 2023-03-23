@@ -25,6 +25,48 @@
                 </UiModal>
             </div>
         </section>
+
+        <section>
+            <div class="title">事件</div>
+            <table>
+                <tr>
+                    <th>名称</th>
+                    <th>说明</th>
+                    <th>回调参数</th>
+                </tr>
+                <tr>
+                    <td>open</td>
+                    <td>弹出框打开回调</td>
+                    <td>() => void</td>
+                </tr>
+                <tr>
+                    <td>close</td>
+                    <td>弹出框关闭回调</td>
+                    <td>() => void</td>
+                </tr>
+            </table>
+        </section>
+
+        <section>
+            <div class="title">方法</div>
+            <table>
+                <tr>
+                    <th>名称</th>
+                    <th>说明</th>
+                    <th>回调参数</th>
+                </tr>
+                <tr>
+                    <td>openModal</td>
+                    <td>弹出框打开方法</td>
+                    <td>() => void</td>
+                </tr>
+                <tr>
+                    <td>closeModal</td>
+                    <td>弹出框关闭方法</td>
+                    <td>() => void</td>
+                </tr>
+            </table>
+        </section>
     </div>
 </template>
 

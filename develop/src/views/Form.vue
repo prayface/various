@@ -136,6 +136,58 @@
                 </tr>
             </table>
         </section>
+
+        <section>
+            <div class="title">Form方法</div>
+            <table>
+                <tr>
+                    <th>名称</th>
+                    <th>说明</th>
+                    <th>回调参数</th>
+                </tr>
+                <tr>
+                    <td>reset</td>
+                    <td>表单重置函数</td>
+                    <td>() => void</td>
+                </tr>
+                <tr>
+                    <td>validator</td>
+                    <td>表单校验函数</td>
+                    <td>(callBack?: (result: boolean) => void) => void</td>
+                </tr>
+            </table>
+        </section>
+
+        <section>
+            <div class="title">FormItem方法</div>
+            <table>
+                <tr>
+                    <th>名称</th>
+                    <th>说明</th>
+                    <th>回调参数</th>
+                </tr>
+                <tr>
+                    <td>show</td>
+                    <td>校验提示显示函数</td>
+                    <td>(content: string, type?: UiTypes.type) => void</td>
+                </tr>
+                <tr>
+                    <td>hidden</td>
+                    <td>校验提示隐藏函数</td>
+                    <td>() => void</td>
+                </tr>
+                <tr>
+                    <td>trigger</td>
+                    <td>触发校验信息, 会判断是否存在校验提示内容</td>
+                    <td>(content: string, type?: UiTypes.type) => void</td>
+                </tr>
+                <tr>
+                    <td>validator</td>
+                    <td>表单校验函数, name为触发校验的类型</td>
+                    <td>(name: string) => void</td>
+                </tr>
+            </table>
+        </section>
     </div>
 </template>
 

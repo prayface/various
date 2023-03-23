@@ -67,6 +67,7 @@
                 </p>
             </div>
         </section>
+
         <section>
             <div class="title">属性</div>
             <table>
@@ -125,6 +126,22 @@
                     <td>string</td>
                     <td>button | submit | reset</td>
                     <td>button</td>
+                </tr>
+            </table>
+        </section>
+
+        <section>
+            <div class="title">事件</div>
+            <table>
+                <tr>
+                    <th>名称</th>
+                    <th>说明</th>
+                    <th>回调参数</th>
+                </tr>
+                <tr>
+                    <td>click</td>
+                    <td>点击事件回调</td>
+                    <td>(event?: MouseEvent | Event) => void</td>
                 </tr>
             </table>
         </section>

@@ -123,6 +123,7 @@ main {
                 tr td,
                 tr th {
                     padding: 8px 12px;
+                    text-align: center;
                     border-bottom: 1px solid var(--uic-auxiliary);
                 }
             }

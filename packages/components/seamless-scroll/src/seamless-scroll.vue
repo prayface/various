@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, onMounted, onUnmounted } from "vue";
+import { defineComponent, reactive, onMounted, onUnmounted, toRefs } from "vue";
 import { UiSeamlessScrollPropsOption } from "./seamless-scroll";
 import Composable, { UiSeamlessScrollConstructorRefs } from "./composable";
 export default defineComponent({
@@ -39,6 +39,7 @@ export default defineComponent({
         return {
             ...composable.computeds,
             ...composable.methods,
+            ...toRefs(refs),
         };
     },
 });
