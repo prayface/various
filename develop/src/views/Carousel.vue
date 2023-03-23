@@ -26,6 +26,8 @@
                 <UiCarousel :height="200" mode="multiple-view" ref="carousel">
                     <div style="background-color: aquamarine; width: 500px; margin: 0 32px 0 0">1</div>
                     <div style="background-color: bisque; width: 320px; margin: 0 32px">2</div>
+                    <div style="background-color: bisque; width: 320px; margin: 0 32px">2</div>
+                    <div style="background-color: bisque; width: 320px; margin: 0 32px">2</div>
                     <div style="background-color: brown; width: 1400px; margin: 0 32px">3</div>
                     <div style="background-color: burlywood; width: 200px; margin: 0 32px">4</div>
                     <div style="background-color: cadetblue; width: 500px; margin: 0 32px">5</div>

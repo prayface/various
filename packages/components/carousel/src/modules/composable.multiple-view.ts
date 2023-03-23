@@ -70,52 +70,50 @@ export default class {
                 for (let i = 1; i < this.refs.container.children.length - 1; i++) {
                     const currentNode = this.refs.container.children[i] as HTMLElement;
                     const backNode = this.refs.container.children[i - 1] as HTMLElement;
-                    const nextNode = this.refs.container.children[i + 1] as HTMLElement;
-                    //* 判断当前偏移的位置
-                    if (offset < currentNode.offsetLeft + currentNode.offsetWidth && offset > currentNode.offsetLeft) {
-                        //* 上一帧是否在范围内
-                        const isRange = this.offset <= currentNode.offsetLeft + currentNode.offsetWidth && this.offset >= currentNode.offsetLeft;
-                        if (isRange && currentNode.offsetWidth >= this.refs.main.clientWidth) {
+                    const backNodeLeft = backNode.offsetLeft || 0;
+                    //* 判断当前右侧偏移距离在该节点中
+                    if (currentNode.offsetLeft < offset && currentNode.offsetLeft + currentNode.offsetWidth >= offset) {
+                        //* 判断上一次右侧偏移举例是否在该节点中
+                        if (currentNode.offsetLeft <= this.offset && currentNode.offsetLeft + currentNode.offsetWidth >= this.offset) {
+                            //* 不做任何操作退出循环
                             break;
                         } else {
+                            //* 存在下一个节点则下一个节点左贴边否则当前节点右贴边并退出循环
                             offset = currentNode.offsetLeft;
                             break;
                         }
-                    } else if (offset <= currentNode.offsetLeft && offset >= backNode.offsetLeft + backNode.offsetWidth) {
-                        offset = backNode.offsetLeft;
-                        break;
-                    } else if (offset <= nextNode.offsetLeft && offset >= currentNode.offsetLeft + currentNode.offsetWidth) {
-                        offset = nextNode.offsetLeft;
+                    }
+
+                    if (currentNode.offsetLeft + currentNode.offsetWidth <= offset && backNodeLeft >= offset) {
+                        //* 存在下一个节点则下一个节点左贴边否则当前节点右贴边并退出循环
+                        offset = currentNode.offsetLeft;
                         break;
                     }
                 }
             } else {
                 //* 判断左侧滚动时是否存在左侧展示不完整内容
-                for (let i = 1; i < this.refs.container.children.length - 1; i++) {
+                for (let i = 0; i < this.refs.container.children.length; i++) {
                     const currentNode = this.refs.container.children[i] as HTMLElement;
-                    const backNode = this.refs.container.children[i - 1] as HTMLElement;
                     const nextNode = this.refs.container.children[i + 1] as HTMLElement;
-                    if (offset < currentNode.offsetLeft + currentNode.offsetWidth && offset > currentNode.offsetLeft) {
-                        //* 上一帧是否在范围内
-                        const isRange = this.offset <= currentNode.offsetLeft + currentNode.offsetWidth && this.offset >= currentNode.offsetLeft;
-                        //* 上一帧是否在currentNode节点与nextNode节点的间隙中
-                        const isCurrentNextGap =
-                            this.offset <= nextNode.offsetLeft && this.offset >= currentNode.offsetLeft + currentNode.offsetWidth;
-                        //* 是否当前节点尺寸大于可是区域尺寸
-                        const isViewRange = currentNode.offsetWidth >= this.refs.main.clientWidth;
-                        if (isViewRange && isRange) {
+                    const nextNodeLeft = nextNode.offsetLeft || this.refs.container.clientWidth;
+                    const offsetRight = offset + this.refs.main.clientWidth;
+                    //* 判断当前右侧偏移距离在该节点中
+                    if (currentNode.offsetLeft < offsetRight && currentNode.offsetLeft + currentNode.offsetWidth >= offsetRight) {
+                        const offsetNextRight = this.offset + this.refs.main.clientWidth;
+                        //* 判断上一次右侧偏移举例是否在该节点中
+                        if (currentNode.offsetLeft <= offsetNextRight && currentNode.offsetLeft + currentNode.offsetWidth >= offsetNextRight) {
+                            //* 不做任何操作退出循环
                             break;
-                        } else if (isViewRange && isCurrentNextGap) {
-                            offset = currentNode.offsetLeft + currentNode.offsetWidth - this.refs.main.clientWidth;
                         } else {
-                            offset = nextNode.offsetLeft;
+                            //* 当前节点右贴边并退出循环
+                            offset = currentNode.offsetLeft + currentNode.offsetWidth - this.refs.main.clientWidth;
                             break;
                         }
-                    } else if (offset <= currentNode.offsetLeft && offset >= backNode.offsetLeft + backNode.offsetWidth) {
-                        offset = currentNode.offsetLeft;
-                        break;
-                    } else if (offset <= nextNode.offsetLeft && offset >= currentNode.offsetLeft + currentNode.offsetWidth) {
-                        offset = nextNode.offsetLeft;
+                    }
+
+                    if (currentNode.offsetLeft + currentNode.offsetWidth <= offsetRight && nextNodeLeft >= offsetRight) {
+                        //* 当前节点右贴边并退出循环
+                        offset = currentNode.offsetLeft + currentNode.offsetWidth - this.refs.main.clientWidth;
                         break;
                     }
                 }
