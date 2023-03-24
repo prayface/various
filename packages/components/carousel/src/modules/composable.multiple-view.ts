@@ -70,9 +70,9 @@ export default class {
                 for (let i = 1; i < this.refs.container.children.length - 1; i++) {
                     const currentNode = this.refs.container.children[i] as HTMLElement;
                     const backNode = this.refs.container.children[i - 1] as HTMLElement;
-                    const backNodeLeft = backNode.offsetLeft || 0;
+                    const backNodeRight = backNode ? backNode.offsetLeft + backNode.offsetWidth : 0;
                     //* 判断当前右侧偏移距离在该节点中
-                    if (currentNode.offsetLeft < offset && currentNode.offsetLeft + currentNode.offsetWidth >= offset) {
+                    if (currentNode.offsetLeft < offset && currentNode.offsetLeft + currentNode.offsetWidth > offset) {
                         //* 判断上一次右侧偏移举例是否在该节点中
                         if (currentNode.offsetLeft <= this.offset && currentNode.offsetLeft + currentNode.offsetWidth >= this.offset) {
                             //* 不做任何操作退出循环
@@ -84,7 +84,7 @@ export default class {
                         }
                     }
 
-                    if (currentNode.offsetLeft + currentNode.offsetWidth <= offset && backNodeLeft >= offset) {
+                    if (backNodeRight <= offset && currentNode.offsetLeft >= offset) {
                         //* 存在下一个节点则下一个节点左贴边否则当前节点右贴边并退出循环
                         offset = currentNode.offsetLeft;
                         break;
@@ -98,7 +98,7 @@ export default class {
                     const nextNodeLeft = nextNode.offsetLeft || this.refs.container.clientWidth;
                     const offsetRight = offset + this.refs.main.clientWidth;
                     //* 判断当前右侧偏移距离在该节点中
-                    if (currentNode.offsetLeft < offsetRight && currentNode.offsetLeft + currentNode.offsetWidth >= offsetRight) {
+                    if (currentNode.offsetLeft < offsetRight && currentNode.offsetLeft + currentNode.offsetWidth > offsetRight) {
                         const offsetNextRight = this.offset + this.refs.main.clientWidth;
                         //* 判断上一次右侧偏移举例是否在该节点中
                         if (currentNode.offsetLeft <= offsetNextRight && currentNode.offsetLeft + currentNode.offsetWidth >= offsetNextRight) {
