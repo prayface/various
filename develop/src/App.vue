@@ -22,8 +22,8 @@
 footer {
     width: 100%;
     height: 200px;
-    background: var(--uic-disabled);
-    border-top: 1px solid var(--uic-auxiliary);
+    background: var(--uic-font-4);
+    border-top: 1px solid var(--uic-font-5);
 }
 
 header {
@@ -37,7 +37,7 @@ header {
     background: #fff;
     font-weight: bold;
     line-height: 55px;
-    border-bottom: 1px solid var(--uic-auxiliary);
+    border-bottom: 1px solid var(--uic-font-5);
 }
 
 main {
@@ -55,18 +55,18 @@ main {
         a {
             width: 100%;
             margin: 8px 0 0;
-            border: 1px solid var(--uic-auxiliary);
+            border: 1px solid var(--uic-font-5);
             display: block;
             padding: 8px 20px;
             border-radius: 4px;
             &:hover {
-                border-color: var(--ui-main-color);
+                border-color: var(--uic-main-color);
             }
 
             &.router-link-active {
-                color: var(--ui-main-color);
-                border-color: var(--ui-main-color);
-                background: var(--ui-main-color-005);
+                color: var(--uic-main-color);
+                border-color: var(--uic-main-color);
+                background: var(--uic-main-color-005);
             }
         }
     }
@@ -97,14 +97,14 @@ main {
             > .content {
                 margin-top: 20px;
                 padding: 30px 36px;
-                border: 1px solid var(--uic-auxiliary);
+                border: 1px solid var(--uic-font-5);
             }
 
             > .descript {
                 p {
                     line-height: 22px;
                     > span {
-                        background-color: var(--uic-auxiliary);
+                        background-color: var(--uic-font-5);
                         border-radius: 2px;
                         display: inline-block;
                         padding: 0 4px;
@@ -112,7 +112,7 @@ main {
                         &.warn {
                             margin: 0 4px 0 0;
                             color: #fff;
-                            background-color: var(--ui-error);
+                            background-color: var(--uic-error);
                         }
                     }
                 }
@@ -124,7 +124,7 @@ main {
                 tr th {
                     padding: 8px 12px;
                     text-align: center;
-                    border-bottom: 1px solid var(--uic-auxiliary);
+                    border-bottom: 1px solid var(--uic-font-5);
                 }
             }
         }

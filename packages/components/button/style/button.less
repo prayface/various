@@ -2,52 +2,71 @@
 .ui-button {
     display: inline-block;
     position: relative;
-    border-radius: var(--ui-radius);
+    border-radius: var(--uis-radius);
     vertical-align: top;
-    button {
-        color: #fff;
+    //* 按钮主体样式
+    .ui-button-main {
+        color: var(--uioption-button-font-color);
         cursor: pointer;
-        border: 1px solid var(--ui-topic-color);
-        height: var(--ui-size);
+        border: 1px solid var(--uioption-button-color);
+        height: var(--uis-size);
         display: flex;
-        padding: 0 var(--ui-spacing);
-        font-size: var(--ui-font-size);
-        min-width: var(--ui-button-size);
+        padding: 0 var(--uis-spacing-x);
+        font-size: var(--uis-font-size);
+        min-width: var(--uioption-button-width);
         transition: all 0.2s;
         align-items: center;
         justify-content: center;
-        border-radius: var(--ui-radius);
-        background-color: var(--ui-topic-color);
+        border-radius: var(--uis-radius);
+        background-color: var(--uioption-button-color);
         &:hover {
-            background-color: var(--ui-topic-active-color);
+            background-color: var(--uioption-button-active-color);
         }
     }
-}
 
-//* 朴素的按钮
-.ui-button.ui-button-simple {
-    button {
-        background-color: #fff;
-        color: var(--ui-topic-color);
-        &:hover,
-        &:focus {
-            background-color: var(--ui-topic-color);
-            color: #fff;
-        }
-    }
-}
-
-//* 加载和禁用状态样式
-.ui-button.ui-loading-status,
-.ui-button.ui-disabled-status {
+    //* 按钮图标尺寸
     .ui-mask {
         font-size: 24px;
     }
 }
 
+//* 朴素的按钮
+.ui-button.ui-button-simple {
+    .ui-button-main {
+        background-color: #fff;
+        color: var(--uioption-button-color);
+        &:hover,
+        &:focus {
+            background-color: var(--uioption-button-color);
+            color: var(--uioption-button-font-color);
+        }
+    }
+}
+
 //* 禁用状态样式
 .ui-button.ui-disabled-status {
-    .ui-mask-icon {
-        display: none;
+    .ui-button-main {
+        cursor: no-drop;
+    }
+}
+
+.ui-button.ui-readonly-status {
+    .ui-button-main {
+        cursor: auto;
+    }
+}
+
+//* 朴素的按钮禁用状态
+.ui-button.ui-button-simple.ui-disabled-status {
+    --uioption-button-color: var(--uioption-button-readonly-color);
+    --uioption-button-font-color: var(--uic-font-3);
+}
+
+.ui-button.ui-button-simple.ui-disabled-status,
+.ui-button.ui-button-simple.ui-readonly-status {
+    .ui-button-main {
+        background-color: var(--uioption-button-color);
+        border-color: var(--uioption-button-color);
+        color: var(--uioption-button-font-color);
     }
 }

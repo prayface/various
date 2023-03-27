@@ -1,12 +1,12 @@
 // 表单控制层样式
 .ui-form-control {
     background-color: var(--ui-form-color);
-    border-radius: var(--ui-radius);
-    line-height: calc(var(--ui-size) - 2px);
+    border-radius: var(--uis-radius);
+    line-height: calc(var(--uis-size) - 2px);
     transition: all 0.2s;
-    font-size: var(--ui-font-size);
+    font-size: var(--uis-font-size);
     position: relative;
-    height: var(--ui-size);
+    height: var(--uis-size);
     border: 1px solid var(--ui-border-color);
     width: 100%;
     &:hover,
@@ -27,11 +27,11 @@
 .ui-form-candidates {
     transform-origin: center top;
     background-color: #fff;
-    border-radius: var(--ui-radius);
+    border-radius: var(--uis-radius);
     transition: opacity 0.2s, transform 0.3s;
-    box-shadow: var(--ui-box-shadow);
+    box-shadow: var(--uic-box-shadow);
     position: absolute;
-    border: 1px solid var(--ui-box-border);
+    border: 1px solid var(--uic-box-border);
     inset: 0 auto auto 0;
     &.v-enter-from,
     &.v-leave-to {
@@ -55,11 +55,11 @@
     > .ui-form-candidate-container {
         > .ui-form-candidate {
             cursor: pointer;
-            height: var(--ui-size);
-            padding: 0 var(--ui-spacing);
+            height: var(--uis-size);
+            padding: 0 var(--uis-spacing-x);
             transition: all 0.2s;
             white-space: nowrap;
-            line-height: var(--ui-size);
+            line-height: var(--uis-size);
             &:hover,
             &.ui-active {
                 background: var(--ui-form-candidate-color);
@@ -67,11 +67,11 @@
             }
 
             &:last-child {
-                border-radius: 0 0 var(--ui-radius) var(--ui-radius);
+                border-radius: 0 0 var(--uis-radius) var(--uis-radius);
             }
 
             &:first-child {
-                border-radius: var(--ui-radius) var(--ui-radius) 0 0;
+                border-radius: var(--uis-radius) var(--uis-radius) 0 0;
             }
         }
     }

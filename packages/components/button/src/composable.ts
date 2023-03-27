@@ -1,5 +1,6 @@
-import { UiButtonProps } from "./button";
+import { UiButtonEmits, UiButtonProps } from "./button";
 import { computed, ComputedRef } from "vue";
+import { UiEmitFn } from "@various/constants";
 
 export default class {
     computeds: {
@@ -9,8 +10,13 @@ export default class {
         status: ComputedRef<{ is: boolean; name: string }>;
     };
 
-    constructor(define: UiButtonProps) {
+    methods: {
+        triggerClick: (event: MouseEvent | Event) => void;
+    };
+
+    constructor(define: UiButtonProps, emit: UiEmitFn<typeof UiButtonEmits>) {
         this.computeds = this.#useComputeds(define);
+        this.methods = this.#useMethods(define, emit);
     }
 
     #useComputeds(define: UiButtonProps) {
@@ -20,6 +26,8 @@ export default class {
                 return { is: true, name: "loading" };
             } else if (define.disabled) {
                 return { is: false, name: "disabled" };
+            } else if (define.readonly) {
+                return { is: false, name: "readonly" };
             } else {
                 return { is: false, name: "default" };
             }
@@ -30,7 +38,7 @@ export default class {
             //* 样式
             style: computed(() => (define.width ? `min-width: ${define.width}px` : "")),
             //* 禁用状态
-            disabled: computed(() => status.value.name != "default"),
+            disabled: computed(() => ["loading", "disabled", "readonly"].includes(status.value.name)),
             //* 类名
             className: computed(() => {
                 //* 1. 数据初始化
@@ -41,9 +49,19 @@ export default class {
                 if (define.type != "info") result.push(`ui-${define.type}-type`);
                 if (status.value.name == "loading") result.push("ui-loading-status");
                 else if (status.value.name == "disabled") result.push("ui-disabled-status");
+                else if (status.value.name == "readonly") result.push("ui-readonly-status");
                 //* 3. 输出结果
                 return result.join(" ");
             }),
+        };
+    }
+
+    #useMethods(define: UiButtonProps, emit: UiEmitFn<typeof UiButtonEmits>) {
+        return {
+            triggerClick: (event: MouseEvent | Event) => {
+                if (define.disabled) return;
+                else emit("click", event);
+            },
         };
     }
 }

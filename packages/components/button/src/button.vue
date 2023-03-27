@@ -1,12 +1,12 @@
 <template>
     <div class="ui-button" :class="className">
         <!-- 按钮主体 -->
-        <button :type="nativeType" :style="style" :disabled="disabled" @click="!disabled && $emit('click', $event)">
+        <button class="ui-button-main" :type="nativeType" :style="style" :disabled="disabled" @click="triggerClick">
             <slot></slot>
         </button>
         <!-- 遮罩层 -->
         <Transition>
-            <div class="ui-mask ui-loading" v-if="disabled">
+            <div class="ui-mask ui-loading" v-if="status.name == 'loading'">
                 <UiIcon name="loading" class="ui-mask-icon" v-show="status.is" />
             </div>
         </Transition>
@@ -24,12 +24,13 @@ export default defineComponent({
     emits: UiButtonEmits,
     props: UiButtonPropsOption,
     components: { UiIcon },
-    setup(define) {
+    setup(define, { emit }) {
         //* 实例化组合函数
-        const composable = new Composable(define);
-        
+        const composable = new Composable(define, emit);
+
         return {
             ...composable.computeds,
+            ...composable.methods,
         };
     },
 });

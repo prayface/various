@@ -47,6 +47,26 @@
             </div>
         </section>
         <section>
+            <div class="title">只读状态</div>
+            <div class="descript">
+                <p>你可以使用<span>readonly</span>属性来定义按钮是否只读。 该属性接收一个<span>Boolean</span>类型的值</p>
+            </div>
+            <div class="content">
+                <p>
+                    <UiButton @click="click" readonly>啊! 我被禁用了</UiButton>
+                    <UiButton @click="click" type="error" readonly>啊! 我被禁用了</UiButton>
+                    <UiButton @click="click" type="warning" readonly>啊! 我被禁用了</UiButton>
+                    <UiButton @click="click" type="success" readonly>啊! 我被禁用了</UiButton>
+                </p>
+                <p>
+                    <UiButton @click="click" readonly simple>啊! 我也被禁用了</UiButton>
+                    <UiButton @click="click" type="error" readonly simple>啊! 我也被禁用了</UiButton>
+                    <UiButton @click="click" type="warning" readonly simple>啊! 我也被禁用了</UiButton>
+                    <UiButton @click="click" type="success" readonly simple>啊! 我也被禁用了</UiButton>
+                </p>
+            </div>
+        </section>
+        <section>
             <div class="title">加载状态</div>
             <div class="descript">
                 <p>点击按钮来加载数据，并向用户反馈加载状态。</p>
@@ -107,6 +127,13 @@
                     <td>false</td>
                 </tr>
                 <tr>
+                    <td>readonly</td>
+                    <td>是否为只读按钮</td>
+                    <td>boolean</td>
+                    <td>--</td>
+                    <td>false</td>
+                </tr>
+                <tr>
                     <td>loading</td>
                     <td>是否为加载按钮</td>
                     <td>boolean</td>
@@ -161,7 +188,7 @@ const click = () => {
         .content {
             p {
                 display: flex;
-                align-items: center;
+                align-items: flex-end;
             }
         }
 

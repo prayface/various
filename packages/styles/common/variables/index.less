@@ -1,77 +1,101 @@
+// 颜色组
 :root {
     // 主色
-    --ui-main-color: rgb(84, 73, 219);
-    --ui-main-color-005: rgba(84, 73, 219, 0.05); // 主色的5%透明度
-    --ui-main-active-color: rgb(83, 100, 230); // 主色的激活色
+    --uic-main-color: rgb(84, 73, 219);
+    --uic-main-color-05: rgb(169, 164, 237);
+    --uic-main-color-005: rgb(246, 246, 253);
+    --uic-main-active-color: rgb(83, 100, 230); // 主色的激活色
 
     // 辅助色
-    --uic-disabled: rgb(245, 245, 245); // 禁用色
-    --uic-auxiliary: rgb(227, 227, 227); // 常规辅助色
-    --uic-auxiliary-active: rgb(199, 199, 199); // 常规辅助激活色
     --uic-font-1: rgb(64, 64, 64); // 标题文本色
     --uic-font-2: rgb(132, 132, 132); // 默认文本色
-    --uic-font-3: rgb(153, 153, 153); // 降级文本色
-    --uic-font-4: rgb(248, 248, 248); // 浅色背景色
+    --uic-font-3: rgb(153, 153, 153); // 提示文本色
+    --uic-font-4: rgb(199, 199, 199); // 默认边框背景色
+    --uic-font-4-02: rgb(244, 244, 244);
+    --uic-font-5: rgb(248, 248, 248); // 浅色边框背景色
+    --uic-font-6: rgb(255, 255, 255); // 反白色
 
     // 错误颜色
-    --ui-error: rgb(207, 36, 36);
-    --ui-error-005: rgb(254, 244, 244);
-    --ui-error-active: rgb(209, 62, 62); // 激活色
+    --uic-error: rgb(207, 36, 36);
+    --uic-error-05: rgb(231, 145, 145);
+    --uic-error-005: rgb(253, 244, 244);
+    --uic-error-active: rgb(209, 62, 62); // 激活色
 
     // 成功颜色
-    --ui-success: rgb(0, 177, 55);
-    --ui-success-005: rgb(242, 251, 245);
-    --ui-success-active: rgb(19, 179, 69); // 激活色
+    --uic-success: rgb(0, 177, 55);
+    --uic-success-05: rgb(127, 216, 155);
+    --uic-success-005: rgb(242, 251, 245);
+    --uic-success-active: rgb(19, 179, 69); // 激活色
 
     // 警告颜色
-    --ui-warning: rgb(255, 156, 0);
-    --ui-warning-005: rgb(255, 250, 242);
-    --ui-warning-active: rgb(250, 165, 28); // 激活色
+    --uic-warning: rgb(255, 156, 0);
+    --uic-warning-05: rgb(255, 205, 127);
+    --uic-warning-005: rgb(255, 250, 242);
+    --uic-warning-active: rgb(250, 165, 28); // 激活色
 
-    // 半透明遮罩
-    --ui-mask-color: rgba(255, 255, 255, 0.8);
+    // 遮罩颜色
+    --uic-mask: rgba(255, 255, 255, 0.8);
 
     // 阴影效果
-    --ui-box-shadow: 0px 4px 8px 0px rgba(105, 1, 98, 0.05);
-    --ui-box-border: rgba(277, 277, 277, 0.3);
+    --uic-box-shadow: 0px 4px 8px 0px rgba(105, 1, 98, 0.05);
+    --uic-box-border: rgba(277, 277, 277, 0.3);
+}
+
+// 尺寸组
+:root {
+    --uis-font-height: 22px; // 默认字体行高
+    --uis-font-size: 14px; // 默认字体大小
+
+    // 其他常规配置
+    --uis-model-spacing-x: 112px; // 默认弹出框水平间距
+    --uis-model-spacing-y: 68px; // 默认弹出框垂直间距
+    --uis-spacing-x: 16px; // 默认水平间距
+    --uis-spacing-y: 16px; // 默认垂直间距
+    --uis-radius: 4px; // 默认圆角
+    --uis-size: 40px; // 默认尺寸
+}
+
+// 配置组
+:root {
+    // 按钮组件配置
+    --uioption-button-size: var(--uis-size); // 默认按钮尺寸
+    --uioption-button-width: auto; // 默认按钮最小尺寸
+    --uioption-button-color: var(--uic-main-color); // 默认按钮颜色
+    --uioption-button-font-color: var(--uic-font-6); // 默认按钮字体颜色
+    --uioption-button-active-color: var(--uic-main-active-color); // 默认按钮禁用颜色
+    --uioption-button-disabled-color: var(--uic-main-color-05); // 默认按钮禁用颜色
+    --uioption-button-readonly-color: var(--uic-font-4-02); // 默认按钮只读颜色
 
     // 图标配置
-    --ui-icon-color: var(--uic-auxiliary); // 默认图标颜色
-    --ui-icon-active-color: var(--ui-main-color); // 默认图标激活颜色
-
-    // 按钮组件配置
-    --ui-button-size: auto; // 默认按钮最小尺寸
+    --ui-icon-color: var(--uic-font-5); // 默认图标颜色
+    --ui-icon-active-color: var(--uic-main-color); // 默认图标激活颜色
 
     // 滚动条组件配置
-    --ui-scrollbar-color: var(--uic-auxiliary); // 默认滚动条滑块颜色
-    --ui-scrollbar-active-color: var(--uic-auxiliary-active); // 默认滚动条滑块激活颜色
+    --ui-scrollbar-color: var(--uic-font-5); // 默认滚动条滑块颜色
+    --ui-scrollbar-active-color: var(--uic-font-4); // 默认滚动条滑块激活颜色
 
     // 表单配置
-    --ui-form-placeholder-color: var(--uic-auxiliary); // 默认提示文本颜色
-    --ui-form-candidate-color: var(--ui-main-color-005); // 候选项背景色
+    --ui-form-placeholder-color: var(--uic-font-5); // 默认提示文本颜色
+    --ui-form-candidate-color: var(--uic-main-color-005); // 候选项背景色
     --ui-form-message-color: var(--ui-font-color); // 默认校验提示文本颜色
     --ui-form-color: #fff; // 默认表单背景颜色
 
     // 常规主题色配置
-    --ui-topic-color: var(--ui-main-color); // 主题色
-    --ui-topic-active-color: var(--ui-main-active-color); // 主题激活色
-    --ui-subtopic-color: var(--ui-main-color-005); // 副主题色
+    --ui-topic-color: var(--uic-main-color); // 主题色
+    --ui-topic-active-color: var(--uic-main-active-color); // 主题激活色
+    --ui-subtopic-color: var(--uic-main-color-005); // 副主题色
 
     // 常规边框配置
-    --ui-border-color: var(--uic-auxiliary); // 默认边框颜色
-    --ui-border-active-color: var(--ui-main-color); // 默认边框激活颜色
+    --ui-border-color: var(--uic-font-5); // 默认边框颜色
+    --ui-border-active-color: var(--uic-main-color); // 默认边框激活颜色
 
     // 常规字体配置
-    --ui-font-active-color: var(--ui-main-color); // 默认文本激活颜色
+    --ui-font-active-color: var(--uic-main-color); // 默认文本激活颜色
     --ui-font-color: var(--uic-font-2); // 默认文字颜色
-    --ui-font-line: 22px; // 默认字体行高
-    --ui-font-size: 14px; // 默认字体大小
+}
 
-    // 其他常规配置
-    --ui-spacing: 16px; // 默认间距
-    --ui-radius: 4px; // 默认圆角
-    --ui-size: 40px; // 默认尺寸
-
+// 引入组
+:root {
     @import "./size.less";
     @import "./type.less";
     @import "./status.less";

@@ -4,6 +4,7 @@ import { UiTypes } from "@various/constants";
 export const UiButtonPropsOption = {
     nativeType: { type: String as PropType<"button" | "submit" | "reset">, default: "button" },
     disabled: { type: Boolean, default: false },
+    readonly: { type: Boolean, default: false },
     loading: { type: Boolean, default: false },
     simple: { type: Boolean, default: false },
     width: { type: Number },

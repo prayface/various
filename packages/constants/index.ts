@@ -34,6 +34,8 @@ export type UiEmitFn<Options = EmitsOptions, Event extends keyof Options = keyof
     ? (event: string, ...args: any[]) => void
     : UnionToIntersection<
           {
-              [key in Event]: Options[key] extends (...args: infer Args) => any ? (event: key, ...args: Args) => void : (event: key, ...args: any[]) => void;
+              [key in Event]: Options[key] extends (...args: infer Args) => any
+                  ? (event: key, ...args: Args) => void
+                  : (event: key, ...args: any[]) => void;
           }[Event]
       >;
