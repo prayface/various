@@ -14,6 +14,7 @@
     --uic-font-4-02: rgb(244, 244, 244);
     --uic-font-5: rgb(248, 248, 248); // 浅色边框背景色
     --uic-font-6: rgb(255, 255, 255); // 反白色
+    --uic-font-6-03: rgba(255, 255, 255, 0.3); // 反白色
 
     // 错误颜色
     --uic-error: rgb(207, 36, 36);
@@ -34,11 +35,11 @@
     --uic-warning-active: rgb(250, 165, 28); // 激活色
 
     // 遮罩颜色
-    --uic-mask: rgba(255, 255, 255, 0.8);
+    --uic-mask: rgba(255, 255, 255, 0.8); // 局部遮罩
+    --uic-full-mask: rgba(0, 0, 0, 0.45); // 全屏遮罩
 
     // 阴影效果
     --uic-box-shadow: 0px 4px 8px 0px rgba(105, 1, 98, 0.05);
-    --uic-box-border: rgba(277, 277, 277, 0.3);
 }
 
 // 尺寸组
@@ -57,41 +58,34 @@
 
 // 配置组
 :root {
-    // 按钮组件配置
-    --uioption-button-size: var(--uis-size); // 默认按钮尺寸
-    --uioption-button-width: auto; // 默认按钮最小尺寸
-    --uioption-button-color: var(--uic-main-color); // 默认按钮颜色
-    --uioption-button-font-color: var(--uic-font-6); // 默认按钮字体颜色
-    --uioption-button-active-color: var(--uic-main-active-color); // 默认按钮禁用颜色
-    --uioption-button-disabled-color: var(--uic-main-color-05); // 默认按钮禁用颜色
-    --uioption-button-readonly-color: var(--uic-font-4-02); // 默认按钮只读颜色
+    // 常规字体配置
+    --uioption-font-active-color: var(--uic-main-color); // 默认文本激活颜色
+    --uioption-font-color: var(--uic-font-2); // 默认文字颜色
 
-    // 图标配置
-    --ui-icon-color: var(--uic-font-5); // 默认图标颜色
-    --ui-icon-active-color: var(--uic-main-color); // 默认图标激活颜色
+    // 表单组件配置
+    --uioption-form-color: var(--uic-font-4); // 默认表单组件边框色
+    --uioption-form-radius: var(--uis-radius); // 默认表单组件圆角
+    --uioption-form-spacing-x: var(--uis-spacing-x); // 默认表单组件水平间距
+    --uioption-form-font-size: var(--uis-font-size); // 默认表单组件字体大小
+    --uioption-form-font-color: var(--uioption-font-color); // 默认表单组件字体颜色
+    --uioption-form-message-color: var(--uic-font-2); // 默认表单组件校验提示文本色
+    --uioption-form-candidate-color: var(--uic-font-2); // 候选项字体颜色
+    --uioption-form-background-color: var(--uic-font-6); // 默认表单组件背景色
+    --uioption-form-placeholder-color: var(--uic-font-3); // 默认表单组件提示文本色
+    --uioption-form-candidate-spacing-x: var(--uis-spacing-x); // 默认表单组件候选项水平间距
+    --uioption-form-candidate-box-shadow: var(--uic-box-shadow); // 候选项容器阴影效果
+    --uioption-form-candidate-background-color: var(--uic-font-6); // 候选项背景色
+
+    // 表单组件激活配置
+    --uioption-form-active-color: var(--uic-main-color); // 默认表单组件激活边框色
+    --uioption-form-active-font-color: var(--uioption-font-active-color); // 默认表单组件激活字体颜色
+    --uioption-form-candidate-active-color: var(--uic-main-active-color); // 候选激活项字体颜色
+    --uioption-form-candidate-active-background-color: var(--uic-main-color-005); // 候选激活项背景色
 
     // 滚动条组件配置
-    --ui-scrollbar-color: var(--uic-font-5); // 默认滚动条滑块颜色
-    --ui-scrollbar-active-color: var(--uic-font-4); // 默认滚动条滑块激活颜色
-
-    // 表单配置
-    --ui-form-placeholder-color: var(--uic-font-5); // 默认提示文本颜色
-    --ui-form-candidate-color: var(--uic-main-color-005); // 候选项背景色
-    --ui-form-message-color: var(--ui-font-color); // 默认校验提示文本颜色
-    --ui-form-color: #fff; // 默认表单背景颜色
-
-    // 常规主题色配置
-    --ui-topic-color: var(--uic-main-color); // 主题色
-    --ui-topic-active-color: var(--uic-main-active-color); // 主题激活色
-    --ui-subtopic-color: var(--uic-main-color-005); // 副主题色
-
-    // 常规边框配置
-    --ui-border-color: var(--uic-font-5); // 默认边框颜色
-    --ui-border-active-color: var(--uic-main-color); // 默认边框激活颜色
-
-    // 常规字体配置
-    --ui-font-active-color: var(--uic-main-color); // 默认文本激活颜色
-    --ui-font-color: var(--uic-font-2); // 默认文字颜色
+    --uioption-scrollbar-color: var(--uic-font-4); // 默认滚动条滑块颜色
+    --uioption-scrollbar-active-color: var(--uic-font-3); // 默认滚动条滑块激活颜色
+    --uioption-scrollbar-background-color: var(--uic-font-4-02); // 默认滚动条背景颜色
 }
 
 // 引入组

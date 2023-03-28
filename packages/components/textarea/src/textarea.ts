@@ -4,7 +4,6 @@ import { UiTypes } from "@various/constants";
 export const UiTextareaPropsOption = {
     placeholder: { type: String, default: "Please input" } /**提示文本 */,
     modelValue: { type: [String, Number] as PropType<string | number>, required: true },
-    clearable: { type: Boolean, default: false } /**是否可清空 */,
     disabled: { type: Boolean, default: false } /**是否禁用 */,
     readonly: { type: Boolean, default: false } /**是否只读 */,
     loading: { type: Boolean, default: false } /**是否启动内置loading */,

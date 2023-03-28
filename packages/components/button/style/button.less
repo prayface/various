@@ -1,23 +1,36 @@
-//* 默认状态
+//* css变量
+.ui-button {
+    --uioption-button-size: var(--uis-size); // 默认按钮尺寸
+    --uioption-button-width: auto; // 默认按钮最小尺寸
+    --uioption-button-color: var(--uic-main-color); // 默认按钮颜色
+    --uioption-button-radius: var(--uis-radius); // 默认按钮组件圆角
+    --uioption-button-spacing-x: var(--uis-spacing-x); // 默认按钮组件水平间距
+    --uioption-button-font-color: var(--uic-font-6); // 默认按钮字体颜色
+    --uioption-button-active-color: var(--uic-main-active-color); // 默认按钮激活颜色
+    --uioption-button-disabled-color: var(--uic-main-color-05); // 默认按钮禁用颜色
+    --uioption-button-readonly-color: var(--uic-font-4-02); // 默认按钮只读颜色
+}
+
+//* 默认的按钮
 .ui-button {
     display: inline-block;
     position: relative;
-    border-radius: var(--uis-radius);
+    border-radius: var(--uioption-button-radius);
     vertical-align: top;
     //* 按钮主体样式
     .ui-button-main {
         color: var(--uioption-button-font-color);
         cursor: pointer;
         border: 1px solid var(--uioption-button-color);
-        height: var(--uis-size);
+        height: var(--uioption-button-size);
         display: flex;
-        padding: 0 var(--uis-spacing-x);
+        padding: 0 var(--uioption-button-spacing-x);
         font-size: var(--uis-font-size);
         min-width: var(--uioption-button-width);
         transition: all 0.2s;
         align-items: center;
         justify-content: center;
-        border-radius: var(--uis-radius);
+        border-radius: var(--uioption-button-radius);
         background-color: var(--uioption-button-color);
         &:hover {
             background-color: var(--uioption-button-active-color);
@@ -43,30 +56,6 @@
     }
 }
 
-//* 禁用状态样式
-.ui-button.ui-disabled-status {
-    .ui-button-main {
-        cursor: no-drop;
-    }
-}
-
-.ui-button.ui-readonly-status {
-    .ui-button-main {
-        cursor: auto;
-    }
-}
-
-//* 朴素的按钮禁用状态
-.ui-button.ui-button-simple.ui-disabled-status {
-    --uioption-button-color: var(--uioption-button-readonly-color);
-    --uioption-button-font-color: var(--uic-font-3);
-}
-
-.ui-button.ui-button-simple.ui-disabled-status,
-.ui-button.ui-button-simple.ui-readonly-status {
-    .ui-button-main {
-        background-color: var(--uioption-button-color);
-        border-color: var(--uioption-button-color);
-        color: var(--uioption-button-font-color);
-    }
-}
+@import "./button.size.less";
+@import "./button.type.less";
+@import "./button.status.less";

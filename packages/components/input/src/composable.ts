@@ -6,10 +6,10 @@ import { UiEmitFn, UiTypes } from "@various/constants";
 import { node, dispost } from "@various/utils";
 
 export type UiInputConstructorRefs = {
-    main?: HTMLElement;
     visible: boolean;
     triangle?: HTMLElement;
     container?: HTMLElement;
+    candidate?: HTMLElement;
 };
 
 export default class {
@@ -49,7 +49,7 @@ export default class {
     #useMethods(define: UiInputProps, emit: UiEmitFn<typeof UiInputEmits>, emitter?: Emitter<any>) {
         //? 候选框隐藏事件
         const hiddenCandidate = (ev?: Event) => {
-            if (!ev || !this.refs.main || !node.includes(ev.target as HTMLElement, this.refs.main)) {
+            if (!ev || !this.refs.container || !node.includes(ev.target as HTMLElement, this.refs.container)) {
                 this.refs.visible = false;
                 window.removeEventListener("click", hiddenCandidate);
             }
@@ -83,23 +83,23 @@ export default class {
             showCandidate: () => {
                 this.refs.visible = true;
                 nextTick(() => {
-                    if (!this.refs.main || !this.refs.container) return;
+                    if (!this.refs.container || !this.refs.candidate) return;
                     //* 将内容添加到视图容器中
-                    node.append("ui-windows", this.refs.container);
+                    node.append("ui-windows", this.refs.candidate);
 
                     //* 获取节点到body距离
-                    const mainToBodyRect = dispost.elementToBodyRect(this.refs.main);
                     const containerToBodyRect = dispost.elementToBodyRect(this.refs.container);
+                    const candidateToBodyRect = dispost.elementToBodyRect(this.refs.candidate);
                     //* 根据配置计算当前窗口位置
-                    const rect = dispost.elementToContainerBoundary(mainToBodyRect, containerToBodyRect, {
+                    const rect = dispost.elementToContainerBoundary(containerToBodyRect, candidateToBodyRect, {
                         direction: "bottom",
                         align: "top",
                     });
 
                     //* 将窗口位置添加入窗口中
                     if (rect) {
-                        this.refs.container.style.inset = `${rect.offsetY}px auto auto ${rect.offsetX}px`;
-                        this.refs.container.style.transform = rect.transform;
+                        this.refs.candidate.style.inset = `${rect.offsetY}px auto auto ${rect.offsetX}px`;
+                        this.refs.candidate.style.transform = rect.transform;
                         if (rect.triangle && this.refs.triangle) {
                             this.refs.triangle.style.inset = rect.triangle;
                             this.refs.triangle.style.transform = `rotate(${rect.rotate})`;

@@ -63,7 +63,11 @@ export const elementToContainerBoundary = (main: DOMRect, container: DOMRect, op
             //* 数据初始化
             const result = {
                 rotate: "90deg",
-                offsetX: dispostBoundaryAlign(option.align, container.width, main.width, { offset: main.left, inner: innerWidth, scroll: window.scrollX }),
+                offsetX: dispostBoundaryAlign(option.align, container.width, main.width, {
+                    offset: main.left,
+                    inner: innerWidth,
+                    scroll: window.scrollX,
+                }),
                 offsetY: main.top - 8,
                 triangle: `${container.height - 1}px auto auto ${dispostTriangleAlign(container.width, option.align)}`,
                 transform: "translate(0, -100%)",
@@ -72,7 +76,7 @@ export const elementToContainerBoundary = (main: DOMRect, container: DOMRect, op
             if (result.offsetY - container.height < window.scrollY && main.top + main.height + container.height + 8 < innerHeight) {
                 result.rotate = "-90deg";
                 result.offsetY = main.top + main.height + 8;
-                result.triangle = `-7px auto auto ${dispostTriangleAlign(container.width, option.align)}`;
+                result.triangle = `-6px auto auto ${dispostTriangleAlign(container.width, option.align)}`;
                 result.transform = "none";
             }
 
@@ -84,7 +88,11 @@ export const elementToContainerBoundary = (main: DOMRect, container: DOMRect, op
             const result = {
                 rotate: "",
                 offsetX: main.left - 8,
-                offsetY: dispostBoundaryAlign(option.align, container.height, main.height, { offset: main.top, inner: innerHeight, scroll: window.scrollY }),
+                offsetY: dispostBoundaryAlign(option.align, container.height, main.height, {
+                    offset: main.top,
+                    inner: innerHeight,
+                    scroll: window.scrollY,
+                }),
                 triangle: `${dispostTriangleAlign(container.height, option.align)} auto auto ${container.width}px`,
                 transform: "translate(-100%, 0)",
             };
@@ -104,7 +112,11 @@ export const elementToContainerBoundary = (main: DOMRect, container: DOMRect, op
             const result = {
                 rotate: "180deg",
                 offsetX: main.left + main.width + 8,
-                offsetY: dispostBoundaryAlign(option.align, container.height, main.height, { offset: main.top, inner: innerHeight, scroll: window.scrollY }),
+                offsetY: dispostBoundaryAlign(option.align, container.height, main.height, {
+                    offset: main.top,
+                    inner: innerHeight,
+                    scroll: window.scrollY,
+                }),
                 triangle: `${dispostTriangleAlign(container.height, option.align)} auto auto -6px`,
                 transform: "none",
             };
@@ -123,9 +135,13 @@ export const elementToContainerBoundary = (main: DOMRect, container: DOMRect, op
             //* 数据初始化
             const result = {
                 rotate: "-90deg",
-                offsetX: dispostBoundaryAlign(option.align, container.width, main.width, { offset: main.left, inner: innerWidth, scroll: window.scrollX }),
+                offsetX: dispostBoundaryAlign(option.align, container.width, main.width, {
+                    offset: main.left,
+                    inner: innerWidth,
+                    scroll: window.scrollX,
+                }),
                 offsetY: main.top + main.height + 8,
-                triangle: `-7px auto auto ${dispostTriangleAlign(container.width, option.align)}`,
+                triangle: `-6px auto auto ${dispostTriangleAlign(container.width, option.align)}`,
                 transform: "none",
             };
             //* 超出边界处理

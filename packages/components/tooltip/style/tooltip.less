@@ -1,12 +1,20 @@
+//* css变量
 .ui-tooltip-container {
-    background-color: #fff;
-    border-radius: var(--uis-radius);
+    --uioption-tooltip-radius: var(--uis-radius); // 默认圆角
+    --uioption-tooltip-spacing-x: var(--uis-spacing-x); // 默认水平内间距
+    --uioption-tooltip-spacing-y: calc(var(--uis-spacing-y) / 2); // 默认水平内间距
+    --uioption-tooltip-box-shadow: var(--uic-box-shadow); // 默认悬浮提示组件阴影效果
+    --uioption-tooltip-background-color: var(--uic-font-6); // 默认悬浮提示组件背景颜色
+}
+
+.ui-tooltip-container {
+    background-color: var(--uioption-tooltip-background-color);
+    border-radius: var(--uioption-tooltip-radius);
     white-space: nowrap;
     transition: opacity 0.2s;
-    box-shadow: var(--uic-box-shadow);
+    box-shadow: var(--uioption-tooltip-box-shadow);
     position: absolute;
-    padding: calc(var(--uis-spacing-x) / 2) var(--uis-spacing-x);
-    border: 1px solid var(--uic-box-border);
+    padding: var(--uioption-tooltip-spacing-y) var(--uioption-tooltip-spacing-x);
     inset: 0 auto auto 0;
     &.v-enter-from,
     &.v-leave-to {
@@ -22,7 +30,7 @@
         position: absolute;
         border-style: solid;
         border-width: 4px 0 4px 6px;
-        border-color: transparent transparent transparent #fff;
+        border-color: transparent transparent transparent var(--uioption-tooltip-background-color);
     }
 }
 

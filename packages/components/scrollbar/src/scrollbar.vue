@@ -3,10 +3,10 @@
         <div class="ui-scrollbar-content" ref="content" :style="stylesContent">
             <slot></slot>
         </div>
-        <div class="ui-scrollbar-container ui-scrollbar-x" v-show="scrollbarX.size">
+        <div class="ui-scrollbar-container ui-scrollbar-level" v-show="scrollbarX.size">
             <div class="ui-scrollbar-bar" :style="stylesScrollbarX" @mousedown="onScroll(true, $event)"></div>
         </div>
-        <div class="ui-scrollbar-container ui-scrollbar-y" v-show="scrollbarY.size">
+        <div class="ui-scrollbar-container ui-scrollbar-vertical" v-show="scrollbarY.size">
             <div class="ui-scrollbar-bar" :style="stylesScrollbarY" @mousedown="onScroll(false, $event)"></div>
         </div>
     </div>

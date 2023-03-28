@@ -108,8 +108,6 @@ export default class {
                 else if (define.readonly) result.push("ui-readonly-status");
                 // 判断是否需要添加size类名
                 if (define.size != "default") result.push(`ui-${define.size}`);
-                // 判断是否需要添加clearable类名
-                if (define.clearable) result.push("ui-clearable");
 
                 return result.join(" ");
             }),

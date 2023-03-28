@@ -33,13 +33,6 @@
                     <td>--</td>
                 </tr>
                 <tr>
-                    <td>clearable</td>
-                    <td>是否显示可清空按钮</td>
-                    <td>boolean</td>
-                    <td>--</td>
-                    <td>false</td>
-                </tr>
-                <tr>
                     <td>disabled</td>
                     <td>是否禁用</td>
                     <td>boolean</td>

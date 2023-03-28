@@ -1,3 +1,16 @@
+//* css变量
+.ui-pagination {
+    // 分页器组件配置
+    --uioption-pagination-color: var(--uioption-font-color); // 默认分页器字体色
+    --uioption-pagination-radius: var(--uis-radius); // 默认分页器圆角
+    --uioption-pagination-background-color: var(--uic-font-5); // 默认分页器背景色
+
+    // 分页器组件激活配置
+    --uioption-pagination-active-color: var(--uic-font-6); // 默认分页器激活字体颜色
+    --uioption-pagination-active-background-color: var(--uic-main-color); // 默认分页器激活字体颜色
+}
+
+//* 分页器样式
 .ui-pagination {
     width: 100%;
     display: flex;
@@ -9,6 +22,7 @@
         align-items: center;
         .ui-pagination-control {
             width: 40px;
+            color: var(--uioption-pagination-color);
             height: 40px;
             margin: 0 4px;
             cursor: pointer;
@@ -16,13 +30,13 @@
             position: relative;
             transition: all 0.3s;
             align-items: center;
-            border-radius: var(--uis-radius);
+            border-radius: var(--uioption-pagination-radius);
             justify-content: center;
-            background-color: var(--uic-font-5);
+            background-color: var(--uioption-pagination-background-color);
             &:hover,
             &.ui-active {
-                color: #fff;
-                background-color: var(--uic-main-color);
+                color: var(--uioption-pagination-active-color);
+                background-color: var(--uioption-pagination-active-background-color);
             }
         }
 

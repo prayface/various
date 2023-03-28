@@ -1,0 +1,34 @@
+//* 禁用状态样式
+.ui-button.ui-disabled-status {
+    --uioption-button-color: var(--uioption-button-disabled-color); // 按钮颜色
+    --uioption-button-active-color: var(--uioption-button-disabled-color); // 按钮触发颜色
+    .ui-button-main {
+        cursor: no-drop;
+    }
+}
+
+//* 只读状态样式
+.ui-button.ui-readonly-status {
+    --uioption-button-color: var(--uioption-button-readonly-color); // 按钮颜色
+    --uioption-button-font-color: var(--uic-font-3); // 按钮字体颜色
+    --uioption-button-active-color: var(--uioption-button-readonly-color); // 按钮触发颜色
+    .ui-button-main {
+        cursor: auto;
+    }
+}
+
+//* 朴素的按钮禁用状态样式
+.ui-button.ui-button-simple.ui-disabled-status {
+    --uioption-button-color: var(--uioption-button-readonly-color);
+    --uioption-button-font-color: var(--uic-font-3);
+}
+
+//* 朴素的按钮禁用状态和只读状态公共样式
+.ui-button.ui-button-simple.ui-disabled-status,
+.ui-button.ui-button-simple.ui-readonly-status {
+    .ui-button-main {
+        background-color: var(--uioption-button-color);
+        border-color: var(--uioption-button-color);
+        color: var(--uioption-button-font-color);
+    }
+}

@@ -2,11 +2,9 @@
     <div class="ui-textarea" :class="className" :style="style" ref="main">
         <!-- Input主体 -->
         <textarea class="ui-form-control" v-bind="attrs" v-on="handles" ref="container" resize="none"></textarea>
-        <!-- 清空按钮 -->
-        <UiIcon name="error" class="ui-textarea-clearable" v-if="clearable && modelValue" @click="clear" />
         <!-- 滚动条容器 -->
-        <div class="ui-textarea-scroll" v-show="scrollsize">
-            <div class="ui-textarea-scroll-bar" :style="scrollbarStyle" @mousedown="onMousedown"></div>
+        <div class="ui-scrollbar-container ui-scrollbar-vertical" v-show="scrollsize">
+            <div class="ui-scrollbar-bar" :style="scrollbarStyle" @mousedown="onMousedown"></div>
         </div>
     </div>
 </template>

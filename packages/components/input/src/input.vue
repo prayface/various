@@ -1,12 +1,14 @@
 <template>
-    <div class="ui-input" :class="className" :style="style" ref="main">
+    <div class="ui-input" :class="className" :style="style" ref="container">
         <!-- Input主体 -->
         <input class="ui-form-control" v-bind="attrs" v-on="handles" />
+
         <!-- 清空按钮 -->
-        <UiIcon name="error" class="ui-input-clearable" v-if="clearable && modelValue" @click="clear" />
+        <UiIcon name="error" class="ui-form-clearable" v-if="clearable && modelValue" @click="clear" />
+
         <!-- 候选项 -->
         <Transition>
-            <div class="ui-form-candidates" v-if="visible" ref="container">
+            <div class="ui-form-candidates" v-if="visible" ref="candidate">
                 <div class="ui-form-candidates-triangle" ref="triangle"></div>
                 <div class="ui-form-candidate-container">
                     <template v-for="value in candidates">
@@ -17,9 +19,10 @@
                 </div>
             </div>
         </Transition>
+
         <!-- 遮罩层 -->
         <Transition>
-            <div class="ui-mask ui-loading" v-if="['disabled', 'readonly', 'loading'].includes(status.name)">
+            <div class="ui-mask ui-loading" v-if="status.name == 'loading'">
                 <UiIcon name="loading" class="ui-mask-icon" v-show="status.is" />
             </div>
         </Transition>
@@ -45,10 +48,10 @@ export default defineComponent({
 
         //* 初始化响应式变量
         const refs = reactive<UiInputConstructorRefs>({
-            main: undefined,
             visible: false,
             triangle: undefined,
             container: undefined,
+            candidate: undefined,
         });
 
         //* 实例化组合函数
@@ -59,9 +62,9 @@ export default defineComponent({
 
         //* 销毁事件
         onUnmounted(() => {
-            if (!refs.container) return;
+            if (!refs.candidate) return;
             //* 将内容从视图容器中移除
-            node.remove("ui-windows", refs.container);
+            node.remove("ui-windows", refs.candidate);
         });
 
         return {

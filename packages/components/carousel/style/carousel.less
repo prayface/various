@@ -1,3 +1,19 @@
+//* css变量
+.ui-carousel {
+    // 轮播图组件配置
+    --uioption-carousel-indicator-color: var(--uic-font-2); // 默认轮播图指示器颜色
+    --uioption-carousel-control-icon-color: var(--uic-font-6); // 默认轮播图控制器图标颜色
+    --uioption-carousel-control-border-color: var(--uic-font-6); // 默认轮播图控制器边框颜色
+    --uioption-carousel-control-background-color: var(--uic-font-6-03); // 默认轮播图控制器背景颜色
+
+    // 轮播图组件激活配置
+    --uioption-carousel-indicator-active-color: var(--uic-main-color); // 默认轮播图指示器颜色
+    --uioption-carousel-control-active-icon-color: var(--uic-main-color); // 默认轮播图控制器图标颜色
+    --uioption-carousel-control-active-border-color: var(--uic-font-6); // 默认轮播图控制器边框颜色
+    --uioption-carousel-control-active-background-color: var(--uic-font-6); // 默认轮播图控制器背景颜色
+}
+
+//* 轮播图公共样式
 .ui-carousel {
     overflow: hidden;
     position: relative;
@@ -23,17 +39,17 @@
         justify-content: center;
         border-radius: 50%;
         align-items: center;
-        background: rgba(255, 255, 255, 0.3);
+        background: var(--uioption-carousel-control-background-color);
         transition: all 0.3s ease-in-out;
         transform: translate(0, -50%);
         font-size: 20px;
         position: absolute;
         display: flex;
         opacity: 0;
-        border: 1px solid #fff;
+        border: 1px solid var(--uioption-carousel-control-border-color);
         cursor: pointer;
         height: 48px;
-        color: #fff;
+        color: var(--uioption-carousel-control-icon-color);
         width: 48px;
         &.ui-carousel-left-control {
             inset: 50% auto auto 0;
@@ -63,16 +79,17 @@
             cursor: pointer;
             transition: all 0.3s ease-in-out;
             border-radius: 9999px;
-            background-color: var(--uic-font-3);
+            background-color: var(--uioption-carousel-indicator-color);
         }
 
         .ui-carousel-schedule.active {
             width: 72px;
-            background-color: var(--uic-main-color);
+            background-color: var(--uioption-carousel-indicator-active-color);
         }
     }
 }
 
+//* 默认轮播图样式
 .ui-carousel.ui-default-carousel {
     .ui-carousel-container {
         width: 100%;
@@ -86,6 +103,7 @@
     }
 }
 
+//* 多窗口轮播图样式
 .ui-carousel.ui-multiple-view-carousel {
     .ui-carousel-container {
         height: 100%;
@@ -93,6 +111,7 @@
     }
 }
 
+//* 轮播图悬浮样式
 .ui-carousel:hover {
     > .ui-carousel-control {
         opacity: 1;
@@ -105,8 +124,9 @@
         }
 
         &:hover {
-            color: var(--uic-main-color);
-            background-color: #fff;
+            color: var(--uioption-carousel-control-active-icon-color);
+            border-color: var(--uioption-carousel-control-active-border-color);
+            background-color: var(--uioption-carousel-control-active-background-color);
         }
     }
 }

@@ -1,31 +1,23 @@
+//* css变量
+.ui-textarea {
+    --uioption-textarea-spacing-x: var(--uis-spacing-x); // 默认文本框水平间距
+    --uioption-textarea-spacing-y: var(--uis-spacing-y); // 默认文本框垂直间距
+    --uioption-textarea-line-height: 24px; // 默认文本框行高
+}
+
+//* 文本框样式
 .ui-textarea {
     position: relative;
     > .ui-form-control {
-        color: var(--ui-font-color);
-        margin: 0;
         resize: none;
         height: auto;
         display: block;
-        outline: none;
-        padding: 16px var(--uis-spacing-x);
+        padding: var(--uioption-textarea-spacing-y) var(--uioption-textarea-spacing-x);
         overflow: hidden;
-        line-height: var(--uis-font-height);
+        line-height: var(--uioption-textarea-line-height);
     }
 
-    > .ui-textarea-scroll {
-        position: absolute;
-        top: 1px;
-        right: 1px;
-        width: 6px;
-        height: 100%;
-        .ui-textarea-scroll-bar {
-            width: 100%;
-            cursor: pointer;
-            background: var(--ui-scrollbar-color);
-            border-radius: 9999px;
-            &:hover {
-                background: var(--ui-scrollbar-active-color);
-            }
-        }
+    > .ui-scrollbar-container {
+        inset: 1px 1px 1px auto;
     }
 }

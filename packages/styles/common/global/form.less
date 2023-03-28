@@ -1,38 +1,57 @@
-// 表单控制层样式
+//* 表单控制层样式
 .ui-form-control {
-    background-color: var(--ui-form-color);
-    border-radius: var(--uis-radius);
-    line-height: calc(var(--uis-size) - 2px);
-    transition: all 0.2s;
-    font-size: var(--uis-font-size);
+    background-color: var(--uioption-form-background-color);
+    border-radius: var(--uioption-form-radius);
+    transition: all 0.3s;
+    font-size: var(--uioption-form-font-size);
     position: relative;
+    padding: 0 var(--uioption-form-spacing-x);
+    border: 1px solid var(--uioption-form-color);
     height: var(--uis-size);
-    border: 1px solid var(--ui-border-color);
     width: 100%;
+    color: var(--uioption-form-font-color);
+
     &:hover,
     &:focus {
-        border-color: var(--ui-border-active-color);
+        border-color: var(--uioption-form-active-color);
     }
 
     &::placeholder {
-        color: var(--ui-form-placeholder-color);
+        color: var(--uioption-form-placeholder-color);
     }
 
     &:focus::placeholder {
         color: transparent;
     }
+
+    &.ui-clearable {
+        padding: 0 32px 0 var(--uioption-form-spacing-x);
+    }
+}
+
+//* 表单清空按钮样式
+.ui-form-clearable {
+    transition: all 0.3s;
+    transform: translate(0, -50%);
+    font-size: 24px;
+    position: absolute;
+    cursor: pointer;
+    color: var(--uioption-form-font-color);
+    right: 4px;
+    top: 50%;
+    &:hover {
+        color: var(--uioption-form-active-font-color);
+    }
 }
 
 // 表单候选项样式
 .ui-form-candidates {
+    background-color: var(--uioption-form-candidate-background-color);
     transform-origin: center top;
-    background-color: #fff;
-    border-radius: var(--uis-radius);
+    border-radius: var(--uioption-form-radius);
     transition: opacity 0.2s, transform 0.3s;
-    box-shadow: var(--uic-box-shadow);
+    box-shadow: var(--uioption-form-candidate-box-shadow);
     position: absolute;
-    border: 1px solid var(--uic-box-border);
-    inset: 0 auto auto 0;
     &.v-enter-from,
     &.v-leave-to {
         opacity: 0;
@@ -49,29 +68,29 @@
         position: absolute;
         border-style: solid;
         border-width: 4px 0 4px 6px;
-        border-color: transparent transparent transparent #fff;
+        border-color: transparent transparent transparent var(--uioption-form-candidate-background-color);
     }
 
     > .ui-form-candidate-container {
         > .ui-form-candidate {
             cursor: pointer;
             height: var(--uis-size);
-            padding: 0 var(--uis-spacing-x);
-            transition: all 0.2s;
+            padding: 0 var(--uioption-form-candidate-spacing-x);
+            transition: all 0.3s;
             white-space: nowrap;
             line-height: var(--uis-size);
             &:hover,
             &.ui-active {
-                background: var(--ui-form-candidate-color);
-                color: var(--ui-font-active-color);
+                background: var(--uioption-form-candidate-active-background-color);
+                color: var(--uioption-form-candidate-active-color);
             }
 
             &:last-child {
-                border-radius: 0 0 var(--uis-radius) var(--uis-radius);
+                border-radius: 0 0 var(--uioption-form-radius) var(--uioption-form-radius);
             }
 
             &:first-child {
-                border-radius: var(--uis-radius) var(--uis-radius) 0 0;
+                border-radius: var(--uioption-form-radius) var(--uioption-form-radius) 0 0;
             }
         }
     }
