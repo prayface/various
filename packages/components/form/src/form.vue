@@ -33,7 +33,7 @@ export default defineComponent({
         //* 公共方法导出
         expose({ ...composable.methods });
 
-        return { ...toRefs(refs) };
+        return { ...toRefs(refs), ...composable.methods };
     },
 });
 </script>

@@ -26,14 +26,16 @@ export default defineComponent({
             }
         });
 
-        // 公共方法导出
-        expose({
+        const methods = {
             cutCarousel: (number: number) => main.value?.cutCarousel(number),
             triggerNext: () => main.value?.triggerNext(),
             triggerBack: () => main.value?.triggerBack(),
-        });
+        };
 
-        return { main, attrs, module };
+        // 公共方法导出
+        expose(methods);
+
+        return { main, attrs, module, ...methods };
     },
 });
 </script>
