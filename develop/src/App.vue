@@ -13,7 +13,6 @@
             <RouterView />
         </article>
     </main>
-    <footer></footer>
 </template>
 
 <script setup></script>
@@ -23,7 +22,7 @@ footer {
     width: 100%;
     height: 200px;
     background: var(--uic-font-4);
-    border-top: 1px solid var(--uic-font-5);
+    border-top: 1px solid var(--uic-font-4);
 }
 
 header {
@@ -37,12 +36,12 @@ header {
     background: #fff;
     font-weight: bold;
     line-height: 55px;
-    border-bottom: 1px solid var(--uic-font-5);
+    border-bottom: 1px solid var(--uic-font-4);
 }
 
 main {
     width: 1440px;
-    margin: 0 auto 60px;
+    margin: 40px auto 60px;
     display: flex !important;
     align-items: flex-start;
     .aside {
@@ -55,7 +54,7 @@ main {
         a {
             width: 100%;
             margin: 8px 0 0;
-            border: 1px solid var(--uic-font-5);
+            border: 1px solid var(--uic-font-4);
             display: block;
             padding: 8px 20px;
             border-radius: 4px;
@@ -97,14 +96,14 @@ main {
             > .content {
                 margin-top: 20px;
                 padding: 30px 36px;
-                border: 1px solid var(--uic-font-5);
+                border: 1px solid var(--uic-font-4);
             }
 
             > .descript {
                 p {
                     line-height: 22px;
                     > span {
-                        background-color: var(--uic-font-5);
+                        background-color: var(--uic-font-4);
                         border-radius: 2px;
                         display: inline-block;
                         padding: 0 4px;
@@ -124,7 +123,7 @@ main {
                 tr th {
                     padding: 8px 12px;
                     text-align: center;
-                    border-bottom: 1px solid var(--uic-font-5);
+                    border-bottom: 1px solid var(--uic-font-4);
                 }
             }
         }
