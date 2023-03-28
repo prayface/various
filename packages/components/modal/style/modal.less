@@ -1,13 +1,13 @@
 //* css变量
 .ui-modal {
     // 弹出框组件配置
-    --uioption-modal-radius: var(--uis-radius); // 默认弹出框圆角效果
-    --uioption-modal-icon-color: var(--uic-font-2); // 默认关闭图标颜色
-    --uioption-modal-box-shadow: var(--uic-box-shadow); // 默认弹出框阴影效果
-    --uioption-modal-background-color: var(--uic-font-6); // 默认弹出框背景颜色
+    --uioption-modal-radius: var(--uisize-radius); // 默认弹出框圆角效果
+    --uioption-modal-icon-color: var(--uicolor-font-2); // 默认关闭图标颜色
+    --uioption-modal-box-shadow: var(--uicolor-box-shadow); // 默认弹出框阴影效果
+    --uioption-modal-background-color: var(--uicolor-font-6); // 默认弹出框背景颜色
 
     // 弹出框组件激活配hi
-    --uioption-modal-active-icon-color: var(--uic-main-color); // 默认关闭图标颜色
+    --uioption-modal-active-icon-color: var(--uicolor-main-color); // 默认关闭图标颜色
 }
 
 //* 弹出框样式
@@ -15,7 +15,7 @@
     padding: 80px 0;
     position: fixed;
     overflow-y: auto;
-    background-color: var(--uic-full-mask);
+    background-color: var(--uicolor-full-mask);
     > .ui-modal-container {
         position: relative;
         transition: margin-top 0.5s;
