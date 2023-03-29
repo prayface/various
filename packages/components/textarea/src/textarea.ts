@@ -17,11 +17,11 @@ export const UiTextareaPropsOption = {
 export type UiTextareaProps = ExtractPropTypes<typeof UiTextareaPropsOption>;
 
 export const UiTextareaEmits = {
-    "update:modelValue": (ev: any) => ev,
-    change: (ev?: Event) => ev,
-    clear: (ev?: any) => ev,
-    input: (ev?: InputEvent | Event) => ev,
-    click: (ev?: PointerEvent | Event) => ev,
-    focus: (ev?: FocusEvent | Event) => ev,
-    blur: (ev?: FocusEvent | Event) => ev,
+    "update:modelValue": (ev: any) => true,
+    change: (ev?: Event) => true,
+    clear: (ev?: any) => true,
+    input: (ev?: InputEvent | Event) => true,
+    click: (ev?: PointerEvent | Event) => true,
+    focus: (ev?: FocusEvent | Event) => true,
+    blur: (ev?: FocusEvent | Event) => true,
 };

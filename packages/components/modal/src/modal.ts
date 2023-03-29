@@ -12,6 +12,6 @@ export const UiModalPropsOption = {
 export type UiModalProps = ExtractPropTypes<typeof UiModalPropsOption>;
 
 export const UiModalEmits = {
-    open: () => {},
-    close: () => {},
+    open: () => true,
+    close: () => true,
 };
