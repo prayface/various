@@ -103,7 +103,7 @@ main {
                 p {
                     line-height: 22px;
                     > span {
-                        background-color: var(--uicolor-font-4);
+                        background-color: var(--uicolor-font-4-02);
                         border-radius: 2px;
                         display: inline-block;
                         padding: 0 4px;

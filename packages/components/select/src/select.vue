@@ -1,7 +1,10 @@
 <template>
-    <div class="ui-input" :class="className" :style="style" ref="container">
-        <!-- Input主体 -->
-        <input class="ui-form-control" v-bind="attrs" v-on="handles" />
+    <div class="ui-select" :class="className" :style="style" ref="container">
+        <!-- Select主体 -->
+        <input class="ui-form-control" v-bind="attrs" @click="show" />
+
+        <!-- 下拉箭头 -->
+        <UiIcon name="arrow" class="ui-select-arrow" @click="show" />
 
         <!-- 清空按钮 -->
         <UiIcon name="error" class="ui-form-clearable" v-if="clearable && modelValue" @click="clear" />
@@ -30,24 +33,24 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, inject, toRefs, onUnmounted } from "vue";
-import { UiInputPropsOption, UiInputEmits } from "./input";
+import { defineComponent, inject, reactive, toRefs, onUnmounted } from "vue";
+import { UiSelectEmits, UiSelectPropsOption } from "./select";
 import { UiFormEmitterKey } from "@various/constants";
 import { node } from "@various/utils";
-import Composable, { UiInputConstructorRefs } from "./composable";
+import Composable, { UiSelectConstructorRefs } from "./composable";
 import UiIcon from "@various/components/icon";
 
 export default defineComponent({
-    name: "UiInput",
-    emits: UiInputEmits,
-    props: UiInputPropsOption,
+    name: "UiSelect",
+    emits: UiSelectEmits,
+    props: UiSelectPropsOption,
     components: { UiIcon },
     setup(define, { emit, expose }) {
         //* 初始化mitt
         const emitter = define.name ? inject(UiFormEmitterKey) : undefined;
 
         //* 初始化响应式变量
-        const refs = reactive<UiInputConstructorRefs>({
+        const refs = reactive<UiSelectConstructorRefs>({
             visible: false,
             triangle: undefined,
             container: undefined,
@@ -59,7 +62,9 @@ export default defineComponent({
 
         //* 导出公共函数
         expose({
+            hidden: composable.methods.hidden,
             clear: composable.methods.clear,
+            show: composable.methods.show,
         });
 
         //* 销毁事件
@@ -70,10 +75,9 @@ export default defineComponent({
         });
 
         return {
-            ...composable.computeds,
-            ...composable.handles,
-            ...composable.methods,
             ...toRefs(refs),
+            ...composable.methods,
+            ...composable.computeds,
         };
     },
 });
