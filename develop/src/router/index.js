@@ -4,6 +4,7 @@ export const routes = [
     { path: "/", name: "Home", component: () => import("../views/Home.vue") },
     { path: "/form", name: "Form", component: () => import("../views/Form.vue") },
     { path: "/input", name: "Input", component: () => import("../views/Input.vue") },
+    { path: "/select", name: "Select", component: () => import("../views/Select.vue") },
     { path: "/button", name: "Button", component: () => import("../views/Button.vue") },
     { path: "/message", name: "Message", component: () => import("../views/Message.vue") },
     { path: "/tooltip", name: "Tooltip", component: () => import("../views/Tooltip.vue") },

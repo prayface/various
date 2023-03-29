@@ -1,11 +1,11 @@
 import _ from "lodash";
 import { Emitter } from "mitt";
 import { nextTick, computed, ComputedRef } from "vue";
-import { UiInputProps, UiInputEmits } from "./input";
+import { UiSelectProps, UiSelectEmits } from "./select";
 import { UiEmitFn, UiTypes } from "@various/constants";
 import { node, dispost } from "@various/utils";
 
-export type UiInputConstructorRefs = {
+export type UiSelectConstructorRefs = {
     visible: boolean;
     triangle?: HTMLElement;
     container?: HTMLElement;
@@ -13,16 +13,13 @@ export type UiInputConstructorRefs = {
 };
 
 export default class {
-    refs: UiInputConstructorRefs;
-
-    handles: {
-        handles: {
-            change: (ev: Event) => void;
-            input: (ev: InputEvent | Event) => void;
-            click: (ev: PointerEvent | Event) => void;
-            focus: (ev: FocusEvent | Event) => void;
-            blur: (ev: FocusEvent | Event) => void;
-        };
+    refs: UiSelectConstructorRefs;
+    computeds: {
+        style: ComputedRef<{ width?: string }>;
+        attrs: ComputedRef<{ [name: string]: any }>;
+        status: ComputedRef<{ is: boolean; name: string }>;
+        className: ComputedRef<string>;
+        candidates: ComputedRef<UiTypes.candidate[]>;
     };
 
     methods: {
@@ -32,22 +29,13 @@ export default class {
         cutCandidate: (content: string, ev: Event) => void;
     };
 
-    computeds: {
-        style: ComputedRef<{ width?: string }>;
-        attrs: ComputedRef<{ [name: string]: any }>;
-        status: ComputedRef<{ is: boolean; name: string }>;
-        className: ComputedRef<string>;
-        candidates: ComputedRef<UiTypes.candidate[]>;
-    };
-
-    constructor(refs: UiInputConstructorRefs, define: UiInputProps, emit: UiEmitFn<typeof UiInputEmits>, emitter?: Emitter<any>) {
+    constructor(refs: UiSelectConstructorRefs, define: UiSelectProps, emit: UiEmitFn<typeof UiSelectEmits>, emitter?: Emitter<any>) {
         this.refs = refs;
         this.methods = this.#useMethods(define, emit, emitter);
         this.computeds = this.#useComputeds(define);
-        this.handles = this.#useOnHandles(define, emit, emitter);
     }
 
-    #useMethods(define: UiInputProps, emit: UiEmitFn<typeof UiInputEmits>, emitter?: Emitter<any>) {
+    #useMethods(define: UiSelectProps, emit: UiEmitFn<typeof UiSelectEmits>, emitter?: Emitter<any>) {
         //? 候选框隐藏事件
         const hidden = (ev?: Event) => {
             if (!this.refs.container) return;
@@ -69,41 +57,47 @@ export default class {
 
         //? 候选框显示事件
         const show = () => {
-            this.refs.visible = true;
-            nextTick(() => {
-                if (!this.refs.container || !this.refs.candidate) return;
-                //* 将内容添加到视图容器中
-                node.append("ui-windows", this.refs.candidate);
+            //* 判断选择框是否处于异常状态
+            if (this.computeds.status.value.name != "default") return;
+            //* 判断候选项是否已被激活
+            if (this.refs.visible) {
+                hidden();
+            } else {
+                this.refs.visible = true;
+                nextTick(() => {
+                    if (!this.refs.container || !this.refs.candidate) return;
+                    //* 将内容添加到视图容器中
+                    node.append("ui-windows", this.refs.candidate);
 
-                //* 获取节点到body距离
-                const containerToBodyRect = dispost.elementToBodyRect(this.refs.container);
-                const candidateToBodyRect = dispost.elementToBodyRect(this.refs.candidate);
-                //* 根据配置计算当前窗口位置
-                const rect = dispost.elementToContainerBoundary(containerToBodyRect, candidateToBodyRect, {
-                    direction: "bottom",
-                    align: "top",
-                });
+                    //* 获取节点到body距离
+                    const containerToBodyRect = dispost.elementToBodyRect(this.refs.container);
+                    const candidateToBodyRect = dispost.elementToBodyRect(this.refs.candidate);
+                    //* 根据配置计算当前窗口位置
+                    const rect = dispost.elementToContainerBoundary(containerToBodyRect, candidateToBodyRect, {
+                        direction: "bottom",
+                        align: "top",
+                    });
 
-                //* 将窗口位置添加入窗口中
-                if (rect) {
-                    this.refs.candidate.style.inset = `${rect.offsetY}px auto auto ${rect.offsetX}px`;
-                    this.refs.candidate.style.transform = rect.transform;
-                    if (rect.triangle && this.refs.triangle) {
-                        this.refs.triangle.style.inset = rect.triangle;
-                        this.refs.triangle.style.transform = `rotate(${rect.rotate})`;
+                    //* 将窗口位置添加入窗口中
+                    if (rect) {
+                        this.refs.candidate.style.inset = `${rect.offsetY}px auto auto ${rect.offsetX}px`;
+                        this.refs.candidate.style.transform = rect.transform;
+                        if (rect.triangle && this.refs.triangle) {
+                            this.refs.triangle.style.inset = rect.triangle;
+                            this.refs.triangle.style.transform = `rotate(${rect.rotate})`;
+                        }
                     }
-                }
 
-                //* 隐藏事件
-                window.addEventListener("click", hidden, true);
-            });
+                    //* 隐藏事件
+                    window.addEventListener("click", hidden, true);
+                });
+            }
         };
 
         //? 候选项选择事件
         const cutCandidate = (content: String, ev: Event) => {
             emit("update:modelValue", content);
             emit("change", ev);
-            emit("input", ev);
             if (emitter?.emit) {
                 emitter.emit(define.name || "", "change");
             }
@@ -121,7 +115,7 @@ export default class {
         };
     }
 
-    #useComputeds(define: UiInputProps) {
+    #useComputeds(define: UiSelectProps) {
         //? 组件状态
         const status = computed(() => {
             if (define.loading) {
@@ -137,21 +131,22 @@ export default class {
 
         //? 标签响应式属性
         const attrs = computed(() => {
-            //* 过滤define
+            const disabled = ["disabled", "loading"].includes(status.value.name);
             return {
-                type: define.type,
+                type: "text",
                 value: define.modelValue,
-                disabled: ["disabled", "loading"].includes(status.value.name),
-                readonly: status.value.name == "readonly",
+                disabled: disabled,
+                readonly: !disabled,
                 placeholder: define.placeholder,
-                autocomplete: define.autocomplete,
+                autocomplete: false,
             };
         });
 
         //? 样式
         const style = computed(() => {
-            if (define.width) return { width: define.width + "px" };
-            else return {};
+            //* 宽度处理
+            if (_.isNumber(define.width)) return { width: define.width + "px" };
+            else return { width: define.width };
         });
 
         //? 候选项
@@ -179,6 +174,8 @@ export default class {
             if (define.size != "default") result.push(`ui-${define.size}`);
             //* 判断是否需要添加clearable类名
             if (define.clearable) result.push("ui-clearable");
+            //* 判断候选项是否处于展示状态
+            if (this.refs.visible) result.push("ui-candidates-show");
 
             return result.join(" ");
         });
@@ -187,35 +184,8 @@ export default class {
             candidates,
             className,
             status,
-            attrs,
             style,
-        };
-    }
-
-    #useOnHandles(define: UiInputProps, emit: UiEmitFn<typeof UiInputEmits>, emitter?: Emitter<any>) {
-        return {
-            handles: {
-                change: (ev: Event) => {
-                    emit("change", ev);
-                    emitter?.emit(define.name || "", "change");
-                },
-                input: (ev: InputEvent | Event) => {
-                    const target = ev.target as HTMLInputElement;
-                    emit("update:modelValue", target.value);
-                    emit("input", ev as InputEvent);
-                },
-                click: (ev: PointerEvent | Event) => {
-                    emit("click", ev);
-                    define.candidate && this.methods.show();
-                },
-                focus: (ev: FocusEvent | Event) => {
-                    emit("focus", ev);
-                },
-                blur: (ev: FocusEvent | Event) => {
-                    emit("blur", ev);
-                    emitter?.emit(define.name || "", "blur");
-                },
-            },
+            attrs,
         };
     }
 }

@@ -1,0 +1,39 @@
+.ui-select {
+    display: inline-block;
+    position: relative;
+
+    //* 调整loading尺寸
+    .ui-mask {
+        font-size: 20px;
+    }
+
+    //* 调整输入框右间距
+    .ui-form-control {
+        cursor: pointer;
+        padding-right: calc(var(--uioption-form-spacing-x) + 24px);
+        &:focus::placeholder {
+            color: var(--uioption-form-placeholder-color);
+        }
+    }
+
+    //* 下拉箭头样式
+    .ui-select-arrow {
+        inset: 50% var(--uioption-form-spacing-x) auto auto;
+        cursor: pointer;
+        position: absolute;
+        font-size: 20px;
+        transform: translate(0, -50%);
+        transition: all 0.3s;
+    }
+
+    //* 清空按钮样式调整
+    .ui-form-clearable {
+        inset: 50% calc(var(--uioption-form-spacing-x) + 20px) auto auto;
+    }
+}
+
+.ui-select.ui-candidates-show {
+    .ui-select-arrow {
+        transform: translate(0, -50%) rotate(180deg);
+    }
+}

@@ -5,6 +5,7 @@ export * from "./scrollbar";
 export * from "./form";
 export * from "./form-item";
 export * from "./input";
+export * from "./select";
 export * from "./carousel";
 export * from "./seamless-scroll";
 export * from "./pagination";
