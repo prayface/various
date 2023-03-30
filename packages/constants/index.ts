@@ -15,7 +15,7 @@ export namespace UiTypes {
         message: string;
     };
     export type verifyRule = {
-        trigger: "change" | "blur";
+        trigger: "change" | "verify" | "blur";
         verify: (data: { [name: string]: any }) => verifyResult;
     };
 }

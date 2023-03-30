@@ -21,6 +21,8 @@ export default class {
     }
 
     #useMethods(define: UiFormProps, emitter: Emitter<any>) {
+        const data = _.cloneDeep(define.data);
+
         //? 表单校验函数
         const validator = async (callBack: (result: boolean) => void) => {
             //* 1. 检测是否允许向下执行
@@ -55,6 +57,10 @@ export default class {
         const reset = () => {
             _.forIn(define.rules, async (value, index) => {
                 emitter.emit(`reset:${index}`);
+            });
+
+            _.forIn(data, (value, index) => {
+                define.data[index] = value;
             });
         };
 
