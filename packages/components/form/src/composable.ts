@@ -60,7 +60,11 @@ export default class {
             });
 
             _.forIn(data, (value, index) => {
-                define.data[index] = value;
+                if (_.isArray(define.data[index])) {
+                    define.data[index].splice(0, define.data[index].length);
+                } else {
+                    define.data[index] = value;
+                }
             });
         };
 
