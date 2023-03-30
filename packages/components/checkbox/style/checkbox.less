@@ -1,0 +1,61 @@
+.ui-checkbox {
+    --uioption-checkbox-border-color: var(--uicolor-font-4); // 默认多选框边框颜色
+    --uioption-checkbox-background-color: var(--uicolor-font-6); // 默认多选框背景颜色
+
+    --uioption-checkbox-active-border-color: var(--uicolor-main-color); // 默认多选框激活边框颜色
+    --uioption-checkbox-active-background-color: var(--uicolor-main-color); // 默认多选框激活背景颜色
+
+    --uioption-checkbox-disabled-border-color: var(--uicolor-font-4); // 默认多选框激活边框颜色
+    --uioption-checkbox-disabled-background-color: var(--uicolor-font-4); // 默认多选框激活背景颜色
+}
+
+.ui-checkbox {
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    vertical-align: bottom;
+    > .ui-checkbox-control {
+        width: 20px;
+        height: 20px;
+        border: 1px solid var(--uioption-checkbox-border-color);
+        position: relative;
+        transition: all 0.3s;
+        border-radius: 2px;
+        background-color: var(--uioption-checkbox-background-color);
+        .ui-checkbox-input {
+            width: 0;
+            height: 0;
+        }
+
+        .ui-checkbox-icon {
+            transition: all 0.3s;
+            font-size: 20px;
+            position: absolute;
+            opacity: 0;
+            color: #fff;
+            inset: -1px auto auto -1px;
+        }
+    }
+
+    > .ui-checkbox-content {
+        margin: 0 0 0 8px;
+    }
+}
+
+.ui-checkbox.ui-active {
+    > .ui-checkbox-control {
+        border-color: var(--uioption-checkbox-active-border-color);
+        background-color: var(--uioption-checkbox-active-background-color);
+        .ui-checkbox-icon {
+            opacity: 1;
+        }
+    }
+}
+
+.ui-checkbox.ui-disabled-status {
+    cursor: no-drop;
+    > .ui-checkbox-control {
+        border-color: var(--uioption-checkbox-disabled-border-color);
+        background-color: var(--uioption-checkbox-disabled-background-color);
+    }
+}

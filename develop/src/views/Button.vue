@@ -34,15 +34,15 @@
             <div class="content">
                 <p>
                     <UiButton @click="click" disabled>啊! 我被禁用了</UiButton>
-                    <UiButton @click="click" type="error" disabled>啊! 我被禁用了</UiButton>
-                    <UiButton @click="click" type="warning" disabled>啊! 我被禁用了</UiButton>
-                    <UiButton @click="click" type="success" disabled>啊! 我被禁用了</UiButton>
+                    <UiButton @click="click" type="error" disabled>啊! 你也被禁用了</UiButton>
+                    <UiButton @click="click" type="warning" disabled>啊! 他也被禁用了</UiButton>
+                    <UiButton @click="click" type="success" disabled>啊! 我们都被禁用了</UiButton>
                 </p>
                 <p>
-                    <UiButton @click="click" disabled simple>啊! 我也被禁用了</UiButton>
-                    <UiButton @click="click" type="error" disabled simple>啊! 我也被禁用了</UiButton>
-                    <UiButton @click="click" type="warning" disabled simple>啊! 我也被禁用了</UiButton>
-                    <UiButton @click="click" type="success" disabled simple>啊! 我也被禁用了</UiButton>
+                    <UiButton @click="click" disabled simple>啊! 上面的, 我们也逃不掉</UiButton>
+                    <UiButton @click="click" type="error" disabled simple>啊!</UiButton>
+                    <UiButton @click="click" type="warning" disabled simple>啊! 啊! </UiButton>
+                    <UiButton @click="click" type="success" disabled simple>啊! 啊! 啊!</UiButton>
                 </p>
             </div>
         </section>
