@@ -5,7 +5,7 @@ import { UnionToIntersection } from "@vue/shared";
 export namespace UiTypes {
     export type size = "default" | "middle" | "large" | "small";
     export type type = "success" | "warning" | "info" | "error";
-    export type align = "top" | "center" | "bottom";
+    export type align = "end" | "start" | "center";
     export type loading = boolean | { is: boolean; context?: string };
     export type direction = "top" | "left" | "right" | "bottom";
     export type candidate = { label: any; value: any };

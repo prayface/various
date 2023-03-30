@@ -1,6 +1,6 @@
 import { UiTooltipProps } from "../tooltip";
 import { nextTick, watch, WatchStopHandle } from "vue";
-import { node, dispost } from "@various/utils";
+import { node, dispose } from "@various/utils";
 
 export type UiTooltipConstructorRefs = {
     main?: HTMLElement;
@@ -64,25 +64,21 @@ export default class {
                 this.refs.viewVisible = true;
                 nextTick(() => {
                     if (!this.refs.main || !this.refs.container) return;
+
                     //* 将content添加到视图容器中
                     node.append("ui-windows", this.refs.container);
+
                     //* 根据配置计算当前窗口位置
-                    const rect = dispost.elementToContainerBoundary(
-                        dispost.elementToBodyRect(this.refs.main),
-                        dispost.elementToBodyRect(this.refs.container),
-                        {
-                            direction: define.direction,
-                            align: define.align,
-                        }
-                    );
-                    //* 将窗口位置添加入窗口中
-                    if (rect) {
-                        this.refs.container.style.inset = `${rect.offsetY}px auto auto ${rect.offsetX}px`;
-                        this.refs.container.style.transform = rect.transform;
-                        if (rect.triangle && this.refs.triangle) {
-                            this.refs.triangle.style.inset = rect.triangle;
-                            this.refs.triangle.style.transform = `rotate(${rect.rotate})`;
-                        }
+                    const rect = dispose.elementToContainerBoundary(this.refs.main, this.refs.container, {
+                        offsetMain: 8,
+                        direction: define.direction,
+                        align: define.align,
+                    });
+
+                    //* 判断是否需要调整小三角位置
+                    if (rect.triangle && this.refs.triangle) {
+                        this.refs.triangle.style.inset = rect.triangle;
+                        this.refs.triangle.style.transform = `rotate(${rect.rotate})`;
                     }
                 });
             },

@@ -3,7 +3,7 @@ import { Emitter } from "mitt";
 import { nextTick, computed, ComputedRef } from "vue";
 import { UiInputProps, UiInputEmits } from "./input";
 import { UiEmitFn, UiTypes } from "@various/constants";
-import { node, dispost } from "@various/utils";
+import { node, dispose } from "@various/utils";
 
 export type UiInputConstructorRefs = {
     visible: boolean;
@@ -75,23 +75,17 @@ export default class {
                 //* 将内容添加到视图容器中
                 node.append("ui-windows", this.refs.candidate);
 
-                //* 获取节点到body距离
-                const containerToBodyRect = dispost.elementToBodyRect(this.refs.container);
-                const candidateToBodyRect = dispost.elementToBodyRect(this.refs.candidate);
                 //* 根据配置计算当前窗口位置
-                const rect = dispost.elementToContainerBoundary(containerToBodyRect, candidateToBodyRect, {
+                const rect = dispose.elementToContainerBoundary(this.refs.container, this.refs.candidate, {
+                    offsetMain: 8,
                     direction: "bottom",
-                    align: "top",
+                    align: "start",
                 });
 
-                //* 将窗口位置添加入窗口中
-                if (rect) {
-                    this.refs.candidate.style.inset = `${rect.offsetY}px auto auto ${rect.offsetX}px`;
-                    this.refs.candidate.style.transform = rect.transform;
-                    if (rect.triangle && this.refs.triangle) {
-                        this.refs.triangle.style.inset = rect.triangle;
-                        this.refs.triangle.style.transform = `rotate(${rect.rotate})`;
-                    }
+                //* 判断是否需要调整小三角位置
+                if (rect.triangle && this.refs.triangle) {
+                    this.refs.triangle.style.inset = rect.triangle;
+                    this.refs.triangle.style.transform = `rotate(${rect.rotate})`;
                 }
 
                 //* 隐藏事件

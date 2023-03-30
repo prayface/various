@@ -11,7 +11,7 @@ module.exports = (function () {
     const { OUTPUT, DIRNAME, PACKAGES } = require("../constants.ts");
 
     //* 计算所有的文件源
-    const dispostSourceFiles = async (morph: any) => {
+    const disposeSourceFiles = async (morph: any) => {
         //? 添加类型文件
         morph.addSourceFileAtPath(resolve(DIRNAME, "types/env.d.ts"));
 
@@ -67,7 +67,7 @@ module.exports = (function () {
             skipAddingFilesFromTsConfig: true,
         });
 
-        await dispostSourceFiles(morph);
+        await disposeSourceFiles(morph);
         consola.success("Added source files");
 
         const diagnostics = morph.getPreEmitDiagnostics();

@@ -23,8 +23,8 @@ export default class {
 
     methods: {
         init: () => void;
-        dispostWheel: (offset: number, size: number, max: number) => number;
-        dispostSize: (rw: number, aw: number, ratio: number) => object;
+        disposeWheel: (offset: number, size: number, max: number) => number;
+        disposeSize: (rw: number, aw: number, ratio: number) => object;
         onScroll: (is: boolean, ev: MouseEvent) => void;
     };
 
@@ -72,7 +72,7 @@ export default class {
                     transition: this.refs.scrollbarY.drag ? "none" : "all 0.2s",
                 };
             }),
-        }
+        };
     }
 
     #useMethods(define: UiScrollbarProps) {
@@ -95,14 +95,22 @@ export default class {
                     this.refs.abs.ratioY = this.refs.real.height / this.refs.abs.height;
                     this.refs.abs.ratioX = this.refs.real.width / this.refs.abs.width;
                     //* 4. 计算不同方向滚动条的尺寸和偏移
-                    this.refs.scrollbarX = this.methods.dispostSize(this.refs.real.width, this.refs.abs.width, this.refs.real.ratioX);
-                    this.refs.scrollbarY = this.methods.dispostSize(this.refs.real.height, this.refs.abs.height, this.refs.real.ratioY);
+                    this.refs.scrollbarX = this.methods.disposeSize(this.refs.real.width, this.refs.abs.width, this.refs.real.ratioX);
+                    this.refs.scrollbarY = this.methods.disposeSize(this.refs.real.height, this.refs.abs.height, this.refs.real.ratioY);
                     //* 5. 存在Y轴滚动条时挂载wheel事件
                     if (this.refs.scrollbarY.size) {
                         this.refs.container.onwheel = (ev: WheelEvent) => {
-                            const offsetY = this.methods.dispostWheel(this.refs.scroll.real.top + ev.deltaY, this.refs.abs.height, this.refs.real.height);
+                            const offsetY = this.methods.disposeWheel(
+                                this.refs.scroll.real.top + ev.deltaY,
+                                this.refs.abs.height,
+                                this.refs.real.height
+                            );
                             if (this.refs.scroll.real.top != offsetY) {
-                                this.refs.scroll.real.top = this.methods.dispostWheel(this.refs.scroll.real.top + ev.deltaY, this.refs.abs.height, this.refs.real.height);
+                                this.refs.scroll.real.top = this.methods.disposeWheel(
+                                    this.refs.scroll.real.top + ev.deltaY,
+                                    this.refs.abs.height,
+                                    this.refs.real.height
+                                );
                                 this.refs.scroll.abs.top = this.refs.scroll.real.top * this.refs.real.ratioY;
                                 ev.preventDefault();
                             }
@@ -111,14 +119,14 @@ export default class {
                 }
             },
             //* 计算当前滚动位置
-            dispostWheel: (offset: number, size: number, max: number) => {
+            disposeWheel: (offset: number, size: number, max: number) => {
                 if (offset < 0) return 0;
                 else if (offset + size > max) return max - size;
                 else return offset;
             },
 
             //* 计算Bar尺寸和滚动条偏移
-            dispostSize: (rw: number, aw: number, ratio: number) => {
+            disposeSize: (rw: number, aw: number, ratio: number) => {
                 if (rw <= aw) return { size: 0, offset: 0, drag: false };
                 else if (ratio * aw < 20) return { size: 20, offset: 10, drag: false };
                 else return { size: ratio * aw, offset: 0, drag: false };
@@ -133,11 +141,11 @@ export default class {
                 document.onmousemove = (ev: MouseEvent) => {
                     if (is) {
                         this.refs.scrollbarX.drag = true;
-                        this.refs.scroll.abs.left = this.methods.dispostWheel(offset + ev.x - size, this.refs.scrollbarX.size, this.refs.abs.width);
+                        this.refs.scroll.abs.left = this.methods.disposeWheel(offset + ev.x - size, this.refs.scrollbarX.size, this.refs.abs.width);
                         this.refs.scroll.real.left = this.refs.scroll.abs.left * this.refs.abs.ratioX;
                     } else {
                         this.refs.scrollbarY.drag = true;
-                        this.refs.scroll.abs.top = this.methods.dispostWheel(offset + ev.y - size, this.refs.scrollbarY.size, this.refs.abs.height);
+                        this.refs.scroll.abs.top = this.methods.disposeWheel(offset + ev.y - size, this.refs.scrollbarY.size, this.refs.abs.height);
                         this.refs.scroll.real.top = this.refs.scroll.abs.top * this.refs.abs.ratioY;
                     }
                 };
@@ -149,7 +157,7 @@ export default class {
                     if (is) this.refs.scrollbarX.drag = false;
                     else this.refs.scrollbarY.drag = false;
                 };
-            }
+            },
         };
     }
 }

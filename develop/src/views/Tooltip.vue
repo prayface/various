@@ -47,7 +47,7 @@
                     <UiTooltip direction="top" align="center" content="悬浮信息">
                         <UiButton size="small">上中按钮</UiButton>
                     </UiTooltip>
-                    <UiTooltip direction="top" align="bottom" content="悬浮信息">
+                    <UiTooltip direction="top" align="end" content="悬浮信息">
                         <UiButton size="small">上右按钮</UiButton>
                     </UiTooltip>
                 </section>
@@ -59,7 +59,7 @@
                     <UiTooltip direction="left" align="center" content="悬浮信息">
                         <UiButton size="small">左中按钮</UiButton>
                     </UiTooltip>
-                    <UiTooltip direction="left" align="bottom" content="悬浮信息">
+                    <UiTooltip direction="left" align="end" content="悬浮信息">
                         <UiButton size="small">左下按钮</UiButton>
                     </UiTooltip>
                 </section>
@@ -71,7 +71,7 @@
                     <UiTooltip direction="right" align="center" content="悬浮信息">
                         <UiButton size="small">右中按钮</UiButton>
                     </UiTooltip>
-                    <UiTooltip direction="right" align="bottom" content="悬浮信息">
+                    <UiTooltip direction="right" align="end" content="悬浮信息">
                         <UiButton size="small">右下按钮</UiButton>
                     </UiTooltip>
                 </section>
@@ -83,7 +83,7 @@
                     <UiTooltip direction="bottom" align="center" content="悬浮信息">
                         <UiButton size="small">下中按钮</UiButton>
                     </UiTooltip>
-                    <UiTooltip direction="bottom" align="bottom" content="悬浮信息">
+                    <UiTooltip direction="bottom" align="end" content="悬浮信息">
                         <UiButton size="small">下右按钮</UiButton>
                     </UiTooltip>
                 </section>
@@ -182,7 +182,7 @@
                     <td>align</td>
                     <td>Tooltip的侧轴位置, 只在mode=fixed时生效</td>
                     <td>string</td>
-                    <td>top | center | bottom</td>
+                    <td>end | start | center</td>
                     <td>top</td>
                 </tr>
                 <tr>
