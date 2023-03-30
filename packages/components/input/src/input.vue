@@ -44,7 +44,7 @@ export default defineComponent({
     components: { UiIcon },
     setup(define, { emit, expose }) {
         //* 初始化mitt
-        const emitter = define.name ? inject(UiFormEmitterKey) : undefined;
+        const emitter = inject(UiFormEmitterKey, undefined);
 
         //* 初始化响应式变量
         const refs = reactive<UiInputConstructorRefs>({

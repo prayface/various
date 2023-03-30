@@ -21,9 +21,9 @@ export default defineComponent({
     props: UiFormItemPropsOption,
     setup(define, { expose }) {
         //* 获取emitter和rules数据
-        const emitter = define.prop ? inject(UiFormEmitterKey) : null;
-        const rules = define.prop ? inject(UiFormRulesKey) || {} : {};
-        const data = define.prop ? inject(UiFormDataKey) || {} : {};
+        const emitter = inject(UiFormEmitterKey, undefined);
+        const rules = inject(UiFormRulesKey, {});
+        const data = inject(UiFormDataKey, {});
 
         //* 初始化页面数据
         const refs = reactive<UiFormItemConstructorRefs>({
