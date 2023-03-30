@@ -7,18 +7,18 @@
                 <p>在每一个<span>form</span>组件中, 你需要一个<span>form-item</span>组件作为输入项的容器, 用于获取值与验证值。</p>
             </div>
             <div class="content">
-                <UiForm :rules="rules" :data="data" ref="form">
+                <UiForm :rules="rules" v-model:data="data" ref="form">
                     <UiFormItem prop="name" label="名称" :width="40">
                         <UiInput v-model="data.name" name="name" :loading="loading1" />
                     </UiFormItem>
 
-                    <UiFormItem prop="age" label="年龄" :width="40">
-                        <UiInput v-model="data.age" name="age" />
+                    <UiFormItem prop="type" label="兴趣" :width="40">
+                        <UiSelect v-model="data.type" name="type" :candidate="candidate" />
                     </UiFormItem>
 
                     <UiFormItem>
-                        <UiButton @click="click" :loading="loading2">触发校验</UiButton>
-                        <UiButton native-type="reset" @click="form && form.reset()">重置表单</UiButton>
+                        <UiButton @click="click" :loading="loading1">触发校验</UiButton>
+                        <UiButton @click="form && form.reset()">重置表单</UiButton>
                     </UiFormItem>
                 </UiForm>
             </div>
@@ -196,9 +196,16 @@ import { ref, reactive } from "vue";
 
 const form = ref(null);
 const item = ref(null);
-const data = reactive({ age: "", name: "" });
+const data = reactive({ age: "", type: "", name: "" });
 const loading1 = ref(false);
 const loading2 = ref(false);
+const candidate = [
+    { label: "唱歌", value: "1" },
+    { label: "跳舞", value: "2" },
+    { label: "吃东西", value: "3" },
+    { label: "打屁屁", value: "4" },
+];
+
 const rules = ref({
     name: [
         {
@@ -219,6 +226,14 @@ const rules = ref({
             trigger: "change",
             verify: (data) => {
                 return { verify: Number(data.age) >= 18, message: "年龄不达标" };
+            },
+        },
+    ],
+    type: [
+        {
+            trigger: "change",
+            verify: (data) => {
+                return { verify: data.type, message: "请选中一个兴趣爱好" };
             },
         },
     ],
