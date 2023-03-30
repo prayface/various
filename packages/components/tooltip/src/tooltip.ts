@@ -11,7 +11,7 @@ export const UiTooltipPropsOption = {
     content: { type: String }, //? 窗口内容, 可被slot#content替换
     effect: { type: String }, //? Tooltip主题
     width: { type: Number, default: 200 }, //? 最大宽度
-    align: { type: String as PropType<UiTypes.align>, default: "top" },
+    align: { type: String as PropType<UiTypes.align>, default: "start" },
     mode: { type: String as PropType<"fixed" | "follow">, default: "fixed" },
 } as const;
 

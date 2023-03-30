@@ -1,6 +1,6 @@
 import { UiTooltipProps } from "../tooltip";
 import { nextTick, watch, WatchStopHandle } from "vue";
-import { node, dispost } from "@various/utils";
+import { node, dispose } from "@various/utils";
 
 export type UiTooltipConstructorRefs = {
     main?: HTMLElement;
@@ -67,15 +67,10 @@ export default class {
                         //* 将content添加到视图容器中
                         node.append("ui-windows", this.refs.container);
                         //* 根据配置计算当前窗口位置
-                        const rect = dispost.elementToMouseBoundary(ev, dispost.elementToBodyRect(this.refs.container), {
+                        dispose.elementToMouseBoundary(ev, this.refs.container, {
                             offsetX: define.offsetX || 20,
                             offsetY: define.offsetY || 20,
                         });
-                        //* 将窗口位置添加入窗口中
-                        if (rect) {
-                            this.refs.container.style.inset = `${rect.offsetY}px auto auto ${rect.offsetX}px`;
-                            this.refs.container.style.transform = rect.transform;
-                        }
                     }
                 });
             },
