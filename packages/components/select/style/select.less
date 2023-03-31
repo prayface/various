@@ -11,6 +11,12 @@
     .ui-form-control {
         cursor: pointer;
         padding-right: calc(var(--uioption-form-spacing-x) + 24px);
+
+        //* 提示文案调整
+        &::placeholder {
+            color: var(--uioption-form-placeholder-color);
+        }
+
         &:focus::placeholder {
             color: var(--uioption-form-placeholder-color);
         }
@@ -32,8 +38,25 @@
     }
 }
 
+//* 候选项展开状态
 .ui-select.ui-candidates-show {
     .ui-select-arrow {
         transform: translate(0, -50%) rotate(180deg);
+    }
+}
+
+//* 禁用状态
+.ui-select.ui-disabled-status {
+    .ui-form-control,
+    .ui-select-arrow {
+        cursor: not-allowed;
+    }
+}
+
+//* 只读状态
+.ui-select.ui-readonly-status {
+    .ui-form-control,
+    .ui-select-arrow {
+        cursor: text;
     }
 }

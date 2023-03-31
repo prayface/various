@@ -1,5 +1,5 @@
 import { Emitter } from "mitt";
-import { computed, ComputedRef } from "vue";
+import { computed } from "vue";
 import { UiEmitFn } from "@various/constants";
 import { UiTextareaProps, UiTextareaEmits } from "./textarea";
 
@@ -12,29 +12,10 @@ export type UiTextareaConstructorRefs = {
 };
 
 export default class {
-    refs: UiTextareaConstructorRefs;
-
-    handles: {
-        click: (ev: PointerEvent | Event) => void;
-        focus: (ev: FocusEvent | Event) => void;
-        change: (ev: Event) => void;
-        input: (ev: InputEvent) => void;
-        blur: (ev: FocusEvent | Event) => void;
-        wheel: (ev: WheelEvent) => void;
-    };
-
-    methods: {
-        init: () => void;
-        clear: () => void;
-        onMousedown: (ev: MouseEvent) => void;
-    };
-
-    computeds: {
-        attrs: ComputedRef<{ [name: string]: any }>;
-        style: ComputedRef<{ width?: string }>;
-        className: ComputedRef<string>;
-        scrollbarStyle: ComputedRef<{ height: string; transform: string }>;
-    };
+    refs;
+    handles;
+    methods;
+    computeds;
 
     constructor(refs: UiTextareaConstructorRefs, define: UiTextareaProps, emit: UiEmitFn<typeof UiTextareaEmits>, emitter?: Emitter<any>) {
         this.refs = refs;
@@ -46,30 +27,32 @@ export default class {
     //* 主体响应事件声明
     #useOnHandles(define: UiTextareaProps, emit: UiEmitFn<typeof UiTextareaEmits>, emitter?: Emitter<any>) {
         return {
-            click: (ev: PointerEvent | Event) => emit("click", ev),
-            focus: (ev: FocusEvent | Event) => emit("focus", ev),
-            change: (ev: Event) => {
-                emit("change", ev);
-                emitter?.emit(define.name || "", "change");
-            },
-            input: (ev: InputEvent) => {
-                const target = ev.target as HTMLInputElement;
-                emit("update:modelValue", target.value);
-                emit("input", ev);
-                this.methods.init();
-            },
-            blur: (ev: FocusEvent | Event) => {
-                emit("blur", ev);
-                emitter?.emit(define.name || "", "blur");
-            },
-            wheel: (ev: WheelEvent) => {
-                if (!this.refs.main || !this.refs.container) return;
-                if (this.refs.container.scrollHeight > this.refs.main.clientHeight) {
-                    const node = ev.target as HTMLTextAreaElement;
-                    node.scrollTo({ top: node.scrollTop + ev.deltaY });
-                    this.refs.offset = this.refs.container.scrollTop * this.refs.ratio;
-                    ev.preventDefault();
-                }
+            handles: {
+                click: (ev: PointerEvent | Event) => emit("click", ev),
+                focus: (ev: FocusEvent | Event) => emit("focus", ev),
+                change: (ev: Event) => {
+                    emit("change", ev);
+                    emitter?.emit(define.name || "", "change");
+                },
+                input: (ev: InputEvent) => {
+                    const target = ev.target as HTMLInputElement;
+                    emit("update:modelValue", target.value);
+                    emit("input", ev);
+                    this.methods.init();
+                },
+                blur: (ev: FocusEvent | Event) => {
+                    emit("blur", ev);
+                    emitter?.emit(define.name || "", "blur");
+                },
+                wheel: (ev: WheelEvent) => {
+                    if (!this.refs.main || !this.refs.container) return;
+                    if (this.refs.container.scrollHeight > this.refs.main.clientHeight) {
+                        const node = ev.target as HTMLTextAreaElement;
+                        node.scrollTo({ top: node.scrollTop + ev.deltaY });
+                        this.refs.offset = this.refs.container.scrollTop * this.refs.ratio;
+                        ev.preventDefault();
+                    }
+                },
             },
         };
     }
