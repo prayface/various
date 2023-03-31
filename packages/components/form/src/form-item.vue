@@ -2,7 +2,7 @@
     <div class="ui-form-item" :class="className">
         <div class="ui-form-name" v-if="label" :style="style">{{ label }}</div>
         <div class="ui-form-container">
-            <slot />
+            <slot></slot>
             <Transition>
                 <div class="ui-form-message" v-if="visible">{{ content }}</div>
             </Transition>
@@ -14,7 +14,7 @@
 import { defineComponent, inject, reactive, onUnmounted, toRefs } from "vue";
 import { UiFormEmitterKey, UiFormRulesKey, UiFormDataKey, UiTypes } from "@various/constants";
 import { UiFormItemPropsOption } from "./form-item";
-import Composable, { UiFormItemConstructorRefs } from "./composable";
+import Composable, { UiFormItemConstructorRefs } from "./composable.form-item";
 
 export default defineComponent({
     name: "UiFormItem",

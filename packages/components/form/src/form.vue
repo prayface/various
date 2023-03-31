@@ -10,7 +10,7 @@ import mitt from "mitt";
 import { defineComponent, reactive, provide, toRefs } from "vue";
 import { UiFormDataKey, UiFormRulesKey, UiFormEmitterKey } from "@various/constants";
 import { UiFormPropsOption } from "./form";
-import Composable, { UiFormConstructorRefs } from "./composable";
+import Composable, { UiFormConstructorRefs } from "./composable.form";
 
 export default defineComponent({
     name: "UiForm",

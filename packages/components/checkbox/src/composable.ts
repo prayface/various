@@ -60,7 +60,7 @@ export default class {
         //? 主体类名
         const className = computed(() => {
             //* 1. 初始化返回值
-            const result = [];
+            const result: string[] = [];
 
             //* 2. 检测是否被禁用
             if (disabled.value) result.push("ui-disabled-status");
