@@ -1,0 +1,39 @@
+.ui-scope-input {
+  position: relative;
+}
+.ui-scope-input .ui-form-control {
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.ui-scope-input input::-webkit-outer-spin-button,
+.ui-scope-input input::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
+}
+.ui-scope-input input[type='number'] {
+  -moz-appearance: textfield;
+}
+.ui-scope-input .ui-scope-input-control {
+  flex-shrink: 1;
+  padding: 0 15px;
+  width: 45%;
+  height: 100%;
+  text-align: center;
+  background: transparent;
+}
+.ui-scope-input .ui-scope-input-control::placeholder {
+  color: var(--uioption-form-placeholder-color);
+}
+.ui-scope-input .ui-scope-input-control:focus::placeholder {
+  color: transparent;
+}
+.ui-scope-input .ui-scope-input-line {
+  flex-shrink: 0;
+  width: 5%;
+  height: 2px;
+  background: #606266;
+}
+.ui-scope-input.ui-disabled-status .ui-scope-input-control {
+  cursor: no-drop;
+}
