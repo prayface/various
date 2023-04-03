@@ -16,7 +16,6 @@ export default class {
     handles;
     methods;
     computeds;
-
     constructor(refs: UiTextareaConstructorRefs, define: UiTextareaProps, emit: UiEmitFn<typeof UiTextareaEmits>, emitter?: Emitter<any>) {
         this.refs = refs;
         this.handles = this.#useOnHandles(define, emit, emitter);
@@ -27,39 +26,51 @@ export default class {
     //* 主体响应事件声明
     #useOnHandles(define: UiTextareaProps, emit: UiEmitFn<typeof UiTextareaEmits>, emitter?: Emitter<any>) {
         return {
-            handles: {
-                click: (ev: PointerEvent | Event) => emit("click", ev),
-                focus: (ev: FocusEvent | Event) => emit("focus", ev),
-                change: (ev: Event) => {
-                    emit("change", ev);
-                    emitter?.emit(define.name || "", "change");
-                },
-                input: (ev: InputEvent) => {
-                    const target = ev.target as HTMLInputElement;
-                    emit("update:modelValue", target.value);
-                    emit("input", ev);
-                    this.methods.init();
-                },
-                blur: (ev: FocusEvent | Event) => {
-                    emit("blur", ev);
-                    emitter?.emit(define.name || "", "blur");
-                },
-                wheel: (ev: WheelEvent) => {
-                    if (!this.refs.main || !this.refs.container) return;
-                    if (this.refs.container.scrollHeight > this.refs.main.clientHeight) {
-                        const node = ev.target as HTMLTextAreaElement;
-                        node.scrollTo({ top: node.scrollTop + ev.deltaY });
-                        this.refs.offset = this.refs.container.scrollTop * this.refs.ratio;
-                        ev.preventDefault();
-                    }
-                },
+            click: (ev: PointerEvent | Event) => emit("click", ev),
+            focus: (ev: FocusEvent | Event) => emit("focus", ev),
+            change: (ev: Event) => {
+                emit("change", ev);
+                emitter?.emit(define.name || "", "change");
+            },
+            input: (ev: InputEvent) => {
+                const target = ev.target as HTMLInputElement;
+                emit("update:modelValue", target.value);
+                emit("input", ev);
+                this.methods.init();
+            },
+            blur: (ev: FocusEvent | Event) => {
+                emit("blur", ev);
+                emitter?.emit(define.name || "", "blur");
+            },
+            wheel: (ev: WheelEvent) => {
+                if (define.disabled) return;
+                if (!this.refs.main || !this.refs.container) return;
+                if (this.refs.container.scrollHeight > this.refs.main.clientHeight) {
+                    const node = ev.target as HTMLTextAreaElement;
+                    node.scrollTo({ top: node.scrollTop + ev.deltaY });
+                    this.refs.offset = this.refs.container.scrollTop * this.refs.ratio;
+                    ev.preventDefault();
+                }
             },
         };
     }
 
     //* 静态属性声明
     #useComputeds(define: UiTextareaProps) {
+        //* 当前组件状态
+        const status = computed(() => {
+            if (define.loading) {
+                return { is: true, name: "loading" };
+            } else if (define.disabled) {
+                return { is: false, name: "disabled" };
+            } else if (define.readonly) {
+                return { is: false, name: "readonly" };
+            } else {
+                return { is: false, name: "default" };
+            }
+        });
         return {
+            status: status,
             //* 标签响应式属性
             attrs: computed(() => {
                 // 初始化样式列表
@@ -107,6 +118,7 @@ export default class {
         return {
             init: () => {
                 // 判断是否允许向下执行
+                if (define.disabled) return;
                 if (!this.refs.main || !this.refs.container) return;
                 if (this.refs.container.scrollHeight > this.refs.main.clientHeight) {
                     this.refs.ratio = (this.refs.main.clientHeight - 2) / this.refs.container.scrollHeight;

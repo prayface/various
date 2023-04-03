@@ -6,8 +6,18 @@
         <div class="ui-scrollbar-container ui-scrollbar-vertical" v-show="scrollsize">
             <div class="ui-scrollbar-bar" :style="scrollbarStyle" @mousedown="onMousedown"></div>
         </div>
+
+        <!-- 遮罩层 -->
+        <Transition>
+            <div class="ui-mask ui-loading" v-if="status.name == 'loading'">
+                <UiIcon name="loading" class="ui-mask-icon" v-show="status.is" />
+            </div>
+        </Transition>
     </div>
 </template>
+
+
+
 <script lang="ts">
 import { defineComponent, reactive, inject, toRefs, onMounted } from "vue";
 import { UiTextareaPropsOption, UiTextareaEmits } from "./textarea";

@@ -7,6 +7,25 @@
                 <UiTextarea v-model="value" :height="200" />
             </div>
         </section>
+        <section>
+            <div class="title">禁用状态</div>
+            <div class="content">
+                <UiTextarea v-model="value" :height="200" disabled />
+            </div>
+        </section>
+        <section>
+            <div class="title">只读状态</div>
+            <div class="content">
+                <UiTextarea v-model="value" :height="200" readonly />
+            </div>
+        </section>
+
+        <section>
+            <div class="title">加载状态</div>
+            <div class="content">
+                <UiTextarea v-model="value" :height="200" loading />
+            </div>
+        </section>
 
         <section>
             <div class="title">禁用状态</div>
@@ -175,6 +194,6 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
-
-const value = ref("asd基本用法as从顶部出现, 3秒后自动消失。基本用法as, 3秒后自动消失。基本用法as从顶部出现,");
+const loading1 = ref(false);
+const value = ref("asd基本用法as从顶部出现, 3秒后自动消失。基本用法as, 3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现, 3秒后自动消失。基本用法as, 3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现, 3秒后自动消失。基本用法as, 3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现, 3秒后自动消失。基本用法as, 3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现, 3秒后自动消失。基本用法as, 3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现, 3秒后自动消失。基本用法as, 3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现, 3秒后自动消失。基本用法as, 3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现, 3秒后自动消失。基本用法as, 3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现, 3秒后自动消失。基本用法as, 3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现, 3秒后自动消失。基本用法as, 3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现, 3秒后自动消失。基本用法as, 3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现, 3秒后自动消失。基本用法as, 3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现, 3秒后自动消失。基本用法as, 3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现, 3秒后自动消失。基本用法as, 3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现, 3秒后自动消失。基本用法as, 3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现, 3秒后自动消失。基本用法as, 3秒后自动消失。基本用法as从顶部出");
 </script>
