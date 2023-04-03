@@ -1,12 +1,10 @@
 <template>
     <div class="ui-scope-input" :class="className" :style="style">
         <div class="ui-form-control">
-            <input class="ui-scope-input-control" type="number" v-on="handles" ref="start" v-bind="attrs.start"
-                v-model="modelValue.start" />
+            <input class="ui-scope-input-control" type="number" v-on="handles" ref="start" v-bind="attrs.start" v-model="modelValue.start" />
             <div class="ui-scope-input-line"></div>
 
-            <input class="ui-scope-input-control" type="number" v-on="handles" ref="end" v-bind="attrs.end"
-                v-model="modelValue.end" />
+            <input class="ui-scope-input-control" type="number" v-on="handles" ref="end" v-bind="attrs.end" v-model="modelValue.end" />
         </div>
 
         <!-- 遮罩层 -->
@@ -29,10 +27,10 @@ export default defineComponent({
     emits: UiScopeInputEmits,
     props: UiScopeInputPropsOption,
     setup(define, { emit, expose }) {
-
         //* 初始化mitt
         const emitter = inject(UiFormEmitterKey, undefined);
 
+        // TODO 这东西好像写了又好像没写
         //* 初始化响应式变量
         const refs = reactive<UiScopeInputConstructorRefs>({
             start: undefined,
@@ -49,9 +47,8 @@ export default defineComponent({
             ...composable.computeds,
             ...composable.handles,
             ...composable.methods,
-            ...toRefs(refs)
+            ...toRefs(refs),
         };
-
     },
 });
 </script>

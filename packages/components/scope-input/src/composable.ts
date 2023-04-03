@@ -9,8 +9,8 @@ export type UiScopeInputConstructorRefs = {
     end?: HTMLInputElement;
 };
 
-
 export default class {
+    // TODO 后续代码不需要进行类型声明, class如果在constructor进行初始化会自动生成类型
     refs: UiScopeInputConstructorRefs;
 
     handles: {
@@ -34,19 +34,19 @@ export default class {
     };
 
     constructor(refs: UiScopeInputConstructorRefs, define: UiScopeInputProps, emit: UiEmitFn<typeof UiScopeInputEmits>, emitter?: Emitter<any>) {
-        this.refs = refs
+        this.refs = refs;
         this.methods = this.#useMethods(define, emit, emitter);
         this.computeds = this.#useComputeds(define);
         this.handles = this.#useOnHandles(define, emit, emitter);
     }
 
     #useMethods(define: UiScopeInputProps, emit: UiEmitFn<typeof UiScopeInputEmits>, emitter?: Emitter<any>) {
-
         //? 清空事件
         const clear = () => {
-            if (!this.refs.start || !this.refs.end) return
-            this.refs.start.value = ""
-            this.refs.end.value = ""
+            //TODO 这块地方是否有点多余, refs貌似获取的是dom
+            if (!this.refs.start || !this.refs.end) return;
+            this.refs.start.value = "";
+            this.refs.end.value = "";
             emit("clear", "clear");
             emitter?.emit(define.name || "", "change");
         };
@@ -72,31 +72,31 @@ export default class {
 
         //? 标签响应式属性
         const attrs = computed(() => {
+            // TODO 已经使用v-model了, 所以value属性是多余的
             const start = {
                 value: define.modelValue.start,
                 disabled: ["disabled", "loading"].includes(status.value.name),
                 readonly: status.value.name == "readonly",
-                placeholder: define.placeholder?.start || 'Start',
-            }
+                placeholder: define.placeholder?.start || "Start",
+            };
             const end = {
                 value: define.modelValue.end,
                 disabled: ["disabled", "loading"].includes(status.value.name),
                 readonly: status.value.name == "readonly",
-                placeholder: define.placeholder?.end || 'End',
-            }
+                placeholder: define.placeholder?.end || "End",
+            };
             return {
                 start: start,
-                end: end
-            }
+                end: end,
+            };
         });
-
 
         //? 样式
         const style = computed(() => {
+            // TODO 样式参考一下select需要进行格式处理
             if (define.width) return { width: define.width + "px" };
             else return {};
         });
-
 
         //? 类名
         const className = computed(() => {
@@ -124,7 +124,7 @@ export default class {
         return {
             handles: {
                 change: (ev: Event) => {
-                    console.log('change');
+                    console.log("change");
                     emit("change", ev);
                     emitter?.emit(define.name || "", "change");
                 },
