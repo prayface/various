@@ -8,16 +8,21 @@
 //* 文本框样式
 .ui-textarea {
     position: relative;
-    > .ui-form-control {
+    border: 1px solid var(--uioption-form-color);
+    padding: var(--uioption-textarea-spacing-y) var(--uioption-textarea-spacing-x);
+    background-color: var(--uioption-form-background-color);
+
+    >.ui-form-control {
+        border: none;
         resize: none;
         height: auto;
         display: block;
-        padding: var(--uioption-textarea-spacing-y) var(--uioption-textarea-spacing-x);
+        padding: 0;
         overflow: hidden;
         line-height: var(--uioption-textarea-line-height);
     }
 
-    > .ui-scrollbar-container {
+    >.ui-scrollbar-container {
         inset: 1px 1px 1px auto;
     }
 }

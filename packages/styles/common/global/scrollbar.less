@@ -3,11 +3,13 @@
     position: absolute;
     border-radius: 9999px;
     background-color: var(--uioption-scrollbar-background-color);
+
     .ui-scrollbar-bar {
         cursor: pointer;
-        transition: all 0.3s;
+        // transition: all 0.3s;
         background: var(--uioption-scrollbar-color);
         border-radius: 9999px;
+
         &:hover {
             background: var(--uioption-scrollbar-active-color);
         }
@@ -17,6 +19,7 @@
 .ui-scrollbar-container.ui-scrollbar-level {
     inset: auto 0 0 0;
     height: 6px;
+
     .ui-scrollbar-bar {
         height: 100%;
     }
@@ -25,6 +28,7 @@
 .ui-scrollbar-container.ui-scrollbar-vertical {
     inset: 0 0 0 auto;
     width: 6px;
+
     .ui-scrollbar-bar {
         width: 100%;
     }

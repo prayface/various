@@ -64,11 +64,13 @@ export default class {
                 emitter?.emit(define.name || "", "blur");
             },
             wheel: (ev: WheelEvent) => {
-                if (define.disabled) return
+                if (define.disabled || define.loading) return
                 if (!this.refs.main || !this.refs.container) return;
                 if (this.refs.container.scrollHeight > this.refs.main.clientHeight) {
                     const node = ev.target as HTMLTextAreaElement;
-                    node.scrollTo({ top: node.scrollTop + ev.deltaY });
+
+                    console.log('wheel', node.scrollTop, ev);
+                    node.scrollTo({ top: node.scrollTop + ev.deltaY / 5 });
                     this.refs.offset = this.refs.container.scrollTop * this.refs.ratio;
                     ev.preventDefault();
                 }
@@ -139,10 +141,11 @@ export default class {
         return {
             init: () => {
                 // 判断是否允许向下执行
-                if (define.disabled) return
+                if (define.disabled || define.loading) return
                 if (!this.refs.main || !this.refs.container) return;
                 if (this.refs.container.scrollHeight > this.refs.main.clientHeight) {
-                    this.refs.ratio = (this.refs.main.clientHeight - 2) / this.refs.container.scrollHeight;
+
+                    this.refs.ratio = (this.refs.main.clientHeight - 2) / (this.refs.container.scrollHeight + (this.refs.main.clientHeight - this.refs.container.clientHeight));
                     this.refs.scrollsize = this.refs.ratio * (this.refs.main.clientHeight - 2);
                     this.refs.offset = this.refs.container.scrollTop * this.refs.ratio;
                 } else {
