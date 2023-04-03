@@ -21,7 +21,10 @@ export default defineComponent({
     props: UiTooltipPropsOption,
     components: { TooltipFixed, TooltipFollow },
     setup(define) {
+        //* 属性
         const attrs = computed(() => define);
+
+        //* 组件
         const component = computed(() => {
             switch (define.mode) {
                 case "follow":
