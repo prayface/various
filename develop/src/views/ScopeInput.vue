@@ -7,11 +7,10 @@
                 <p>尺寸<span>size</span>: large | middle | default | small</p>
             </div>
             <div class="content">
-                <UiScopeInput v-model="data" style="margin-bottom:20px" size="large" ref="scope" />
+                <UiScopeInput v-model="data" style="margin-bottom:20px" size="large" />
                 <UiScopeInput v-model="data2" style="margin-bottom:20px" size="middle" />
                 <UiScopeInput v-model="data2" style="margin-bottom:20px" />
                 <UiScopeInput v-model="data2" size="small" />
-                <UiButton @click="scope.clear()">清空</UiButton>
             </div>
         </section>
         <section>
