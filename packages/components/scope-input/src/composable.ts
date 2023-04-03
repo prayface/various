@@ -4,8 +4,14 @@ import { computed, ComputedRef } from "vue";
 import { UiScopeInputProps, UiScopeInputEmits } from "./scope-input";
 import { UiEmitFn } from "@various/constants";
 
+export type UiScopeInputConstructorRefs = {
+    start?: HTMLInputElement;
+    end?: HTMLInputElement;
+};
+
 
 export default class {
+    refs: UiScopeInputConstructorRefs;
 
     handles: {
         handles: {
@@ -27,7 +33,8 @@ export default class {
         className: ComputedRef<string>;
     };
 
-    constructor(define: UiScopeInputProps, emit: UiEmitFn<typeof UiScopeInputEmits>, emitter?: Emitter<any>) {
+    constructor(refs: UiScopeInputConstructorRefs, define: UiScopeInputProps, emit: UiEmitFn<typeof UiScopeInputEmits>, emitter?: Emitter<any>) {
+        this.refs = refs
         this.methods = this.#useMethods(define, emit, emitter);
         this.computeds = this.#useComputeds(define);
         this.handles = this.#useOnHandles(define, emit, emitter);
@@ -37,12 +44,11 @@ export default class {
 
         //? 清空事件
         const clear = () => {
-            console.log('clear');
-            // emit("update:modelValue", "");
+            if (!this.refs.start || !this.refs.end) return
+            this.refs.start.value = ""
+            this.refs.end.value = ""
             emit("clear", "clear");
-            if (emitter?.emit) {
-                emitter.emit(define.name || "", "change");
-            }
+            emitter?.emit(define.name || "", "change");
         };
 
         return {
@@ -66,14 +72,24 @@ export default class {
 
         //? 标签响应式属性
         const attrs = computed(() => {
-            //* 过滤define
-            return {
-                value: define.modelValue,
+            const start = {
+                value: define.modelValue.start,
                 disabled: ["disabled", "loading"].includes(status.value.name),
                 readonly: status.value.name == "readonly",
-                placeholder: define.placeholder || { start: 'Start', end: 'End' },
-            };
+                placeholder: define.placeholder?.start || 'Start',
+            }
+            const end = {
+                value: define.modelValue.end,
+                disabled: ["disabled", "loading"].includes(status.value.name),
+                readonly: status.value.name == "readonly",
+                placeholder: define.placeholder?.end || 'End',
+            }
+            return {
+                start: start,
+                end: end
+            }
         });
+
 
         //? 样式
         const style = computed(() => {
@@ -113,10 +129,6 @@ export default class {
                     emitter?.emit(define.name || "", "change");
                 },
                 input: (ev: InputEvent | Event) => {
-                    const target = ev.target as HTMLInputElement;
-
-                    console.log(target.type);
-                    // emit("update:modelValue", data);
                     emit("input", ev as InputEvent);
                 },
                 focus: (ev: FocusEvent | Event) => {

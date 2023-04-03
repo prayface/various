@@ -3,17 +3,18 @@
         <section>
             <div class="title">基础用法</div>
             <div class="descript">
-                <p>使用<span>size</span>和<span>mode</span>来定义按钮的样式。</p>
+                <p>使用<span>size</span>来定义输入框的样式。</p>
                 <p>尺寸<span>size</span>: large | middle | default | small</p>
             </div>
             <div class="content">
-                <UiScopeInput v-model="data" style="margin-bottom:20px" size="large" />
-                <!-- <UiScopeInput v-model="data" style="margin-bottom:20px" size="middle" />
-                <UiScopeInput v-model="data" style="margin-bottom:20px" />
-                <UiScopeInput v-model="data" size="small" /> -->
+                <UiScopeInput v-model="data" style="margin-bottom:20px" size="large" ref="scope" />
+                <UiScopeInput v-model="data2" style="margin-bottom:20px" size="middle" />
+                <UiScopeInput v-model="data2" style="margin-bottom:20px" />
+                <UiScopeInput v-model="data2" size="small" />
+                <UiButton @click="scope.clear()">清空</UiButton>
             </div>
         </section>
-        <!-- <section>
+        <section>
             <div class="title">禁用状态</div>
             <div class="descript">
                 <p>通过<span>disabled</span>属性来指定是否禁用<span>input</span>组件</p>
@@ -41,9 +42,9 @@
             <div class="content">
                 <UiScopeInput v-model="data" :loading="true" />
             </div>
-        </section> -->
+        </section>
 
-        <!-- 
+
         <section>
             <div class="title">校验类型</div>
             <div class="descript">
@@ -56,9 +57,9 @@
                 </p>
             </div>
             <div class="content">
-                <UiForm :rules="rules1" :data="data1">
-                    <UiFormItem label="名称" :width="40" ref="item">
-                        <UiScopeInput v-model="data1" />
+                <UiForm :rules="rules1" :data="data1" ref="form">
+                    <UiFormItem prop="age" label="年龄" :width="40" ref="item">
+                        <UiScopeInput name="age" v-model="data1" />
                     </UiFormItem>
 
                     <UiFormItem style="margin-top: 40px">
@@ -67,7 +68,7 @@
                     </UiFormItem>
                 </UiForm>
             </div>
-        </section> -->
+        </section>
 
         <section>
             <div class="title">属性</div>
@@ -80,61 +81,48 @@
                     <th>默认值</th>
                 </tr>
                 <tr>
+                    <td>width</td>
+                    <td>输入框整体宽度</td>
+                    <td>number</td>
+                    <td>--</td>
+                    <td>264px</td>
+                </tr>
+                <tr>
                     <td>size</td>
-                    <td>按钮的尺寸</td>
-                    <td>string</td>
+                    <td>输入框整体的尺寸</td>
+                    <td>UiTypes.size</td>
                     <td>large | middle | default | small</td>
                     <td>default</td>
                 </tr>
                 <tr>
-                    <td>type</td>
-                    <td>按钮的类型</td>
-                    <td>string</td>
-                    <td>success | warning | error | info</td>
-                    <td>info</td>
-                </tr>
-                <tr>
-                    <td>simple</td>
-                    <td>按钮的简单模式</td>
-                    <td>boolean</td>
-                    <td>--</td>
-                    <td>false</td>
-                </tr>
-                <tr>
                     <td>disabled</td>
-                    <td>是否为禁用按钮</td>
+                    <td>是否为禁用输入框</td>
                     <td>boolean</td>
                     <td>--</td>
                     <td>false</td>
                 </tr>
                 <tr>
                     <td>readonly</td>
-                    <td>是否为只读按钮</td>
+                    <td>是否为只读输入框</td>
                     <td>boolean</td>
                     <td>--</td>
                     <td>false</td>
                 </tr>
                 <tr>
                     <td>loading</td>
-                    <td>是否为加载按钮</td>
+                    <td>是否为加载输入框</td>
                     <td>boolean</td>
                     <td>--</td>
                     <td>false</td>
                 </tr>
                 <tr>
-                    <td>width</td>
-                    <td>按钮的最小宽度, 还会根据内容拉伸宽度</td>
-                    <td>number</td>
-                    <td>--</td>
-                    <td>--</td>
-                </tr>
-                <tr>
-                    <td>nativeType</td>
-                    <td>原生按钮的Type属性</td>
+                    <td>placeholder</td>
+                    <td>提示文本</td>
                     <td>string</td>
-                    <td>button | submit | reset</td>
-                    <td>button</td>
+                    <td>--</td>
+                    <td>Start | End</td>
                 </tr>
+
             </table>
         </section>
 
@@ -147,9 +135,45 @@
                     <th>回调参数</th>
                 </tr>
                 <tr>
-                    <td>click</td>
-                    <td>点击事件回调</td>
-                    <td>(event?: MouseEvent | Event) => void</td>
+                    <td>change</td>
+                    <td>change事件回调</td>
+                    <td>(event?: Event) => void</td>
+                </tr>
+                <tr>
+                    <td>clear</td>
+                    <td>清空事件回调</td>
+                    <td>(event?: any) => void</td>
+                </tr>
+                <tr>
+                    <td>input</td>
+                    <td>input事件回调</td>
+                    <td>(event?: InputEvent | Event) => void</td>
+                </tr>
+                <tr>
+                    <td>focus</td>
+                    <td>focus事件回调</td>
+                    <td>(event?: FocusEvent | Event) => void</td>
+                </tr>
+                <tr>
+                    <td>blur</td>
+                    <td>blur事件回调</td>
+                    <td>(event?: FocusEvent | Event) => void</td>
+                </tr>
+            </table>
+        </section>
+
+        <section>
+            <div class="title">方法</div>
+            <table>
+                <tr>
+                    <th>名称</th>
+                    <th>说明</th>
+                    <th>回调参数</th>
+                </tr>
+                <tr>
+                    <td>clear</td>
+                    <td>清空输入框内容</td>
+                    <td>() => void</td>
                 </tr>
             </table>
         </section>
@@ -159,19 +183,37 @@
 <script setup>
 import { ref } from "vue";
 
-const data = ref({ start: "", end: "" });
+const data = ref({ start: 1, end: 100 });
+const data2 = ref({ start: "", end: "" });
 
-const form = ref();
-const data1 = ref({ start: 1, end: 20 });
+const form = ref(null);
+const item = ref(null);
+const scope = ref(null);
+const data1 = ref({ start: 0, end: 20 });
 const rules1 = ref({
-    start: [
+    age: [
         {
             trigger: "change",
             verify: (data) => {
-                return { verify: data.start, message: "请至少选中一个职业" };
+                console.log(data);
+                return { verify: Number(data.start) >= 1, message: "请输入1岁及以上" };
             },
         },
     ],
 });
 
+
+
 </script>
+
+<style lang="less">
+.ui-form {
+    .ui-form-item {
+        margin: 0 0 32px;
+
+        .ui-button {
+            margin: 0 0 0 48px;
+        }
+    }
+}
+</style>
