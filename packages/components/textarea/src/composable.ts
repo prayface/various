@@ -34,6 +34,7 @@ export default class {
         style: ComputedRef<{ width?: string }>;
         className: ComputedRef<string>;
         scrollbarStyle: ComputedRef<{ height: string; transform: string }>;
+        status: ComputedRef<{ is: boolean; name: string }>;
     };
 
     constructor(refs: UiTextareaConstructorRefs, define: UiTextareaProps, emit: UiEmitFn<typeof UiTextareaEmits>, emitter?: Emitter<any>) {
@@ -63,6 +64,7 @@ export default class {
                 emitter?.emit(define.name || "", "blur");
             },
             wheel: (ev: WheelEvent) => {
+                if (define.disabled) return
                 if (!this.refs.main || !this.refs.container) return;
                 if (this.refs.container.scrollHeight > this.refs.main.clientHeight) {
                     const node = ev.target as HTMLTextAreaElement;
@@ -76,7 +78,20 @@ export default class {
 
     //* 静态属性声明
     #useComputeds(define: UiTextareaProps) {
+        //* 当前组件状态
+        const status = computed(() => {
+            if (define.loading) {
+                return { is: true, name: "loading" };
+            } else if (define.disabled) {
+                return { is: false, name: "disabled" };
+            } else if (define.readonly) {
+                return { is: false, name: "readonly" };
+            } else {
+                return { is: false, name: "default" };
+            }
+        });
         return {
+            status: status,
             //* 标签响应式属性
             attrs: computed(() => {
                 // 初始化样式列表
@@ -124,6 +139,7 @@ export default class {
         return {
             init: () => {
                 // 判断是否允许向下执行
+                if (define.disabled) return
                 if (!this.refs.main || !this.refs.container) return;
                 if (this.refs.container.scrollHeight > this.refs.main.clientHeight) {
                     this.refs.ratio = (this.refs.main.clientHeight - 2) / this.refs.container.scrollHeight;
