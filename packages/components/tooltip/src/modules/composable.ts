@@ -15,7 +15,12 @@ export default class {
             style: computed(() => (define.width ? `max-width: ${define.width}px` : "")),
             //* 类名
             className: computed(() => {
-                return define.effect ? `ui-effect-${define.effect}` : "";
+                const result = [];
+
+                define.classExtraName && result.push(define.classExtraName);
+                define.effect && result.push(`ui-effect-${define.effect}`);
+
+                return result.join(" ");
             }),
         };
     }

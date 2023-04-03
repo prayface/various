@@ -1,6 +1,6 @@
 <template>
     <Transition>
-        <div class="ui-modal ui-mask" v-show="open" ref="main">
+        <div class="ui-modal ui-mask" v-show="open" ref="main" :class="classExtraName || ''">
             <div class="ui-modal-container" ref="container" :style="style">
                 <!-- 关闭按钮 -->
                 <div class="ui-modal-close" v-if="close">

@@ -116,6 +116,13 @@
                     <th>默认值</th>
                 </tr>
                 <tr>
+                    <td>class-extra-name</td>
+                    <td>用于指定窗口的className</td>
+                    <td>string</td>
+                    <td>--</td>
+                    <td>--</td>
+                </tr>
+                <tr>
                     <td>direction</td>
                     <td>Tooltip的主轴位置, 只在mode=fixed时生效</td>
                     <td>string</td>

@@ -11,7 +11,7 @@
 
         <!-- 候选项 -->
         <Transition>
-            <div class="ui-form-candidates" v-if="visible" ref="candidate">
+            <div class="ui-form-candidates" ref="candidate" v-if="visible" :class="classExtraName || ''">
                 <div class="ui-form-candidates-triangle" ref="triangle"></div>
                 <div class="ui-form-candidate-container">
                     <template v-for="value in candidates">

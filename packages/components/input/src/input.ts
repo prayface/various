@@ -2,6 +2,7 @@ import { PropType, ExtractPropTypes } from "vue";
 import { UiTypes } from "@various/constants";
 
 export const UiInputPropsOption = {
+    classExtraName: { type: String } /**候选项类名 */,
     autocomplete: { type: String, values: ["off", "on"], default: "off" },
     placeholder: { type: String, default: "Please input" } /**提示文本 */,
     modelValue: { type: [String, Number] as PropType<string | number>, required: true },

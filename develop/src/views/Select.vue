@@ -65,6 +65,13 @@
                     <th>默认值</th>
                 </tr>
                 <tr>
+                    <td>class-extra-name</td>
+                    <td>用于指定候选项的className</td>
+                    <td>string</td>
+                    <td>--</td>
+                    <td>--</td>
+                </tr>
+                <tr>
                     <td>placeholder</td>
                     <td>提示文本</td>
                     <td>string</td>

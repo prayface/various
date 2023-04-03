@@ -2,6 +2,7 @@ import { ExtractPropTypes, PropType } from "vue";
 import { UiTypes } from "@various/constants";
 
 export const UiTooltipPropsOption = {
+    classExtraName: { type: String },
     direction: { type: String as PropType<UiTypes.direction>, default: "right" },
     disabled: { type: Boolean, default: false },
     visible: { type: Boolean, default: false },
