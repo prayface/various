@@ -4,7 +4,7 @@ import { UiTypes } from "@various/constants";
 export const UiSelectPropsOption = {
     placeholder: { type: String, default: "Please select" } /**提示文本 */,
     modelValue: { type: String, required: true } /**选中项绑定值 */,
-    candidate: { type: [Function, Array] as PropType<(...arg: any[]) => UiTypes.candidate[] | UiTypes.candidate[]>, required: true } /**候选项 */,
+    candidate: { type: [Array, Function] as PropType<UiTypes.candidate[] | ((...arg: any[]) => UiTypes.candidate[])>, required: true } /**候选项 */,
     clearable: { type: Boolean, default: false } /**是否可清空 */,
     disabled: { type: Boolean, default: false } /**是否禁用 */,
     readonly: { type: Boolean, default: false } /**是否只读 */,
