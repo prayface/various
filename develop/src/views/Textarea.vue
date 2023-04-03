@@ -9,26 +9,6 @@
         </section>
         <section>
             <div class="title">禁用状态</div>
-            <div class="content">
-                <UiTextarea v-model="value" :height="200" disabled />
-            </div>
-        </section>
-        <section>
-            <div class="title">只读状态</div>
-            <div class="content">
-                <UiTextarea v-model="value" :height="200" readonly />
-            </div>
-        </section>
-
-        <section>
-            <div class="title">加载状态</div>
-            <div class="content">
-                <UiTextarea v-model="value" :height="200" loading />
-            </div>
-        </section>
-
-        <section>
-            <div class="title">禁用状态</div>
             <div class="descript">
                 <p>通过<span>disabled</span>属性来指定是否禁用<span>input</span>组件</p>
             </div>
