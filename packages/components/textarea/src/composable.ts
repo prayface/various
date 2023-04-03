@@ -1,5 +1,5 @@
 import { Emitter } from "mitt";
-import { computed, ComputedRef } from "vue";
+import { computed } from "vue";
 import { UiEmitFn } from "@various/constants";
 import { UiTextareaProps, UiTextareaEmits } from "./textarea";
 
@@ -12,31 +12,10 @@ export type UiTextareaConstructorRefs = {
 };
 
 export default class {
-    refs: UiTextareaConstructorRefs;
-
-    handles: {
-        click: (ev: PointerEvent | Event) => void;
-        focus: (ev: FocusEvent | Event) => void;
-        change: (ev: Event) => void;
-        input: (ev: InputEvent) => void;
-        blur: (ev: FocusEvent | Event) => void;
-        wheel: (ev: WheelEvent) => void;
-    };
-
-    methods: {
-        init: () => void;
-        clear: () => void;
-        onMousedown: (ev: MouseEvent) => void;
-    };
-
-    computeds: {
-        attrs: ComputedRef<{ [name: string]: any }>;
-        style: ComputedRef<{ width?: string }>;
-        className: ComputedRef<string>;
-        scrollbarStyle: ComputedRef<{ height: string; transform: string }>;
-        status: ComputedRef<{ is: boolean; name: string }>;
-    };
-
+    refs;
+    handles;
+    methods;
+    computeds;
     constructor(refs: UiTextareaConstructorRefs, define: UiTextareaProps, emit: UiEmitFn<typeof UiTextareaEmits>, emitter?: Emitter<any>) {
         this.refs = refs;
         this.handles = this.#useOnHandles(define, emit, emitter);
@@ -65,6 +44,7 @@ export default class {
             },
             wheel: (ev: WheelEvent) => {
                 if (define.disabled || define.loading) return
+                if (define.disabled) return;
                 if (!this.refs.main || !this.refs.container) return;
                 if (this.refs.container.scrollHeight > this.refs.main.clientHeight) {
                     const node = ev.target as HTMLTextAreaElement;
@@ -142,6 +122,7 @@ export default class {
             init: () => {
                 // 判断是否允许向下执行
                 if (define.disabled || define.loading) return
+                if (define.disabled) return;
                 if (!this.refs.main || !this.refs.container) return;
                 if (this.refs.container.scrollHeight > this.refs.main.clientHeight) {
 

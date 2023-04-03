@@ -54,7 +54,7 @@ export default defineComponent({
         expose({ clear: composable.methods.clear });
 
         return {
-            handles: composable.handles,
+            ...composable.handles,
             ...composable.methods,
             ...composable.computeds,
             ...toRefs(refs),

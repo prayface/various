@@ -20,9 +20,31 @@
         padding: 0;
         overflow: hidden;
         line-height: var(--uioption-textarea-line-height);
+        //* 提示文案调整
+        &::placeholder {
+            color: var(--uioption-form-placeholder-color);
+        }
+
+        &:focus::placeholder {
+            color: transparent;
+        }
     }
 
     >.ui-scrollbar-container {
         inset: 1px 1px 1px auto;
+    }
+}
+
+.ui-textarea.ui-disabled-status {
+    > .ui-form-control {
+        cursor: not-allowed;
+    }
+}
+
+.ui-textarea.ui-readonly-status {
+    > .ui-form-control {
+        &:focus::placeholder {
+            color: var(--uioption-form-placeholder-color);
+        }
     }
 }
