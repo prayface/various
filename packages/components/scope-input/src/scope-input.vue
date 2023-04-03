@@ -8,6 +8,13 @@
             <input class="ui-scope-input-control" type="number" v-on="handles" ref="end" v-bind="attrs.end"
                 v-model="modelValue.end" />
         </div>
+
+        <!-- 遮罩层 -->
+        <Transition>
+            <div class="ui-mask ui-loading" v-if="status.name == 'loading'">
+                <UiIcon name="loading" class="ui-mask-icon" v-show="status.is" />
+            </div>
+        </Transition>
     </div>
 </template>
 
