@@ -1,5 +1,5 @@
 <template>
-    <div v-show="!visible" class="ui-tooltip" ref="main" v-on="mainHandles">
+    <div v-show="!visible" class="ui-tooltip" ref="main" v-on="mainHandles" v-bind="attrs">
         <slot name="default"></slot>
     </div>
 

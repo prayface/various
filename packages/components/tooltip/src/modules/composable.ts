@@ -1,18 +1,16 @@
 import { UiTooltipProps } from "../tooltip";
-import { computed, ComputedRef } from "vue";
+import { computed, useAttrs } from "vue";
 
 export default class {
-    computeds: {
-        style: ComputedRef<string>;
-        className: ComputedRef<string>;
-    };
-
+    computeds;
     constructor(define: UiTooltipProps) {
         this.computeds = this.#useComputeds(define);
     }
 
     #useComputeds(define: UiTooltipProps) {
         return {
+            //* 标签属性
+            attrs: computed(() => useAttrs()),
             //* 样式
             style: computed(() => (define.width ? `max-width: ${define.width}px` : "")),
             //* 类名

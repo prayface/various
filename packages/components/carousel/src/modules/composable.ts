@@ -1,18 +1,16 @@
 import _ from "lodash";
-import { computed, ComputedRef } from "vue";
+import { computed, useAttrs } from "vue";
 import { UiCarouselProps } from "../carousel";
 
 export default class {
-    computeds: {
-        style: ComputedRef<{ [name: string]: any }>;
-    };
-
+    computeds;
     constructor(define: UiCarouselProps) {
         this.computeds = this.#useComputeds(define);
     }
 
     #useComputeds(define: UiCarouselProps) {
         return {
+            attrs: computed(() => useAttrs()),
             style: computed(() => {
                 const result: { [name: string]: any } = {};
                 //* 宽度处理
