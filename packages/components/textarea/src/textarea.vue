@@ -42,6 +42,7 @@ export default defineComponent({
             scrollsize: 0,
             ratio: 0,
             offset: 0,
+            isMousedown: false,
         });
 
         //* 实例化组合函数
@@ -54,7 +55,7 @@ export default defineComponent({
         expose({ clear: composable.methods.clear });
 
         return {
-            ...composable.handles,
+            handles: composable.handles,
             ...composable.methods,
             ...composable.computeds,
             ...toRefs(refs),

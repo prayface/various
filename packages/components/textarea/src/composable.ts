@@ -9,6 +9,7 @@ export type UiTextareaConstructorRefs = {
     scrollsize: number;
     ratio: number;
     offset: number;
+    isMousedown: boolean;
 };
 
 export default class {
@@ -50,8 +51,11 @@ export default class {
                     const node = ev.target as HTMLTextAreaElement;
 
                     console.log('wheel', node.scrollTop, ev);
-                    node.scrollTo({ top: node.scrollTop + ev.deltaY / 5 });
+                    node.scrollTo({ top: node.scrollTop + ev.deltaY / 2, behavior: "smooth" });
+
+                    console.log(this.refs.container.scrollTop, this.refs.ratio);
                     this.refs.offset = this.refs.container.scrollTop * this.refs.ratio;
+                    this.refs.isMousedown = false;
                     ev.preventDefault();
                 }
             },
@@ -111,7 +115,12 @@ export default class {
 
             //* 滚动条滑块样式
             scrollbarStyle: computed(() => {
-                return { height: this.refs.scrollsize + "px", transform: `translateY(${this.refs.offset}px)` };
+                console.log(this.refs.offset);
+                return {
+                    height: this.refs.scrollsize + "px",
+                    transform: `translateY(${this.refs.offset}px)`,
+                    transition: `all ${this.refs.isMousedown ? 0 : 0.2}s`
+                };
             }),
         };
     }
@@ -127,6 +136,7 @@ export default class {
                 if (this.refs.container.scrollHeight > this.refs.main.clientHeight) {
 
                     this.refs.ratio = (this.refs.main.clientHeight - 2) / (this.refs.container.scrollHeight + (this.refs.main.clientHeight - this.refs.container.clientHeight));
+                    // this.refs.ratio = (this.refs.main.clientHeight - 2) / (this.refs.container.scrollHeight);
                     this.refs.scrollsize = this.refs.ratio * (this.refs.main.clientHeight - 2);
                     this.refs.offset = this.refs.container.scrollTop * this.refs.ratio;
                 } else {
@@ -145,6 +155,7 @@ export default class {
                 const size = ev.y;
                 document.onselectstart = () => false;
                 document.onmousemove = (ev: MouseEvent) => {
+                    this.refs.isMousedown = true;
                     this.refs.offset = offset + ev.y - size;
                     if (this.refs.offset < 0) this.refs.offset = 0;
                     else if (this.refs.main && this.refs.offset > this.refs.main.clientHeight - this.refs.scrollsize - 2) {

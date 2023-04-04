@@ -20,6 +20,7 @@
         padding: 0;
         overflow: hidden;
         line-height: var(--uioption-textarea-line-height);
+
         //* 提示文案调整
         &::placeholder {
             color: var(--uioption-form-placeholder-color);
@@ -36,13 +37,13 @@
 }
 
 .ui-textarea.ui-disabled-status {
-    > .ui-form-control {
+    >.ui-form-control {
         cursor: not-allowed;
     }
 }
 
 .ui-textarea.ui-readonly-status {
-    > .ui-form-control {
+    >.ui-form-control {
         &:focus::placeholder {
             color: var(--uioption-form-placeholder-color);
         }
