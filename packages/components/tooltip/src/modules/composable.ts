@@ -15,7 +15,7 @@ export default class {
             style: computed(() => (define.width ? `max-width: ${define.width}px` : "")),
             //* 类名
             className: computed(() => {
-                const result = [];
+                const result: string[] = [];
 
                 define.classExtraName && result.push(define.classExtraName);
                 define.effect && result.push(`ui-effect-${define.effect}`);
