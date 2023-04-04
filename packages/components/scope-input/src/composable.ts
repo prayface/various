@@ -1,40 +1,16 @@
 import _ from "lodash";
 import { Emitter } from "mitt";
-import { computed, ComputedRef } from "vue";
+import { computed } from "vue";
 import { UiScopeInputProps, UiScopeInputEmits } from "./scope-input";
 import { UiEmitFn } from "@various/constants";
 
-export type UiScopeInputConstructorRefs = {
-    start?: HTMLInputElement;
-    end?: HTMLInputElement;
-};
-
 export default class {
     // TODO 后续代码不需要进行类型声明, class如果在constructor进行初始化会自动生成类型
-    refs: UiScopeInputConstructorRefs;
+    handles;
+    methods;
+    computeds;
 
-    handles: {
-        handles: {
-            change: (ev: Event) => void;
-            input: (ev: InputEvent | Event) => void;
-            focus: (ev: FocusEvent | Event) => void;
-            blur: (ev: FocusEvent | Event) => void;
-        };
-    };
-
-    methods: {
-        clear: () => void;
-    };
-
-    computeds: {
-        style: ComputedRef<{ width?: string }>;
-        attrs: ComputedRef<{ [name: string]: any }>;
-        status: ComputedRef<{ is: boolean; name: string }>;
-        className: ComputedRef<string>;
-    };
-
-    constructor(refs: UiScopeInputConstructorRefs, define: UiScopeInputProps, emit: UiEmitFn<typeof UiScopeInputEmits>, emitter?: Emitter<any>) {
-        this.refs = refs;
+    constructor(define: UiScopeInputProps, emit: UiEmitFn<typeof UiScopeInputEmits>, emitter?: Emitter<any>) {
         this.methods = this.#useMethods(define, emit, emitter);
         this.computeds = this.#useComputeds(define);
         this.handles = this.#useOnHandles(define, emit, emitter);
@@ -44,9 +20,6 @@ export default class {
         //? 清空事件
         const clear = () => {
             //TODO 这块地方是否有点多余, refs貌似获取的是dom
-            if (!this.refs.start || !this.refs.end) return;
-            this.refs.start.value = "";
-            this.refs.end.value = "";
             emit("clear", "clear");
             emitter?.emit(define.name || "", "change");
         };
@@ -73,29 +46,22 @@ export default class {
         //? 标签响应式属性
         const attrs = computed(() => {
             // TODO 已经使用v-model了, 所以value属性是多余的
-            const start = {
-                value: define.modelValue.start,
+            const obj = {
                 disabled: ["disabled", "loading"].includes(status.value.name),
                 readonly: status.value.name == "readonly",
-                placeholder: define.placeholder?.start || "Start",
-            };
-            const end = {
-                value: define.modelValue.end,
-                disabled: ["disabled", "loading"].includes(status.value.name),
-                readonly: status.value.name == "readonly",
-                placeholder: define.placeholder?.end || "End",
-            };
+            }
             return {
-                start: start,
-                end: end,
+                start: { ...obj, placeholder: define.placeholder?.start || "Start", },
+                end: { ...obj, placeholder: define.placeholder?.end || "End", },
             };
         });
 
         //? 样式
         const style = computed(() => {
             // TODO 样式参考一下select需要进行格式处理
-            if (define.width) return { width: define.width + "px" };
-            else return {};
+            //* 宽度处理
+            if (_.isNumber(define.width)) return { width: define.width + "px" };
+            else return { width: define.width };
         });
 
         //? 类名

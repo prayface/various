@@ -1,4 +1,8 @@
-//TODO 缺少css变量管理
+// TODO 缺少css变量管理
+.ui-scope-input {
+    --uioption-scope-input-spacing-x: var(--uisize-spacing-x); // 默认范围输入框水平间距
+    --uioption-scope-input-line-color: var(--uicolor-font-4); // 默认范围输入框中间短线颜色
+}
 
 .ui-scope-input {
     position: relative;
@@ -10,25 +14,23 @@
         justify-content: space-between;
     }
 
-
-    //* 去掉上下箭头
-    input::-webkit-outer-spin-button,
-    input::-webkit-inner-spin-button {
-        -webkit-appearance: none !important;
-    }
-
-    input[type='number'] {
-        -moz-appearance: textfield;
-    }
-
-
     .ui-scope-input-control {
         flex-shrink: 1;
-        padding: 0 15px;
+        padding: 0 var(--uioption-scope-input-spacing-x);
         width: 45%;
         height: 100%;
         text-align: center;
         background: transparent;
+
+        //* 去掉上下箭头
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+            -webkit-appearance: none !important;
+        }
+
+        &[type='number'] {
+            -moz-appearance: textfield;
+        }
 
         //* 提示文案调整
         &::placeholder {
@@ -44,13 +46,14 @@
         flex-shrink: 0;
         width: 5%;
         height: 2px;
-        background: #606266;
+        background: var(--uioption-scope-input-line-color);
     }
 }
 
-
+//* 禁用状态
 .ui-scope-input.ui-disabled-status {
     .ui-scope-input-control {
+        color: var(--uioption-form-placeholder-color);
         cursor: no-drop;
     }
 }
