@@ -13,10 +13,12 @@ export type UiTextareaConstructorRefs = {
 };
 
 export default class {
+    timer?: NodeJS.Timer;
     refs;
     handles;
     methods;
     computeds;
+
     constructor(refs: UiTextareaConstructorRefs, define: UiTextareaProps, emit: UiEmitFn<typeof UiTextareaEmits>, emitter?: Emitter<any>) {
         this.refs = refs;
         this.handles = this.#useOnHandles(define, emit, emitter);
@@ -44,17 +46,16 @@ export default class {
                 emitter?.emit(define.name || "", "blur");
             },
             wheel: (ev: WheelEvent) => {
+                this.timer && clearTimeout(this.timer);
                 if (define.disabled || define.loading) return
-                if (define.disabled) return;
                 if (!this.refs.main || !this.refs.container) return;
                 if (this.refs.container.scrollHeight > this.refs.main.clientHeight) {
                     const node = ev.target as HTMLTextAreaElement;
-
-                    console.log('wheel', node.scrollTop, ev);
-                    node.scrollTo({ top: node.scrollTop + ev.deltaY / 2, behavior: "smooth" });
-
-                    console.log(this.refs.container.scrollTop, this.refs.ratio);
-                    this.refs.offset = this.refs.container.scrollTop * this.refs.ratio;
+                    node.scrollTo({ top: node.scrollTop + ev.deltaY / 4, behavior: "smooth" });
+                    this.timer = setTimeout(() => {
+                        if (!this.refs.container) return
+                        this.refs.offset = this.refs.container?.scrollTop * this.refs.ratio;
+                    }, 80);
                     this.refs.isMousedown = false;
                     ev.preventDefault();
                 }
@@ -115,7 +116,6 @@ export default class {
 
             //* 滚动条滑块样式
             scrollbarStyle: computed(() => {
-                console.log(this.refs.offset);
                 return {
                     height: this.refs.scrollsize + "px",
                     transform: `translateY(${this.refs.offset}px)`,
@@ -131,7 +131,6 @@ export default class {
             init: () => {
                 // 判断是否允许向下执行
                 if (define.disabled || define.loading) return
-                if (define.disabled) return;
                 if (!this.refs.main || !this.refs.container) return;
                 if (this.refs.container.scrollHeight > this.refs.main.clientHeight) {
 
