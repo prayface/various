@@ -1,8 +1,8 @@
 import _ from "lodash";
 import { Emitter } from "mitt";
-import { nextTick, computed, ComputedRef } from "vue";
+import { nextTick, computed } from "vue";
 import { UiInputProps, UiInputEmits } from "./input";
-import { UiEmitFn, UiTypes } from "@various/constants";
+import { UiEmitFn } from "@various/constants";
 import { node, dispose } from "@various/utils";
 
 export type UiInputConstructorRefs = {
@@ -13,32 +13,10 @@ export type UiInputConstructorRefs = {
 };
 
 export default class {
-    refs: UiInputConstructorRefs;
-
-    handles: {
-        handles: {
-            change: (ev: Event) => void;
-            input: (ev: InputEvent | Event) => void;
-            click: (ev: PointerEvent | Event) => void;
-            focus: (ev: FocusEvent | Event) => void;
-            blur: (ev: FocusEvent | Event) => void;
-        };
-    };
-
-    methods: {
-        show: () => void;
-        clear: () => void;
-        hidden: () => void;
-        cutCandidate: (content: string, ev: Event) => void;
-    };
-
-    computeds: {
-        style: ComputedRef<{ width?: string }>;
-        attrs: ComputedRef<{ [name: string]: any }>;
-        status: ComputedRef<{ is: boolean; name: string }>;
-        className: ComputedRef<string>;
-        candidates: ComputedRef<UiTypes.candidate[]>;
-    };
+    refs;
+    handles;
+    methods;
+    computeds;
 
     constructor(refs: UiInputConstructorRefs, define: UiInputProps, emit: UiEmitFn<typeof UiInputEmits>, emitter?: Emitter<any>) {
         this.refs = refs;
@@ -69,7 +47,13 @@ export default class {
 
         //? 候选框显示事件
         const show = () => {
-            this.refs.visible = true;
+            //* 判断是否存在候选项
+            if (this.computeds.candidates.value.length) {
+                this.refs.visible = true;
+            } else {
+                return;
+            }
+
             nextTick(() => {
                 if (!this.refs.container || !this.refs.candidate) return;
                 //* 将内容添加到视图容器中

@@ -1,8 +1,8 @@
 import _ from "lodash";
 import { Emitter } from "mitt";
-import { nextTick, computed, ComputedRef } from "vue";
+import { nextTick, computed } from "vue";
 import { UiSelectProps, UiSelectEmits } from "./select";
-import { UiEmitFn, UiTypes } from "@various/constants";
+import { UiEmitFn } from "@various/constants";
 import { node, dispose } from "@various/utils";
 
 export type UiSelectConstructorRefs = {
@@ -13,21 +13,9 @@ export type UiSelectConstructorRefs = {
 };
 
 export default class {
-    refs: UiSelectConstructorRefs;
-    computeds: {
-        style: ComputedRef<{ width?: string }>;
-        attrs: ComputedRef<{ [name: string]: any }>;
-        status: ComputedRef<{ is: boolean; name: string }>;
-        className: ComputedRef<string>;
-        candidates: ComputedRef<UiTypes.candidate[]>;
-    };
-
-    methods: {
-        show: () => void;
-        clear: () => void;
-        hidden: () => void;
-        cutCandidate: (content: string, ev: Event) => void;
-    };
+    refs;
+    methods;
+    computeds;
 
     constructor(refs: UiSelectConstructorRefs, define: UiSelectProps, emit: UiEmitFn<typeof UiSelectEmits>, emitter?: Emitter<any>) {
         this.refs = refs;
