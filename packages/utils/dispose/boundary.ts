@@ -277,3 +277,10 @@ export const elementToBodyRect = (el: HTMLElement): DOMRect => {
 
     return Object.assign(result, { toJSON: () => result });
 };
+
+//? 通过偏移、尺寸和范围计算边界处理
+export const elementOptionBoundary = (offset: number, size: number, min: number, max: number) => {
+    if (offset < min) return min;
+    if (offset + size > max) return max - size;
+    else return offset;
+};

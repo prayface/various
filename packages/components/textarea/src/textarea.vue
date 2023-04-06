@@ -16,8 +16,6 @@
     </div>
 </template>
 
-
-
 <script lang="ts">
 import { defineComponent, reactive, inject, toRefs, onMounted } from "vue";
 import { UiTextareaPropsOption, UiTextareaEmits } from "./textarea";
