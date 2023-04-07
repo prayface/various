@@ -21,7 +21,8 @@ export const UiTextareaEmits = {
     change: (ev?: Event) => true,
     clear: (ev?: any) => true,
     input: (ev?: InputEvent | Event) => true,
-    click: (ev?: PointerEvent | Event) => true,
     focus: (ev?: FocusEvent | Event) => true,
+    click: (ev?: PointerEvent | Event) => true,
+    enter: (ev?: KeyboardEvent | Event) => true,
     blur: (ev?: FocusEvent | Event) => true,
 };

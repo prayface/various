@@ -142,6 +142,11 @@
                     <td>(event?: PointerEvent | Event) => void</td>
                 </tr>
                 <tr>
+                    <td>enter</td>
+                    <td>keydown enter事件回调</td>
+                    <td>(event?: KeyboardEvent | Event) => void</td>
+                </tr>
+                <tr>
                     <td>focus</td>
                     <td>focus事件回调</td>
                     <td>(event?: FocusEvent | Event) => void</td>

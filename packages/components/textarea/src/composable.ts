@@ -30,37 +30,39 @@ export default class {
     //* 主体响应事件声明
     #useOnHandles(define: UiTextareaProps, emit: UiEmitFn<typeof UiTextareaEmits>, emitter?: Emitter<any>) {
         return {
-            click: (ev: PointerEvent | Event) => emit("click", ev),
-            focus: (ev: FocusEvent | Event) => emit("focus", ev),
-            change: (ev: Event) => {
-                emit("change", ev);
-                emitter?.emit(define.name || "", "change");
-            },
-            input: (ev: InputEvent) => {
-                const target = ev.target as HTMLInputElement;
-                emit("update:modelValue", target.value);
-                emit("input", ev);
-                this.methods.init();
-            },
-            blur: (ev: FocusEvent | Event) => {
-                emit("blur", ev);
-                emitter?.emit(define.name || "", "blur");
-            },
-            wheel: (ev: WheelEvent) => {
-                // 禁用状态取消页面默认滚动
-                if (["loading", "disabled"].includes(this.computeds.status.value.name)) {
-                    ev.preventDefault();
-                }
-            },
-            scroll: (ev: WheelEvent) => {
-                // 判断是否存在容器或者处于禁用状态
-                if (!this.refs.main || !this.refs.container) return;
-                if (this.refs.container.scrollHeight > this.refs.container.clientHeight) {
-                    // 判断是否存在滚动条
-                    const node = ev.target as HTMLTextAreaElement;
-                    this.refs.offset = node.scrollTop * this.refs.ratio;
-                    this.refs.isMousedown = false;
-                }
+            handles: {
+                click: (ev: PointerEvent | Event) => emit("click", ev),
+                focus: (ev: FocusEvent | Event) => emit("focus", ev),
+                change: (ev: Event) => {
+                    emit("change", ev);
+                    emitter?.emit(define.name || "", "change");
+                },
+                input: (ev: InputEvent) => {
+                    const target = ev.target as HTMLInputElement;
+                    emit("update:modelValue", target.value);
+                    emit("input", ev);
+                    this.methods.init();
+                },
+                blur: (ev: FocusEvent | Event) => {
+                    emit("blur", ev);
+                    emitter?.emit(define.name || "", "blur");
+                },
+                wheel: (ev: WheelEvent) => {
+                    // 禁用状态取消页面默认滚动
+                    if (["loading", "disabled"].includes(this.computeds.status.value.name)) {
+                        ev.preventDefault();
+                    }
+                },
+                scroll: (ev: WheelEvent) => {
+                    // 判断是否存在容器或者处于禁用状态
+                    if (!this.refs.main || !this.refs.container) return;
+                    if (this.refs.container.scrollHeight > this.refs.container.clientHeight) {
+                        // 判断是否存在滚动条
+                        const node = ev.target as HTMLTextAreaElement;
+                        this.refs.offset = node.scrollTop * this.refs.ratio;
+                        this.refs.isMousedown = false;
+                    }
+                },
             },
         };
     }
@@ -153,7 +155,7 @@ export default class {
                 emitter?.emit(define.name || "", "change");
             },
 
-            onMousedown: (ev: MouseEvent) => {
+            triggerMousedown: (ev: MouseEvent) => {
                 const offset = this.refs.offset;
                 const size = ev.y;
                 document.onselectstart = () => false;
@@ -168,6 +170,10 @@ export default class {
                     document.onmousemove = null;
                     document.onmouseup = null;
                 };
+            },
+
+            triggerKeydownEnter: (ev: KeyboardEvent) => {
+                emit("enter", ev);
             },
         };
     }

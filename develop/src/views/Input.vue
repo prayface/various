@@ -61,7 +61,7 @@
                 <p>候选项<span>candidate</span>支持<span>() => UiTypes.candidate[]</span>和<span>UiTypes.candidate[]</span>类型</p>
             </div>
             <div class="content">
-                <UiInput v-model="value" :candidate="candidate" class-extra-name="cesname" />
+                <UiInput v-model="value" :candidate="candidate" />
             </div>
         </section>
 
@@ -74,13 +74,6 @@
                     <th>类型</th>
                     <th>可选值</th>
                     <th>默认值</th>
-                </tr>
-                <tr>
-                    <td>class-extra-name</td>
-                    <td>用于指定候选项的className</td>
-                    <td>string</td>
-                    <td>--</td>
-                    <td>--</td>
                 </tr>
                 <tr>
                     <td>autocomplete</td>
@@ -196,6 +189,11 @@
                     <td>click</td>
                     <td>click事件回调</td>
                     <td>(event?: PointerEvent | Event) => void</td>
+                </tr>
+                <tr>
+                    <td>enter</td>
+                    <td>keydown enter事件回调</td>
+                    <td>(event?: KeyboardEvent | Event) => void</td>
                 </tr>
                 <tr>
                     <td>focus</td>

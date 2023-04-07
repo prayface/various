@@ -1,10 +1,10 @@
 <template>
     <div class="ui-textarea" :class="className" :style="style" ref="main">
         <!-- Input主体 -->
-        <textarea class="ui-form-control" v-bind="attrs" v-on="handles" ref="container" resize="none"></textarea>
+        <textarea class="ui-form-control" v-bind="attrs" v-on="handles" ref="container" resize="none" @keydown.enter="triggerKeydownEnter"></textarea>
         <!-- 滚动条容器 -->
         <div class="ui-scrollbar-container ui-scrollbar-vertical" v-show="scrollsize">
-            <div class="ui-scrollbar-bar" :style="scrollbarStyle" @mousedown="onMousedown"></div>
+            <div class="ui-scrollbar-bar" :style="scrollbarStyle" @mousedown="triggerMousedown"></div>
         </div>
 
         <!-- 遮罩层 -->
@@ -53,7 +53,7 @@ export default defineComponent({
         expose({ clear: composable.methods.clear });
 
         return {
-            handles: composable.handles,
+            ...composable.handles,
             ...composable.methods,
             ...composable.computeds,
             ...toRefs(refs),

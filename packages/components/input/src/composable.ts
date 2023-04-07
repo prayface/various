@@ -91,7 +91,13 @@ export default class {
             }
         };
 
+        //? 触发键盘回车事件
+        const triggerKeydownEnter = (ev: KeyboardEvent) => {
+            emit("enter", ev);
+        };
+
         return {
+            triggerKeydownEnter,
             cutCandidate,
             hidden,
             clear,
