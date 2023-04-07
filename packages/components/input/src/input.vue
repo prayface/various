@@ -1,7 +1,7 @@
 <template>
     <div class="ui-input" :class="className" :style="style" ref="container">
         <!-- Input主体 -->
-        <input class="ui-form-control" v-bind="attrs" v-on="handles" />
+        <input class="ui-form-control" v-bind="attrs" v-on="handles" @keydown.enter="triggerKeydownEnter" />
 
         <!-- 清空按钮 -->
         <UiIcon name="error" class="ui-form-clearable" v-if="clearable && modelValue" @click="clear" />
