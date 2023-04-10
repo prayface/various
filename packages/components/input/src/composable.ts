@@ -48,7 +48,7 @@ export default class {
         //? 候选框显示事件
         const show = () => {
             //* 判断是否存在候选项
-            if (this.computeds.candidates.value.length) {
+            if (define.candidates?.length) {
                 this.refs.visible = true;
             } else {
                 return;
@@ -156,21 +156,7 @@ export default class {
             return result.join(" ");
         });
 
-        //? 候选项
-        const candidates = computed(() => {
-            if (_.isArray(define.candidate)) return define.candidate;
-            else if (_.isFunction(define.candidate)) {
-                const result = define.candidate();
-                if (_.isArray(result)) {
-                    return result;
-                }
-            }
-
-            return [];
-        });
-
         return {
-            candidates,
             className,
             status,
             attrs,
@@ -192,7 +178,7 @@ export default class {
                 },
                 click: (ev: PointerEvent | Event) => {
                     emit("click", ev);
-                    define.candidate && this.methods.show();
+                    define.candidates && this.methods.show();
                 },
                 focus: (ev: FocusEvent | Event) => {
                     emit("focus", ev);

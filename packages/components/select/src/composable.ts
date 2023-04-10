@@ -131,19 +131,6 @@ export default class {
             else return { width: define.width };
         });
 
-        //? 候选项
-        const candidates = computed(() => {
-            if (_.isArray(define.candidate)) return define.candidate;
-            else if (_.isFunction(define.candidate)) {
-                const result = define.candidate();
-                if (_.isArray(result)) {
-                    return result;
-                }
-            }
-
-            return [];
-        });
-
         //? 类名
         const className = computed(() => {
             //* 初始化输出列表
@@ -163,7 +150,6 @@ export default class {
         });
 
         return {
-            candidates,
             className,
             status,
             style,

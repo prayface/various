@@ -6,7 +6,7 @@ export const UiInputPropsOption = {
     autocomplete: { type: String, values: ["off", "on"], default: "off" },
     placeholder: { type: String, default: "Please input" } /**提示文本 */,
     modelValue: { type: [String, Number] as PropType<string | number>, required: true },
-    candidate: { type: [Array, Function] as PropType<UiTypes.candidate[] | ((...arg: any[]) => UiTypes.candidate[])> } /**候选项 */,
+    candidates: { type: Array as PropType<UiTypes.candidate[]> } /**候选项 */,
     clearable: { type: Boolean, default: false } /**是否可清空 */,
     disabled: { type: Boolean, default: false } /**是否禁用 */,
     readonly: { type: Boolean, default: false } /**是否只读 */,
