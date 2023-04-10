@@ -64,7 +64,6 @@ export default class {
             emit("update:modelValue", content);
             emit("select", ev);
             emit("change", ev);
-            emit("input", ev);
             if (emitter?.emit) {
                 emitter.emit(define.name || "", "change");
             }
