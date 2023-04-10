@@ -8,11 +8,15 @@
 
         <!-- 候选项 -->
         <Transition>
-            <div class="ui-form-candidates" ref="candidate" v-if="visible" :class="classExtraName || ''">
+            <div class="ui-form-candidates" ref="candidate" v-if="visible" v-show="candidates?.length" :class="classExtraName || ''">
                 <div class="ui-form-candidates-triangle" ref="triangle"></div>
                 <div class="ui-form-candidate-container">
                     <template v-for="value in candidates">
-                        <div class="ui-form-candidate" :class="{ 'ui-active': value.value == modelValue }" @click="cutCandidate(value.value, $event)">
+                        <div
+                            class="ui-form-candidate"
+                            :class="{ 'ui-active': value.value == modelValue }"
+                            @mousedown="cutCandidate(value.value, $event)"
+                        >
                             {{ value.label }}
                         </div>
                     </template>

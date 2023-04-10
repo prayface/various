@@ -26,16 +26,6 @@ export default class {
     }
 
     #useMethods(define: UiInputProps, emit: UiEmitFn<typeof UiInputEmits>, emitter?: Emitter<any>) {
-        //? 候选框隐藏事件
-        const hidden = (ev?: Event) => {
-            if (!this.refs.container) return;
-            if (ev?.target && node.includes(ev.target as HTMLElement, this.refs.container)) return;
-            else {
-                this.refs.visible = false;
-                window.removeEventListener("click", hidden);
-            }
-        };
-
         //? 清空事件
         const clear = () => {
             emit("update:modelValue", "");
@@ -47,15 +37,10 @@ export default class {
 
         //? 候选框显示事件
         const show = () => {
-            //* 判断是否存在候选项
-            if (define.candidates?.length) {
-                this.refs.visible = true;
-            } else {
-                return;
-            }
-
+            //* 显示候选项列表
+            this.refs.visible = true;
             nextTick(() => {
-                if (!this.refs.container || !this.refs.candidate) return;
+                if (!this.refs.container || !this.refs.candidate || !define.candidates?.length) return;
                 //* 将内容添加到视图容器中
                 node.append("ui-windows", this.refs.candidate);
 
@@ -71,9 +56,6 @@ export default class {
                     this.refs.triangle.style.inset = rect.triangle;
                     this.refs.triangle.style.transform = `rotate(${rect.rotate})`;
                 }
-
-                //* 隐藏事件
-                window.addEventListener("click", hidden, true);
             });
         };
 
@@ -85,10 +67,6 @@ export default class {
             if (emitter?.emit) {
                 emitter.emit(define.name || "", "change");
             }
-
-            if (this.refs.visible) {
-                hidden();
-            }
         };
 
         //? 触发键盘回车事件
@@ -99,7 +77,6 @@ export default class {
         return {
             triggerKeydownEnter,
             cutCandidate,
-            hidden,
             clear,
             show,
         };
@@ -178,12 +155,13 @@ export default class {
                 },
                 click: (ev: PointerEvent | Event) => {
                     emit("click", ev);
-                    define.candidates && this.methods.show();
                 },
                 focus: (ev: FocusEvent | Event) => {
+                    this.methods.show();
                     emit("focus", ev);
                 },
                 blur: (ev: FocusEvent | Event) => {
+                    this.refs.visible = false;
                     emit("blur", ev);
                     emitter?.emit(define.name || "", "blur");
                 },
