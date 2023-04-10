@@ -40,7 +40,7 @@ export default class {
             //* 显示候选项列表
             this.refs.visible = true;
             nextTick(() => {
-                if (!this.refs.container || !this.refs.candidate || !define.candidates?.length) return;
+                if (!this.refs.container || !this.refs.candidate) return;
                 //* 将内容添加到视图容器中
                 node.append("ui-windows", this.refs.candidate);
 
@@ -62,6 +62,7 @@ export default class {
         //? 候选项选择事件
         const cutCandidate = (content: String, ev: Event) => {
             emit("update:modelValue", content);
+            emit("select", ev);
             emit("change", ev);
             emit("input", ev);
             if (emitter?.emit) {
