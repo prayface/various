@@ -11,3 +11,4 @@ export * from "./seamless-scroll";
 export * from "./pagination";
 export * from "./textarea";
 export * from "./modal";
+export * from "./table";
