@@ -1,5 +1,5 @@
 //* css变量
-.ui-tooltip-container {
+.ui-tooltip {
     --uioption-tooltip-radius: var(--uisize-radius); // 默认圆角
     --uioption-tooltip-spacing-x: var(--uisize-spacing-x); // 默认水平内间距
     --uioption-tooltip-spacing-y: calc(var(--uisize-spacing-y) / 2); // 默认水平内间距
@@ -7,24 +7,14 @@
     --uioption-tooltip-background-color: var(--uicolor-font-6); // 默认悬浮提示组件背景颜色
 }
 
-.ui-tooltip-container {
+.ui-tooltip {
     background-color: var(--uioption-tooltip-background-color);
     border-radius: var(--uioption-tooltip-radius);
     white-space: nowrap;
-    transition: opacity 0.2s;
     box-shadow: var(--uioption-tooltip-box-shadow);
     position: absolute;
     padding: var(--uioption-tooltip-spacing-y) var(--uioption-tooltip-spacing-x);
     inset: 0 auto auto 0;
-    &.v-enter-from,
-    &.v-leave-to {
-        opacity: 0;
-    }
-
-    &.v-enter-to,
-    &.v-leave-from {
-        opacity: 1;
-    }
 
     .ui-tooltip-triangle {
         position: absolute;
@@ -34,7 +24,7 @@
     }
 }
 
-.ui-tooltip {
-    vertical-align: top;
+.ui-tooltip-container {
     display: inline-block;
+    vertical-align: baseline;
 }
