@@ -5,8 +5,7 @@
 
     <Transition @enter="entranceAnimation" @leave="departureAnimation" @before-enter="entrancePreAnimation">
         <div v-if="visible" v-on="tooltipHandles" class="ui-tooltip" ref="tooltip" :style="style" :class="classExtraName">
-            <slot name="content" v-if="$slots.content"></slot>
-            <template v-else>{{ content }}</template>
+            <slot name="content">{{ content }}</slot>
         </div>
     </Transition>
 </template>

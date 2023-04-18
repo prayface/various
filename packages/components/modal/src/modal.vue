@@ -9,8 +9,7 @@
 
                 <!-- 头部信息 -->
                 <div class="ui-modal-header">
-                    <template v-if="$slots.header"><slot name="header"></slot></template>
-                    <template v-else>{{ title }}</template>
+                    <slot name="header">{{ title }}</slot>
                 </div>
 
                 <!-- 内容 -->

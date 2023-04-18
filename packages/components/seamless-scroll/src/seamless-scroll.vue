@@ -2,10 +2,10 @@
     <div class="ui-seamless-scroll" :style="style" ref="main" @mouseenter="mouseenter" @mouseleave="mouseleave">
         <div class="ui-seamless-scroll-container" ref="container">
             <div class="ui-seamless-scroll-content" ref="content">
-                <slot />
+                <slot></slot>
             </div>
             <div class="ui-seamless-scroll-content ui-seamless-scroll-copy-content">
-                <slot />
+                <slot></slot>
             </div>
         </div>
     </div>
