@@ -5,6 +5,7 @@ declare module "@vue/runtime-core" {
         UiIcon: typeof import("various-ui")["UiIcon"];
         UiButton: typeof import("various-ui")["UiButton"];
         UiTooltip: typeof import("various-ui")["UiTooltip"];
+        UiTooltipFollow: typeof import("various-ui")["UiTooltipFollow"];
         UiScrollbar: typeof import("various-ui")["UiScrollbar"];
         UiForm: typeof import("various-ui")["UiForm"];
         UiInput: typeof import("various-ui")["UiInput"];
@@ -15,6 +16,7 @@ declare module "@vue/runtime-core" {
         UiPagination: typeof import("various-ui")["UiPagination"];
         UiTextarea: typeof import("various-ui")["UiTextarea"];
         UiModal: typeof import("various-ui")["UiModal"];
+        UiTable: typeof import("various-ui")["UiTable"];
         vLoading: typeof import("various-ui")["vLoading"];
         $loading: typeof import("various-ui")["$loading"];
         $message: typeof import("various-ui")["$message"];

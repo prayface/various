@@ -11,9 +11,9 @@
                 <UiTooltip content="悬浮信息">
                     <UiButton size="small">固定模式</UiButton>
                 </UiTooltip>
-                <UiTooltip content="悬浮信息" mode="follow">
+                <UiTooltipFollow content="悬浮信息">
                     <UiButton size="small">跟随模式</UiButton>
-                </UiTooltip>
+                </UiTooltipFollow>
             </div>
         </section>
 
@@ -220,7 +220,7 @@ const click = () => {
     .tooltip-1,
     .tooltip-2,
     .tooltip-4 {
-        .ui-tooltip {
+        .ui-tooltip-container {
             margin: 0 8px;
         }
     }
@@ -228,7 +228,7 @@ const click = () => {
     .tooltip-3 {
         .tooltip-top {
             margin: 20px 120px;
-            .ui-tooltip {
+            .ui-tooltip-container {
                 margin: 0 8px;
             }
         }
@@ -236,7 +236,7 @@ const click = () => {
         .tooltip-left {
             display: inline-flex;
             flex-direction: column;
-            .ui-tooltip {
+            .ui-tooltip-container {
                 margin: 8px 0;
             }
         }
@@ -245,14 +245,14 @@ const click = () => {
             margin: 0 0 0 360px;
             display: inline-flex;
             flex-direction: column;
-            .ui-tooltip {
+            .ui-tooltip-container {
                 margin: 8px 0;
             }
         }
 
         .tooltip-bottom {
             margin: 20px 120px;
-            .ui-tooltip {
+            .ui-tooltip-container {
                 margin: 0 8px;
             }
         }
