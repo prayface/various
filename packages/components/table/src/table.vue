@@ -13,7 +13,7 @@
                         <th class="ui-table-column" v-for="row in option" :key="row.key" :class="row.className">
                             <span class="ui-table-column-content">
                                 <!-- 内容 -->
-                                <slot :name="row.slot + 'Header'">{{ row.name }}</slot>
+                                <slot :name="row.slot + 'Header'" :data="row">{{ row.name }}</slot>
 
                                 <!-- 控制器 -->
                                 <div class="ui-table-controls">
@@ -50,7 +50,7 @@
                         <!-- 动态渲染的表格结构 -->
                         <tr v-for="(col, index) in data" :key="index" :class="GetColumnClassName(col)" @click="cutRatio(col)">
                             <td class="ui-table-column" v-for="row in option" :key="row.key" :class="row.className">
-                                <slot :name="row.slot">{{ col[row.key] }}</slot>
+                                <slot :name="row.slot" :data="col">{{ col[row.key] }}</slot>
                             </td>
                         </tr>
                     </tbody>
