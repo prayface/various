@@ -1,7 +1,14 @@
 .ui-table {
-    --ui-table-row-spacing: 8px; //* 单元格行间隔
+    --ui-table-header-background-color: #E9E9F5; //* 表格头部颜色
+    --ui-table-header-color: var(--uicolor-font-1); //* 表格头部字体颜色
+
+    --ui-table-border-active-color: var(--uicolor-main-color); //* 表格边框激活颜色
+    --ui-table-border-color: var(--uicolor-font-4-03); //* 表格边框颜色
+
+    --ui-table-row-spacing: 4px; //* 单元格行间隔
     --ui-table-col-spacing: var(--uisize-spacing-x); //* 单元格列间隔
     --ui-table-size: 48px; //* 单元格高度
+
 }
 
 .ui-table {
@@ -10,6 +17,15 @@
 
     .ui-table-header {
         margin-bottom: var(--ui-table-row-spacing);
+
+        .ui-table-container {
+            .ui-table-column {
+                color: var(--ui-table-header-color);
+                font-weight: bold;
+                border-color: var(--ui-table-header-background-color);
+                background-color: var(--ui-table-header-background-color);
+            }
+        }
     }
 
 
@@ -24,6 +40,13 @@
                 margin: calc(-1 * var(--ui-table-row-spacing)) 0;
                 border-spacing: 0 var(--ui-table-row-spacing);
                 border-collapse: separate;
+
+                tr:hover,
+                tr.ui-active {
+                    .ui-table-column {
+                        border-color: var(--ui-table-border-active-color);
+                    }
+                }
             }
         }
     }
@@ -34,8 +57,9 @@
 
         .ui-table-column {
             height: var(--ui-table-size);
-            border: 1px solid #000;
+            border: 1px solid var(--ui-table-border-color);
             padding: 0 var(--ui-table-col-spacing);
+            transition: all .3s;
             text-align: center;
             vertical-align: middle;
             background-color: #fff;
