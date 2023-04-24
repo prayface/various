@@ -3,6 +3,7 @@ import { ExtractPropTypes, PropType } from "vue";
 export interface UiTableOption {
     key: string;
     name: string;
+    flex?: number;
     slot?: string;
     sort?: boolean;
     width?: number;
@@ -14,7 +15,8 @@ export const UiTablePropsOption = {
     data: { type: Array as PropType<any[]>, required: true },
     ratio: { type: String },
     height: { type: [String, Number] as PropType<string | number> },
-    option: { type: Object as PropType<{ [name: string]: UiTableOption }>, required: true },
+    option: { type: Array as PropType<UiTableOption[]>, required: true },
+    spacing: { type: Number, default: 48 },
     loading: { type: Boolean, default: false },
     checkbox: { type: Boolean, default: false },
 } as const;

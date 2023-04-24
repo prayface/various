@@ -93,31 +93,41 @@ export default defineComponent({
                     if (!main.value || !body.value || !bodyContainer.value) return;
 
                     //* 数据初始化
-                    refs.colgroup = [];
+                    refs.colgroup = [{ show: false, width: define.spacing }];
 
                     //* 统计未分配的尺寸
-                    let unallocated = main.value.clientWidth - 2; //* 已分配尺寸
-                    let unallocatedCount = 0; //* 未分配模块数量
-                    for (const i in define.option) {
-                        unallocated -= define.option[i].width || 0;
-                        refs.colgroup.push({ show: true, width: define.option[i].width || 0 });
-                        if (!define.option[i].width) {
-                            unallocatedCount++;
+                    let unallocated = main.value.clientWidth - define.spacing * 2 - 2; //* 已分配尺寸
+                    let unallocatedCount = 0; //* 未分配份额数量
+                    define.option.forEach((config) => {
+                        unallocated -= config.width || 0;
+                        refs.colgroup.push({ show: true, width: config.width || 0 });
+                        if (!config.width) {
+                            unallocatedCount += config.flex || 1;
                         }
-                    }
+                    });
 
                     //* 判断是否出现滚动条
                     if (body.value.clientHeight < bodyContainer.value.clientHeight) {
                         unallocated -= 12;
-                        refs.colgroup.push({ show: false, width: 12 });
+                        refs.colgroup.push({ show: false, width: define.spacing + 12 });
+                    } else {
+                        refs.colgroup.push({ show: false, width: define.spacing });
                     }
 
-                    //* 调整
+                    //* 统计每份份额宽度占比(向下取整)
+                    const share = Math.floor(unallocated / unallocatedCount);
+
+                    //* 遍历为所有按份额分配模块补充宽度
                     refs.colgroup.forEach((value, index, arr) => {
                         if (!value.width) {
-                            arr[index].width = unallocated / unallocatedCount;
+                            arr[index].width = share;
                         }
                     });
+
+                    //* 随机为第一个份额补充剩余尺寸
+                    if (refs.colgroup[1]) {
+                        refs.colgroup[1].width += unallocated - unallocatedCount * share;
+                    }
                 });
 
                 // 将main挂载到observer中
