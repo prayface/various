@@ -16,7 +16,7 @@ export const UiTablePropsOption = {
     ratio: { type: String },
     height: { type: [String, Number] as PropType<string | number> },
     option: { type: Array as PropType<UiTableOption[]>, required: true },
-    spacing: { type: Number, default: 48 },
+    spacing: { type: Number, default: 56 },
     loading: { type: Boolean, default: false },
     checkbox: { type: Boolean, default: false },
 } as const;
