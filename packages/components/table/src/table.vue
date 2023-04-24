@@ -9,6 +9,9 @@
                 </colgroup>
                 <thead>
                     <tr>
+                        <!-- 占位坑 -->
+                        <th class="ui-table-column ui-table-placeholder-column"></th>
+
                         <!-- 动态渲染的表格结构 -->
                         <th class="ui-table-column" v-for="row in option" :key="row.key" :class="row.className">
                             <span class="ui-table-column-content">
@@ -28,8 +31,8 @@
                             </span>
                         </th>
 
-                        <!-- 滚动条占位坑 -->
-                        <th class="ui-table-column ui-table-scrollbar-column"></th>
+                        <!-- 占位坑 -->
+                        <th class="ui-table-column ui-table-placeholder-column"></th>
                     </tr>
                 </thead>
             </table>
@@ -47,11 +50,17 @@
                         </template>
                     </colgroup>
                     <tbody>
-                        <!-- 动态渲染的表格结构 -->
                         <tr v-for="(col, index) in data" :key="index" :class="GetColumnClassName(col)" @click="cutRatio(col)">
+                            <!-- 占位坑 -->
+                            <th class="ui-table-column ui-table-placeholder-column"></th>
+
+                            <!-- 动态渲染的表格结构 -->
                             <td class="ui-table-column" v-for="row in option" :key="row.key" :class="row.className">
                                 <slot :name="row.slot" :data="col">{{ col[row.key] }}</slot>
                             </td>
+
+                            <!-- 占位坑 -->
+                            <th class="ui-table-column ui-table-placeholder-column"></th>
                         </tr>
                     </tbody>
                 </table>
