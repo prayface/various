@@ -45,9 +45,7 @@
                 <!-- 表格主体 -->
                 <table class="ui-table-container">
                     <colgroup>
-                        <template v-for="value in colgroup">
-                            <col :width="value.width" v-if="value.show" />
-                        </template>
+                        <col v-for="value in colgroup" :width="value.width" />
                     </colgroup>
                     <tbody>
                         <tr v-for="(col, index) in data" :key="index" :class="GetColumnClassName(col)" @click="cutRatio(col)">
