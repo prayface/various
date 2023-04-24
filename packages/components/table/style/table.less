@@ -21,6 +21,7 @@
         margin-bottom: var(--ui-table-row-spacing);
 
         .ui-table-container {
+            border-spacing: 0;
             .ui-table-column {
                 color: var(--ui-table-header-color);
                 font-weight: bold;
@@ -40,7 +41,6 @@
             .ui-table-container {
                 margin: calc(-1 * var(--ui-table-row-spacing)) 0;
                 border-spacing: 0 var(--ui-table-row-spacing);
-                border-collapse: separate;
 
                 tr:hover,
                 tr.ui-active {
@@ -54,13 +54,13 @@
 
     .ui-table-container {
         width: 100%;
-        border-collapse: collapse;
-
+        border-collapse: separate;
         .ui-table-column {
             height: var(--ui-table-size);
             border: 1px solid var(--ui-table-border-color);
-            padding: 0 var(--ui-table-col-spacing);
+            padding: 4px var(--ui-table-col-spacing);
             transition: all 0.3s;
+            text-align: left;
             vertical-align: middle;
             background-color: #fff;
 
@@ -76,7 +76,6 @@
                 .ui-table-sort {
                     cursor: pointer;
                     display: flex;
-                    font-size: 9px;
                     flex-direction: column;
 
                     .ui-table-sort-up,
@@ -87,20 +86,20 @@
 
                     .ui-table-sort-up {
                         border-width: 0 4px 5px 4px;
-                        border-color: transparent transparent var(--ui-table-icon-active-color) transparent;
+                        border-color: transparent transparent var(--ui-table-icon-color) transparent;
 
                         &.ui-active {
-                            border-color: transparent transparent var(--ui-table-icon-color) transparent;
+                            border-color: transparent transparent var(--ui-table-icon-active-color) transparent;
                         }
                     }
 
                     .ui-table-sort-down {
                         margin-top: 3px;
                         border-width: 5px 4px 0 4px;
-                        border-color: var(--ui-table-icon-active-color) transparent transparent transparent;
+                        border-color: var(--ui-table-icon-color) transparent transparent transparent;
 
                         &.ui-active {
-                            border-color: var(--ui-table-icon-color) transparent transparent transparent;
+                            border-color: var(--ui-table-icon-active-color) transparent transparent transparent;
                         }
                     }
                 }

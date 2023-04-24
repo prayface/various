@@ -197,8 +197,8 @@
 </template>
 
 <script setup>
-const option = {
-    name: {
+const option = [
+    {
         name: "Gene symbol",
         key: "gene_symbol",
         width: 160,
@@ -209,12 +209,12 @@ const option = {
             { label: "选中项3", value: "value3" },
         ],
     },
-    descript: { name: "Description", key: "description", sort: true },
-    benign: { name: "良性突变", key: "benign", sort: true, width: 120 },
-    pathogenic: { name: "致病突变", key: "pathogenic", width: 120 },
-    mutation: { name: "所有突变", key: "mutation", width: 120 },
-    control: { name: "Operate", key: "operate", slot: "operate", width: 160 },
-};
+    { name: "Description", key: "description", sort: true },
+    { name: "良性突变", key: "benign", sort: true, width: 120 },
+    { name: "致病突变", key: "pathogenic", width: 120 },
+    { name: "所有突变", key: "mutation", width: 120 },
+    { name: "Operate", key: "operate", slot: "operate", width: 160 },
+];
 
 const data = [
     {

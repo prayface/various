@@ -50,7 +50,7 @@
                     <tbody>
                         <tr v-for="(col, index) in data" :key="index" :class="GetColumnClassName(col)" @click="cutRatio(col)">
                             <!-- 占位坑 -->
-                            <th class="ui-table-column ui-table-placeholder-column"></th>
+                            <td class="ui-table-column ui-table-placeholder-column"></td>
 
                             <!-- 动态渲染的表格结构 -->
                             <td class="ui-table-column" v-for="row in option" :key="row.key" :class="row.className">
@@ -58,7 +58,7 @@
                             </td>
 
                             <!-- 占位坑 -->
-                            <th class="ui-table-column ui-table-placeholder-column"></th>
+                            <td class="ui-table-column ui-table-placeholder-column"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -94,52 +94,53 @@ export default defineComponent({
 
         //  组件挂载时添加resize observer监听表格尺寸变化, 用于进行单元格尺寸调整
         onMounted(() => {
-            if (main.value) {
-                // 实例化ResizeObserver
-                const observer = new ResizeObserver(() => {
-                    if (!main.value || !body.value || !bodyContainer.value) return;
+            // 检测是否允许向下执行
+            if (!main.value) return;
 
-                    //* 数据初始化
-                    refs.colgroup = [{ show: false, width: define.spacing }];
+            // 实例化ResizeObserver
+            const observer = new ResizeObserver(() => {
+                if (!main.value || !body.value || !bodyContainer.value) return;
 
-                    //* 统计未分配的尺寸
-                    let unallocated = main.value.clientWidth - define.spacing * 2 - 2; //* 已分配尺寸
-                    let unallocatedCount = 0; //* 未分配份额数量
-                    define.option.forEach((config) => {
-                        unallocated -= config.width || 0;
-                        refs.colgroup.push({ show: true, width: config.width || 0 });
-                        if (!config.width) {
-                            unallocatedCount += config.flex || 1;
-                        }
-                    });
+                //* 数据初始化
+                refs.colgroup = [{ show: false, width: define.spacing - 16 }];
 
-                    //* 判断是否出现滚动条
-                    if (body.value.clientHeight < bodyContainer.value.clientHeight) {
-                        unallocated -= 12;
-                        refs.colgroup.push({ show: false, width: define.spacing + 12 });
-                    } else {
-                        refs.colgroup.push({ show: false, width: define.spacing });
-                    }
-
-                    //* 统计每份份额宽度占比(向下取整)
-                    const share = Math.floor(unallocated / unallocatedCount);
-
-                    //* 遍历为所有按份额分配模块补充宽度
-                    refs.colgroup.forEach((value, index, arr) => {
-                        if (!value.width) {
-                            arr[index].width = share;
-                        }
-                    });
-
-                    //* 随机为第一个份额补充剩余尺寸
-                    if (refs.colgroup[1]) {
-                        refs.colgroup[1].width += unallocated - unallocatedCount * share;
+                //* 统计未分配的尺寸
+                let unallocated = main.value.clientWidth - (define.spacing - 16) * 2; //* 已分配尺寸
+                let unallocatedCount = 0; //* 未分配份额数量
+                define.option.forEach((config) => {
+                    unallocated -= config.width || 0;
+                    refs.colgroup.push({ show: true, width: config.width || 0 });
+                    if (!config.width) {
+                        unallocatedCount += config.flex || 1;
                     }
                 });
 
-                // 将main挂载到observer中
-                observer.observe(main.value);
-            }
+                //* 判断是否出现滚动条
+                if (body.value.clientHeight < bodyContainer.value.clientHeight) {
+                    unallocated -= 12;
+                    refs.colgroup.push({ show: false, width: define.spacing - 4 });
+                } else {
+                    refs.colgroup.push({ show: false, width: define.spacing - 16 });
+                }
+
+                //* 统计每份份额宽度占比(向下取整)
+                const share = Math.floor(unallocated / unallocatedCount);
+
+                //* 遍历为所有按份额分配模块补充宽度
+                refs.colgroup.forEach((value, index, arr) => {
+                    if (!value.width) {
+                        arr[index].width = share;
+                    }
+                });
+
+                //* 随机为第一个份额补充剩余尺寸
+                if (refs.colgroup[1]) {
+                    refs.colgroup[1].width += unallocated - unallocatedCount * share;
+                }
+            });
+
+            // 将main挂载到observer中
+            observer.observe(main.value);
         });
 
         return {
