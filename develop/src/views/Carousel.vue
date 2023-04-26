@@ -8,10 +8,10 @@
             </div>
             <div class="content">
                 <UiCarousel :height="200">
-                    <div style="background-color: aquamarine">1</div>
-                    <div style="background-color: bisque">2</div>
-                    <div style="background-color: brown">3</div>
-                    <div style="background-color: burlywood">4</div>
+                    <div style="background-color: aquamarine; height: 200px">1</div>
+                    <div style="background-color: bisque; height: 400px">2</div>
+                    <div style="background-color: brown; height: 200px">3</div>
+                    <div style="background-color: burlywood; height: 200px">4</div>
                 </UiCarousel>
             </div>
         </section>

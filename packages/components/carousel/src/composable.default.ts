@@ -6,8 +6,8 @@ export type UiCarouselConstructorRefs = {
     main?: HTMLDivElement;
     container?: HTMLDivElement;
     childrens?: HTMLElement[];
-    skipTimer?: NodeJS.Timer;
     autoTimer?: NodeJS.Timer;
+    skipTimer: Boolean;
     active: number;
 };
 
@@ -52,7 +52,7 @@ export default class {
 
             //* 显示当前轮播图
             if (this.refs.childrens[this.refs.active]) {
-                gsap.set(this.refs.childrens[this.refs.active], { xPercent: -100 });
+                gsap.set(this.refs.childrens[this.refs.active], { xPercent: -100, position: "relative" });
             }
         };
 
@@ -66,6 +66,9 @@ export default class {
 
             //* 停止自动播放动画的定时器
             this.refs.autoTimer && clearTimeout(this.refs.autoTimer);
+
+            //* 激活禁用切换
+            this.refs.skipTimer = true;
 
             //* 轮播图触边处理
             if (number >= count || number < 0) {
@@ -106,31 +109,35 @@ export default class {
 
             //* 入场动画
             timeline.to(readyNode, {
+                position: "relative",
                 duration: this.delay,
                 xPercent: -100,
             });
 
-            //* 离场动画
-            timeline.to(
-                currentNode,
-                {
-                    duration: this.delay,
-                    xPercent: is ? -200 : 0,
-                    onComplete: () => {
-                        //* 重置离场节点位置
-                        gsap.set(currentNode, { xPercent: 0 });
+            //* 离场动画配置
+            const leave = {
+                position: "absolute",
+                duration: this.delay,
+                xPercent: is ? -200 : 0,
+                onComplete: () => {
+                    //* 重置离场节点位置
+                    gsap.set(currentNode, { xPercent: 0 });
 
-                        //* 删除剩余动画效果
-                        timeline.kill();
+                    //* 删除剩余动画效果
+                    timeline.kill();
 
-                        //* 自动播放
-                        if (define.autoplay) {
-                            this.refs.autoTimer = setTimeout(() => this.methods.cutCarousel(this.refs.active + 1), define.delay);
-                        }
-                    },
+                    //* 自动播放
+                    if (define.autoplay) {
+                        this.refs.autoTimer = setTimeout(() => this.methods.cutCarousel(this.refs.active + 1), define.delay);
+                    }
+
+                    //* 关闭禁用切换
+                    this.refs.skipTimer = false;
                 },
-                "<"
-            );
+            };
+
+            //* 离场动画
+            timeline.to(currentNode, leave, "<");
         };
 
         return {

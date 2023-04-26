@@ -40,8 +40,8 @@ export default defineComponent({
             main: undefined,
             container: undefined,
             childrens: undefined,
-            skipTimer: undefined,
             autoTimer: undefined,
+            skipTimer: false,
             active: 0,
         });
 
@@ -54,7 +54,6 @@ export default defineComponent({
 
         //* 卸载函数
         onUnmounted(() => {
-            refs.skipTimer && clearTimeout(refs.skipTimer);
             refs.autoTimer && clearInterval(refs.autoTimer);
             composableDefault.watchs.stopAutoPlay && composableDefault.watchs.stopAutoPlay();
         });
