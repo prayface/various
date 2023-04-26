@@ -18,15 +18,16 @@
 
 <script lang="ts">
 import { onMounted, onUnmounted, reactive, defineComponent, toRefs } from "vue";
-import { UiCarouselPropsOption } from "../carousel";
+import { UiCarouselMultipleViewPropsOption } from "./carousel";
 import Composable from "./composable";
 import ComposableDefault, { UiCarouselConstructorRefs } from "./composable.multiple-view";
 
 import UiIcon from "@various/components/icon";
 
 export default defineComponent({
+    name: "UiCarouselMultipleView",
     components: { UiIcon },
-    props: UiCarouselPropsOption,
+    props: UiCarouselMultipleViewPropsOption,
     setup(define, { expose }) {
         //* 初始化响应式变量
         const refs = reactive<UiCarouselConstructorRefs>({

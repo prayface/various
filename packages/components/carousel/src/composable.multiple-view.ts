@@ -1,4 +1,4 @@
-import { UiCarouselProps } from "../carousel";
+import { UiCarouselMultipleViewProps } from "./carousel";
 
 export type UiCarouselConstructorRefs = {
     main?: HTMLDivElement;
@@ -23,7 +23,7 @@ export default class {
         cutCarousel: (number: number, data?: any) => void;
     };
 
-    constructor(refs: UiCarouselConstructorRefs, define: UiCarouselProps) {
+    constructor(refs: UiCarouselConstructorRefs, define: UiCarouselMultipleViewProps) {
         this.refs = refs;
         this.delay = define.transitionDelay / 1000;
         this.width = 0;
@@ -32,7 +32,7 @@ export default class {
         this.methods = this.#useMethods(define);
     }
 
-    #useMethods(define: UiCarouselProps) {
+    #useMethods(define: UiCarouselMultipleViewProps) {
         //? 初始化函数
         const init = () => {
             //* 获取模块容器失败则取消后续操作
