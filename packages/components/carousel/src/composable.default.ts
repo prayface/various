@@ -26,7 +26,7 @@ export default class {
 
     #useWatch(define: UiCarouselProps) {
         const stopAutoPlayHanlder = () => {
-            this.refs.autoTimer = setTimeout(() => this.methods.cutCarousel(this.refs.active + 1), define.delay);
+            this.refs.autoTimer = setTimeout(() => define.autoplay && this.methods.cutCarousel(this.refs.active + 1), define.delay);
         };
 
         return {
@@ -62,7 +62,7 @@ export default class {
             const count = this.refs.childrens?.length || 0;
 
             //* 检测是否满足运行条件
-            if (!this.refs.container || this.refs.skipTimer || count <= 1) return;
+            if (!this.refs.container || this.refs.skipTimer || count <= 1 || number == this.refs.active) return;
 
             //* 停止自动播放动画的定时器
             this.refs.autoTimer && clearTimeout(this.refs.autoTimer);
