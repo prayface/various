@@ -1,6 +1,7 @@
 import { watch } from "vue";
-import { UiCarouselProps } from "./carousel";
+import { UiCarouselProps, UiCarouselEmits } from "./carousel";
 import { gsap } from "gsap";
+import { UiEmitFn } from "@various/constants";
 
 export type UiCarouselConstructorRefs = {
     main?: HTMLDivElement;
@@ -17,10 +18,10 @@ export default class {
     watchs;
     methods;
 
-    constructor(refs: UiCarouselConstructorRefs, define: UiCarouselProps) {
+    constructor(refs: UiCarouselConstructorRefs, define: UiCarouselProps, emit: UiEmitFn<typeof UiCarouselEmits>) {
         this.refs = refs;
         this.delay = define.transitionDelay / 1000;
-        this.methods = this.#useMethods(define);
+        this.methods = this.#useMethods(define, emit);
         this.watchs = this.#useWatch(define);
     }
 
@@ -36,7 +37,7 @@ export default class {
         };
     }
 
-    #useMethods(define: UiCarouselProps) {
+    #useMethods(define: UiCarouselProps, emit: UiEmitFn<typeof UiCarouselEmits>) {
         //* 初始化函数
         const init = () => {
             //* 获取模块容器失败则取消后续操作
@@ -108,11 +109,7 @@ export default class {
             const timeline = gsap.timeline();
 
             //* 入场动画
-            timeline.to(readyNode, {
-                position: "relative",
-                duration: this.delay,
-                xPercent: -100,
-            });
+            timeline.to(readyNode, { position: "relative", duration: this.delay, xPercent: -100 });
 
             //* 离场动画配置
             const leave = {
@@ -133,6 +130,9 @@ export default class {
 
                     //* 关闭禁用切换
                     this.refs.skipTimer = false;
+
+                    //* 触发change回调
+                    emit("change", this.refs.active);
                 },
             };
 

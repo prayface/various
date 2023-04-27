@@ -28,5 +28,5 @@ export type UiCarouselProps = ExtractPropTypes<typeof UiCarouselPropsOption>;
 export type UiCarouselMultipleViewProps = ExtractPropTypes<typeof UiCarouselMultipleViewPropsOption>;
 
 export const UiCarouselEmits = {
-    change: (ev?: any) => true,
+    change: (page: number) => true,
 };

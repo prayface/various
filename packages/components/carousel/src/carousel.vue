@@ -25,7 +25,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive, toRefs, onMounted, onUnmounted } from "vue";
-import { UiCarouselPropsOption } from "./carousel";
+import { UiCarouselEmits, UiCarouselPropsOption } from "./carousel";
 import ComposableDefault, { UiCarouselConstructorRefs } from "./composable.default";
 import Composable from "./composable";
 import UiIcon from "@various/components/icon";
@@ -33,8 +33,9 @@ import UiIcon from "@various/components/icon";
 export default defineComponent({
     name: "UiCarousel",
     components: { UiIcon },
+    emits: UiCarouselEmits,
     props: UiCarouselPropsOption,
-    setup(define, { expose }) {
+    setup(define, { expose, emit }) {
         //* 初始化响应式变量
         const refs = reactive<UiCarouselConstructorRefs>({
             main: undefined,
@@ -47,7 +48,7 @@ export default defineComponent({
 
         //* 实例化响应式变量
         const composable = new Composable(define);
-        const composableDefault = new ComposableDefault(refs, define);
+        const composableDefault = new ComposableDefault(refs, define, emit);
 
         //* 挂载函数
         onMounted(() => composableDefault.methods.init());
