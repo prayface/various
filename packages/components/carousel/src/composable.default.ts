@@ -95,6 +95,9 @@ export default class {
                 this.refs.active = ready;
             }
 
+            //* 触发change回调
+            emit("change", this.refs.active);
+
             //* 缓存轮播图内容节点
             const currentNode = this.refs.childrens[current];
             const readyNode = this.refs.childrens[ready];
@@ -130,9 +133,6 @@ export default class {
 
                     //* 关闭禁用切换
                     this.refs.skipTimer = false;
-
-                    //* 触发change回调
-                    emit("change", this.refs.active);
                 },
             };
 
