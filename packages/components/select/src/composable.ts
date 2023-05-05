@@ -115,12 +115,11 @@ export default class {
         const attrs = computed(() => {
             const disabled = ["disabled", "loading"].includes(status.value.name);
             return {
-                type: "text",
                 value: define.modelValue,
                 disabled: disabled,
                 readonly: !disabled,
                 placeholder: define.placeholder,
-                autocomplete: false,
+                autocomplete: "off",
             };
         });
 

@@ -1,7 +1,7 @@
 <template>
     <div class="ui-select" :class="className" :style="style" ref="container">
         <!-- Select主体 -->
-        <input class="ui-form-control" v-bind="attrs" @click="show" />
+        <input class="ui-form-control" type="text" v-bind="attrs" @click="show" />
 
         <!-- 下拉箭头 -->
         <UiIcon name="arrow" class="ui-select-arrow" @click="show" />
@@ -16,7 +16,7 @@
                 <div class="ui-form-candidate-container">
                     <template v-for="value in candidates">
                         <div class="ui-form-candidate" :class="{ 'ui-active': value.value == modelValue }" @click="cutCandidate(value.value, $event)">
-                            {{ value.label }}
+                            <slot name="candidate" :data="value">{{ value.label }}</slot>
                         </div>
                     </template>
                 </div>
