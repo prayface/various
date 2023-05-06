@@ -50,7 +50,7 @@ export default defineComponent({
         onMounted(() => composable.methods.init());
 
         //* 导出方法
-        expose({ clear: composable.methods.clear });
+        expose({ clear: composable.methods.clear, focus: composable.methods.focus });
 
         return {
             ...composable.handles,

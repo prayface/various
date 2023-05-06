@@ -172,6 +172,11 @@
                     <td>清空输入框内容</td>
                     <td>() => void</td>
                 </tr>
+                <tr>
+                    <td>focus</td>
+                    <td>输入框获取焦点事件</td>
+                    <td>() => void</td>
+                </tr>
             </table>
         </section>
     </div>

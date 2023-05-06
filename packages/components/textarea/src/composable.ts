@@ -155,6 +155,12 @@ export default class {
                 emitter?.emit(define.name || "", "change");
             },
 
+            focus: () => {
+                this.refs.container?.focus();
+                emit("focus");
+                emitter?.emit(define.name || "", "focus");
+            },
+
             triggerMousedown: (ev: MouseEvent) => {
                 const offset = this.refs.offset;
                 const size = ev.y;
