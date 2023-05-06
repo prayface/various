@@ -70,8 +70,10 @@ export default class {
         };
 
         //? 触发键盘回车事件
-        const triggerKeydownEnter = (ev: KeyboardEvent) => {
-            emit("enter", ev);
+        const triggerKeydownEnter = () => {
+            emit("enter", () => {
+                this.refs.visible = false;
+            });
         };
 
         return {
