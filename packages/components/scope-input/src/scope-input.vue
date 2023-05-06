@@ -1,12 +1,10 @@
 <template>
     <div class="ui-scope-input" :class="className" :style="style">
         <div class="ui-form-control">
-            <input class="ui-scope-input-control" type="number" v-on="handles" ref="start" v-bind="attrs.start"
-                v-model="modelValue.start" />
+            <input class="ui-scope-input-control" type="number" v-on="handles" v-bind="attrs.start" v-model="modelValue.start" />
             <div class="ui-scope-input-line"></div>
 
-            <input class="ui-scope-input-control" type="number" v-on="handles" ref="end" v-bind="attrs.end"
-                v-model="modelValue.end" />
+            <input class="ui-scope-input-control" type="number" v-on="handles" v-bind="attrs.end" v-model="modelValue.end" />
         </div>
 
         <!-- 遮罩层 -->

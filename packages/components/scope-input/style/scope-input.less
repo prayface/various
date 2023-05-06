@@ -4,6 +4,14 @@
     --uioption-scope-input-line-color: var(--uicolor-font-4); // 默认范围输入框中间短线颜色
 }
 
+.ui-form-control {
+
+    &:hover,
+    &:focus {
+        border-color: var(--uioption-form-active-color);
+    }
+}
+
 .ui-scope-input {
     position: relative;
 
@@ -32,6 +40,7 @@
             -moz-appearance: textfield;
         }
 
+
         //* 提示文案调整
         &::placeholder {
             color: var(--uioption-form-placeholder-color);
@@ -55,5 +64,11 @@
     .ui-scope-input-control {
         color: var(--uioption-form-placeholder-color);
         cursor: no-drop;
+    }
+}
+
+.ui-scope-input.ui-active {
+    .ui-form-control {
+        border-color: var(--uioption-form-active-color);
     }
 }

@@ -20,6 +20,10 @@ export default class {
         //? 清空事件
         const clear = () => {
             //TODO 这块地方是否有点多余, refs貌似获取的是dom
+            emit("update:modelValue", {
+                start: '',
+                end: ''
+            });
             emit("clear", "clear");
             emitter?.emit(define.name || "", "change");
         };
@@ -90,7 +94,6 @@ export default class {
         return {
             handles: {
                 change: (ev: Event) => {
-                    console.log("change");
                     emit("change", ev);
                     emitter?.emit(define.name || "", "change");
                 },

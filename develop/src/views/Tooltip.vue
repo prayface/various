@@ -206,10 +206,12 @@ const click = () => {
         visible.value = false;
     }, 2000);
 };
+
 </script>
 
 <style lang="less">
 .tooltip {
+
     .tooltip-1,
     .tooltip-2,
     .tooltip-4 {
@@ -221,6 +223,7 @@ const click = () => {
     .tooltip-3 {
         .tooltip-top {
             margin: 20px 120px;
+
             .ui-tooltip {
                 margin: 0 8px;
             }
@@ -229,6 +232,7 @@ const click = () => {
         .tooltip-left {
             display: inline-flex;
             flex-direction: column;
+
             .ui-tooltip {
                 margin: 8px 0;
             }
@@ -238,6 +242,7 @@ const click = () => {
             margin: 0 0 0 360px;
             display: inline-flex;
             flex-direction: column;
+
             .ui-tooltip {
                 margin: 8px 0;
             }
@@ -245,6 +250,7 @@ const click = () => {
 
         .tooltip-bottom {
             margin: 20px 120px;
+
             .ui-tooltip {
                 margin: 0 8px;
             }

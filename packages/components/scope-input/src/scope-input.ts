@@ -13,6 +13,7 @@ export const UiScopeInputPropsOption = {
 } as const;
 
 export const UiScopeInputEmits = {
+    "update:modelValue": (ev: any) => true,
     change: (ev?: Event) => true,
     clear: (ev?: any) => true,
     input: (ev?: InputEvent | Event) => true,

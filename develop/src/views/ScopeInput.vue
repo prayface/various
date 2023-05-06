@@ -58,12 +58,13 @@
             <div class="content">
                 <UiForm :rules="rules1" :data="data1" ref="form">
                     <UiFormItem prop="age" label="年龄" :width="40" ref="item">
-                        <UiScopeInput name="age" v-model="data1" />
+                        <UiScopeInput name="age" v-model="data1" ref="scopeInput" />
                     </UiFormItem>
 
                     <UiFormItem style="margin-top: 40px">
                         <UiButton @click="form && form.validator()">触发校验</UiButton>
                         <UiButton @click="form && form.reset()" style="margin-left: 20px">重置表单</UiButton>
+                        <UiButton @click="scopeInput && scopeInput.clear()">清空</UiButton>
                     </UiFormItem>
                 </UiForm>
             </div>
@@ -187,15 +188,14 @@ const data2 = ref({ start: "", end: "" });
 
 const form = ref(null);
 const item = ref(null);
-const scope = ref(null);
+const scopeInput = ref(null);
 const data1 = ref({ start: 0, end: 20 });
 const rules1 = ref({
     age: [
         {
             trigger: "change",
             verify: (data) => {
-                console.log(data);
-                return { verify: Number(data.start) >= 1, message: "请输入1岁及以上" };
+                return { verify: Number(data.start) >= 1 && Number(data.end) >= 1, message: "请输入1岁及以上" };
             },
         },
     ],
