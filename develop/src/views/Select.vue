@@ -190,6 +190,22 @@
                 </tr>
             </table>
         </section>
+
+        <section>
+            <div class="title">插槽</div>
+            <table>
+                <tr>
+                    <th>名称</th>
+                    <th>说明</th>
+                    <th>数据</th>
+                </tr>
+                <tr>
+                    <td>candidate</td>
+                    <td>下拉候选项的插槽</td>
+                    <td>data</td>
+                </tr>
+            </table>
+        </section>
     </div>
 </template>
 

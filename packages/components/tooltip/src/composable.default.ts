@@ -61,18 +61,18 @@ export default class {
             },
 
             //* 入场前样式调整
-            entrancePreAnimation: (el: HTMLDivElement) => {
+            entrancePreAnimation: (el: Element) => {
                 gsap.set(el, { opacity: 0 });
             },
 
             //* 入场动画
-            entranceAnimation: (el: HTMLDivElement, done: () => void) => {
+            entranceAnimation: (el: Element, done: () => void) => {
                 gsap.killTweensOf(el);
                 gsap.to(el, { duration: 0.2, opacity: 1, onComplete: () => done() });
             },
 
             //* 离场动画
-            departureAnimation: (el: HTMLDivElement, done: () => void) => {
+            departureAnimation: (el: Element, done: () => void) => {
                 gsap.killTweensOf(el);
                 gsap.to(el, { duration: 0.2, opacity: 0, onComplete: () => done() });
             },
