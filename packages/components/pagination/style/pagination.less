@@ -8,6 +8,10 @@
     // 分页器组件激活配置
     --uioption-pagination-active-color: var(--uicolor-font-6); // 默认分页器激活字体颜色
     --uioption-pagination-active-background-color: var(--uicolor-main-color); // 默认分页器激活字体颜色
+
+    // 分页器组件禁用配置
+    --uioption-pagination-disabled-color: var(--uioption-font-color); // 默认分页器禁用字体颜色
+    --uioption-pagination-disabled-background-color: var(--uicolor-font-4-05); // 默认分页器禁用字体颜色
 }
 
 //* 分页器样式
@@ -28,7 +32,7 @@
             cursor: pointer;
             display: flex;
             position: relative;
-            transition: all 0.3s;
+            // transition: all 0.3s;
             align-items: center;
             border-radius: var(--uioption-pagination-radius);
             justify-content: center;
@@ -37,6 +41,12 @@
             &.ui-active {
                 color: var(--uioption-pagination-active-color);
                 background-color: var(--uioption-pagination-active-background-color);
+            }
+
+            &.ui-disabled-status {
+                color: var(--uioption-pagination-disabled-color);
+                cursor: not-allowed;
+                background-color: var(--uioption-pagination-disabled-background-color);
             }
         }
 
