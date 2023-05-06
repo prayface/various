@@ -33,7 +33,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject, reactive, toRefs, onUnmounted } from "vue";
+import { defineComponent, inject, reactive, toRefs, onBeforeUnmount } from "vue";
 import { UiSelectEmits, UiSelectPropsOption } from "./select";
 import { UiFormEmitterKey } from "@various/constants";
 import { node } from "@various/utils";
@@ -68,7 +68,7 @@ export default defineComponent({
         });
 
         //* 销毁事件
-        onUnmounted(() => {
+        onBeforeUnmount(() => {
             if (!refs.candidate) return;
             //* 将内容从视图容器中移除
             node.remove("ui-windows", refs.candidate);

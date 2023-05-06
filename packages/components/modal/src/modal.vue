@@ -22,7 +22,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs, onMounted, onUnmounted } from "vue";
+import { defineComponent, reactive, toRefs, onMounted, onBeforeUnmount } from "vue";
 import { UiModalPropsOption, UiModalEmits } from "./modal";
 import { node } from "@various/utils";
 import Composable, { UiModalConstructorRefs } from "./composable";
@@ -51,7 +51,7 @@ export default defineComponent({
         });
 
         // 卸载函数
-        onUnmounted(() => {
+        onBeforeUnmount(() => {
             document.body.style.overflow = "";
             refs.main && node.remove("ui-modals", refs.main);
         });

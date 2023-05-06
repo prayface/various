@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject, reactive, onUnmounted, toRefs } from "vue";
+import { defineComponent, inject, reactive, onBeforeUnmount, toRefs } from "vue";
 import { UiFormEmitterKey, UiFormRulesKey, UiFormDataKey, UiTypes } from "@various/constants";
 import { UiFormItemPropsOption } from "./form-item";
 import Composable, { UiFormItemConstructorRefs } from "./composable.form-item";
@@ -47,7 +47,7 @@ export default defineComponent({
         expose({ ...composable.methods });
 
         //* 组件销毁时销毁未执行完的定时器
-        onUnmounted(() => {
+        onBeforeUnmount(() => {
             refs.timer && clearTimeout(refs.timer);
         });
 

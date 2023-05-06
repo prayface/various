@@ -30,7 +30,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, inject, toRefs, onUnmounted } from "vue";
+import { defineComponent, reactive, inject, toRefs, onBeforeUnmount } from "vue";
 import { UiInputPropsOption, UiInputEmits } from "./input";
 import { UiFormEmitterKey } from "@various/constants";
 import { node } from "@various/utils";
@@ -63,7 +63,7 @@ export default defineComponent({
         });
 
         //* 销毁事件
-        onUnmounted(() => {
+        onBeforeUnmount(() => {
             if (!refs.candidate) return;
             //* 将内容从视图容器中移除
             node.remove("ui-windows", refs.candidate);

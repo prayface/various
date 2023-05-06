@@ -61,7 +61,7 @@
                 <p>候选项<span>candidates</span>支持<span>UiTypes.candidate[]</span>类型</p>
             </div>
             <div class="content">
-                <UiInput v-model="value" :candidates="candidates" @focus="trigger" @input="trigger" @change="change" />
+                <UiInput v-model="value" :candidates="candidates" @focus="trigger" @input="trigger" @change="change" @enter="$router.push('/')" />
             </div>
         </section>
 

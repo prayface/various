@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs, onMounted, onUnmounted } from "vue";
+import { defineComponent, reactive, toRefs, onMounted, onBeforeUnmount } from "vue";
 import { UiCarouselEmits, UiCarouselPropsOption } from "./carousel";
 import ComposableDefault, { UiCarouselConstructorRefs } from "./composable.default";
 import Composable from "./composable";
@@ -54,7 +54,7 @@ export default defineComponent({
         onMounted(() => composableDefault.methods.init());
 
         //* 卸载函数
-        onUnmounted(() => {
+        onBeforeUnmount(() => {
             refs.autoTimer && clearInterval(refs.autoTimer);
             composableDefault.watchs.stopAutoPlay && composableDefault.watchs.stopAutoPlay();
         });

@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts">
-import { onMounted, onUnmounted, reactive, defineComponent, toRefs } from "vue";
+import { onMounted, onBeforeUnmount, reactive, defineComponent, toRefs } from "vue";
 import { UiCarouselMultipleViewPropsOption } from "./carousel";
 import Composable from "./composable";
 import ComposableDefault, { UiCarouselConstructorRefs } from "./composable.multiple-view";
@@ -53,7 +53,7 @@ export default defineComponent({
         });
 
         //* 卸载函数
-        onUnmounted(() => {
+        onBeforeUnmount(() => {
             refs.skipTimer && clearTimeout(refs.skipTimer);
             refs.autoTimer && clearInterval(refs.autoTimer);
             refs.main && (refs.main.onresize = null);
