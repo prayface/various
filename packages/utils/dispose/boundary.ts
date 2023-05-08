@@ -238,18 +238,18 @@ export const elementToContainerBoundary = (container: HTMLElement, main: HTMLEle
 //? 相对于当前鼠标位置的边界算法
 export const elementToMouseBoundary = (ev: MouseEvent, main: HTMLElement, option: { offsetX: number; offsetY: number }) => {
     const result = {
-        offsetX: ev.pageX + window.scrollX + option.offsetX,
-        offsetY: ev.pageY + window.scrollY + option.offsetY,
+        offsetX: ev.pageX + option.offsetX,
+        offsetY: ev.pageY + option.offsetY,
     };
 
     const offsetY = result.offsetY + main.offsetHeight;
-    const offsetNewY = ev.pageY + window.scrollY - main.offsetHeight - option.offsetY;
+    const offsetNewY = ev.pageY - main.offsetHeight - option.offsetY;
     if (offsetY > window.innerHeight + window.scrollY && offsetNewY >= window.scrollY) {
         result.offsetY = offsetNewY;
     }
 
     const offsetX = result.offsetX + main.offsetWidth;
-    const offsetNewX = ev.pageX + window.scrollX - main.offsetWidth - option.offsetX;
+    const offsetNewX = ev.pageX - main.offsetWidth - option.offsetX;
     if (offsetX > window.innerWidth + window.scrollX && offsetNewX >= window.scrollX) {
         result.offsetX = offsetNewX;
     }
