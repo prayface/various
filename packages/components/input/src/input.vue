@@ -1,7 +1,7 @@
 <template>
     <div class="ui-input" :class="className" :style="style" ref="container">
         <!-- Input主体 -->
-        <input class="ui-form-control" v-bind="attrs" v-on="handles" @keydown.enter="triggerKeydownEnter" />
+        <input ref="input" class="ui-form-control" v-bind="attrs" v-on="methods" @keydown.enter="enter" />
 
         <!-- 清空按钮 -->
         <UiIcon name="error" class="ui-form-clearable" v-if="clearable && modelValue" @click="clear" />
@@ -48,6 +48,7 @@ export default defineComponent({
 
         //* 初始化响应式变量
         const refs = reactive<UiInputConstructorRefs>({
+            input: undefined,
             visible: false,
             triangle: undefined,
             container: undefined,
@@ -57,9 +58,19 @@ export default defineComponent({
         //* 实例化组合函数
         const composable = new Composable(refs, define, emit, emitter);
 
+        //* 批量事件声明
+        const methods = {
+            change: composable.methods.change,
+            focus: composable.methods.focus,
+            input: composable.methods.input,
+            blur: composable.methods.blur,
+        };
+
         //* 导出公共函数
         expose({
             clear: composable.methods.clear,
+            focus: composable.methods.focus,
+            blur: composable.methods.blur,
         });
 
         //* 销毁事件
@@ -71,9 +82,9 @@ export default defineComponent({
 
         return {
             ...composable.computeds,
-            ...composable.handles,
             ...composable.methods,
             ...toRefs(refs),
+            methods,
         };
     },
 });

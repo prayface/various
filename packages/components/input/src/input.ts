@@ -21,12 +21,13 @@ export type UiInputProps = ExtractPropTypes<typeof UiInputPropsOption>;
 
 export const UiInputEmits = {
     "update:modelValue": (ev: any) => true,
-    "change": (ev?: Event) => true,
-    "select": (ev?: Event) => true,
-    "clear": (ev?: any) => true,
-    "input": (ev?: InputEvent | Event) => true,
-    "focus": (ev?: FocusEvent | Event) => true,
-    "click": (ev?: PointerEvent | Event) => true,
-    "enter": (done: () => void) => true,
-    "blur": (ev?: FocusEvent | Event) => true,
+
+    "clear": () => true,
+
+    "select": (ev: Event) => true,
+    "change": (ev: Event) => true,
+    "enter": (ev: KeyboardEvent | Event) => true,
+    "input": (ev: InputEvent | Event) => true,
+    "focus": (ev: FocusEvent | Event) => true,
+    "blur": (ev: FocusEvent | Event) => true,
 };

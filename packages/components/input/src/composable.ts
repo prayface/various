@@ -6,6 +6,7 @@ import { UiEmitFn } from "@various/constants";
 import { node, dispose } from "@various/utils";
 
 export type UiInputConstructorRefs = {
+    input?: HTMLElement;
     visible: boolean;
     triangle?: HTMLElement;
     container?: HTMLElement;
@@ -14,7 +15,6 @@ export type UiInputConstructorRefs = {
 
 export default class {
     refs;
-    handles;
     methods;
     computeds;
 
@@ -22,21 +22,13 @@ export default class {
         this.refs = refs;
         this.methods = this.#useMethods(define, emit, emitter);
         this.computeds = this.#useComputeds(define);
-        this.handles = this.#useOnHandles(define, emit, emitter);
     }
 
     #useMethods(define: UiInputProps, emit: UiEmitFn<typeof UiInputEmits>, emitter?: Emitter<any>) {
-        //? 清空事件
-        const clear = () => {
-            emit("update:modelValue", "");
-            emit("clear", "clear");
-            if (emitter?.emit) {
-                emitter.emit(define.name || "", "change");
-            }
-        };
-
         //? 候选框显示事件
         const show = () => {
+            //* 检测是否满足运行条件
+            if (this.refs.visible) return;
             //* 显示候选项列表
             this.refs.visible = true;
             nextTick(() => {
@@ -59,6 +51,71 @@ export default class {
             });
         };
 
+        //? Input失去焦点事件
+        const blur = (ev?: FocusEvent | Event) => {
+            //* 当ev不存在时, 触发Input失去焦点
+            if (!ev) return this.refs.input?.blur();
+            else {
+                //* 隐藏候选项
+                this.refs.visible = false;
+
+                //* 触发blur回调
+                emit("blur", ev);
+
+                //* 触发表单blur相关校验
+                emitter?.emit(define.name || "", "blur");
+            }
+        };
+
+        //? Input获取焦点事件
+        const focus = (ev?: FocusEvent | Event) => {
+            //* 当ev不存在时, 触发Input获取焦点
+            if (!ev) return this.refs.input?.blur();
+            else {
+                //* 显示候选项
+                this.methods.show();
+
+                //* 触发focus回调
+                emit("focus", ev);
+            }
+        };
+
+        //? 清空事件
+        const clear = () => {
+            emit("update:modelValue", "");
+            emit("clear");
+            if (emitter?.emit) {
+                emitter.emit(define.name || "", "change");
+            }
+        };
+
+        //? Input触发input事件
+        const input = (ev: InputEvent | Event) => {
+            //* 获取Target对象
+            const target = ev.target as HTMLInputElement;
+
+            //* 显示候选项窗口, 针对某些情况下提前隐藏候选项, 但触发input时候选项需要显示的场景
+            this.methods.show();
+
+            //* 触发v-model变更和input回调
+            emit("update:modelValue", target.value);
+            emit("input", ev as InputEvent);
+        };
+
+        //? Input触发回车事件
+        const enter = (ev: KeyboardEvent | Event) => {
+            emit("enter", ev);
+        };
+
+        //? Input触发change事件
+        const change = (ev: Event) => {
+            //* 触发change回调
+            emit("change", ev);
+
+            //* 触发表单change相关校验
+            emitter?.emit(define.name || "", "change");
+        };
+
         //? 候选项选择事件
         const cutCandidate = (content: String, ev: Event) => {
             emit("update:modelValue", content);
@@ -69,17 +126,14 @@ export default class {
             }
         };
 
-        //? 触发键盘回车事件
-        const triggerKeydownEnter = () => {
-            emit("enter", () => {
-                this.refs.visible = false;
-            });
-        };
-
         return {
-            triggerKeydownEnter,
             cutCandidate,
+            change,
+            enter,
+            input,
+            focus,
             clear,
+            blur,
             show,
         };
     }
@@ -140,34 +194,6 @@ export default class {
             status,
             attrs,
             style,
-        };
-    }
-
-    #useOnHandles(define: UiInputProps, emit: UiEmitFn<typeof UiInputEmits>, emitter?: Emitter<any>) {
-        return {
-            handles: {
-                change: (ev: Event) => {
-                    emit("change", ev);
-                    emitter?.emit(define.name || "", "change");
-                },
-                input: (ev: InputEvent | Event) => {
-                    const target = ev.target as HTMLInputElement;
-                    emit("update:modelValue", target.value);
-                    emit("input", ev as InputEvent);
-                },
-                click: (ev: PointerEvent | Event) => {
-                    emit("click", ev);
-                },
-                focus: (ev: FocusEvent | Event) => {
-                    this.methods.show();
-                    emit("focus", ev);
-                },
-                blur: (ev: FocusEvent | Event) => {
-                    this.refs.visible = false;
-                    emit("blur", ev);
-                    emitter?.emit(define.name || "", "blur");
-                },
-            },
         };
     }
 }

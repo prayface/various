@@ -61,7 +61,15 @@
                 <p>候选项<span>candidates</span>支持<span>UiTypes.candidate[]</span>类型</p>
             </div>
             <div class="content">
-                <UiInput v-model="value" :candidates="candidates" @focus="trigger" @input="trigger" @change="change" @enter="$router.push('/')" />
+                <UiInput
+                    v-model="value"
+                    ref="input"
+                    :candidates="candidates"
+                    @blur="blur"
+                    @focus="trigger"
+                    @input="trigger"
+                    @change="change"
+                    @enter="input.blur()" />
             </div>
         </section>
 
@@ -173,7 +181,12 @@
                 <tr>
                     <td>change</td>
                     <td>change事件回调</td>
-                    <td>(event?: Event) => void</td>
+                    <td>(event: Event) => void</td>
+                </tr>
+                <tr>
+                    <td>select</td>
+                    <td>候选项选择事件回调</td>
+                    <td>(event: Event) => void</td>
                 </tr>
                 <tr>
                     <td>clear</td>
@@ -183,27 +196,22 @@
                 <tr>
                     <td>input</td>
                     <td>input事件回调</td>
-                    <td>(event?: InputEvent | Event) => void</td>
-                </tr>
-                <tr>
-                    <td>click</td>
-                    <td>click事件回调</td>
-                    <td>(event?: PointerEvent | Event) => void</td>
+                    <td>(event: InputEvent | Event) => void</td>
                 </tr>
                 <tr>
                     <td>enter</td>
                     <td>keydown enter事件回调</td>
-                    <td>(event?: KeyboardEvent | Event) => void</td>
+                    <td>(event: KeyboardEvent | Event) => void</td>
                 </tr>
                 <tr>
                     <td>focus</td>
                     <td>focus事件回调</td>
-                    <td>(event?: FocusEvent | Event) => void</td>
+                    <td>(event: FocusEvent | Event) => void</td>
                 </tr>
                 <tr>
                     <td>blur</td>
                     <td>blur事件回调</td>
-                    <td>(event?: FocusEvent | Event) => void</td>
+                    <td>(event: FocusEvent | Event) => void</td>
                 </tr>
             </table>
         </section>
@@ -219,6 +227,16 @@
                 <tr>
                     <td>clear</td>
                     <td>清空输入框内容</td>
+                    <td>() => void</td>
+                </tr>
+                <tr>
+                    <td>focus</td>
+                    <td>输入框获取焦点事件</td>
+                    <td>() => void</td>
+                </tr>
+                <tr>
+                    <td>blur</td>
+                    <td>输入框失去焦点事件</td>
                     <td>() => void</td>
                 </tr>
             </table>
@@ -245,6 +263,7 @@
 <script setup>
 import { ref } from "vue";
 
+const input = ref();
 const value = ref("");
 const candidates = ref([]);
 
@@ -260,6 +279,10 @@ const trigger = () => {
     } else {
         candidates.value.push({ label: "测试选项" + number, value: "test" + number });
     }
+};
+
+const blur = () => {
+    console.log("blur");
 };
 
 const change = () => {
