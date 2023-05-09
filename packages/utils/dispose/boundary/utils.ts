@@ -3,7 +3,7 @@ import { DisposeLayshaftOption } from "./types";
 //? 副轴方向边界处理
 export const disposeLayshaft = (option: DisposeLayshaftOption) => {
     //* 计算容器与窗口的差值
-    const difference = option.size - option.viewSize;
+    const difference = option.viewSize - option.size;
 
     //* 方向处理
     switch (option.align) {
@@ -27,6 +27,7 @@ export const disposeLayshaft = (option: DisposeLayshaftOption) => {
                 }
             }
 
+            console.log(result, option);
             return result;
         }
 
@@ -38,8 +39,8 @@ export const disposeLayshaft = (option: DisposeLayshaftOption) => {
             };
 
             //* 检测是否左对齐时右侧超出边界并且右对齐时左侧是否在边界内
-            if (result.offset + option.viewSize > option.max && option.max - option.viewSize >= option.min) {
-                result.offset = option.max - option.viewSize;
+            if (result.offset + option.viewSize > option.max && option.offset - difference >= option.min) {
+                result.offset = option.offset - difference;
             }
 
             return result;
@@ -48,7 +49,7 @@ export const disposeLayshaft = (option: DisposeLayshaftOption) => {
         case "end": {
             //* 计算初始位置
             const result = {
-                offset: option.max - option.viewSize,
+                offset: option.offset - difference,
                 origin: "0",
             };
 
