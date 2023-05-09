@@ -58,9 +58,10 @@ export default class {
                     node.append("ui-windows", this.refs.candidate);
 
                     //* 根据配置计算当前窗口位置
-                    const rect = dispose.elementToContainerBoundary(this.refs.container, this.refs.candidate, {
-                        offsetMain: 8,
+                    const rect = dispose.boundary.relativeContainerBody(this.refs.container, this.refs.candidate, {
                         direction: "bottom",
+                        width: this.refs.container?.offsetWidth || 0,
+                        offset: 8,
                         align: "start",
                     });
 

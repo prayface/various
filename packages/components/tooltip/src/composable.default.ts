@@ -38,10 +38,11 @@ export default class {
                     node.append("ui-windows", this.refs.tooltip);
 
                     //* 根据配置计算当前窗口位置
-                    const rect = dispose.elementToContainerBoundary(this.refs.main, this.refs.tooltip, {
-                        offsetMain: define.offset,
+                    const rect = dispose.boundary.relativeContainerBody(this.refs.main, this.refs.tooltip, {
                         direction: define.direction,
+                        offset: define.offset,
                         align: define.align,
+                        width: define.width,
                     });
 
                     //* 判断是否需要调整小三角位置

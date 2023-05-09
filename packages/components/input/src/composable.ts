@@ -37,9 +37,10 @@ export default class {
                 node.append("ui-windows", this.refs.candidate);
 
                 //* 根据配置计算当前窗口位置
-                const rect = dispose.elementToContainerBoundary(this.refs.container, this.refs.candidate, {
-                    offsetMain: 8,
+                const rect = dispose.boundary.relativeContainerBody(this.refs.container, this.refs.candidate, {
                     direction: "bottom",
+                    offset: 8,
+                    width: this.refs.container?.offsetWidth || 0,
                     align: "start",
                 });
 
@@ -167,8 +168,9 @@ export default class {
 
         //? 样式
         const style = computed(() => {
-            if (define.width) return { width: define.width + "px" };
-            else return {};
+            //* 宽度处理
+            if (_.isNumber(define.width)) return { width: define.width + "px" };
+            else return { width: define.width };
         });
 
         //? 类名

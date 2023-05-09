@@ -36,7 +36,7 @@ export default class {
                         //* 将content添加到视图容器中
                         node.append("ui-windows", this.refs.tooltip);
                         //* 根据配置计算当前窗口位置
-                        dispose.elementToMouseBoundary(ev, this.refs.tooltip, {
+                        dispose.boundary.relativeMouseBody(ev, this.refs.tooltip, {
                             offsetX: define.offsetX,
                             offsetY: define.offsetY,
                         });

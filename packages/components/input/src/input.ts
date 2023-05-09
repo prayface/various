@@ -11,7 +11,7 @@ export const UiInputPropsOption = {
     disabled: { type: Boolean, default: false } /**是否禁用 */,
     readonly: { type: Boolean, default: false } /**是否只读 */,
     loading: { type: Boolean, default: false } /**是否启动内置loading */,
-    width: { type: Number },
+    width: { type: [String, Number] as PropType<number | string>, default: 264 },
     type: { type: String as PropType<"email" | "number" | "search" | "tel" | "text">, default: "text" } /**文本框类型 */,
     size: { type: String as PropType<UiTypes.size>, default: "default" },
     name: { type: String },

@@ -166,8 +166,15 @@ export default class {
                 const size = ev.y;
                 document.onselectstart = () => false;
                 document.onmousemove = (ev: MouseEvent) => {
+                    //* 判断是否允许向下执行
                     if (!this.refs.main || !this.refs.container) return;
-                    this.refs.offset = dispose.elementOptionBoundary(offset + ev.y - size, this.refs.scrollsize, 0, this.refs.main.clientHeight - 2);
+
+                    //* 窗口偏移的边界处理
+                    this.refs.offset = dispose.boundary.relativeRange(offset + ev.y - size, this.refs.scrollsize, {
+                        min: 0,
+                        max: this.refs.main.clientHeight - 2,
+                    });
+
                     this.refs.isMousedown = true;
                     this.refs.container.scrollTo({ top: this.refs.offset / this.refs.ratio });
                 };
