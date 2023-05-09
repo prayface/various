@@ -116,12 +116,17 @@ export default class {
         const attrs = computed(() => {
             const disabled = ["disabled", "loading"].includes(status.value.name);
             return {
-                value: define.modelValue,
                 disabled: disabled,
                 readonly: !disabled,
                 placeholder: define.placeholder,
                 autocomplete: "off",
             };
+        });
+
+        //? 输入框内容
+        const value = computed(() => {
+            const candidate = define.candidates.find((candidate) => candidate.value == define.modelValue);
+            return candidate?.label || "";
         });
 
         //? 样式
@@ -154,6 +159,7 @@ export default class {
             status,
             style,
             attrs,
+            value,
         };
     }
 }
