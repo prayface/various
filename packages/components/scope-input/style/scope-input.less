@@ -1,14 +1,14 @@
-// TODO 缺少css变量管理
 .ui-scope-input {
     --uioption-scope-input-spacing-x: var(--uisize-spacing-x); // 默认范围输入框水平间距
     --uioption-scope-input-line-color: var(--uicolor-font-4); // 默认范围输入框中间短线颜色
+    --uioption-scope-input-active-border-color: var(--uioption-form-active-color); // 默认范围输入框激活边框色
 }
 
 .ui-form-control {
 
     &:hover,
     &:focus {
-        border-color: var(--uioption-form-active-color);
+        border-color: var(--uioption-scope-input-active-border-color);
     }
 }
 
@@ -69,6 +69,6 @@
 
 .ui-scope-input.ui-active {
     .ui-form-control {
-        border-color: var(--uioption-form-active-color);
+        border-color: var(--uioption-scope-input-active-border-color);
     }
 }

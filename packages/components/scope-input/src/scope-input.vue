@@ -17,10 +17,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject } from "vue";
+import { defineComponent, inject, reactive } from "vue";
 import { UiScopeInputEmits, UiScopeInputPropsOption } from "./scope-input";
 import { UiFormEmitterKey } from "@various/constants";
-import Composable from "./composable";
+import Composable, { UiScopeInputRefs } from "./composable";
 
 export default defineComponent({
     name: "UiScopeInput",
@@ -30,10 +30,13 @@ export default defineComponent({
         //* 初始化mitt
         const emitter = inject(UiFormEmitterKey, undefined);
 
-        // TODO 这东西好像写了又好像没写
+        //* 初始化响应式变量
+        const refs = reactive<UiScopeInputRefs>({
+            active: false,
+        });
 
         //* 实例化组合函数
-        const composable = new Composable(define, emit, emitter);
+        const composable = new Composable(refs, define, emit, emitter);
 
         //* 导出方法
         expose({ clear: composable.methods.clear });
