@@ -261,10 +261,12 @@ const click = () => {
         visible.value = false;
     }, 2000);
 };
+
 </script>
 
 <style lang="less">
 .tooltip {
+
     .tooltip-1,
     .tooltip-2,
     .tooltip-4 {

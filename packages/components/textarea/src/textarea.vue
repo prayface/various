@@ -53,7 +53,7 @@ export default defineComponent({
         expose({ clear: composable.methods.clear, focus: composable.methods.focus });
 
         return {
-            ...composable.handles,
+            handles: composable.handles,
             ...composable.methods,
             ...composable.computeds,
             ...toRefs(refs),

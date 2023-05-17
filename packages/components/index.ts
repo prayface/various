@@ -6,6 +6,7 @@ export * from "./form";
 export * from "./input";
 export * from "./select";
 export * from "./checkbox";
+export * from "./scope-input";
 export * from "./carousel";
 export * from "./seamless-scroll";
 export * from "./pagination";

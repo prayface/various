@@ -25,6 +25,7 @@ export default class {
 
         //? 表单校验函数
         const validator = async (callBack: (result: boolean) => void) => {
+            console.log('validator');
             //* 1. 检测是否允许向下执行
             if (!define.rules) return;
             //* 2. 初始化数据
