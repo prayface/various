@@ -17,6 +17,7 @@ export const routes = [
     { path: "/textarea", name: "Textarea", component: () => import("../views/Textarea.vue") },
     { path: "/modal", name: "Modal", component: () => import("../views/Modal.vue") },
     { path: "/table", name: "Table", component: () => import("../views/Table.vue") },
+    { path: "/radio", name: "Radio", component: () => import("../views/Radio.vue") },
 ];
 
 export default createRouter({

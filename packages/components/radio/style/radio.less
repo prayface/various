@@ -1,0 +1,51 @@
+.ui-radio {
+    --uioption-radio-color: var(--uicolor-font-4); // 默认多选框边框颜色
+
+    --uioption-radio-active-color: var(--uicolor-main-color); // 默认多选框激活边框颜色
+}
+
+.ui-radio {
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    vertical-align: bottom;
+    > .ui-radio-control {
+        width: 20px;
+        height: 20px;
+        border: 1px solid var(--uioption-radio-color);
+        position: relative;
+        transition: all 0.3s;
+        border-radius: 50%;
+        background-color: #fff;
+        .ui-radio-input {
+            width: 0;
+            height: 0;
+        }
+
+        .ui-radio-circle {
+            inset: 50% auto auto 50%;
+            width: 12px;
+            height: 12px;
+            position: absolute;
+            transform: translate(-50%, -50%) scale(0);
+            transition: all 0.3s;
+            border-radius: 50%;
+            transform-origin: center;
+            background-color: transparent;
+        }
+    }
+
+    > .ui-radio-content {
+        margin: 0 0 0 8px;
+    }
+}
+
+.ui-radio.ui-active {
+    > .ui-radio-control {
+        border-color: var(--uioption-radio-active-color);
+        .ui-radio-circle {
+            transform: translate(-50%, -50%) scale(1);
+            background-color: var(--uioption-radio-active-color);
+        }
+    }
+}

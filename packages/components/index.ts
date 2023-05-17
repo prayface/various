@@ -13,3 +13,4 @@ export * from "./pagination";
 export * from "./textarea";
 export * from "./modal";
 export * from "./table";
+export * from "./radio";
