@@ -1,6 +1,6 @@
 <template>
     <Transition>
-        <div class="ui-modal ui-mask" v-show="open" ref="main">
+        <div class="ui-modal ui-mask" v-show="open" ref="main" :class="classExtraName || ''">
             <div class="ui-modal-container" ref="container" :style="style">
                 <!-- 关闭按钮 -->
                 <div class="ui-modal-close" v-if="close">
@@ -9,8 +9,7 @@
 
                 <!-- 头部信息 -->
                 <div class="ui-modal-header">
-                    <template v-if="$slots.header"><slot name="header"></slot></template>
-                    <template v-else>{{ title }}</template>
+                    <slot name="header">{{ title }}</slot>
                 </div>
 
                 <!-- 内容 -->
@@ -23,7 +22,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs, onMounted, onUnmounted } from "vue";
+import { defineComponent, reactive, toRefs, onMounted, onBeforeUnmount } from "vue";
 import { UiModalPropsOption, UiModalEmits } from "./modal";
 import { node } from "@various/utils";
 import Composable, { UiModalConstructorRefs } from "./composable";
@@ -52,7 +51,7 @@ export default defineComponent({
         });
 
         // 卸载函数
-        onUnmounted(() => {
+        onBeforeUnmount(() => {
             document.body.style.overflow = "";
             refs.main && node.remove("ui-modals", refs.main);
         });

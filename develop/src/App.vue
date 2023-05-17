@@ -128,5 +128,12 @@ main {
             }
         }
     }
+
+    p {
+        margin-bottom: 8px;
+        &:last-child {
+            margin: 0;
+        }
+    }
 }
 </style>

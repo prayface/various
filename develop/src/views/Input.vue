@@ -57,11 +57,19 @@
         <section>
             <div class="title">候选项</div>
             <div class="descript">
-                <p>可以通过<span>candidate</span>属性设置<span>input</span>的候选项, 当<span>input</span>获取焦点时出现候选列表</p>
-                <p>候选项<span>candidate</span>支持<span>() => UiTypes.candidate[]</span>和<span>UiTypes.candidate[]</span>类型</p>
+                <p>可以通过<span>candidates</span>属性设置<span>input</span>的候选项, 当<span>candidates</span>长度不为0时, 展示候选项列表</p>
+                <p>候选项<span>candidates</span>支持<span>UiTypes.candidate[]</span>类型</p>
             </div>
             <div class="content">
-                <UiInput v-model="value" :candidate="candidate" />
+                <UiInput
+                    v-model="value"
+                    ref="input"
+                    :candidates="candidates"
+                    @blur="blur"
+                    @focus="trigger"
+                    @input="trigger"
+                    @change="change"
+                    @enter="input.blur()" />
             </div>
         </section>
 
@@ -97,9 +105,9 @@
                     <td>--</td>
                 </tr>
                 <tr>
-                    <td>candidate</td>
+                    <td>candidates</td>
                     <td>候选项</td>
-                    <td>(...arg: any[]) => UiTypes.candidate[] | UiTypes.candidate[]</td>
+                    <td>UiTypes.candidate[]</td>
                     <td>--</td>
                     <td>--</td>
                 </tr>
@@ -173,7 +181,12 @@
                 <tr>
                     <td>change</td>
                     <td>change事件回调</td>
-                    <td>(event?: Event) => void</td>
+                    <td>(event: Event) => void</td>
+                </tr>
+                <tr>
+                    <td>select</td>
+                    <td>候选项选择事件回调</td>
+                    <td>(event: Event) => void</td>
                 </tr>
                 <tr>
                     <td>clear</td>
@@ -183,22 +196,22 @@
                 <tr>
                     <td>input</td>
                     <td>input事件回调</td>
-                    <td>(event?: InputEvent | Event) => void</td>
+                    <td>(event: InputEvent | Event) => void</td>
                 </tr>
                 <tr>
-                    <td>click</td>
-                    <td>click事件回调</td>
-                    <td>(event?: PointerEvent | Event) => void</td>
+                    <td>enter</td>
+                    <td>keydown enter事件回调</td>
+                    <td>(event: KeyboardEvent | Event) => void</td>
                 </tr>
                 <tr>
                     <td>focus</td>
                     <td>focus事件回调</td>
-                    <td>(event?: FocusEvent | Event) => void</td>
+                    <td>(event: FocusEvent | Event) => void</td>
                 </tr>
                 <tr>
                     <td>blur</td>
                     <td>blur事件回调</td>
-                    <td>(event?: FocusEvent | Event) => void</td>
+                    <td>(event: FocusEvent | Event) => void</td>
                 </tr>
             </table>
         </section>
@@ -216,6 +229,32 @@
                     <td>清空输入框内容</td>
                     <td>() => void</td>
                 </tr>
+                <tr>
+                    <td>focus</td>
+                    <td>输入框获取焦点事件</td>
+                    <td>() => void</td>
+                </tr>
+                <tr>
+                    <td>blur</td>
+                    <td>输入框失去焦点事件</td>
+                    <td>() => void</td>
+                </tr>
+            </table>
+        </section>
+
+        <section>
+            <div class="title">插槽</div>
+            <table>
+                <tr>
+                    <th>名称</th>
+                    <th>说明</th>
+                    <th>数据</th>
+                </tr>
+                <tr>
+                    <td>candidate</td>
+                    <td>下拉候选项的插槽</td>
+                    <td>data</td>
+                </tr>
             </table>
         </section>
     </div>
@@ -224,13 +263,29 @@
 <script setup>
 import { ref } from "vue";
 
+const input = ref();
 const value = ref("");
-const candidate = () => {
-    return [
-        { label: "测试选项1", value: "test1" },
-        { label: "测试选项2", value: "test2" },
-        { label: "测试选项3", value: "test3" },
-        { label: "测试选项4", value: "test4" },
-    ];
+const candidates = ref([]);
+
+const trigger = () => {
+    const number = candidates.value.length + 1;
+    if (number > 10) {
+        candidates.value = [
+            { label: "测试选项1", value: "test1" },
+            { label: "测试选项2", value: "test2" },
+            { label: "测试选项3", value: "test3" },
+            { label: "测试选项4", value: "test4" },
+        ];
+    } else {
+        candidates.value.push({ label: "测试选项" + number, value: "test" + number });
+    }
+};
+
+const blur = () => {
+    console.log("blur");
+};
+
+const change = () => {
+    console.log("change");
 };
 </script>

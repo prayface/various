@@ -1,5 +1,5 @@
 import { Emitter } from "mitt";
-import { InjectionKey, EmitsOptions } from "vue";
+import { InjectionKey, EmitsOptions, App, ComponentPublicInstance } from "vue";
 import { UnionToIntersection } from "@vue/shared";
 
 export namespace UiTypes {
@@ -8,7 +8,7 @@ export namespace UiTypes {
     export type align = "end" | "start" | "center";
     export type loading = boolean | { is: boolean; context?: string };
     export type direction = "top" | "left" | "right" | "bottom";
-    export type candidate = { label: any; value: any };
+    export type candidate = { label: any; value: any; [name: string]: any };
     export type verifyResult = {
         type?: UiTypes.type;
         verify: boolean;
@@ -39,3 +39,10 @@ export type UiEmitFn<Options = EmitsOptions, Event extends keyof Options = keyof
                   : (event: key, ...args: any[]) => void;
           }[Event]
       >;
+
+export interface UiHTMLElement extends HTMLElement {
+    app?: App<Element>;
+    instance?: ComponentPublicInstance;
+}
+
+export * from "./components";

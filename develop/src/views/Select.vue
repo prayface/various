@@ -7,10 +7,10 @@
                 <p>尺寸<span>size</span>: large | middle | default | small</p>
             </div>
             <div class="content">
-                <UiSelect v-model="value" size="large" :width="200" :candidate="candidate" style="margin-right: 8px" />
-                <UiSelect v-model="value" size="middle" :width="200" :candidate="candidate" style="margin-right: 8px" />
-                <UiSelect v-model="value" :width="200" :candidate="candidate" style="margin-right: 8px" />
-                <UiSelect v-model="value" size="small" :width="200" :candidate="candidate" />
+                <UiSelect v-model="value" size="large" :width="200" :candidates="candidates" style="margin-right: 8px" />
+                <UiSelect v-model="value" size="middle" :width="200" :candidates="candidates" style="margin-right: 8px" />
+                <UiSelect v-model="value" :width="200" :candidates="candidates" style="margin-right: 8px" />
+                <UiSelect v-model="value" size="small" :width="200" :candidates="candidates" />
             </div>
         </section>
 
@@ -20,7 +20,7 @@
                 <p>通过<span>disabled</span>属性来指定是否禁用<span>input</span>组件</p>
             </div>
             <div class="content">
-                <UiSelect v-model="value" :disabled="true" :candidate="candidate" />
+                <UiSelect v-model="value" :disabled="true" :candidates="candidates" />
             </div>
         </section>
 
@@ -30,7 +30,7 @@
                 <p>通过<span>readonly</span>属性来指定<span>input</span>组件是否只读</p>
             </div>
             <div class="content">
-                <UiSelect v-model="value" :readonly="true" :candidate="candidate" />
+                <UiSelect v-model="value" :readonly="true" :candidates="candidates" />
             </div>
         </section>
 
@@ -40,7 +40,7 @@
                 <p>通过<span>loading</span>属性来指定<span>input</span>组件是否加载</p>
             </div>
             <div class="content">
-                <UiSelect v-model="value" :loading="true" :candidate="candidate" />
+                <UiSelect v-model="value" :loading="true" :candidates="candidates" />
             </div>
         </section>
 
@@ -50,7 +50,7 @@
                 <p>使用<span>clearable</span>属性即可在当输入框存在内容时出现一个可一键清空的按钮</p>
             </div>
             <div class="content">
-                <UiSelect v-model="value" :clearable="true" :candidate="candidate" />
+                <UiSelect v-model="value" :clearable="true" :candidates="candidates" />
             </div>
         </section>
 
@@ -63,6 +63,13 @@
                     <th>类型</th>
                     <th>可选值</th>
                     <th>默认值</th>
+                </tr>
+                <tr>
+                    <td>class-extra-name</td>
+                    <td>用于指定候选项的className</td>
+                    <td>string</td>
+                    <td>--</td>
+                    <td>--</td>
                 </tr>
                 <tr>
                     <td>placeholder</td>
@@ -79,9 +86,9 @@
                     <td>--</td>
                 </tr>
                 <tr>
-                    <td>candidate</td>
+                    <td>candidates</td>
                     <td>候选项</td>
-                    <td>(...arg: any[]) => UiTypes.candidate[] | UiTypes.candidate[]</td>
+                    <td>UiTypes.candidate[]</td>
                     <td>--</td>
                     <td>--</td>
                 </tr>
@@ -183,6 +190,22 @@
                 </tr>
             </table>
         </section>
+
+        <section>
+            <div class="title">插槽</div>
+            <table>
+                <tr>
+                    <th>名称</th>
+                    <th>说明</th>
+                    <th>数据</th>
+                </tr>
+                <tr>
+                    <td>candidate</td>
+                    <td>下拉候选项的插槽</td>
+                    <td>data</td>
+                </tr>
+            </table>
+        </section>
     </div>
 </template>
 
@@ -190,7 +213,7 @@
 import { ref } from "vue";
 
 const value = ref("");
-const candidate = [
+const candidates = [
     { label: "测试选项1", value: "test1" },
     { label: "测试选项2", value: "test2" },
     { label: "测试选项3", value: "test3" },

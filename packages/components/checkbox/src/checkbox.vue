@@ -8,8 +8,7 @@
 
         <!-- 多选框文案 -->
         <div class="ui-checkbox-content">
-            <template v-if="$slots.default"><slot></slot></template>
-            <template v-else>{{ value }}</template>
+            <slot>{{ value }}</slot>
         </div>
     </label>
 </template>

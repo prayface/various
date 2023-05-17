@@ -16,6 +16,7 @@ module.exports = (function () {
     const resource = [
         resolve(PACKAGES, "styles/*.less"),
         resolve(PACKAGES, "methods/**/style/*.less"),
+        resolve(PACKAGES, "constants/**/style/*.less"),
         resolve(PACKAGES, "directives/**/style/*.less"),
         resolve(PACKAGES, "components/**/style/*.less"),
         "!**/*.size.less",

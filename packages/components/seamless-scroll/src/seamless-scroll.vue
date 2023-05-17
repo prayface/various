@@ -2,17 +2,17 @@
     <div class="ui-seamless-scroll" :style="style" ref="main" @mouseenter="mouseenter" @mouseleave="mouseleave">
         <div class="ui-seamless-scroll-container" ref="container">
             <div class="ui-seamless-scroll-content" ref="content">
-                <slot />
+                <slot></slot>
             </div>
             <div class="ui-seamless-scroll-content ui-seamless-scroll-copy-content">
-                <slot />
+                <slot></slot>
             </div>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, onMounted, onUnmounted, toRefs } from "vue";
+import { defineComponent, reactive, onMounted, onBeforeUnmount, toRefs } from "vue";
 import { UiSeamlessScrollPropsOption } from "./seamless-scroll";
 import Composable, { UiSeamlessScrollConstructorRefs } from "./composable";
 export default defineComponent({
@@ -32,7 +32,7 @@ export default defineComponent({
         const composable = new Composable(refs, define);
 
         onMounted(() => composable.methods.mouseleave());
-        onUnmounted(() => {
+        onBeforeUnmount(() => {
             composable.refs.frame && window.cancelAnimationFrame(composable.refs.frame);
         });
 

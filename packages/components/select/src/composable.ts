@@ -1,8 +1,8 @@
 import _ from "lodash";
 import { Emitter } from "mitt";
-import { nextTick, computed, ComputedRef } from "vue";
+import { nextTick, computed } from "vue";
 import { UiSelectProps, UiSelectEmits } from "./select";
-import { UiEmitFn, UiTypes } from "@various/constants";
+import { UiEmitFn } from "@various/constants";
 import { node, dispose } from "@various/utils";
 
 export type UiSelectConstructorRefs = {
@@ -13,21 +13,9 @@ export type UiSelectConstructorRefs = {
 };
 
 export default class {
-    refs: UiSelectConstructorRefs;
-    computeds: {
-        style: ComputedRef<{ width?: string }>;
-        attrs: ComputedRef<{ [name: string]: any }>;
-        status: ComputedRef<{ is: boolean; name: string }>;
-        className: ComputedRef<string>;
-        candidates: ComputedRef<UiTypes.candidate[]>;
-    };
-
-    methods: {
-        show: () => void;
-        clear: () => void;
-        hidden: () => void;
-        cutCandidate: (content: string, ev: Event) => void;
-    };
+    refs;
+    methods;
+    computeds;
 
     constructor(refs: UiSelectConstructorRefs, define: UiSelectProps, emit: UiEmitFn<typeof UiSelectEmits>, emitter?: Emitter<any>) {
         this.refs = refs;
@@ -70,9 +58,10 @@ export default class {
                     node.append("ui-windows", this.refs.candidate);
 
                     //* 根据配置计算当前窗口位置
-                    const rect = dispose.elementToContainerBoundary(this.refs.container, this.refs.candidate, {
-                        offsetMain: 8,
+                    const rect = dispose.boundary.relativeContainerBody(this.refs.container, this.refs.candidate, {
                         direction: "bottom",
+                        width: this.refs.container?.offsetWidth || 0,
+                        offset: 8,
                         align: "start",
                     });
 
@@ -127,13 +116,17 @@ export default class {
         const attrs = computed(() => {
             const disabled = ["disabled", "loading"].includes(status.value.name);
             return {
-                type: "text",
-                value: define.modelValue,
                 disabled: disabled,
                 readonly: !disabled,
                 placeholder: define.placeholder,
-                autocomplete: false,
+                autocomplete: "off",
             };
+        });
+
+        //? 输入框内容
+        const value = computed(() => {
+            const candidate = define.candidates.find((candidate) => candidate.value == define.modelValue);
+            return candidate?.label || "";
         });
 
         //? 样式
@@ -141,19 +134,6 @@ export default class {
             //* 宽度处理
             if (_.isNumber(define.width)) return { width: define.width + "px" };
             else return { width: define.width };
-        });
-
-        //? 候选项
-        const candidates = computed(() => {
-            if (_.isArray(define.candidate)) return define.candidate;
-            else if (_.isFunction(define.candidate)) {
-                const result = define.candidate();
-                if (_.isArray(result)) {
-                    return result;
-                }
-            }
-
-            return [];
         });
 
         //? 类名
@@ -175,11 +155,11 @@ export default class {
         });
 
         return {
-            candidates,
             className,
             status,
             style,
             attrs,
+            value,
         };
     }
 }

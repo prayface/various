@@ -1,7 +1,7 @@
 <template>
     <div class="ui-select" :class="className" :style="style" ref="container">
         <!-- Select主体 -->
-        <input class="ui-form-control" v-bind="attrs" @click="show" />
+        <input class="ui-form-control" type="text" v-bind="attrs" :value="value" @click="show" />
 
         <!-- 下拉箭头 -->
         <UiIcon name="arrow" class="ui-select-arrow" @click="show" />
@@ -11,12 +11,12 @@
 
         <!-- 候选项 -->
         <Transition>
-            <div class="ui-form-candidates" v-if="visible" ref="candidate">
+            <div class="ui-form-candidates" ref="candidate" v-if="visible" :class="classExtraName || ''">
                 <div class="ui-form-candidates-triangle" ref="triangle"></div>
                 <div class="ui-form-candidate-container">
                     <template v-for="value in candidates">
                         <div class="ui-form-candidate" :class="{ 'ui-active': value.value == modelValue }" @click="cutCandidate(value.value, $event)">
-                            {{ value.label }}
+                            <slot name="candidate" :data="value">{{ value.label }}</slot>
                         </div>
                     </template>
                 </div>
@@ -33,7 +33,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject, reactive, toRefs, onUnmounted } from "vue";
+import { defineComponent, inject, reactive, toRefs, onBeforeUnmount } from "vue";
 import { UiSelectEmits, UiSelectPropsOption } from "./select";
 import { UiFormEmitterKey } from "@various/constants";
 import { node } from "@various/utils";
@@ -68,7 +68,7 @@ export default defineComponent({
         });
 
         //* 销毁事件
-        onUnmounted(() => {
+        onBeforeUnmount(() => {
             if (!refs.candidate) return;
             //* 将内容从视图容器中移除
             node.remove("ui-windows", refs.candidate);

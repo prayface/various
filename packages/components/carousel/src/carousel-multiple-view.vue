@@ -1,5 +1,5 @@
 <template>
-    <div class="ui-carousel ui-multiple-view-carousel" :style="style" ref="main">
+    <div class="ui-carousel ui-multiple-view-carousel" :style="style" ref="main" v-bind="attrs">
         <!-- 轮播图容器, 用来控制轮播滚动 -->
         <div class="ui-carousel-container" ref="container">
             <slot></slot>
@@ -17,16 +17,17 @@
 </template>
 
 <script lang="ts">
-import { onMounted, onUnmounted, reactive, defineComponent, toRefs } from "vue";
-import { UiCarouselPropsOption } from "../carousel";
+import { onMounted, onBeforeUnmount, reactive, defineComponent, toRefs } from "vue";
+import { UiCarouselMultipleViewPropsOption } from "./carousel";
 import Composable from "./composable";
 import ComposableDefault, { UiCarouselConstructorRefs } from "./composable.multiple-view";
 
 import UiIcon from "@various/components/icon";
 
 export default defineComponent({
+    name: "UiCarouselMultipleView",
     components: { UiIcon },
-    props: UiCarouselPropsOption,
+    props: UiCarouselMultipleViewPropsOption,
     setup(define, { expose }) {
         //* 初始化响应式变量
         const refs = reactive<UiCarouselConstructorRefs>({
@@ -52,7 +53,7 @@ export default defineComponent({
         });
 
         //* 卸载函数
-        onUnmounted(() => {
+        onBeforeUnmount(() => {
             refs.skipTimer && clearTimeout(refs.skipTimer);
             refs.autoTimer && clearInterval(refs.autoTimer);
             refs.main && (refs.main.onresize = null);

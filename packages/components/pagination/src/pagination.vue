@@ -2,8 +2,8 @@
     <div class="ui-pagination" v-if="total">
         <div class="ui-pagination-items" v-if="items">{{ info }}</div>
         <div class="ui-pagination-controls">
-            <!-- 前进控制器 -->
-            <div class="ui-pagination-control" @click="cutNumber(modelValue - 1)">
+            <!-- 后退控制器 -->
+            <div class="ui-pagination-control" @click="back" :class="{ 'ui-disabled-status': modelValue <= 1 }">
                 <UiIcon name="arrow" class="ui-pagination-next" />
             </div>
 
@@ -16,8 +16,8 @@
                 </div>
             </template>
 
-            <!-- 后退控制器 -->
-            <div class="ui-pagination-control" @click="cutNumber(modelValue + 1)">
+            <!-- 前进控制器 -->
+            <div class="ui-pagination-control" @click="next" :class="{ 'ui-disabled-status': modelValue >= total }">
                 <UiIcon name="arrow" class="ui-pagination-back" />
             </div>
         </div>

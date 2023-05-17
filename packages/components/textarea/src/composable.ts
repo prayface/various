@@ -1,6 +1,7 @@
 import { Emitter } from "mitt";
 import { computed } from "vue";
 import { UiEmitFn } from "@various/constants";
+import { dispose } from "@various/utils";
 import { UiTextareaProps, UiTextareaEmits } from "./textarea";
 
 export type UiTextareaConstructorRefs = {
@@ -9,13 +10,16 @@ export type UiTextareaConstructorRefs = {
     scrollsize: number;
     ratio: number;
     offset: number;
+    isMousedown: boolean;
 };
 
 export default class {
+    timer?: NodeJS.Timer;
     refs;
     handles;
     methods;
     computeds;
+
     constructor(refs: UiTextareaConstructorRefs, define: UiTextareaProps, emit: UiEmitFn<typeof UiTextareaEmits>, emitter?: Emitter<any>) {
         this.refs = refs;
         this.handles = this.#useOnHandles(define, emit, emitter);
@@ -26,31 +30,39 @@ export default class {
     //* 主体响应事件声明
     #useOnHandles(define: UiTextareaProps, emit: UiEmitFn<typeof UiTextareaEmits>, emitter?: Emitter<any>) {
         return {
-            click: (ev: PointerEvent | Event) => emit("click", ev),
-            focus: (ev: FocusEvent | Event) => emit("focus", ev),
-            change: (ev: Event) => {
-                emit("change", ev);
-                emitter?.emit(define.name || "", "change");
-            },
-            input: (ev: InputEvent) => {
-                const target = ev.target as HTMLInputElement;
-                emit("update:modelValue", target.value);
-                emit("input", ev);
-                this.methods.init();
-            },
-            blur: (ev: FocusEvent | Event) => {
-                emit("blur", ev);
-                emitter?.emit(define.name || "", "blur");
-            },
-            wheel: (ev: WheelEvent) => {
-                if (define.disabled) return;
-                if (!this.refs.main || !this.refs.container) return;
-                if (this.refs.container.scrollHeight > this.refs.main.clientHeight) {
-                    const node = ev.target as HTMLTextAreaElement;
-                    node.scrollTo({ top: node.scrollTop + ev.deltaY });
-                    this.refs.offset = this.refs.container.scrollTop * this.refs.ratio;
-                    ev.preventDefault();
-                }
+            handles: {
+                click: (ev: PointerEvent | Event) => emit("click", ev),
+                focus: (ev: FocusEvent | Event) => emit("focus", ev),
+                change: (ev: Event) => {
+                    emit("change", ev);
+                    emitter?.emit(define.name || "", "change");
+                },
+                input: (ev: InputEvent) => {
+                    const target = ev.target as HTMLInputElement;
+                    emit("update:modelValue", target.value);
+                    emit("input", ev);
+                    this.methods.init();
+                },
+                blur: (ev: FocusEvent | Event) => {
+                    emit("blur", ev);
+                    emitter?.emit(define.name || "", "blur");
+                },
+                wheel: (ev: WheelEvent) => {
+                    // 禁用状态取消页面默认滚动
+                    if (["loading", "disabled"].includes(this.computeds.status.value.name)) {
+                        ev.preventDefault();
+                    }
+                },
+                scroll: (ev: WheelEvent) => {
+                    // 判断是否存在容器或者处于禁用状态
+                    if (!this.refs.main || !this.refs.container) return;
+                    if (this.refs.container.scrollHeight > this.refs.container.clientHeight) {
+                        // 判断是否存在滚动条
+                        const node = ev.target as HTMLTextAreaElement;
+                        this.refs.offset = node.scrollTop * this.refs.ratio;
+                        this.refs.isMousedown = false;
+                    }
+                },
             },
         };
     }
@@ -95,12 +107,13 @@ export default class {
 
             //* 类名
             className: computed(() => {
-                // 初始化输出
+                //* 初始化输出
                 const result: string[] = [];
-                // 判断是否是禁用或只读状态
-                if (define.disabled) result.push("ui-disabled-status");
-                else if (define.readonly) result.push("ui-readonly-status");
-                // 判断是否需要添加size类名
+                //* 判断是否是禁用或只读状态
+                if (status.value.name == "disabled") result.push("ui-disabled-status");
+                else if (status.value.name == "readonly") result.push("ui-readonly-status");
+                else if (status.value.name == "loading") result.push("ui-loading-status");
+                //* 判断是否需要添加size类名
                 if (define.size != "default") result.push(`ui-${define.size}`);
 
                 return result.join(" ");
@@ -108,7 +121,11 @@ export default class {
 
             //* 滚动条滑块样式
             scrollbarStyle: computed(() => {
-                return { height: this.refs.scrollsize + "px", transform: `translateY(${this.refs.offset}px)` };
+                return {
+                    height: this.refs.scrollsize + "px",
+                    transform: `translateY(${this.refs.offset}px)`,
+                    transition: `all ${this.refs.isMousedown ? 0 : 0.1}s`,
+                };
             }),
         };
     }
@@ -118,12 +135,15 @@ export default class {
         return {
             init: () => {
                 // 判断是否允许向下执行
-                if (define.disabled) return;
                 if (!this.refs.main || !this.refs.container) return;
-                if (this.refs.container.scrollHeight > this.refs.main.clientHeight) {
+                // 判断是否需要显示滚动条, 并计算滚动比例
+                if (this.refs.container.scrollHeight > this.refs.container.clientHeight) {
+                    // 内容滚动距离转滚动条滑块滚动距离的转换比例
                     this.refs.ratio = (this.refs.main.clientHeight - 2) / this.refs.container.scrollHeight;
-                    this.refs.scrollsize = this.refs.ratio * (this.refs.main.clientHeight - 2);
+                    // 滚动条滑块位置计算
                     this.refs.offset = this.refs.container.scrollTop * this.refs.ratio;
+                    // 滚动条滑块尺寸计算
+                    this.refs.scrollsize = this.refs.ratio * this.refs.container.clientHeight;
                 } else {
                     this.refs.scrollsize = 0;
                 }
@@ -135,24 +155,38 @@ export default class {
                 emitter?.emit(define.name || "", "change");
             },
 
-            onMousedown: (ev: MouseEvent) => {
+            focus: () => {
+                this.refs.container?.focus();
+                emit("focus");
+                emitter?.emit(define.name || "", "focus");
+            },
+
+            triggerMousedown: (ev: MouseEvent) => {
                 const offset = this.refs.offset;
                 const size = ev.y;
                 document.onselectstart = () => false;
                 document.onmousemove = (ev: MouseEvent) => {
-                    this.refs.offset = offset + ev.y - size;
-                    if (this.refs.offset < 0) this.refs.offset = 0;
-                    else if (this.refs.main && this.refs.offset > this.refs.main.clientHeight - this.refs.scrollsize - 2) {
-                        this.refs.offset = this.refs.main.clientHeight - this.refs.scrollsize - 2;
-                    }
+                    //* 判断是否允许向下执行
+                    if (!this.refs.main || !this.refs.container) return;
 
-                    this.refs.container?.scrollTo({ top: this.refs.offset / this.refs.ratio });
+                    //* 窗口偏移的边界处理
+                    this.refs.offset = dispose.boundary.relativeRange(offset + ev.y - size, this.refs.scrollsize, {
+                        min: 0,
+                        max: this.refs.main.clientHeight - 2,
+                    });
+
+                    this.refs.isMousedown = true;
+                    this.refs.container.scrollTo({ top: this.refs.offset / this.refs.ratio });
                 };
 
                 document.onmouseup = () => {
                     document.onmousemove = null;
                     document.onmouseup = null;
                 };
+            },
+
+            triggerKeydownEnter: (ev: KeyboardEvent) => {
+                emit("enter", ev);
             },
         };
     }

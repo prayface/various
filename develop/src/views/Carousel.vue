@@ -8,10 +8,10 @@
             </div>
             <div class="content">
                 <UiCarousel :height="200">
-                    <div style="background-color: aquamarine">1</div>
-                    <div style="background-color: bisque">2</div>
-                    <div style="background-color: brown">3</div>
-                    <div style="background-color: burlywood">4</div>
+                    <div style="background-color: aquamarine; height: 200px">1</div>
+                    <div style="background-color: bisque; height: 400px">2</div>
+                    <div style="background-color: brown; height: 200px">3</div>
+                    <div style="background-color: burlywood; height: 200px">4</div>
                 </UiCarousel>
             </div>
         </section>
@@ -19,11 +19,10 @@
         <section>
             <div class="title">多窗口模式</div>
             <div class="descript">
-                <p>当<span>mode="multiple-view"</span>时开启该模式, 在该模式下允许每个窗口尺寸不等</p>
-                <p><span class="warn">注</span>在该模式下以下功能将失效: <span>底部的指示器</span>、<span>自动轮播</span>、<span>无限轮播</span></p>
+                <p>组件<span>UiCarouselMultipleView</span>, 在该模式下允许每个窗口尺寸不等</p>
             </div>
             <div class="content">
-                <UiCarousel :height="200" mode="multiple-view" ref="carousel">
+                <UiCarouselMultipleView :height="200" ref="carousel">
                     <div style="background-color: aquamarine; width: 500px; margin: 0 32px 0 0">1</div>
                     <div style="background-color: bisque; width: 320px; margin: 0 32px">2</div>
                     <div style="background-color: bisque; width: 320px; margin: 0 32px">2</div>
@@ -33,7 +32,7 @@
                     <div style="background-color: cadetblue; width: 500px; margin: 0 32px">5</div>
                     <div style="background-color: violet; width: 100px; margin: 0 32px">6</div>
                     <div style="background-color: tomato; width: 500px; margin: 0 0 0 32px">7</div>
-                </UiCarousel>
+                </UiCarouselMultipleView>
             </div>
         </section>
 

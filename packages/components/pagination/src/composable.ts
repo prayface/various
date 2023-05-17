@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { computed, ComputedRef } from "vue";
+import { computed } from "vue";
 import { UiEmitFn } from "@various/constants";
 import { UiPaginationProps, UiPaginationEmits } from "./pagination";
 
@@ -10,15 +10,8 @@ type UiPaginationOption = {
 };
 
 export default class {
-    computeds: {
-        info: ComputedRef<string>;
-        total: ComputedRef<number>;
-        controls: ComputedRef<UiPaginationOption[]>;
-    };
-
-    methods: {
-        cutNumber: (number: number) => void;
-    };
+    computeds;
+    methods;
 
     constructor(define: UiPaginationProps, emit: UiEmitFn<typeof UiPaginationEmits>) {
         this.computeds = this.#useComputeds(define);
@@ -95,19 +88,33 @@ export default class {
     }
 
     #useMethods(define: UiPaginationProps, emit: UiEmitFn<typeof UiPaginationEmits>) {
+        //? 通过页码切换分页
+        const cutNumber = (number: number) => {
+            if (!_.isNumber(number) || number == define.modelValue) return;
+            if (number <= 0) {
+                emit("update:modelValue", 1);
+                emit("change", 1);
+            } else if (number > this.computeds.total.value) {
+                emit("update:modelValue", this.computeds.total.value);
+                emit("change", this.computeds.total.value);
+            } else {
+                emit("update:modelValue", number);
+                emit("change", number);
+            }
+        };
+
         return {
-            //? 通过页码切换分页
-            cutNumber: (number: number) => {
-                if (!_.isNumber(number) || number == define.modelValue) return;
-                if (number <= 0) {
-                    emit("update:modelValue", 1);
-                    emit("change", 1);
-                } else if (number > this.computeds.total.value) {
-                    emit("update:modelValue", this.computeds.total.value);
-                    emit("change", this.computeds.total.value);
-                } else {
-                    emit("update:modelValue", number);
-                    emit("change", number);
+            cutNumber,
+            next: () => {
+                if (define.modelValue >= this.computeds.total.value) return;
+                else {
+                    cutNumber(define.modelValue + 1);
+                }
+            },
+            back: () => {
+                if (define.modelValue <= 1) return;
+                else {
+                    cutNumber(define.modelValue - 1);
                 }
             },
         };

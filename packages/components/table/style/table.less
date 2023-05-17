@@ -1,0 +1,121 @@
+.ui-table {
+    --ui-table-header-background-color: #e9e9f5; //* 表格头部颜色
+    --ui-table-header-color: var(--uicolor-font-1); //* 表格头部字体颜色
+
+    --ui-table-border-active-color: var(--uicolor-main-color); //* 表格边框激活颜色
+    --ui-table-border-color: var(--uicolor-font-4-03); //* 表格边框颜色
+
+    --ui-table-icon-color: var(--uicolor-font-2); //* 表格图标颜色
+    --ui-table-icon-active-color: var(--uicolor-main-color); //* 表格图标激活颜色
+
+    --ui-table-row-spacing: 4px; //* 单元格行间隔
+    --ui-table-col-spacing: var(--uisize-spacing-x); //* 单元格列间隔
+    --ui-table-size: 48px; //* 单元格高度
+}
+
+.ui-table {
+    display: flex;
+    flex-direction: column;
+
+    .ui-table-header {
+        margin-bottom: var(--ui-table-row-spacing);
+
+        .ui-table-container {
+            border-spacing: 0;
+            .ui-table-column {
+                color: var(--ui-table-header-color);
+                font-weight: bold;
+                border-color: var(--ui-table-header-background-color);
+                background-color: var(--ui-table-header-background-color);
+            }
+        }
+    }
+
+    .ui-table-body {
+        flex: 1;
+        overflow: auto;
+
+        .ui-table-body-container {
+            overflow: hidden;
+
+            .ui-table-container {
+                margin: calc(-1 * var(--ui-table-row-spacing)) 0;
+                border-spacing: 0 var(--ui-table-row-spacing);
+
+                tr:hover,
+                tr.ui-active {
+                    .ui-table-column {
+                        border-color: var(--ui-table-border-active-color);
+                    }
+                }
+            }
+        }
+    }
+
+    .ui-table-container {
+        width: 100%;
+        border-collapse: separate;
+        .ui-table-column {
+            height: var(--ui-table-size);
+            border: 1px solid var(--ui-table-border-color);
+            padding: 4px var(--ui-table-col-spacing);
+            transition: all 0.3s;
+            text-align: left;
+            vertical-align: middle;
+            background-color: #fff;
+
+            .ui-table-column-content {
+                position: relative;
+            }
+
+            .ui-table-controls {
+                transform: translate(100%, -50%);
+                position: absolute;
+                inset: 50% -4px auto auto;
+
+                .ui-table-sort {
+                    cursor: pointer;
+                    display: flex;
+                    flex-direction: column;
+
+                    .ui-table-sort-up,
+                    .ui-table-sort-down {
+                        border-style: solid;
+                        transition: all 0.5s;
+                    }
+
+                    .ui-table-sort-up {
+                        border-width: 0 4px 5px 4px;
+                        border-color: transparent transparent var(--ui-table-icon-color) transparent;
+
+                        &.ui-active {
+                            border-color: transparent transparent var(--ui-table-icon-active-color) transparent;
+                        }
+                    }
+
+                    .ui-table-sort-down {
+                        margin-top: 3px;
+                        border-width: 5px 4px 0 4px;
+                        border-color: var(--ui-table-icon-color) transparent transparent transparent;
+
+                        &.ui-active {
+                            border-color: var(--ui-table-icon-active-color) transparent transparent transparent;
+                        }
+                    }
+                }
+            }
+        }
+
+        .ui-table-column.ui-table-placeholder-column {
+            padding: 0;
+        }
+
+        .ui-table-column:not(:first-child) {
+            border-left: 0;
+        }
+
+        .ui-table-column:not(:last-child) {
+            border-right: 0;
+        }
+    }
+}

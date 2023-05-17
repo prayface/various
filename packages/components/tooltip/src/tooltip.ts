@@ -2,17 +2,24 @@ import { ExtractPropTypes, PropType } from "vue";
 import { UiTypes } from "@various/constants";
 
 export const UiTooltipPropsOption = {
+    classExtraName: { type: String },
     direction: { type: String as PropType<UiTypes.direction>, default: "right" },
     disabled: { type: Boolean, default: false },
-    visible: { type: Boolean, default: false },
-    offsetX: { type: Number },
-    offsetY: { type: Number },
-    trigger: { type: String as PropType<"click" | "hover">, default: "hover" },
+    trigger: { type: String as PropType<"hover" | "none">, default: "hover" },
     content: { type: String }, //? 窗口内容, 可被slot#content替换
-    effect: { type: String }, //? Tooltip主题
-    width: { type: Number, default: 200 }, //? 最大宽度
+    offset: { typs: Number, default: 8 },
+    width: { type: Number }, //? 最大宽度
     align: { type: String as PropType<UiTypes.align>, default: "start" },
-    mode: { type: String as PropType<"fixed" | "follow">, default: "fixed" },
+} as const;
+
+export const UiTooltipFollowPropsOption = {
+    classExtraName: { type: String },
+    disabled: { type: Boolean, default: false },
+    content: { type: String }, //? 窗口内容, 可被slot#content替换
+    offsetX: { typs: Number, default: 20 },
+    offsetY: { typs: Number, default: 20 },
+    width: { type: Number }, //? 最大宽度
 } as const;
 
 export type UiTooltipProps = ExtractPropTypes<typeof UiTooltipPropsOption>;
+export type UiTooltipFollowProps = ExtractPropTypes<typeof UiTooltipFollowPropsOption>;
