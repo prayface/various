@@ -7,9 +7,9 @@
                 <p>尺寸<span>size</span>: large | middle | default | small</p>
             </div>
             <div class="content">
-                <UiScopeInput v-model="data" style="margin-bottom:20px" size="large" />
-                <UiScopeInput v-model="data2" style="margin-bottom:20px" size="middle" />
-                <UiScopeInput v-model="data2" style="margin-bottom:20px" />
+                <UiScopeInput v-model="data" style="margin-bottom: 20px" size="large" />
+                <UiScopeInput v-model="data2" style="margin-bottom: 20px" size="middle" />
+                <UiScopeInput v-model="data2" style="margin-bottom: 20px" />
                 <UiScopeInput v-model="data2" size="small" />
             </div>
         </section>
@@ -43,15 +43,13 @@
             </div>
         </section>
 
-
         <section>
             <div class="title">校验类型</div>
             <div class="descript">
                 <p>表单的<span>form-item</span>组件允许通过修改<span>UiFormRulesVerify.type</span>来对校验提示的类型进行调整</p>
                 <p>现支持配置项有: info | warning | success | error</p>
                 <p>
-                    <span class="warn">注</span>当<span>UiFormRulesVerify.type</span>配置为<span>info</span>,
-                    <span>success</span>,
+                    <span class="warn">注</span>当<span>UiFormRulesVerify.type</span>配置为<span>info</span>, <span>success</span>,
                     <span>warning</span>时, 表单的<span>validator</span>不对对其进行校验
                 </p>
             </div>
@@ -122,7 +120,6 @@
                     <td>--</td>
                     <td>Start | End</td>
                 </tr>
-
             </table>
         </section>
 
@@ -183,7 +180,7 @@
 <script setup>
 import { ref } from "vue";
 
-const data = ref({ start: 1, end: 100 });
+const data = ref({ start: "", end: "" });
 const data2 = ref({ start: "", end: "" });
 
 const form = ref(null);
@@ -200,9 +197,6 @@ const rules1 = ref({
         },
     ],
 });
-
-
-
 </script>
 
 <style lang="less">
