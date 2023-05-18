@@ -40,6 +40,7 @@ export const relativeContainerBody = (container: HTMLElement, view: HTMLElement,
     view.style.width = viewWidth + "px";
     view.style.maxHeight = viewHeight + "px";
     view.style.overflowY = "auto";
+    view.style.overflowX = "hidden";
 
     switch (option.direction) {
         case "top": {

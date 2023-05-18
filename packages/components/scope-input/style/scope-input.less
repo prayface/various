@@ -5,7 +5,6 @@
 }
 
 .ui-form-control {
-
     &:hover,
     &:focus {
         border-color: var(--uioption-scope-input-active-border-color);
@@ -36,10 +35,9 @@
             -webkit-appearance: none !important;
         }
 
-        &[type='number'] {
+        &[type="number"] {
             -moz-appearance: textfield;
         }
-
 
         //* 提示文案调整
         &::placeholder {
@@ -67,6 +65,14 @@
     }
 }
 
+//* 只读状态
+.ui-scope-input.ui-readonly-status {
+    .ui-scope-input-control {
+        color: var(--uioption-form-placeholder-color);
+    }
+}
+
+//* 激活状态
 .ui-scope-input.ui-active {
     .ui-form-control {
         border-color: var(--uioption-scope-input-active-border-color);
