@@ -218,5 +218,10 @@ const candidates = [
     { label: "测试选项2", value: "test2" },
     { label: "测试选项3", value: "test3" },
     { label: "测试选项4", value: "test4" },
+    { label: "测试选项1", value: "test5" },
+    { label: "测试选项2", value: "test6" },
+    { label: "测试选项3", value: "test7" },
+    { label: "测试选项4", value: "test8" },
+    { label: "测试选项1", value: "test9" },
 ];
 </script>

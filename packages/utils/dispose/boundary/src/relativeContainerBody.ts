@@ -16,6 +16,9 @@ export type RelativeContainerBodyOption = {
 
     //* 窗口宽度
     width?: number;
+
+    //* 窗口高度
+    height?: number;
 };
 
 /**
@@ -31,10 +34,12 @@ export const relativeContainerBody = (container: HTMLElement, view: HTMLElement,
 
     //* 获取窗口宽高
     const viewWidth = option.width || view.offsetWidth;
-    const viewHeight = view.offsetHeight;
+    const viewHeight = option.height || view.offsetHeight;
 
     //* 设置窗口宽度
     view.style.width = viewWidth + "px";
+    view.style.maxHeight = viewHeight + "px";
+    view.style.overflowY = "auto";
 
     switch (option.direction) {
         case "top": {

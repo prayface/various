@@ -40,6 +40,7 @@ export default class {
                 const rect = dispose.boundary.relativeContainerBody(this.refs.container, this.refs.candidate, {
                     direction: "bottom",
                     offset: 8,
+                    height: define.height,
                     width: this.refs.container?.offsetWidth || 0,
                     align: "start",
                 });

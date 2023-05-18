@@ -60,8 +60,9 @@ export default class {
                     //* 根据配置计算当前窗口位置
                     const rect = dispose.boundary.relativeContainerBody(this.refs.container, this.refs.candidate, {
                         direction: "bottom",
-                        width: this.refs.container?.offsetWidth || 0,
+                        height: define.height,
                         offset: 8,
+                        width: this.refs.container?.offsetWidth || 0,
                         align: "start",
                     });
 
