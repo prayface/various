@@ -27,7 +27,6 @@ export const disposeLayshaft = (option: DisposeLayshaftOption) => {
                 }
             }
 
-            console.log(result, option);
             return result;
         }
 

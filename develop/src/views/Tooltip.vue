@@ -105,6 +105,18 @@
             </div>
         </section>
 
+        <section class="tooltip-4">
+            <div class="title">基于方法的悬浮信息窗口</div>
+            <div class="descript">
+                <p>基于方法的悬浮信息窗口, 顾名思义</p>
+            </div>
+            <div class="content">
+                <UiTooltipFunction ref="container" content="悬浮信息">
+                    <UiButton size="small" @click="click1">该悬浮窗口只能被Function触发</UiButton>
+                </UiTooltipFunction>
+            </div>
+        </section>
+
         <section>
             <div class="title">UiTooltip 属性</div>
             <table>
@@ -262,11 +274,18 @@ const click = () => {
     }, 2000);
 };
 
+const container = ref();
+const click1 = (ev) => {
+    if (!container.value) return;
+    else {
+        const rect = ev.target.getBoundingClientRect();
+        container.value.show("center", { pageX: ev.pageX, pageY: ev.pageY });
+    }
+};
 </script>
 
 <style lang="less">
 .tooltip {
-
     .tooltip-1,
     .tooltip-2,
     .tooltip-4 {

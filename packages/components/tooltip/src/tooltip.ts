@@ -21,5 +21,15 @@ export const UiTooltipFollowPropsOption = {
     width: { type: Number }, //? 最大宽度
 } as const;
 
+export const UiTooltipFunctionPropsOption = {
+    classExtraName: { type: String },
+    disabled: { type: Boolean, default: false },
+    content: { type: String }, //? 窗口内容, 可被slot#content替换
+    offsetX: { typs: Number, default: 20 },
+    offsetY: { typs: Number, default: 20 },
+    width: { type: Number }, //? 最大宽度
+} as const;
+
 export type UiTooltipProps = ExtractPropTypes<typeof UiTooltipPropsOption>;
 export type UiTooltipFollowProps = ExtractPropTypes<typeof UiTooltipFollowPropsOption>;
+export type UiTooltipFunctionProps = ExtractPropTypes<typeof UiTooltipFunctionPropsOption>;
