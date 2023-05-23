@@ -33,14 +33,12 @@ export const relativeContainerBody = (container: HTMLElement, view: HTMLElement,
     const rect = useElementOption(container);
 
     //* 获取窗口宽高
-    const viewWidth = option.width || view.offsetWidth;
-    const viewHeight = option.height || view.offsetHeight;
+    const viewWidth = Math.ceil(option.width || view.offsetWidth);
+    const viewHeight = Math.ceil(option.height || view.offsetHeight);
 
     //* 设置窗口宽度
     view.style.width = viewWidth + "px";
     view.style.maxHeight = viewHeight + "px";
-    view.style.overflowY = "auto";
-    view.style.overflowX = "hidden";
 
     switch (option.direction) {
         case "top": {
@@ -79,7 +77,7 @@ export const relativeContainerBody = (container: HTMLElement, view: HTMLElement,
                 view.style.inset = `${result.offsetY}px auto auto ${result.offsetX}px`;
             } else {
                 //* 调整数据
-                result.triangle = `${viewHeight - 1}px auto auto ${triangleOffset}px}`;
+                result.triangle = `${viewHeight - 1}px auto auto ${triangleOffset}px`;
 
                 //* 样式调整
                 view.style.transformOrigin = "center bottom";

@@ -10,7 +10,7 @@
         <Transition>
             <div class="ui-form-candidates" ref="candidate" v-if="visible" v-show="candidates?.length" :class="classExtraName || ''">
                 <div class="ui-form-candidates-triangle" ref="triangle"></div>
-                <div class="ui-form-candidate-container">
+                <div class="ui-form-candidate-container" :style="{ maxHeight: height + 'px' }">
                     <template v-for="value in candidates">
                         <div class="ui-form-candidate" :class="{ 'ui-active': value.value == modelValue }" @click="cutCandidate(value.value, $event)">
                             <slot name="candidate" :data="value">{{ value.label }}</slot>

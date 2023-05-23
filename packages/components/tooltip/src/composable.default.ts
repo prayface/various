@@ -68,13 +68,11 @@ export default class {
 
             //* 入场动画
             entranceAnimation: (el: Element, done: () => void) => {
-                gsap.killTweensOf(el);
                 gsap.to(el, { duration: 0.2, opacity: 1, onComplete: () => done() });
             },
 
             //* 离场动画
             departureAnimation: (el: Element, done: () => void) => {
-                gsap.killTweensOf(el);
                 gsap.to(el, { duration: 0.2, opacity: 0, onComplete: () => done() });
             },
         };
