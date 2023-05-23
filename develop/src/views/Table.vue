@@ -7,7 +7,7 @@
                 <p>尺寸<span>size</span>: large | middle | default | small</p>
             </div>
             <div class="content">
-                <UiTable :option="option" :data="data" ratio="gene_symbol">
+                <UiTable :option="option" :data="data" ratio="gene_symbol" :height="400">
                     <template #operate>
                         <UiButton size="small">~~按钮~~</UiButton>
                     </template>
@@ -201,7 +201,6 @@ const option = [
     {
         name: "Gene symbol",
         key: "gene_symbol",
-        width: 160,
         sort: true,
         selector: [
             { label: "选中项1", value: "value1" },
@@ -210,10 +209,10 @@ const option = [
         ],
     },
     { name: "Description", key: "description", sort: true },
-    { name: "良性突变", key: "benign", sort: true, width: 120 },
-    { name: "致病突变", key: "pathogenic", width: 120 },
-    { name: "所有突变", key: "mutation", width: 120 },
-    { name: "Operate", key: "operate", slot: "operate", width: 160 },
+    { name: "良性突变", key: "benign", sort: true },
+    { name: "致病突变", key: "pathogenic" },
+    { name: "所有突变", key: "mutation" },
+    { name: "Operate", key: "operate", slot: "operate", align: "center" },
 ];
 
 const data = [
