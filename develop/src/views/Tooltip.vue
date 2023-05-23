@@ -112,7 +112,16 @@
             </div>
             <div class="content">
                 <UiTooltipFunction ref="container" content="悬浮信息">
-                    <UiButton size="small" @click="click1">该悬浮窗口只能被Function触发</UiButton>
+                    <template #default>
+                        <div style="width: 1000px; height: 240px; display: flex">
+                            <div style="flex: 1; height: 100%; background-color: red" @mouseenter="show" @mouseleave="hidden"></div>
+                            <div style="flex: 1; height: 100%; background-color: yellow" @mouseenter="show" @mouseleave="hidden"></div>
+                            <div style="flex: 1; height: 100%; background-color: blue" @mouseenter="show" @mouseleave="hidden"></div>
+                        </div>
+                    </template>
+                    <template #content>
+                        <div style="width: 400px; height: 240px">我可是很大的</div>
+                    </template>
                 </UiTooltipFunction>
             </div>
         </section>
@@ -275,11 +284,17 @@ const click = () => {
 };
 
 const container = ref();
-const click1 = (ev) => {
+const show = (ev) => {
     if (!container.value) return;
     else {
-        const rect = ev.target.getBoundingClientRect();
         container.value.show("center", { pageX: ev.pageX, pageY: ev.pageY });
+    }
+};
+
+const hidden = () => {
+    if (!container.value) return;
+    else {
+        container.value.hidden();
     }
 };
 </script>

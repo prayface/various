@@ -5,6 +5,10 @@ export const disposeLayshaft = (option: DisposeLayshaftOption) => {
     //* 计算容器与窗口的差值
     const difference = option.viewSize - option.size;
 
+    //* 增加最小最大位置的判定范围
+    option.max -= 20;
+    option.min += 20;
+
     //* 方向处理
     switch (option.align) {
         case "center": {
@@ -23,6 +27,7 @@ export const disposeLayshaft = (option: DisposeLayshaftOption) => {
 
                 //* 检测右对齐时, 左侧是否未超出边界
                 if (option.offset - difference >= option.min) {
+                    console.log(option, difference);
                     result.offset = option.offset - difference;
                 }
             }
