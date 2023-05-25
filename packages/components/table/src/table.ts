@@ -4,7 +4,7 @@ import { ExtractPropTypes, PropType } from "vue";
 export interface UiTableOption {
     "key": string;
     "name": string;
-    "align": UiTypes.align;
+    "align"?: UiTypes.align;
     "className"?: string;
     "children"?: boolean;
 

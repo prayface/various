@@ -13,7 +13,7 @@
                     </UiFormItem>
 
                     <UiFormItem prop="type" label="兴趣" :width="40">
-                        <UiSelect v-model="data.type" name="type" :candidate="candidate" />
+                        <UiSelect v-model="data.type" name="type" :candidates="candidate" />
                     </UiFormItem>
 
                     <UiFormItem>
