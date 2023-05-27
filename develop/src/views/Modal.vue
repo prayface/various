@@ -31,7 +31,7 @@
             <div class="descript">从顶部出现, 3秒后自动消失。</div>
             <div class="content">
                 <UiButton @click="$refs.modal1.openModal()">开启模态框</UiButton>
-                <UiAsideModal ref="modal1">
+                <UiModalAside ref="modal1">
                     <p>测试模态框</p>
                     <p>测试模态框</p>
                     <p>测试模态框</p>
@@ -48,7 +48,7 @@
                     <p>测试模态框</p>
                     <p>测试模态框</p>
                     <p>测试模态框</p>
-                </UiAsideModal>
+                </UiModalAside>
             </div>
         </section>
 

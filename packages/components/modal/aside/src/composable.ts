@@ -3,10 +3,10 @@ import { gsap } from "gsap";
 
 import _ from "lodash";
 
-import { UiAsideModalEmits, UiAsideModalProps } from "../index";
+import { UiModalAsideEmits, UiModalAsideProps } from "../index";
 import { UiEmitFn } from "@various/constants";
 
-export default (define: UiAsideModalProps, emit: UiEmitFn<typeof UiAsideModalEmits>) => {
+export default (define: UiModalAsideProps, emit: UiEmitFn<typeof UiModalAsideEmits>) => {
     //* 响应式变量
     const refs = {
         open: ref<boolean>(false),

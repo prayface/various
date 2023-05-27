@@ -18,16 +18,16 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, onBeforeUnmount } from "vue";
-import { UiAsideModalPropsOption, UiAsideModalEmits } from "./index";
+import { UiModalAsidePropsOption, UiModalAsideEmits } from "./index";
 import { node } from "@various/utils";
 
 import Composable from "./src/composable";
 import UiIcon from "@various/components/icon";
 
 export default defineComponent({
-    name: "UiAsideModal",
-    emits: UiAsideModalEmits,
-    props: UiAsideModalPropsOption,
+    name: "UiModalAside",
+    emits: UiModalAsideEmits,
+    props: UiModalAsidePropsOption,
     components: { UiIcon },
     setup(define, { emit, expose }) {
         const { refs, methods, computeds } = Composable(define, emit);

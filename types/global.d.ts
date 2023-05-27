@@ -18,6 +18,7 @@ declare module "@vue/runtime-core" {
         UiPagination: typeof import("various-ui")["UiPagination"];
         UiTextarea: typeof import("various-ui")["UiTextarea"];
         UiModal: typeof import("various-ui")["UiModal"];
+        UiModalAside: typeof import("various-ui")["UiModalAside"];
         UiTable: typeof import("various-ui")["UiTable"];
         UiRadio: typeof import("various-ui")["UiRadio"];
         vLoading: typeof import("various-ui")["vLoading"];
