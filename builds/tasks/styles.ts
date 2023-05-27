@@ -13,16 +13,7 @@ module.exports = (function () {
     const { OUTPUT, PACKAGES } = require("../constants.ts");
 
     //* 待打包的less目录列表
-    const resource = [
-        resolve(PACKAGES, "styles/*.less"),
-        resolve(PACKAGES, "methods/**/style/*.less"),
-        resolve(PACKAGES, "constants/**/style/*.less"),
-        resolve(PACKAGES, "directives/**/style/*.less"),
-        resolve(PACKAGES, "components/**/style/*.less"),
-        "!**/*.size.less",
-        "!**/*.type.less",
-        "!**/*.status.less",
-    ];
+    const resource = [resolve(PACKAGES, "**/style/*.less"), "!**/*.size.less", "!**/*.type.less", "!**/*.status.less"];
 
     //! Less编译, Css兼容和压缩处理
     const styles = () => {
@@ -37,7 +28,6 @@ module.exports = (function () {
             .pipe(
                 GulpRename((file: any) => {
                     return {
-                        dirname: "",
                         extname: file.extname,
                         basename: file.basename,
                     };

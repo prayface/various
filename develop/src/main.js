@@ -4,7 +4,7 @@ import App from "./App.vue";
 import router from "./router";
 
 import "virtual:svg-icons-register";
-import "@various/styles/index.less";
+import "@various/style/index.less";
 import VariousUI from "@various";
 
 const app = createApp(App);

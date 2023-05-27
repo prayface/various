@@ -1,6 +1,12 @@
 import { register } from "@various/utils";
-import Modal from "./src/modal.vue";
+
+import Modal from "./default/index.vue";
+import AsideModal from "./aside/index.vue";
 
 export const UiModal = register.use(Modal, "component") as typeof Modal;
-export * from "./src/modal";
+export const UiAsideModal = register.use(AsideModal, "component") as typeof AsideModal;
+
+export * from "./default";
+export * from "./aside";
+
 export default UiModal;

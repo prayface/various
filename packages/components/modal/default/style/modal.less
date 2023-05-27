@@ -1,8 +1,7 @@
 //* css变量
 .ui-modal {
     // 弹出框组件配置
-    --uioption-modal-radius: var(--uisize-radius); // 默认弹出框圆角效果
-    --uioption-modal-icon-color: var(--uicolor-font-2); // 默认关闭图标颜色
+    --uioption-modal-icon-color: var(--uicolor-font-6); // 默认关闭图标颜色
     --uioption-modal-box-shadow: var(--uicolor-box-shadow); // 默认弹出框阴影效果
     --uioption-modal-background-color: var(--uicolor-font-6); // 默认弹出框背景颜色
 
@@ -12,7 +11,6 @@
 
 //* 弹出框样式
 .ui-modal {
-    padding: 80px 0;
     position: fixed;
     overflow-y: auto;
     background-color: var(--uicolor-full-mask);
@@ -20,7 +18,6 @@
         position: relative;
         transition: margin-top 0.5s;
         box-shadow: var(--uioption-modal-box-shadow);
-        border-radius: var(--uioption-modal-radius);
         background-color: var(--uioption-modal-background-color);
         > .ui-modal-header {
             line-height: 40px;
@@ -29,34 +26,18 @@
             position: relative;
             margin: 0 0 28px;
         }
+    }
 
-        > .ui-modal-close {
-            transition: all 0.3s;
-            font-size: 48px;
-            position: absolute;
-            cursor: pointer;
-            right: 20px;
-            color: var(--uioption-modal-icon-color);
-            top: 20px;
-            &:hover {
-                color: var(--uioption-modal-active-icon-color);
-            }
+    > .ui-modal-close {
+        transition: all 0.3s;
+        font-size: 32px;
+        position: fixed;
+        cursor: pointer;
+        right: 16px;
+        color: var(--uioption-modal-icon-color);
+        top: 16px;
+        &:hover {
+            color: var(--uioption-modal-active-icon-color);
         }
-    }
-}
-
-//* 弹出框过渡样式
-.ui-modal.v-enter-from,
-.ui-modal.v-leave-to {
-    > .ui-modal-container {
-        margin-top: -40px;
-    }
-}
-
-//* 弹出框过渡样式
-.ui-modal.v-enter-to,
-.ui-modal.v-leave-from {
-    > .ui-modal-container {
-        margin-top: 0;
     }
 }

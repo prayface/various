@@ -1,0 +1,38 @@
+//* css变量
+.ui-aside-modal {
+    // 弹出框组件配置
+    --uioption-aside-modal-icon-color: var(--uicolor-font-1); // 默认关闭图标颜色
+    --uioption-aside-modal-box-shadow: var(--uicolor-box-shadow); // 默认弹出框阴影效果
+    --uioption-aside-modal-background-color: var(--uicolor-font-6); // 默认弹出框背景颜色
+
+    // 弹出框组件激活配置
+    --uioption-aside-modal-active-icon-color: var(--uicolor-main-color); // 默认关闭图标颜色
+}
+
+//* 弹出框样式
+.ui-aside-modal {
+    position: fixed;
+    overflow-y: auto;
+    overflow-x: hidden;
+    justify-content: flex-end;
+    background-color: var(--uicolor-full-mask);
+    > .ui-modal-container {
+        position: relative;
+        min-height: 100vh;
+        box-shadow: var(--uioption-aside-modal-box-shadow);
+        background-color: var(--uioption-aside-modal-background-color);
+    }
+
+    > .ui-modal-close {
+        transition: all 0.3s;
+        font-size: 32px;
+        position: fixed;
+        cursor: pointer;
+        right: 16px;
+        color: var(--uioption-aside-modal-icon-color);
+        top: 16px;
+        &:hover {
+            color: var(--uioption-aside-modal-active-icon-color);
+        }
+    }
+}
