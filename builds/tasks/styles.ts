@@ -28,6 +28,7 @@ module.exports = (function () {
             .pipe(
                 GulpRename((file: any) => {
                     return {
+                        dirname: "",
                         extname: file.extname,
                         basename: file.basename,
                     };
