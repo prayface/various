@@ -22,9 +22,10 @@ declare module "@vue/runtime-core" {
         UiTable: typeof import("various-ui")["UiTable"];
         UiRadio: typeof import("various-ui")["UiRadio"];
         vLoading: typeof import("various-ui")["vLoading"];
+    }
+
+    interface ComponentCustomProperties {
         $loading: typeof import("various-ui")["$loading"];
         $message: typeof import("various-ui")["$message"];
     }
-
-    interface ComponentCustomProperties {}
 }
