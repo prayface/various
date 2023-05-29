@@ -41,7 +41,7 @@ export default defineComponent({
         onMounted(() => {
             refs.observer.value = new ResizeObserver(methods.resizeHandler);
             if (refs.main.value) {
-                node.append("ui-modals", refs.main.value);
+                node.append(document.body, refs.main.value);
             }
         });
 
@@ -50,7 +50,7 @@ export default defineComponent({
             document.body.style.overflow = "";
             refs.observer.value?.disconnect();
             if (refs.main.value) {
-                node.remove("ui-modals", refs.main.value);
+                node.remove(document.body, refs.main.value);
             }
         });
 

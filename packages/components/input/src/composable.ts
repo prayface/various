@@ -34,7 +34,7 @@ export default class {
             nextTick(() => {
                 if (!this.refs.container || !this.refs.candidate) return;
                 //* 将内容添加到视图容器中
-                node.append("ui-windows", this.refs.candidate);
+                node.append(document.body, this.refs.candidate);
 
                 //* 根据配置计算当前窗口位置
                 const rect = dispose.boundary.relativeContainerBody(this.refs.container, this.refs.candidate, {

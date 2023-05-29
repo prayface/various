@@ -20,6 +20,7 @@ export default (define: UiModalProps, emit: UiEmitFn<typeof UiModalEmits>) => {
         mainStyle: computed(() => {
             return {
                 padding: `${define.margin}px 0`,
+                zIndex: define.zIndex,
             };
         }),
         //* 容器样式

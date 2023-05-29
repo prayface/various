@@ -34,7 +34,7 @@ export default class {
                 nextTick(() => {
                     if (this.refs.tooltip && ev) {
                         //* 将content添加到视图容器中
-                        node.append("ui-windows", this.refs.tooltip);
+                        node.append(document.body, this.refs.tooltip);
                         //* 根据配置计算当前窗口位置
                         dispose.boundary.relativeMouseBody(ev, this.refs.tooltip, {
                             offsetX: define.offsetX,
@@ -74,7 +74,17 @@ export default class {
     #useComputeds(define: UiTooltipFollowProps) {
         return {
             //* 样式
-            style: computed(() => (define.width ? `max-width: ${define.width}px` : "")),
+            style: computed(() => {
+                //* 初始化数据
+                const result: any = {
+                    zIndex: define.zIndex || 66,
+                };
+
+                //* 添加宽度
+                if (define.width) result["max-width"] = `${define.width}px`;
+
+                return result;
+            }),
         };
     }
 

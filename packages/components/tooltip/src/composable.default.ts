@@ -35,7 +35,7 @@ export default class {
                     if (!this.refs.main || !this.refs.tooltip) return;
 
                     //* 将内容添加到视图容器中
-                    node.append("ui-windows", this.refs.tooltip);
+                    node.append(document.body, this.refs.tooltip);
 
                     //* 根据配置计算当前窗口位置
                     const rect = dispose.boundary.relativeContainerBody(this.refs.main, this.refs.tooltip, {
@@ -117,7 +117,17 @@ export default class {
     #useComputeds(define: UiTooltipProps) {
         return {
             //* 样式
-            style: computed(() => (define.width ? `max-width: ${define.width}px` : "")),
+            style: computed(() => {
+                //* 初始化数据
+                const result: any = {
+                    zIndex: define.zIndex || 66,
+                };
+
+                //* 添加宽度
+                if (define.width) result["max-width"] = `${define.width}px`;
+
+                return result;
+            }),
         };
     }
 }

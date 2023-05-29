@@ -1,6 +1,6 @@
 <template>
     <Transition @enter="entranceAnimation" @leave="departureAnimation" @before-enter="entrancePreAnimation">
-        <div class="ui-aside-modal ui-mask" v-show="open" ref="main" @click.self="closeModal">
+        <div class="ui-aside-modal ui-mask" v-show="open" ref="main" @click.self="closeModal" :style="{ zIndex: zIndex }">
             <div class="ui-modal-container" ref="container" :style="style">
                 <!-- 内容 -->
                 <div class="ui-modal-content" ref="content">
@@ -35,7 +35,7 @@ export default defineComponent({
         // 挂载函数
         onMounted(() => {
             if (refs.main.value) {
-                node.append("ui-modals", refs.main.value);
+                node.append(document.body, refs.main.value);
             }
         });
 
@@ -43,7 +43,7 @@ export default defineComponent({
         onBeforeUnmount(() => {
             document.body.style.overflow = "";
             if (refs.main.value) {
-                node.remove("ui-modals", refs.main.value);
+                node.remove(document.body, refs.main.value);
             }
         });
 

@@ -11,6 +11,7 @@ export const UiSelectPropsOption = {
     readonly: { type: Boolean, default: false } /**是否只读 */,
     loading: { type: Boolean, default: false } /**是否启动内置loading */,
     height: { type: Number, default: 240 },
+    zIndex: { type: Number, default: 66 },
     width: { type: [String, Number] as PropType<number | string>, default: 264 },
     size: { type: String as PropType<UiTypes.size>, default: "default" },
     name: { type: String },

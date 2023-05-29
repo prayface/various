@@ -11,7 +11,7 @@
 
         <!-- 候选项 -->
         <Transition>
-            <div class="ui-form-candidates" ref="candidate" v-if="visible" :class="classExtraName || ''">
+            <div class="ui-form-candidates" ref="candidate" v-if="visible" :class="classExtraName || ''" :style="{ zIndex: zIndex }">
                 <div class="ui-form-candidates-triangle" ref="triangle"></div>
                 <div class="ui-form-candidate-container" :style="{ maxHeight: height + 'px' }">
                     <template v-for="value in candidates">
@@ -71,7 +71,7 @@ export default defineComponent({
         onBeforeUnmount(() => {
             if (!refs.candidate) return;
             //* 将内容从视图容器中移除
-            node.remove("ui-windows", refs.candidate);
+            node.remove(document.body, refs.candidate);
         });
 
         return {
