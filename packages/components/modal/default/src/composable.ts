@@ -19,6 +19,7 @@ export default (define: UiModalProps, emit: UiEmitFn<typeof UiModalEmits>) => {
         //* 主体样式
         mainStyle: computed(() => {
             return {
+                borderRadius: define.radius + "px",
                 padding: `${define.margin}px 0`,
                 zIndex: define.zIndex,
             };
