@@ -2,10 +2,10 @@ import { ref, computed, nextTick } from "vue";
 
 import _ from "lodash";
 
-import { UiModalEmits, UiModalProps } from "../index";
+import { UiModalSemiScreenEmits, UiModalSemiScreenProps } from "../index";
 import { UiEmitFn } from "@various/constants";
 
-export default (define: UiModalProps, emit: UiEmitFn<typeof UiModalEmits>) => {
+export default (define: UiModalSemiScreenProps, emit: UiEmitFn<typeof UiModalSemiScreenEmits>) => {
     //* 响应式变量
     const refs = {
         open: ref<boolean>(false),
@@ -30,8 +30,7 @@ export default (define: UiModalProps, emit: UiEmitFn<typeof UiModalEmits>) => {
                 width: _.isNumber(define.width) ? define.width + "px" : define.width,
                 padding: define.spacing,
             };
-            //* 检测是否需要拉伸
-            result[define.magnify ? "min-height" : "height"] = _.isNumber(define.height) ? define.height + "px" : define.height;
+
             return result;
         }),
     };
