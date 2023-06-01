@@ -10,6 +10,7 @@ declare module "@vue/runtime-core" {
         UiScrollbar: typeof import("various-ui")["UiScrollbar"];
         UiForm: typeof import("various-ui")["UiForm"];
         UiInput: typeof import("various-ui")["UiInput"];
+        UiStepsInput: typeof import("various-ui")["UiStepsInput"];
         UiSelect: typeof import("various-ui")["UiSelect"];
         UiCheckbox: typeof import("various-ui")["UiCheckbox"];
         UiCarousel: typeof import("various-ui")["UiCarousel"];

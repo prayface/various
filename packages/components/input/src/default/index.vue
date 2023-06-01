@@ -1,7 +1,7 @@
 <template>
     <div class="ui-input" :class="className" :style="style" ref="container">
         <!-- Input主体 -->
-        <input ref="input" class="ui-form-control" v-bind="attrs" v-on="methods" @keydown.enter="enter" />
+        <input ref="input" class="ui-form-control" v-bind="attrs" v-on="inputOns" @keydown.enter="enter" />
 
         <!-- 清空按钮 -->
         <UiIcon name="error" class="ui-form-clearable" v-if="clearable && modelValue" @click="clear" />
@@ -35,61 +35,36 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, inject, toRefs, onBeforeUnmount } from "vue";
-import { UiInputPropsOption, UiInputEmits } from "./input";
-import { UiFormEmitterKey } from "@various/constants";
+import { defineComponent, onBeforeUnmount } from "vue";
+import { UiInputPropsOption } from "./index";
 import { node } from "@various/utils";
-import Composable, { UiInputConstructorRefs } from "./composable";
+import { useComposable } from "./src/composable";
 import UiIcon from "@various/components/icon";
 
 export default defineComponent({
     name: "UiInput",
-    emits: UiInputEmits,
     props: UiInputPropsOption,
     components: { UiIcon },
     setup(define, { emit, expose }) {
-        //* 初始化mitt
-        const emitter = inject(UiFormEmitterKey, undefined);
-
-        //* 初始化响应式变量
-        const refs = reactive<UiInputConstructorRefs>({
-            input: undefined,
-            visible: false,
-            triangle: undefined,
-            container: undefined,
-            candidate: undefined,
-        });
-
-        //* 实例化组合函数
-        const composable = new Composable(refs, define, emit, emitter);
-
-        //* 批量事件声明
-        const methods = {
-            change: composable.methods.change,
-            focus: composable.methods.focus,
-            input: composable.methods.input,
-            blur: composable.methods.blur,
-        };
+        //* 获取组合函数
+        const { refs, options, methods, computeds } = useComposable(define, emit);
 
         //* 导出公共函数
-        expose({
-            clear: composable.methods.clear,
-            focus: composable.methods.focus,
-            blur: composable.methods.blur,
-        });
+        expose({ clear: methods.clear, focus: methods.focus, blur: methods.blur });
 
         //* 销毁事件
         onBeforeUnmount(() => {
-            if (!refs.candidate) return;
+            //* 检测是否满足运行条件
+            if (!refs.candidate.value) return;
             //* 将内容从视图容器中移除
-            node.remove(document.body, refs.candidate);
+            node.remove(document.body, refs.candidate.value);
         });
 
         return {
-            ...composable.computeds,
-            ...composable.methods,
-            ...toRefs(refs),
-            methods,
+            ...refs,
+            ...options,
+            ...methods,
+            ...computeds,
         };
     },
 });

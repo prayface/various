@@ -1,0 +1,63 @@
+.ui-steps-input {
+    --uioption-steps-spacing: 16px;
+}
+
+.ui-steps-input {
+    display: flex;
+    align-items: center;
+    .ui-steps-container {
+        display: flex;
+        align-items: center;
+        //* 主控制器
+        .ui-steps-control {
+            flex: 1;
+            padding: 0 var(--uioption-steps-spacing);
+            border-right: 0;
+            border-radius: var(--uioption-form-radius) 0 0 var(--uioption-form-radius);
+        }
+
+        //* 副控制器
+        .ui-steps-number {
+            width: 76px;
+            padding: 0 var(--uioption-steps-spacing);
+            border-radius: 0 var(--uioption-form-radius) var(--uioption-form-radius) 0;
+        }
+
+        //* 提示文案调整
+        .ui-form-control {
+            text-align: center;
+            &::placeholder {
+                color: var(--uioption-form-placeholder-color);
+            }
+
+            &:focus::placeholder {
+                color: transparent;
+            }
+
+            &::-webkit-outer-spin-button,
+            &::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                appearance: none;
+                margin: 0;
+            }
+        }
+    }
+
+    .ui-steps-container:hover,
+    .ui-steps-container.ui-active {
+        --uioption-form-color: var(--uicolor-font-2);
+    }
+
+    .ui-steps-container:not(:first-child) {
+        position: relative;
+        margin-left: 40px;
+        &::before {
+            inset: 19px auto auto -26px;
+            width: 12px;
+            height: 2px;
+            content: "";
+            position: absolute;
+            background-color: var(--uicolor-font-1);
+        }
+    }
+}

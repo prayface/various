@@ -3,7 +3,6 @@
         <div class="ui-form-control">
             <input class="ui-scope-input-control" type="number" v-on="handles" v-bind="attrs.start" v-model="modelValue.start" />
             <div class="ui-scope-input-line"></div>
-
             <input class="ui-scope-input-control" type="number" v-on="handles" v-bind="attrs.end" v-model="modelValue.end" />
         </div>
 
@@ -21,11 +20,13 @@ import { defineComponent, inject, reactive } from "vue";
 import { UiScopeInputEmits, UiScopeInputPropsOption } from "./scope-input";
 import { UiFormEmitterKey } from "@various/constants";
 import Composable, { UiScopeInputRefs } from "./composable";
+import UiIcon from "@various/components/icon";
 
 export default defineComponent({
     name: "UiScopeInput",
     emits: UiScopeInputEmits,
     props: UiScopeInputPropsOption,
+    components: { UiIcon },
     setup(define, { emit, expose }) {
         //* 初始化mitt
         const emitter = inject(UiFormEmitterKey, undefined);

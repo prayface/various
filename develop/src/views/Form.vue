@@ -8,12 +8,16 @@
             </div>
             <div class="content">
                 <UiForm :rules="rules" v-model:data="data" ref="form">
-                    <UiFormItem prop="name" label="名称" :width="40">
+                    <UiFormItem prop="name" label="名称" :width="80">
                         <UiInput v-model="data.name" name="name" :loading="loading1" />
                     </UiFormItem>
 
-                    <UiFormItem prop="type" label="兴趣" :width="40">
+                    <UiFormItem prop="type" label="兴趣" :width="80">
                         <UiSelect v-model="data.type" name="type" :candidates="candidate" />
+                    </UiFormItem>
+
+                    <UiFormItem prop="range" label="复合范围" :width="80">
+                        <UiStepsInput v-model="data.range" name="range" :placeholder="{ start: '开始', end: '结束' }" />
                     </UiFormItem>
 
                     <UiFormItem>
@@ -196,7 +200,6 @@ import { ref, reactive } from "vue";
 
 const form = ref(null);
 const item = ref(null);
-const data = reactive({ age: "", type: "", name: "" });
 const loading1 = ref(false);
 const loading2 = ref(false);
 const candidate = [
@@ -205,6 +208,17 @@ const candidate = [
     { label: "吃东西", value: "3" },
     { label: "打屁屁", value: "4" },
 ];
+
+const data = reactive({
+    type: "",
+    name: "",
+    range: {
+        "start-steps": 0,
+        "end-steps": 0,
+        "start": "",
+        "end": "",
+    },
+});
 
 const rules = ref({
     name: [
@@ -221,19 +235,30 @@ const rules = ref({
             },
         },
     ],
-    age: [
-        {
-            trigger: "change",
-            verify: (data) => {
-                return { verify: Number(data.age) >= 18, message: "年龄不达标" };
-            },
-        },
-    ],
     type: [
         {
             trigger: "change",
             verify: (data) => {
                 return { verify: data.type, message: "请选中一个兴趣爱好" };
+            },
+        },
+    ],
+    range: [
+        {
+            trigger: "change",
+            verify: (data) => {
+                const end = data.range.end;
+                const start = data.range.start;
+                const endSteps = data.range["end-steps"];
+                const startSteps = data.range["start-steps"];
+
+                if (!end?.toString() || !start?.toString() || !endSteps?.toString() || !startSteps?.toString()) {
+                    return { verify: false, message: "必填+++" };
+                } else if (end + endSteps < start + startSteps) {
+                    return { verify: false, message: "结束位置必须大于开始位置" };
+                } else {
+                    return { verify: true };
+                }
             },
         },
     ],
