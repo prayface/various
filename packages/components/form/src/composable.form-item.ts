@@ -1,4 +1,4 @@
-import { computed, ComputedRef } from "vue";
+import { computed } from "vue";
 import { UiTypes } from "@various/constants";
 import { UiFormItemProps } from "./form-item";
 
@@ -16,18 +16,8 @@ export type UiFormItemConstructorOption = {
 
 export default class {
     refs: UiFormItemConstructorRefs;
-
-    methods: {
-        show: (content: string, type?: UiTypes.type) => void;
-        hidden: () => void;
-        trigger: (content: string, type?: UiTypes.type) => void;
-        validator: (name: string) => Promise<void>;
-    };
-
-    computeds: {
-        className: ComputedRef<string>;
-        style: ComputedRef<{ width?: string }>;
-    };
+    methods;
+    computeds;
 
     constructor(refs: UiFormItemConstructorRefs, define: UiFormItemProps, option: UiFormItemConstructorOption) {
         this.refs = refs;
@@ -82,7 +72,7 @@ export default class {
         };
 
         //* 校验函数
-        const validator = async (name: string) => {
+        const validator = async (name: string, callBack: (result: boolean) => void) => {
             //* 1. 数据初始化
             const verifys: (Promise<UiTypes.verifyResult> | UiTypes.verifyResult)[] = []; // 校验列表
             const rule = rules[define.prop as string].filter((value) => value.trigger == name || name == "all"); // 筛选校验规则
@@ -96,9 +86,11 @@ export default class {
             const error = result.filter((value) => !value.verify);
             //* 6. 根据是否存在校验失败选择触发提示or隐藏提示
             if (error.length) {
+                callBack && callBack(false);
                 trigger(error[0].message || "", error[0].type || "error");
             } else {
                 hidden();
+                callBack && callBack(true);
             }
         };
 

@@ -24,23 +24,25 @@ export default class {
         const data = _.cloneDeep(define.data);
 
         //? 表单校验函数
-        const validator = async (callBack: (result: boolean) => void) => {
-            console.log('validator');
+        const validator = async (callBack: (result: boolean) => void, list?: string[]) => {
+            console.log("validator");
             //* 1. 检测是否允许向下执行
             if (!define.rules) return;
             //* 2. 初始化数据
             const errors: { name: string; result: UiTypes.verifyResult }[] = [];
             //* 3. 遍历生成校验队列
             for (const i in define.rules) {
-                //* 3.1 初始化校验队列
+                //* 3.1 检测是否需要校验
+                if (list && !list.includes(i)) continue;
+                //* 3.2 初始化校验队列
                 const alignment: (Promise<UiTypes.verifyResult> | UiTypes.verifyResult)[] = [];
-                //* 3.2 添加校验
+                //* 3.3 添加校验
                 define.rules[i].forEach((value) => alignment.push(value.verify(define.data)));
-                //* 3.3 获取校验结果
+                //* 3.4 获取校验结果
                 const result = await Promise.all(alignment);
-                //* 3.4 获取校验失败列表
+                //* 3.5 获取校验失败列表
                 const error = result.filter((value) => (!value.type || value.type == "error") && !value.verify);
-                //* 3.5 存在校验失败则添加入队列中
+                //* 3.6 存在校验失败则添加入队列中
                 if (error && error.length) {
                     errors.push({ name: i, result: error[0] });
                 }
