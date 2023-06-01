@@ -13,11 +13,12 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { UiStepsInputPropsOption } from "./index";
+import { UiStepsInputPropsOption, UiStepsInputEmitsOption } from "./index";
 import { useComposable } from "./src/composable";
 
 export default defineComponent({
     name: "UiStepsInput",
+    emits: UiStepsInputEmitsOption,
     props: UiStepsInputPropsOption,
     setup(define, { emit }) {
         const { refs, computeds } = useComposable(define, emit);

@@ -36,7 +36,7 @@
 
 <script lang="ts">
 import { defineComponent, onBeforeUnmount } from "vue";
-import { UiInputPropsOption } from "./index";
+import { UiInputPropsOption, UiInputEmitsOption } from "./index";
 import { node } from "@various/utils";
 import { useComposable } from "./src/composable";
 import UiIcon from "@various/components/icon";
@@ -44,6 +44,7 @@ import UiIcon from "@various/components/icon";
 export default defineComponent({
     name: "UiInput",
     props: UiInputPropsOption,
+    emits: UiInputEmitsOption,
     components: { UiIcon },
     setup(define, { emit, expose }) {
         //* 获取组合函数

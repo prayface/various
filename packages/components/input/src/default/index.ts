@@ -21,6 +21,7 @@ export const UiInputPropsOption = {
 
 export type UiInputProps = ExtractPropTypes<typeof UiInputPropsOption>;
 
+export const UiInputEmitsOption = ["update:modelValue", "select", "change", "clear", "enter", "input", "focus", "blur"];
 export type UiInputEmits = {
     (event: "update:modelValue", value: any): void;
     (event: "clear"): void;

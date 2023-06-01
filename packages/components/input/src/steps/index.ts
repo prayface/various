@@ -18,12 +18,9 @@ export const UiStepsInputPropsOption = {
 
 export type UiStepsInputProps = ExtractPropTypes<typeof UiStepsInputPropsOption>;
 
+export const UiStepsInputEmitsOption = ["change", "input", "focus", "blur"];
 export type UiStepsInputEmits = {
-    (event: "update:modelValue", value: any): void;
-    (event: "clear"): void;
-    (event: "select", ev: Event): void;
     (event: "change", ev: Event): void;
-    (event: "enter", ev: KeyboardEvent | Event): void;
     (event: "input", ev: InputEvent | Event): void;
     (event: "focus", ev: FocusEvent | Event): void;
     (event: "blur", ev: FocusEvent | Event): void;

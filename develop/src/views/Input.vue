@@ -10,7 +10,7 @@
                 <UiInput v-model="value" size="large" :width="200" style="margin-right: 8px" />
                 <UiInput v-model="value" size="middle" :width="200" style="margin-right: 8px" />
                 <UiInput v-model="value" :width="200" style="margin-right: 8px" />
-                <UiInput v-model="value" size="small" :width="200" />
+                <UiInput v-model="value" size="small" :width="200" @change="change" />
             </div>
         </section>
 
