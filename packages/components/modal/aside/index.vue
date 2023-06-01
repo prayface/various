@@ -48,7 +48,7 @@ export default defineComponent({
         });
 
         // 导出公共方法
-        expose({ openModal: methods.openModal, closeModal: methods.closeModal });
+        expose({ scrollTo: methods.scrollTo, openModal: methods.openModal, closeModal: methods.closeModal });
 
         return {
             ...refs,

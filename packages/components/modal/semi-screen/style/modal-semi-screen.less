@@ -1,12 +1,14 @@
 //* css变量
 .ui-semi-screen-modal {
     // 弹出框组件配置
+    --uioption-modal-radius: var(--uisize-radius); // 默认关闭图标背景圆角
     --uioption-modal-icon-color: var(--uicolor-font-6); // 默认关闭图标颜色
     --uioption-modal-box-shadow: var(--uicolor-box-shadow); // 默认弹出框阴影效果
     --uioption-modal-background-color: var(--uicolor-font-6); // 默认弹出框背景颜色
 
     // 弹出框组件激活配hi
     --uioption-modal-active-icon-color: var(--uicolor-main-color); // 默认关闭图标颜色
+    --uioption-modal-active-icon-background-color: var(--uicolor-font-4-02); // 默认关闭图标背景颜色
 }
 
 //* 弹出框样式
@@ -31,6 +33,7 @@
 
     > .ui-semi-screen-modal-close {
         transition: all 0.3s;
+        border-radius: var(--uioption-modal-radius);
         font-size: 48px;
         position: fixed;
         cursor: pointer;
@@ -39,6 +42,7 @@
         top: 16px;
         &:hover {
             color: var(--uioption-modal-active-icon-color);
+            background-color: var(--uioption-modal-active-icon-background-color);
         }
     }
 }

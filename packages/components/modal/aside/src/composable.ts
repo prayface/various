@@ -36,16 +36,30 @@ export default (define: UiModalAsideProps, emit: UiEmitFn<typeof UiModalAsideEmi
             refs.open.value = false;
             //* 响应关闭事件
             emit("close");
+            //* Body间距回调
+            if (document.body.scrollHeight > document.body.offsetHeight) {
+                document.body.style.paddingRight = "";
+            }
         },
 
         //* Modal启动函数
         openModal: () => {
-            //* Body隐藏滚动条
-            document.body.style.overflow = "hidden";
+            //* 回到顶部
+            refs.container.value?.scrollTo({ top: 0 });
             //* 显示弹出窗口
             refs.open.value = true;
             //* 响应Open事件
             emit("open");
+            //* Body隐藏滚动条
+            if (document.body.scrollHeight > document.body.offsetHeight) {
+                document.body.style.overflow = "hidden";
+                document.body.style.paddingRight = "12px";
+            }
+        },
+
+        //* Modal滚动条函数
+        scrollTo: (options: ScrollToOptions) => {
+            refs.container.value?.scrollTo(options);
         },
 
         //* 入场前样式调整

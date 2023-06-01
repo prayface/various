@@ -47,6 +47,15 @@ export default (define: UiModalProps, emit: UiEmitFn<typeof UiModalEmits>) => {
                 } else {
                     refs.main.value.style.alignItems = "center";
                 }
+
+                //* Body隐藏滚动条
+                if (document.body.scrollHeight > document.body.offsetHeight) {
+                    document.body.style.overflow = "hidden";
+                    document.body.style.paddingRight = "12px";
+                } else {
+                    document.body.style.overflow = "";
+                    document.body.style.paddingRight = "";
+                }
             });
         },
 
@@ -54,6 +63,9 @@ export default (define: UiModalProps, emit: UiEmitFn<typeof UiModalEmits>) => {
         closeModal: () => {
             //* 检测是否满足运行条件
             if (!refs.main.value || !refs.observer.value) return;
+            if (document.body.scrollHeight > document.body.offsetHeight) {
+                document.body.style.paddingRight = "";
+            }
             //* 卸载监听事件
             refs.observer.value.disconnect();
             //* Body显示被隐藏的滚动条
@@ -68,14 +80,23 @@ export default (define: UiModalProps, emit: UiEmitFn<typeof UiModalEmits>) => {
         openModal: () => {
             //* 检测是否满足运行条件
             if (!refs.main.value || !refs.observer.value) return;
+            if (document.body.scrollHeight > document.body.offsetHeight) {
+                document.body.style.overflow = "hidden";
+                document.body.style.paddingRight = "12px";
+            }
+            //* 回到顶部
+            refs.main.value?.scrollTo({ top: 0 });
             //* 挂载监听事件
             refs.observer.value.observe(refs.main.value);
-            //* Body隐藏滚动条
-            document.body.style.overflow = "hidden";
             //* 显示弹出窗口
             refs.open.value = true;
             //* 响应Open事件
             emit("open");
+        },
+
+        //* Modal滚动条函数
+        scrollTo: (options: ScrollToOptions) => {
+            refs.main.value?.scrollTo(options);
         },
     };
 
