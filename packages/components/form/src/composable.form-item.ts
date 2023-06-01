@@ -72,7 +72,7 @@ export default class {
         };
 
         //* 校验函数
-        const validator = async (name: string, callBack: (result: boolean) => void) => {
+        const validator = async (name: string, callBack?: (result: boolean) => void) => {
             //* 1. 数据初始化
             const verifys: (Promise<UiTypes.verifyResult> | UiTypes.verifyResult)[] = []; // 校验列表
             const rule = rules[define.prop as string].filter((value) => value.trigger == name || name == "all"); // 筛选校验规则

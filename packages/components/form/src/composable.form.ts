@@ -9,11 +9,7 @@ export type UiFormConstructorRefs = {
 
 export default class {
     refs: UiFormConstructorRefs;
-
-    methods: {
-        validator: (callBack: (result: boolean) => void) => Promise<void>;
-        reset: () => void;
-    };
+    methods;
 
     constructor(refs: UiFormConstructorRefs, define: UiFormProps, emitter: Emitter<any>) {
         this.refs = refs;
