@@ -1,10 +1,10 @@
-import { ExtractPropTypes } from "vue";
+import { ExtractPropTypes, PropType } from "vue";
 
 export const UiLoadingPropsOption = {
-    className: { type: String, default: "" },
-    content: { type: String, default: "加载中..." },
+    message: { type: String, default: "加载中" },
+    visible: { type: Boolean, default: false },
     zIndex: { type: Number },
-    show: { type: Boolean, default: false },
+    mode: { type: String as PropType<"absolute" | "fixed">, default: "absolute" },
     icon: { type: String, default: "loading" },
 } as const;
 

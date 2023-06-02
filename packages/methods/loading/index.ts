@@ -4,7 +4,7 @@ import { UiLoading, UiHTMLElement } from "@various/constants";
 export type UiLoadingShowOption = {
     icon?: string;
     delay?: number;
-    content?: string;
+    message?: string;
 };
 
 export type UiLoadingHandles = {
@@ -27,12 +27,11 @@ const show = (config?: UiLoadingShowOption) => {
     if (el.instance) {
         //* 属性变更
         if (config?.icon) el.instance.$.props.icon = config.icon;
-        if (config?.content) el.instance.$.props.content = config.content;
-        el.instance.$.props.show = true;
+        if (config?.message) el.instance.$.props.message = config.message;
     } else {
         //* 组件挂载
         //* 创建新的Vue实例
-        const app = createApp(UiLoading, Object.assign({ show: true, className: "ui-full-loading" }, config));
+        const app = createApp(UiLoading, Object.assign({ visible: false, mode: "fixed" }, config));
         const instance = app.mount(document.createElement("div"));
 
         //* 检测是否需要添加Position
@@ -43,6 +42,9 @@ const show = (config?: UiLoadingShowOption) => {
         el.instance = instance;
         el.appendChild(instance.$el);
     }
+
+    //* 显示Loading
+    el.instance.$.props.visible = true;
 };
 
 const $loading: UiLoadingHandles = {
@@ -80,14 +82,14 @@ const $loading: UiLoadingHandles = {
                 el.style.overflow = "";
                 el.style.paddingRight = "";
                 //* 隐藏Loading
-                if (el.instance) el.instance.$.props.show = false;
+                if (el.instance) el.instance.$.props.visible = false;
             }, 1000);
         } else if (el.instance) {
             //* 还原body样式
             el.style.overflow = "";
             el.style.paddingRight = "";
             //* 隐藏Loading
-            el.instance.$.props.show = false;
+            el.instance.$.props.visible = false;
         }
     },
 };
