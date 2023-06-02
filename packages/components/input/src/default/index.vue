@@ -16,7 +16,7 @@
                             <div
                                 class="ui-form-candidate"
                                 :class="{ 'ui-active': value.value == modelValue }"
-                                @click="cutCandidate(value.value, $event)">
+                                @mousedown="cutCandidate(value.value, $event)">
                                 <slot name="candidate" :data="value">{{ value.label }}</slot>
                             </div>
                         </template>

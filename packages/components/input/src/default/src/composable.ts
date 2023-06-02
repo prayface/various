@@ -121,6 +121,7 @@ export const useComposable = (define: UiInputProps, emit: UiInputEmits) => {
 
         //* 候选项选择事件
         cutCandidate: (content: String, ev: Event) => {
+            console.log(1212);
             emit("update:modelValue", content);
             emit("select", ev);
             emit("change", ev);
