@@ -150,7 +150,7 @@ export default class {
             //* 判断是否需要添加clearable类名
             if (define.clearable) result.push("ui-clearable");
             //* 判断候选项是否处于展示状态
-            if (this.refs.visible) result.push("ui-candidates-show");
+            if (this.refs.visible && define.candidates?.length) result.push("ui-candidates-show");
 
             return result.join(" ");
         });

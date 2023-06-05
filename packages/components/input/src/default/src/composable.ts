@@ -190,7 +190,7 @@ export const useComposable = (define: UiInputProps, emit: UiInputEmits) => {
             //* 判断是否需要添加clearable类名
             if (define.clearable) result.push("ui-clearable");
             //* 判断候选项是否处于展示状态
-            if (refs.visible.value) result.push("ui-candidates-show");
+            if (refs.visible.value && define.candidates?.length) result.push("ui-candidates-show");
 
             return result.join(" ");
         }),
