@@ -123,6 +123,17 @@ export default defineComponent({
                 // 统计补足的份额
                 vars.replenish += result.replenish;
 
+                // 设置Header Row宽度
+                const colHeader = refs.colsHeader.value.find((value) => value.getAttribute("name") == result.key);
+                if (colHeader) {
+                    colHeader.style.width = "";
+                }
+                // 设置Body Row宽度
+                const colBody = refs.colsBody.value.find((value) => value.getAttribute("name") == result.key);
+                if (colBody) {
+                    colBody.style.width = "";
+                }
+
                 // 遍历td、th用于获取row尺寸
                 rows.forEach((row) => {
                     // 获取对应的col node
@@ -154,7 +165,7 @@ export default defineComponent({
                 return former + current.width;
             }, 0);
 
-            // 第三次遍历, 检测当前表格是需要进行补足还是删减尺寸, 并进行对应操作
+            // 第二次遍历, 检测当前表格是需要进行补足还是删减尺寸, 并进行对应操作
             if (real < vars.size) {
                 if (vars.replenish > 0) {
                     const replenish = (vars.size - real) / vars.replenish;
@@ -185,7 +196,7 @@ export default defineComponent({
                 }
             }
 
-            // // 第四次遍历设置定框的Row
+            // 第三次遍历设置定框的Row
             vars.data.forEach((row) => {
                 // 设置Header Row宽度
                 const colHeader = refs.colsHeader.value.find((value) => value.getAttribute("name") == row.key);
@@ -220,7 +231,10 @@ export default defineComponent({
         });
 
         // 触发数据更新时, 进行一次初始化
-        onUpdated(() => init());
+        onUpdated(() => {
+            init();
+            console.log("update");
+        });
 
         return {
             ...refs,
