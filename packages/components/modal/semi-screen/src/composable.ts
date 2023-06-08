@@ -80,9 +80,10 @@ export default (define: UiModalSemiScreenProps, emit: UiEmitFn<typeof UiModalSem
         openModal: () => {
             //* 检测是否满足运行条件
             if (!refs.main.value || !refs.observer.value) return;
+
+            //* Body隐藏滚动条
+            document.body.style.overflow = "hidden";
             if (document.body.scrollHeight > document.body.offsetHeight) {
-                //* Body隐藏滚动条
-                document.body.style.overflow = "hidden";
                 document.body.style.paddingRight = "12px";
             }
             //* 回到顶部
