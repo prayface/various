@@ -62,14 +62,15 @@ export default (define: UiModalSemiScreenProps, emit: UiEmitFn<typeof UiModalSem
         closeModal: () => {
             //* 检测是否满足运行条件
             if (!refs.main.value || !refs.observer.value) return;
-            if (document.body.scrollHeight > document.body.offsetHeight) {
-                //* Body内间距回调
-                document.body.style.paddingRight = "";
-            }
-            //* 卸载监听事件
-            refs.observer.value.disconnect();
+
             //* Body显示被隐藏的滚动条
             document.body.style.overflow = "";
+            if (document.body.scrollHeight > document.body.offsetHeight) {
+                document.body.style.paddingRight = "";
+            }
+
+            //* 卸载监听事件
+            refs.observer.value.disconnect();
             //* 隐藏弹出窗口
             refs.open.value = false;
             //* 响应关闭事件
@@ -86,6 +87,7 @@ export default (define: UiModalSemiScreenProps, emit: UiEmitFn<typeof UiModalSem
             if (document.body.scrollHeight > document.body.offsetHeight) {
                 document.body.style.paddingRight = "12px";
             }
+
             //* 回到顶部
             refs.container.value?.scrollTo({ top: 0 });
             //* 挂载监听事件
