@@ -30,13 +30,12 @@ export default (define: UiModalAsideProps, emit: UiEmitFn<typeof UiModalAsideEmi
     const methods = {
         //* Modal关闭函数
         closeModal: () => {
-            //* Body显示被隐藏的滚动条
-            document.body.style.overflow = "";
             //* 隐藏弹出窗口
             refs.open.value = false;
             //* 响应关闭事件
             emit("close");
-            //* Body间距回调
+            //* Body显示被隐藏的滚动条
+            document.body.style.overflow = "";
             if (document.body.scrollHeight > document.body.offsetHeight) {
                 document.body.style.paddingRight = "";
             }
@@ -51,8 +50,8 @@ export default (define: UiModalAsideProps, emit: UiEmitFn<typeof UiModalAsideEmi
             //* 响应Open事件
             emit("open");
             //* Body隐藏滚动条
+            document.body.style.overflow = "hidden";
             if (document.body.scrollHeight > document.body.offsetHeight) {
-                document.body.style.overflow = "hidden";
                 document.body.style.paddingRight = "12px";
             }
         },
