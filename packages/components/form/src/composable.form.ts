@@ -41,6 +41,8 @@ export default class {
                 //* 3.6 存在校验失败则添加入队列中
                 if (error && error.length) {
                     errors.push({ name: i, result: error[0] });
+                } else {
+                    emitter.emit(`reset:${i}`);
                 }
             }
             //* 4. 根据是否存在校验失败选择触发提示or触发回调函数
