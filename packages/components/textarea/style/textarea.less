@@ -9,7 +9,7 @@
 .ui-textarea {
     position: relative;
 
-    >.ui-form-control {
+    > .ui-form-control {
         resize: none;
         height: auto;
         display: block;
@@ -30,7 +30,7 @@
         }
     }
 
-    >.ui-scrollbar-container {
+    > .ui-scrollbar-container {
         inset: 1px 1px 1px auto;
     }
 
@@ -41,8 +41,7 @@
         z-index: 1;
         position: absolute;
         background-color: #fff;
-        content: '';
-
+        content: "";
     }
 
     &::before {
@@ -52,18 +51,16 @@
     &::after {
         inset: auto auto 1px var(--uioption-textarea-spacing-x);
     }
-
-
 }
 
 .ui-textarea.ui-disabled-status {
-    >.ui-form-control {
-        cursor: not-allowed;
+    > .ui-form-control {
+        cursor: auto;
     }
 }
 
 .ui-textarea.ui-readonly-status {
-    >.ui-form-control {
+    > .ui-form-control {
         &:focus::placeholder {
             color: var(--uioption-form-placeholder-color);
         }
@@ -72,16 +69,14 @@
 
 .ui-textarea.ui-disabled-status,
 .ui-textarea.ui-loading-status {
-    >.ui-scrollbar-container {
+    > .ui-scrollbar-container {
         display: none;
     }
 }
 
-
 .ui-textarea.ui-disabled-status,
 .ui-textarea.ui-readonly-status,
 .ui-textarea.ui-loading-status {
-
     &::before,
     &::after {
         background-color: var(--uioption-form-background-color);
