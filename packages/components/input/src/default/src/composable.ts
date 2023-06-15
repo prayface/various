@@ -10,7 +10,7 @@ export const useComposable = (define: UiInputProps, emit: UiInputEmits) => {
 
     //* 响应式变量
     const refs = {
-        input: ref<HTMLElement>(),
+        main: ref<HTMLElement>(),
         visible: ref<boolean>(false),
         triangle: ref<HTMLElement>(),
         container: ref<HTMLElement>(),
@@ -57,7 +57,7 @@ export const useComposable = (define: UiInputProps, emit: UiInputEmits) => {
         //* Input失去焦点事件
         blur: (ev?: FocusEvent | Event) => {
             //* 当ev不存在时, 触发Input失去焦点
-            if (!ev) return refs.input.value?.blur();
+            if (!ev) return refs.main.value?.blur();
             else {
                 //* 隐藏候选项
                 refs.visible.value = false;
@@ -73,7 +73,7 @@ export const useComposable = (define: UiInputProps, emit: UiInputEmits) => {
         //* Input获取焦点事件
         focus: (ev?: FocusEvent | Event) => {
             //* 当ev不存在时, 触发Input获取焦点
-            if (!ev) return refs.input.value?.blur();
+            if (!ev) return refs.main.value?.blur();
             else {
                 //* 显示候选项
                 utils.show();
