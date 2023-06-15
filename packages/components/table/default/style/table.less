@@ -1,0 +1,102 @@
+.ui-table {
+    --ui-table-header-background-color: #e9e9f5; //* 表格头部颜色
+    --ui-table-header-color: var(--uicolor-font-1); //* 表格头部字体颜色
+
+    --ui-table-body-background-color: #fff; //* 表格内容背景颜色
+    --ui-table-body-background-active-color: var(--uicolor-main-color-005); //* 表格内容背景激活颜色
+
+    --ui-table-border-active-color: var(--uicolor-main-color); //* 表格边框激活颜色
+    --ui-table-border-color: var(--uicolor-font-4-03); //* 表格边框颜色
+
+    --ui-table-checkbox-icon-color: #fff; //* 多选框图标颜色
+    --ui-table-checkbox-border-color: var(--uicolor-font-4); //* 多选框边框颜色
+    --ui-table-checkbox-background-color: #fff; //* 多选框背景颜色
+    --ui-table-checkbox-border-active-color: var(--uicolor-main-color); //* 多选框边框激活颜色
+    --ui-table-checkbox-background-active-color: var(--uicolor-main-color); //* 多选框背景激活颜色
+
+    --ui-table-icon-color: var(--uicolor-font-2); //* 表格图标颜色
+    --ui-table-icon-active-color: var(--uicolor-main-color); //* 表格图标激活颜色
+
+    --ui-table-row-spacing: 4px; //* 单元格行间隔
+    --ui-table-col-spacing: var(--uisize-spacing-x); //* 单元格列间隔
+    --ui-table-size: 48px; //* 单元格最小高度
+}
+
+.ui-table {
+    //* 表格头部样式
+    .ui-table-header {
+        background-color: var(--ui-table-header-background-color);
+        justify-content: flex-start;
+        align-items: center;
+        min-height: var(--ui-table-size);
+        min-width: 100%;
+        display: flex;
+        //* 表格列样式
+        .ui-table-column {
+            color: var(--uicolor-font-1);
+            display: flex;
+            padding: 0 var(--ui-table-col-spacing);
+            font-weight: bold;
+            align-items: center;
+            //* 表格排序控件
+            .ui-table-sort {
+                cursor: pointer;
+                padding: 4px;
+                //* 排序控件 - 三角形
+                .ui-table-sort-trigger {
+                    width: 0;
+                    height: 0;
+                    transition: all 0.3s;
+                    border-style: solid;
+                    border-width: 0 4px 5px 4px;
+                    border-color: transparent transparent var(--ui-table-icon-color) transparent;
+                    &.ui-active {
+                        border-color: transparent transparent var(--ui-table-icon-active-color) transparent;
+                    }
+                }
+
+                //* 排序控件 - 三角形样式调整
+                .ui-table-down-sort {
+                    margin-top: 2px;
+                    transform: rotate(180deg);
+                    &.ui-active {
+                        border-color: transparent transparent var(--ui-table-icon-active-color) transparent;
+                    }
+                }
+            }
+        }
+    }
+
+    //* 表格内容样式
+    .ui-table-bodys {
+        .ui-table-body {
+            background-color: var(--ui-table-body-background-color);
+            border: 1px solid var(--ui-table-border-color);
+            margin: var(--ui-table-row-spacing) 0 0;
+            .ui-table-row {
+                justify-content: flex-start;
+                align-items: center;
+                transition: all 0.3s;
+                min-height: var(--ui-table-size);
+                min-width: 100%;
+                display: flex;
+                .ui-table-column {
+                    display: flex;
+                    padding: 4px var(--ui-table-col-spacing);
+                    min-height: var(--ui-table-size);
+                    align-items: center;
+                }
+            }
+        }
+
+        .ui-table-body:hover,
+        .ui-table-body.ui-active {
+            background-color: var(--ui-table-body-background-active-color);
+            border-color: var(--ui-table-body-background-active-color);
+        }
+
+        .ui-table-body.ui-active {
+            border-color: var(--ui-table-border-active-color);
+        }
+    }
+}

@@ -1,6 +1,6 @@
-import Table from "./default/index.vue";
+import Table from "./src/table.vue";
 import { register } from "@various/utils";
 
 export const UiTable = register.use(Table, "component") as typeof Table;
-export * from "./default/index";
+export * from "./src/table";
 export default UiTable;
