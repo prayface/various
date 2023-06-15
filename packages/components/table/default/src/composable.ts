@@ -1,5 +1,7 @@
-import { SetupContext, ref } from "vue";
+import _ from "lodash";
+import { SetupContext, computed, ref } from "vue";
 import { UiTableProps, UiTableEmits, UiTableOption } from "../index";
+import type { UiTableVars } from "./types";
 
 export const useComposable = (define: UiTableProps, emit: SetupContext<typeof UiTableEmits>["emit"]) => {
     //* 响应式变量
@@ -13,6 +15,167 @@ export const useComposable = (define: UiTableProps, emit: SetupContext<typeof Ui
 
         //* 嵌套表格开启列表
         childrens: ref<string[]>([]),
+
+        //* 表格行节点
+        HeaderNode: ref<HTMLDivElement>(),
+        TableNode: ref<HTMLDivElement>(),
+        BodyNodes: ref<HTMLDivElement[]>([]),
+    };
+
+    //* 工具函数
+    const utils = {
+        //* 表格初始化函数
+        init: () => {
+            //* 检测是否满足运行条件
+            if (!refs.TableNode.value || !refs.HeaderNode.value || !refs.BodyNodes.value.length) return;
+
+            //* 数据初始化
+            const rows = [refs.HeaderNode.value, ...refs.BodyNodes.value];
+            const vars: UiTableVars = {
+                replenish: 0,
+                size: refs.TableNode.value.offsetWidth - define.spacing * 2,
+                data: [],
+            };
+
+            //* 第一次遍历进行数据初始化
+            define.option.forEach((value) => {
+                //* 数据初始化
+                const result = {
+                    key: value.key,
+                    min: value["min-width"] || 0,
+                    max: value["max-width"] || 0,
+                    width: value.width || value["min-width"] || 0,
+                };
+
+                //* 遍历td、th用于获取row尺寸
+                rows.forEach((row) => {
+                    //* 获取对应的col node
+                    const node = row.querySelector(`.ui-table-column[name=${value.key}]`) as HTMLElement;
+                    //* 检测col node是否存在
+                    if (!node) return;
+                    else {
+                        //* 重置node属性
+                        node.style.whiteSpace = "nowrap";
+                        node.style.width = "";
+
+                        //* 判断当前尺寸是否为最大尺寸
+                        if (node.clientWidth > result.width) {
+                            if (result.max && node.clientWidth > result.max) {
+                                result.width = result.max;
+                            } else {
+                                result.width = Math.ceil(node.clientWidth);
+                            }
+                        }
+
+                        //* 回退样式调整
+                        node.style.whiteSpace = "";
+                    }
+                });
+
+                //* 数据添加
+                vars.data.push(result);
+            });
+
+            //* 统计实际表格所需尺寸
+            const real = vars.data.reduce((former, current) => {
+                return former + current.width;
+            }, 0);
+
+            //* 第二次遍历, 检测当前表格是需要进行补足还是删减尺寸, 并进行对应操作
+            if (real < vars.size) {
+                //* 统计当前需补充的长度
+                const replenish = (vars.size - real) / vars.data.length;
+                vars.data.forEach((val) => {
+                    val.width += replenish;
+                });
+            } else if (real > vars.size) {
+                //* 统计当前需删减的长度
+                let omit = real - vars.size;
+                //* 无限循环删减omit
+                while (omit > 0) {
+                    const data = vars.data.filter((val) => val.width > val.min);
+                    const max = data.sort((a, b) => b.width - a.width)?.[0].width || 0;
+                    for (let i = 0; i < data.length; i++) {
+                        if (data[i].width == max) {
+                            omit--;
+                            data[i].width--;
+                        }
+
+                        if (omit == 0) break;
+                    }
+                }
+            }
+
+            //* 第三次遍历设置定框的Row
+            vars.data.forEach((value) => {
+                //* 遍历td、th用于获取row尺寸
+                rows.forEach((row) => {
+                    //* 获取对应的col node
+                    const node = row.querySelector(`.ui-table-column[name=${value.key}]`) as HTMLElement;
+                    //* 检测col node是否存在
+                    if (!node) return;
+                    else {
+                        //* 设置尺寸
+                        node.style.width = `${value.width}px`;
+                    }
+                });
+            });
+        },
+    };
+
+    //* 样式列表
+    const styles = {
+        //* 内间距
+        receiveRowStyle: computed(() => {
+            return {
+                padding: `0 ${define.spacing}px`,
+            };
+        }),
+
+        //* bodys样式
+        receiveBodysStyle: computed(() => {
+            if (!define.height) return {};
+            else if (_.isNumber(define.height)) {
+                return { height: define.height + "px" };
+            } else {
+                return { height: define.height };
+            }
+        }),
+
+        //* 对齐样式
+        receiveAlignStyle: (data: any) => {
+            switch (data.align) {
+                case "center":
+                    return { "justify-content": "center" };
+
+                case "right":
+                    return { "justify-content": "flex-end" };
+
+                default:
+                    return { "justify-content": "flex-start" };
+            }
+        },
+    };
+
+    //* 状态列表
+    const states = {
+        //* 获取嵌套表格状态
+        disposeChild: (data: any) => {
+            if (define.children && define.childrenIndex && refs.childrens.value.includes(data[define.childrenIndex])) {
+                return true;
+            } else {
+                return false;
+            }
+        },
+
+        //* 获取嵌套表格图标显示状态
+        disposeChildIcon: (data: any) => {
+            if (define.children && define.childrenIndex && data.key == define.childrenIndex) {
+                return true;
+            } else {
+                return false;
+            }
+        },
     };
 
     //* 函数列表
@@ -48,8 +211,27 @@ export const useComposable = (define: UiTableProps, emit: SetupContext<typeof Ui
             }
         },
 
-        //* 获取排序状态
-        receiveSort: (data: UiTableOption, value: string) => {
+        //* 开关函数
+        switchChild: (data: any) => {
+            //* 数据初始化
+            const key = define.childrenIndex || "";
+            const index = refs.childrens.value.findIndex((value: any) => {
+                return value == data[key];
+            });
+
+            //* 判断开启或关闭
+            if (index == -1) {
+                refs.childrens.value.push(data[key]);
+            } else {
+                refs.childrens.value.splice(index, 1);
+            }
+        },
+    };
+
+    //* 类名列表
+    const className = {
+        //* 获取排序状态类名
+        classSortName: (data: UiTableOption, value: string) => {
             if (refs.sortKey.value == data.key && refs.sortValue.value == value) {
                 return "ui-active";
             } else {
@@ -57,8 +239,8 @@ export const useComposable = (define: UiTableProps, emit: SetupContext<typeof Ui
             }
         },
 
-        //* 获取单选状态
-        receiveRatio: (data: any) => {
+        //* 获取单选状态类名
+        classRatioName: (data: any) => {
             if (define.ratio && define.ratioIndex && refs.ratioValue.value == data[define.ratioIndex]) {
                 return "ui-active";
             } else {
@@ -66,33 +248,15 @@ export const useComposable = (define: UiTableProps, emit: SetupContext<typeof Ui
             }
         },
 
-        //* 获取嵌套表格状态
-        receiveChildren: (data: any) => {
-            if (define.children && define.childrenIndex && refs.childrens.value.includes(data[define.childrenIndex])) {
-                return true;
-            } else {
-                return false;
-            }
-        },
+        //* 获取body下column类名
+        classBodyColumnName: (data: any) => {
+            const result: string[] = [];
+            if (states.disposeChildIcon(data)) result.push("ui-table-children-column");
+            if (data.className) result.push(data.className);
 
-        //* 获取嵌套表格图标显示状态
-        receiveChildrenIcon: (data: any) => {
-            if (define.children && define.childrenIndex && data.key == define.childrenIndex) {
-                return true;
-            } else {
-                return false;
-            }
-        },
-
-        //* 获取嵌套表格图标名称
-        receiveChildrenIconName: (data: any) => {
-            if (define.children && define.childrenIndex && refs.childrens.value.includes(data[define.childrenIndex])) {
-                return "close-solid-border";
-            } else {
-                return "open-solid-border";
-            }
+            return result;
         },
     };
 
-    return { refs, methods };
+    return { refs, utils, styles, states, methods, className };
 };

@@ -15,7 +15,6 @@ export interface UiTableOption {
 
     //* 尺寸控制配置
     "width"?: number; //* 固定尺寸
-    "replenish"?: number; //* 补足时的份额, 若没有则为平均分配
     "min-width"?: number; //* 最小尺寸, 优先级低于width
     "max-width"?: number; //* 最大尺寸, 优先级低于width
 }

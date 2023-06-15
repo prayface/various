@@ -12,7 +12,7 @@
                     :height="400"
                     :ratio="true"
                     :data="data"
-                    ratio-index="pubmedID"
+                    ratio-index="pubmed_id"
                     children-index="name"
                     @sort="sort">
                     <template #children>

@@ -88,6 +88,6 @@
         { "key": "status", "name": "药物状态", "align": "center" },
         { "key": "group", "name": "研发组织" },
         { "key": "mechanism_of_action", "name": "作用机理" },
-        { "key": "pubmedID", "name": "Pubmed ID", "sort": true }
+        { "key": "pubmed_id", "name": "Pubmed ID", "sort": true }
     ]
 }
