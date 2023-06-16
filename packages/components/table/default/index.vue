@@ -105,4 +105,7 @@ onUpdated(() => {
 onBeforeUnmount(() => {
     observer.disconnect();
 });
+
+//* 导出函数
+defineExpose({ switchChild: switchChild, changeRatio: changeRatio, changeSort: changeSort });
 </script>
