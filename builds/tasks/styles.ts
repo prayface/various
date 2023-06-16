@@ -13,7 +13,7 @@ module.exports = (function () {
     const { OUTPUT, PACKAGES } = require("../constants.ts");
 
     //* 待打包的less目录列表
-    const resource = [resolve(PACKAGES, "**/style/*.less"), "!**/*.size.less", "!**/*.type.less", "!**/*.status.less"];
+    const resource = [resolve(PACKAGES, "**/style/*.less"), "!**/*.size.less", "!**/*.type.less", "!**/*.status.less", "!**/*.module.less"];
 
     //! Less编译, Css兼容和压缩处理
     const styles = () => {
