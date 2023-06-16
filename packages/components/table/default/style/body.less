@@ -1,0 +1,99 @@
+.ui-table {
+    //* 表格内容样式
+    .ui-table-bodys {
+        overflow: hidden auto;
+        .ui-table-body {
+            background-color: var(--ui-table-body-background-color);
+            transition: all 0.5s;
+            border: 1px solid var(--ui-table-border-color);
+            margin: var(--ui-table-row-spacing) 0 0;
+            .ui-table-row {
+                justify-content: flex-start;
+                align-items: center;
+                transition: all 0.3s;
+                min-height: var(--ui-table-size);
+                min-width: 100%;
+                display: flex;
+                .ui-table-column {
+                    display: flex;
+                    padding: 8px var(--ui-table-col-spacing);
+                    min-height: var(--ui-table-size);
+                    align-items: center;
+                    border-radius: 4px;
+                    .ui-table-context {
+                        position: relative;
+                        .ui-table-icon {
+                            inset: 50% auto auto 100%;
+                            width: 14px;
+                            height: 14px;
+                            border: 1px solid var(--ui-table-icon-color);
+                            position: absolute;
+                            transform: translate(8px, -50%);
+                            transition: all 0.3s;
+                            cursor: pointer;
+                            &::before,
+                            &::after {
+                                content: "";
+                                position: absolute;
+                                transition: all 0.3s;
+                                background-color: var(--ui-table-icon-color);
+                            }
+
+                            &::after {
+                                inset: 5px auto auto 2px;
+                                width: 8px;
+                                height: 2px;
+                            }
+
+                            &::before {
+                                inset: 2px auto auto 5px;
+                                width: 2px;
+                                height: 8px;
+                            }
+
+                            &:hover {
+                                border-color: var(--ui-table-icon-active-color);
+                                &::before,
+                                &::after {
+                                    background-color: var(--ui-table-icon-active-color);
+                                }
+                            }
+                        }
+
+                        .ui-table-icon.ui-active {
+                            &::before {
+                                display: none;
+                            }
+                        }
+                    }
+                }
+
+                .ui-table-children-column {
+                    padding: 4px calc(var(--ui-table-col-spacing) + 22px) 4px var(--ui-table-col-spacing);
+                }
+            }
+
+            .ui-table-children {
+                border-top: 1px solid var(--ui-table-border-color);
+            }
+        }
+
+        .ui-table-body:hover,
+        .ui-table-body.ui-active {
+            background-color: var(--ui-table-body-background-active-color);
+            border-color: var(--ui-table-body-background-active-color);
+        }
+
+        .ui-table-body.ui-active {
+            border-color: var(--ui-table-border-active-color);
+        }
+
+        .ui-table-body.ui-table-error {
+            background-color: var(--ui-table-body-background-color);
+            border: 1px solid var(--ui-table-border-color);
+            .ui-table-row {
+                justify-content: center;
+            }
+        }
+    }
+}

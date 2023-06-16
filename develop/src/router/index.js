@@ -17,7 +17,7 @@ export const routes = [
     { path: "/pagination", name: "Pagination", component: () => import("../views/Pagination.vue") },
     { path: "/textarea", name: "Textarea", component: () => import("../views/Textarea.vue") },
     { path: "/modal", name: "Modal", component: () => import("../views/Modal.vue") },
-    { path: "/table", name: "Table", component: () => import("../views/Table.vue") },
+    { path: "/table", name: "Table", component: () => import("../views/table/index.vue") },
     { path: "/radio", name: "Radio", component: () => import("../views/Radio.vue") },
 ];
 
