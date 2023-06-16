@@ -65,7 +65,7 @@ export const useComposable = (define: UiTableProps, emit: SetupContext<typeof Ui
                             if (result.max && node.clientWidth > result.max) {
                                 result.width = result.max;
                             } else {
-                                result.width = Math.ceil(node.clientWidth);
+                                result.width = Math.ceil(node.clientWidth) + 4;
                             }
                         }
 
