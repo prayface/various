@@ -11,7 +11,7 @@
                     :option="option1"
                     :height="600"
                     :ratio="true"
-                    :data="[]"
+                    :data="data"
                     ratio-index="pubmed_id"
                     children-index="name"
                     @sort="sort">
