@@ -97,13 +97,15 @@ export const useComposable = (define: UiTableProps, emit: SetupContext<typeof Ui
                 while (omit > 0) {
                     const data = vars.data.filter((val) => val.width > val.min);
                     const max = data.sort((a, b) => b.width - a.width)?.[0]?.width || 0;
-                    for (let i = 0; i < data.length; i++) {
-                        if (data[i].width == max) {
-                            omit--;
-                            data[i].width--;
+                    if (!data.length) return;
+                    else {
+                        for (let i = 0; i < data.length; i++) {
+                            if (omit <= 0) break;
+                            if (data[i].width == max) {
+                                omit--;
+                                data[i].width--;
+                            }
                         }
-
-                        if (omit == 0) break;
                     }
                 }
             }
