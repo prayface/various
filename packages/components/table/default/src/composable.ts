@@ -19,7 +19,7 @@ export const useComposable = (define: UiTableProps, emit: SetupContext<typeof Ui
         //* 表格行节点
         HeaderNode: ref<HTMLDivElement>(),
         TableNode: ref<HTMLDivElement>(),
-        BodyNodes: ref<HTMLDivElement[]>([]),
+        BodysNode: ref<HTMLDivElement>(),
     };
 
     //* 工具函数
@@ -27,13 +27,15 @@ export const useComposable = (define: UiTableProps, emit: SetupContext<typeof Ui
         //* 表格初始化函数
         init: () => {
             //* 检测是否满足运行条件
-            if (!refs.TableNode.value || !refs.HeaderNode.value || !refs.BodyNodes.value.length) return;
+            if (!refs.TableNode.value || !refs.HeaderNode.value || !refs.BodysNode.value) return;
 
             //* 数据初始化
-            const rows = [refs.HeaderNode.value, ...refs.BodyNodes.value];
+            const bodys = refs.BodysNode.value.querySelectorAll(".ui-table-body") || [];
+            const offsetTop = refs.BodysNode.value.scrollTop;
+            const rows = [refs.HeaderNode.value, ...bodys];
             const vars: UiTableVars = {
                 replenish: 0,
-                size: refs.TableNode.value.offsetWidth - define.spacing * 2,
+                size: refs.TableNode.value.offsetWidth - 14 - define.spacing * 2,
                 data: [],
             };
 
@@ -120,6 +122,14 @@ export const useComposable = (define: UiTableProps, emit: SetupContext<typeof Ui
                     }
                 });
             });
+
+            //* 出现滚动条需要表头需要补充间距
+            if (refs.BodysNode.value.scrollHeight > refs.BodysNode.value.offsetHeight) {
+                refs.HeaderNode.value.style.paddingRight = `${define.spacing + 12}px`;
+            }
+
+            //* 滚动条定位
+            refs.BodysNode.value.scrollTo({ top: offsetTop });
         },
     };
 
@@ -255,6 +265,11 @@ export const useComposable = (define: UiTableProps, emit: SetupContext<typeof Ui
             if (data.className) result.push(data.className);
 
             return result;
+        },
+
+        //* 获取body下column子集的类名
+        classColumnChildName: (data: any) => {
+            return { "ui-active": states.disposeChild(data) };
         },
     };
 

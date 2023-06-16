@@ -26,8 +26,8 @@ export const UiTablePropsOption = {
     height: { type: [String, Number] as PropType<string | number> },
     //* 表单左右两侧间距
     spacing: { type: Number, default: 40 },
-    //* 表单加载配置
-    loading: { type: Boolean, default: false },
+    //* 无数据处理
+    noData: { type: String, default: "暂无数据" },
 
     //* 是否开启单选功能
     ratio: { type: Boolean, default: false },

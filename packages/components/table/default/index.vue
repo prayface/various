@@ -18,34 +18,41 @@
         </div>
 
         <!-- * 表格内容区域 -->
-        <div class="ui-table-bodys" :style="receiveBodysStyle">
+        <div class="ui-table-bodys" ref="BodysNode" :style="receiveBodysStyle">
             <!-- * 遍历生成表格行 -->
-            <template v-for="col in data">
-                <div class="ui-table-body" ref="BodyNodes" :class="classRatioName(col)" :style="receiveRowStyle" @click="changeRatio(col)">
-                    <!-- * 表格行 -->
-                    <div class="ui-table-row">
-                        <!-- * 遍历生成表格列 -->
-                        <template v-for="row in option">
-                            <div class="ui-table-column" :class="classBodyColumnName(row)" :name="row.key" :style="receiveAlignStyle(row)">
-                                <div class="ui-table-context">
-                                    <!-- * 表格文本内容区域 -->
-                                    <span>
-                                        <slot :name="row.slot" :data="col">{{ col[row.key] }}</slot>
-                                    </span>
+            <template v-if="data && data.length">
+                <template v-for="value in data">
+                    <div class="ui-table-body" :class="classRatioName(value)" :style="receiveRowStyle" @click="changeRatio(value)">
+                        <!-- * 表格行 -->
+                        <div class="ui-table-row">
+                            <!-- * 遍历生成表格列 -->
+                            <template v-for="row in option">
+                                <div class="ui-table-column" :class="classBodyColumnName(row)" :name="row.key" :style="receiveAlignStyle(row)">
+                                    <div class="ui-table-context">
+                                        <!-- * 表格文本内容区域 -->
+                                        <slot :name="row.slot" :data="value">{{ value[row.key] }}</slot>
 
-                                    <!-- * 表格图标 -->
-                                    <template v-if="disposeChildIcon(row)">
-                                        <span class="ui-table-icon" :class="{ 'ui-active': disposeChild(col) }" @click="switchChild(col)"></span>
-                                    </template>
+                                        <!-- * 表格图标 -->
+                                        <template v-if="disposeChildIcon(row)">
+                                            <span class="ui-table-icon" :class="classColumnChildName(value)" @click="switchChild(value)"></span>
+                                        </template>
+                                    </div>
                                 </div>
-                            </div>
-                        </template>
-                    </div>
+                            </template>
+                        </div>
 
-                    <!-- * 嵌套表格 -->
-                    <div class="ui-table-children" v-if="disposeChild(col)">
-                        <slot name="children" :data="col"></slot>
+                        <!-- * 嵌套表格 -->
+                        <div class="ui-table-children" v-if="disposeChild(value)">
+                            <slot name="children" :data="value"></slot>
+                        </div>
                     </div>
+                </template>
+            </template>
+
+            <!-- * 无数据处理 -->
+            <template v-else>
+                <div class="ui-table-body ui-table-error">
+                    <div class="ui-table-row">{{ noData }}</div>
                 </div>
             </template>
         </div>
@@ -69,9 +76,9 @@ const emit = defineEmits(UiTableEmits);
 const { className, methods, states, styles, utils, refs } = useComposable(define, emit);
 const { switchChild, changeSort, changeRatio } = methods;
 const { disposeChild, disposeChildIcon } = states;
-const { classSortName, classRatioName, classBodyColumnName } = className;
+const { classSortName, classRatioName, classBodyColumnName, classColumnChildName } = className;
 const { receiveRowStyle, receiveBodysStyle, receiveAlignStyle } = styles;
-const { BodyNodes, TableNode, HeaderNode } = refs;
+const { BodysNode, TableNode, HeaderNode } = refs;
 
 //* resize observer声明
 let observer: ResizeObserver;
@@ -80,12 +87,13 @@ let observer: ResizeObserver;
 onMounted(() => {
     //* 检测是否允许向下执行
     if (!refs.TableNode.value) return;
+    else {
+        //* 实例化ResizeObserver
+        observer = new ResizeObserver(() => utils.init());
 
-    //* 实例化ResizeObserver
-    observer = new ResizeObserver(() => utils.init());
-
-    //* 将main挂载到observer中
-    observer.observe(refs.TableNode.value);
+        //* 将main挂载到observer中
+        observer.observe(refs.TableNode.value);
+    }
 });
 
 //* 触发数据更新时, 进行一次初始化

@@ -16,7 +16,7 @@
                 display: flex;
                 .ui-table-column {
                     display: flex;
-                    padding: 4px var(--ui-table-col-spacing);
+                    padding: 8px var(--ui-table-col-spacing);
                     min-height: var(--ui-table-size);
                     align-items: center;
                     border-radius: 4px;
@@ -86,6 +86,14 @@
 
         .ui-table-body.ui-active {
             border-color: var(--ui-table-border-active-color);
+        }
+
+        .ui-table-body.ui-table-error {
+            background-color: var(--ui-table-body-background-color);
+            border: 1px solid var(--ui-table-border-color);
+            .ui-table-row {
+                justify-content: center;
+            }
         }
     }
 }
