@@ -7,8 +7,8 @@ export const useComposable = (define: UiTableProps, emit: SetupContext<typeof Ui
     //* 响应式变量
     const refs = {
         //* 排序配置
-        sortKey: ref<string>(),
-        sortValue: ref<string>(),
+        sortKey: ref<string>(""),
+        sortValue: ref<string>(""),
 
         //* 单选配置
         ratioValue: ref<string>(),
@@ -200,8 +200,8 @@ export const useComposable = (define: UiTableProps, emit: SetupContext<typeof Ui
                 if (refs.sortValue.value == "asc") {
                     refs.sortValue.value = "desc";
                 } else {
-                    refs.sortKey.value = undefined;
-                    refs.sortValue.value = undefined;
+                    refs.sortKey.value = "";
+                    refs.sortValue.value = "";
                 }
             } else {
                 refs.sortKey.value = data.key;

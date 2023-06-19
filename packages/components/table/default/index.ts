@@ -46,7 +46,7 @@ export const UiTablePropsOption = {
 export type UiTableProps = ExtractPropTypes<typeof UiTablePropsOption>;
 
 export const UiTableEmits = {
-    sort: (key?: string, sort?: string) => true,
-    ratio: (data: any) => true,
-    checkbox: (data: any[]) => true,
+    sort: (_key: string, _sort: string) => true,
+    ratio: (_data: any) => true,
+    checkbox: (_data: any[]) => true,
 };
