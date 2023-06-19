@@ -3,6 +3,7 @@ module.exports = (function () {
     const { resolve } = require("path");
     const { rollup } = require("rollup");
     const glob = require("fast-glob");
+    const consola = require("consola");
     const VuePlugin = require("@vitejs/plugin-vue");
     const AliasPlugin = require("@rollup/plugin-alias");
     const VueJsxPlugin = require("@vitejs/plugin-vue-jsx");
@@ -50,6 +51,7 @@ module.exports = (function () {
 
         await Promise.all(
             PACKAGING_TYPES_ENTRIES.map(([module, config]: any) => {
+                consola.success(`--- ${config.ext} 开始创建 ---`);
                 return rollupBundle.write({
                     format: config.format,
                     dir: config.output.path,

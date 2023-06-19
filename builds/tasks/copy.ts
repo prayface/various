@@ -7,8 +7,9 @@ module.exports = (function () {
     const { OUTPUT, DIRNAME, PACKAGES } = require("../constants.ts");
 
     //! 文件copy处理
-    const copy = (cb: () => void) => {
-        Promise.all([
+    const copy = async (cb: () => void) => {
+        //* 文件复制
+        await Promise.all([
             fs.copy(resolve(DIRNAME, "package.json"), resolve(OUTPUT, "package.json")),
             fs.copy(resolve(DIRNAME, "README.md"), resolve(OUTPUT, "README.md")),
             fs.copy(resolve(DIRNAME, "types/global.d.ts"), resolve(OUTPUT, "global.d.ts")),
