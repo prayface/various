@@ -1,4 +1,4 @@
-import { isNumber } from "lodash";
+import _ from "lodash";
 import { computed, SetupContext } from "vue";
 import { UiButtonEmits, UiButtonProps } from "../index";
 
@@ -18,7 +18,7 @@ export const useComposable = (define: UiButtonProps, emits: SetupContext<typeof 
         //* 主体样式
         style: computed(() => {
             if (!define.width) return {};
-            else if (isNumber(define.width)) {
+            else if (_.isNumber(define.width)) {
                 return { "min-width": define.width + "px" };
             } else {
                 return { "min-width": define.width };
