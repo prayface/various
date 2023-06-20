@@ -15,5 +15,5 @@ export const UiButtonPropsOption = {
 export type UiButtonProps = ExtractPropTypes<typeof UiButtonPropsOption>;
 
 export const UiButtonEmits = {
-    click: (ev?: MouseEvent | Event) => true,
+    click: (_ev?: MouseEvent | Event) => true,
 };
