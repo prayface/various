@@ -28,7 +28,7 @@ module.exports = (function () {
         const rollupBundle = await rollup({
             input,
             treeshake: false,
-            external: await GenerateExternal({ full: false }),
+            external: await GenerateExternal(),
             plugins: [
                 AliasPlugin({
                     customResolver: NodeResolvePlugin({ extensions: [".mjs", ".js", ".jsx", ".json", ".ts", ".css", ".less", ".otf"] }),

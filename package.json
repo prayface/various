@@ -79,8 +79,8 @@
         "not op_mini all"
     ],
     "dependencies": {
+        "mitt": "^3.0.0",
         "gsap": "^3.12.1",
-        "lodash": "^4.17.21",
-        "mitt": "^3.0.0"
+        "lodash": "^4.17.21"
     }
 }

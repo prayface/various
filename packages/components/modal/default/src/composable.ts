@@ -61,42 +61,48 @@ export default (define: UiModalProps, emit: UiEmitFn<typeof UiModalEmits>) => {
 
         //* Modal关闭函数
         closeModal: () => {
-            //* 检测是否满足运行条件
-            if (!refs.main.value || !refs.observer.value) return;
-
             //* Body显示被隐藏的滚动条
             document.body.style.overflow = "";
             if (document.body.scrollHeight > document.body.offsetHeight) {
                 document.body.style.paddingRight = "";
             }
 
-            //* 卸载监听事件
-            refs.observer.value.disconnect();
-            //* 隐藏弹出窗口
-            refs.open.value = false;
-            //* 响应关闭事件
-            emit("close");
+            nextTick(() => {
+                //* 检测是否满足运行条件
+                if (!refs.main.value || !refs.observer.value) return;
+                else {
+                    //* 卸载监听事件
+                    refs.observer.value.disconnect();
+                    //* 隐藏弹出窗口
+                    refs.open.value = false;
+                    //* 响应关闭事件
+                    emit("close");
+                }
+            });
         },
 
         //* Modal启动函数
         openModal: () => {
-            //* 检测是否满足运行条件
-            if (!refs.main.value || !refs.observer.value) return;
-
             //* 隐藏滚动条
             document.body.style.overflow = "hidden";
             if (document.body.scrollHeight > document.body.offsetHeight) {
                 document.body.style.paddingRight = "12px";
             }
 
-            //* 回到顶部
-            refs.main.value?.scrollTo({ top: 0 });
-            //* 挂载监听事件
-            refs.observer.value.observe(refs.main.value);
-            //* 显示弹出窗口
-            refs.open.value = true;
-            //* 响应Open事件
-            emit("open");
+            nextTick(() => {
+                //* 检测是否满足运行条件
+                if (!refs.main.value || !refs.observer.value) return;
+                else {
+                    //* 回到顶部
+                    refs.main.value?.scrollTo({ top: 0 });
+                    //* 挂载监听事件
+                    refs.observer.value.observe(refs.main.value);
+                    //* 显示弹出窗口
+                    refs.open.value = true;
+                    //* 响应Open事件
+                    emit("open");
+                }
+            });
         },
 
         //* Modal滚动条函数
