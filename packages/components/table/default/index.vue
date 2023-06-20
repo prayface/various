@@ -50,7 +50,7 @@
             </template>
 
             <!-- * 无数据处理 -->
-            <template v-else>
+            <template v-else-if="noData">
                 <div class="ui-table-body ui-table-error">
                     <div class="ui-table-row">{{ noData }}</div>
                 </div>

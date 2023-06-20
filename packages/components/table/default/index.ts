@@ -27,7 +27,7 @@ export const UiTablePropsOption = {
     //* 表单左右两侧间距
     spacing: { type: Number, default: 40 },
     //* 无数据处理
-    noData: { type: String, default: "暂无数据" },
+    noData: { type: String, default: "" },
 
     //* 是否开启单选功能
     ratio: { type: Boolean, default: false },
