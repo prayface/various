@@ -46,62 +46,41 @@ export default (define: UiModalSemiScreenProps, emit: UiEmitFn<typeof UiModalSem
                 } else {
                     refs.main.value.style.alignItems = "center";
                 }
-
-                //* Body隐藏滚动条
-                if (document.body.scrollHeight > document.body.offsetHeight) {
-                    document.body.style.overflow = "hidden";
-                    document.body.style.paddingRight = "12px";
-                } else {
-                    document.body.style.overflow = "";
-                    document.body.style.paddingRight = "";
-                }
             });
         },
 
         //* Modal关闭函数
         closeModal: () => {
-            //* Body显示被隐藏的滚动条
-            document.body.style.overflow = "";
-            if (document.body.scrollHeight > document.body.offsetHeight) {
-                document.body.style.paddingRight = "";
+            //* 检测是否满足运行条件
+            if (!refs.main.value || !refs.observer.value) return;
+            else {
+                //* Body显示被隐藏的滚动条
+                document.body.style.overflow = "";
+                //* 卸载监听事件
+                refs.observer.value.disconnect();
+                //* 隐藏弹出窗口
+                refs.open.value = false;
+                //* 响应关闭事件
+                emit("close");
             }
-
-            nextTick(() => {
-                //* 检测是否满足运行条件
-                if (!refs.main.value || !refs.observer.value) return;
-                else {
-                    //* 卸载监听事件
-                    refs.observer.value.disconnect();
-                    //* 隐藏弹出窗口
-                    refs.open.value = false;
-                    //* 响应关闭事件
-                    emit("close");
-                }
-            });
         },
 
         //* Modal启动函数
         openModal: () => {
-            //* Body隐藏滚动条
-            document.body.style.overflow = "hidden";
-            if (document.body.scrollHeight > document.body.offsetHeight) {
-                document.body.style.paddingRight = "12px";
+            //* 检测是否满足运行条件
+            if (!refs.main.value || !refs.observer.value) return;
+            else {
+                //* Body隐藏滚动条
+                document.body.style.overflow = "hidden";
+                //* 回到顶部
+                refs.container.value?.scrollTo({ top: 0 });
+                //* 挂载监听事件
+                refs.observer.value.observe(refs.main.value);
+                //* 显示弹出窗口
+                refs.open.value = true;
+                //* 响应Open事件
+                emit("open");
             }
-
-            nextTick(() => {
-                //* 检测是否满足运行条件
-                if (!refs.main.value || !refs.observer.value) return;
-                else {
-                    //* 回到顶部
-                    refs.container.value?.scrollTo({ top: 0 });
-                    //* 挂载监听事件
-                    refs.observer.value.observe(refs.main.value);
-                    //* 显示弹出窗口
-                    refs.open.value = true;
-                    //* 响应Open事件
-                    emit("open");
-                }
-            });
         },
 
         //* Modal滚动条函数
