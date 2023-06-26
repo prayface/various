@@ -42,9 +42,9 @@ export default (define: UiModalSemiScreenProps, emit: UiEmitFn<typeof UiModalSem
             nextTick(() => {
                 if (!refs.container.value || !refs.main.value) return;
                 if (refs.container.value.offsetHeight >= window.innerHeight) {
-                    refs.main.value.style.justifyContent = "flex-start";
+                    refs.main.value.style.alignItems = "flex-start";
                 } else {
-                    refs.main.value.style.justifyContent = "center";
+                    refs.main.value.style.alignItems = "center";
                 }
             });
         },
