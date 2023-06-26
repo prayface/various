@@ -43,9 +43,9 @@ export default (define: UiModalProps, emit: UiEmitFn<typeof UiModalEmits>) => {
             nextTick(() => {
                 if (!refs.container.value || !refs.main.value) return;
                 if (refs.container.value.offsetHeight >= window.innerHeight) {
-                    refs.main.value.style.alignItems = "flex-start";
+                    refs.main.value.style.justifyContent = "flex-start";
                 } else {
-                    refs.main.value.style.alignItems = "center";
+                    refs.main.value.style.justifyContent = "center";
                 }
             });
         },
