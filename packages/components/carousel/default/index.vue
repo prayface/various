@@ -32,9 +32,6 @@ import { onMounted, onBeforeUnmount } from "vue";
 //* 组件引入
 import UiIcon from "@various/components/icon";
 
-//* 组件配置
-defineOptions({ name: "UiCarousel" });
-
 //* 获取组件属性
 const define = defineProps(UiCarouselPropsOption);
 const emits = defineEmits(UiCarouselEmits);
@@ -53,6 +50,8 @@ onBeforeUnmount(() => {
     watchs.stopAutoPlay && watchs.stopAutoPlay();
 });
 
+//* 组件配置
+defineOptions({ name: "UiCarousel" });
 //* 导出函数
 defineExpose({
     init: methods.init,

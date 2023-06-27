@@ -10,8 +10,8 @@ export const UiCheckboxPropsOption = {
 } as const;
 
 export const UiCheckboxEmits = {
-    change: (ev: Event) => true,
-    "update:modelValue": (data: boolean) => true,
+    "change": (_ev: Event) => true,
+    "update:modelValue": (_data: boolean) => true,
 };
 
 export type UiCheckboxProps = ExtractPropTypes<typeof UiCheckboxPropsOption>;
