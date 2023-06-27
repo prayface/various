@@ -17,25 +17,8 @@
 .ui-carousel {
     overflow: hidden;
     position: relative;
-    > .ui-carousel-container {
-        position: relative;
 
-        .ui-carousel-auxiliary {
-            position: absolute;
-        }
-
-        .ui-carousel-header-auxiliary {
-            inset: 0 auto auto 0;
-            transform: translate3d(-100%, 0, 0);
-        }
-
-        .ui-carousel-footer-auxiliary {
-            inset: 0 0 auto auto;
-            transform: translate3d(100%, 0, 0);
-        }
-    }
-
-    > .ui-carousel-control {
+    .ui-carousel-control {
         justify-content: center;
         border-radius: 50%;
         align-items: center;
@@ -66,7 +49,7 @@
         }
     }
 
-    > .ui-carousel-schedules {
+    .ui-carousel-schedules {
         align-items: center;
         transform: translateX(-50%);
         position: absolute;
@@ -87,13 +70,11 @@
             background-color: var(--uioption-carousel-indicator-active-color);
         }
     }
-}
 
-//* 默认轮播图样式
-.ui-carousel.ui-default-carousel {
     .ui-carousel-container {
         width: 100%;
         height: 100%;
+        position: relative;
         > * {
             inset: 0 auto auto 100%;
             width: 100%;
@@ -103,17 +84,9 @@
     }
 }
 
-//* 多窗口轮播图样式
-.ui-carousel.ui-multiple-view-carousel {
-    .ui-carousel-container {
-        height: 100%;
-        display: inline-flex;
-    }
-}
-
 //* 轮播图悬浮样式
 .ui-carousel:hover {
-    > .ui-carousel-control {
+    .ui-carousel-control {
         opacity: 1;
         &.ui-carousel-left-control {
             transform: translate(100%, -50%);

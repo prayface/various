@@ -7,7 +7,7 @@
                 <p>组件<span>UiCarousel</span>会将<span>默认插槽</span>中的最顶级节点添加<span>width: 100%</span></p>
             </div>
             <div class="content">
-                <UiCarousel :height="200">
+                <UiCarousel :height="200" :autoplay="false">
                     <div style="background-color: aquamarine; height: 200px">1</div>
                     <div style="background-color: bisque; height: 400px">2</div>
                     <div style="background-color: brown; height: 200px">3</div>
