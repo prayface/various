@@ -17,6 +17,7 @@ const define = defineProps(UiCheckboxGroupPropsOption);
 const emits = defineEmits(UiCheckboxGroupEmits);
 
 const { methods, values } = useComposable(define, emits);
+const { switchMode } = methods;
 
 //* 将Group组件的Props注入子组件中
 provide(UiCheckboxGroupInjectionKey, {
@@ -38,7 +39,7 @@ provide(UiCheckboxGroupInjectionKey, {
 });
 
 //* 导出函数
-defineExpose({ switchMode: methods.switchMode });
+defineExpose({ switchMode });
 //* 组件配置
 defineOptions({ name: "UiCheckboxGroup" });
 </script>

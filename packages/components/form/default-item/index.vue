@@ -21,6 +21,7 @@ import { onBeforeUnmount } from "vue";
 const define = defineProps(UiFormItemPropsOption);
 
 const { refs, rules, methods, computeds, emitter } = useComposable(define);
+const { show, hidden, trigger, validator } = methods;
 const { visible, content, verifyTimer } = refs;
 const { style, className } = computeds;
 
@@ -39,5 +40,5 @@ onBeforeUnmount(() => {
 //* 组件配置
 defineOptions({ name: "UiFormItem" });
 //* 公共方法导出
-defineExpose({ show: methods.show, hidden: methods.hidden, trigger: methods.trigger, validator: methods.validator });
+defineExpose({ show, hidden, trigger, validator });
 </script>
