@@ -22,7 +22,7 @@
                 <p>组件<span>UiCarouselMultipleView</span>, 在该模式下允许每个窗口尺寸不等</p>
             </div>
             <div class="content">
-                <UiCarouselMultipleView :height="200" ref="carousel">
+                <UiCarouselMultipleView :height="200" ref="carousel" arrow="always">
                     <div style="background-color: aquamarine; width: 500px; margin: 0 32px 0 0">1</div>
                     <div style="background-color: bisque; width: 320px; margin: 0 32px">2</div>
                     <div style="background-color: bisque; width: 320px; margin: 0 32px">2</div>

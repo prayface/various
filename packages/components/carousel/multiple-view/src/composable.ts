@@ -18,6 +18,8 @@ export const useComposable = (define: UiCarouselMultipleViewProps, emits: SetupC
         controls: ref<Boolean>(false), //* 轮播图组件控制器显示状态
         autoTimer: ref<NodeJS.Timer>(), //* 轮播图组件自动播放定时器
         container: ref<HTMLDivElement>(), //* 轮播图组件列表的容器
+
+        boundary: ref<string>("first"),  //* 是否到达边界  first | middle | last
     };
 
     //* 函数列表
@@ -109,10 +111,16 @@ export const useComposable = (define: UiCarouselMultipleViewProps, emits: SetupC
             }
 
             //* 判断是否左侧贴边
-            if (offset <= 0) offset = 0;
-            else if (offset + refs.main.value.clientWidth >= refs.container.value.clientWidth) {
+            if (offset <= 0) {
+                offset = 0;
+                refs.boundary.value = "first";
+            } else if (offset + refs.main.value.clientWidth >= refs.container.value.clientWidth) {
                 //* 判断是否右侧贴边
                 offset = (refs.container.value.clientWidth / refs.main.value.clientWidth - 1) * refs.main.value.clientWidth;
+                refs.boundary.value = "last";
+
+            } else {
+                refs.boundary.value = "middle";
             }
 
             //* 执行脚本
@@ -149,6 +157,17 @@ export const useComposable = (define: UiCarouselMultipleViewProps, emits: SetupC
             }
 
             return result;
+        }),
+
+        //* 主体类名
+        className: computed(() => {
+            //* 1. 初始化返回值
+            const result: string[] = [];
+
+            //* 2. hover显示按钮
+            if (define.arrow == 'hover') result.push(`ui-hover-type`);
+
+            return result.join(" ");
         }),
     };
 

@@ -11,19 +11,28 @@
     --uioption-mv-carousel-control-active-icon-color: var(--uicolor-main-color); // 默认轮播图控制器图标颜色
     --uioption-mv-carousel-control-active-border-color: var(--uicolor-font-6); // 默认轮播图控制器边框颜色
     --uioption-mv-carousel-control-active-background-color: var(--uicolor-font-6); // 默认轮播图控制器背景颜色
+
+
+    // 轮播图组件禁用配置
+    --uioption-mv-carousel-indicator-disabled-color: var(--uioption-font-color); // 默认轮播图指示器颜色
+    --uioption-mv-carousel-control-disabled-icon-color: var(--uicolor-font-4); // 默认轮播图控制器图标颜色
+    --uioption-mv-carousel-control-disabled-border-color: var(--uicolor-font-4-05); // 默认轮播图控制器边框颜色
+    --uioption-mv-carousel-control-disabled-background-color: var(--uicolor-font-4-05); // 默认轮播图控制器背景颜色
+
 }
 
 //* 轮播图公共样式
 .ui-mv-carousel {
     overflow: hidden;
     position: relative;
-    > .ui-mv-carousel-container {
+
+    >.ui-mv-carousel-container {
         height: 100%;
         display: inline-flex;
         position: relative;
     }
 
-    > .ui-mv-carousel-control {
+    >.ui-mv-carousel-control {
         justify-content: center;
         border-radius: 50%;
         align-items: center;
@@ -33,14 +42,22 @@
         font-size: 20px;
         position: absolute;
         display: flex;
-        opacity: 0;
+        opacity: 1;
         border: 1px solid var(--uioption-mv-carousel-control-border-color);
         cursor: pointer;
         height: 48px;
         color: var(--uioption-mv-carousel-control-icon-color);
         width: 48px;
+
+        &:hover {
+            color: var(--uioption-mv-carousel-control-active-icon-color);
+            border-color: var(--uioption-mv-carousel-control-active-border-color);
+            background-color: var(--uioption-mv-carousel-control-active-background-color);
+        }
+
         &.ui-mv-carousel-left-control {
             inset: 50% auto auto 0;
+
             .ui-icon {
                 transform: rotate(90deg);
             }
@@ -48,6 +65,7 @@
 
         &.ui-mv-carousel-right-control {
             inset: 50% 0 auto auto;
+
             .ui-icon {
                 transform: rotate(-90deg);
             }
@@ -56,21 +74,35 @@
 }
 
 //* 轮播图悬浮样式
-.ui-mv-carousel:hover {
-    > .ui-mv-carousel-control {
-        opacity: 1;
-        &.ui-mv-carousel-left-control {
-            transform: translate(100%, -50%);
-        }
+.ui-hover-type {
+    >.ui-mv-carousel-control {
+        opacity: 0;
+    }
 
-        &.ui-mv-carousel-right-control {
-            transform: translate(-100%, -50%);
-        }
+    &:hover {
+        >.ui-mv-carousel-control {
+            opacity: 1;
 
-        &:hover {
-            color: var(--uioption-mv-carousel-control-active-icon-color);
-            border-color: var(--uioption-mv-carousel-control-active-border-color);
-            background-color: var(--uioption-mv-carousel-control-active-background-color);
+            &.ui-mv-carousel-left-control {
+                transform: translate(100%, -50%);
+            }
+
+            &.ui-mv-carousel-right-control {
+                transform: translate(-100%, -50%);
+            }
+        }
+    }
+}
+
+
+//* 轮播图按钮禁用样式
+.ui-mv-carousel {
+    >.ui-mv-carousel-control {
+        &.ui-disabled-status {
+            cursor: auto;
+            color: var(--uioption-mv-carousel-control-disabled-icon-color);
+            border-color: var(--uioption-mv-carousel-control-disabled-border-color);
+            background-color: var(--uioption-mv-carousel-control-disabled-background-color);
         }
     }
 }
