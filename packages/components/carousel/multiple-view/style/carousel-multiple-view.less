@@ -55,22 +55,4 @@
     }
 }
 
-//* 轮播图悬浮样式
-.ui-mv-carousel:hover {
-    > .ui-mv-carousel-control {
-        opacity: 1;
-        &.ui-mv-carousel-left-control {
-            transform: translate(100%, -50%);
-        }
-
-        &.ui-mv-carousel-right-control {
-            transform: translate(-100%, -50%);
-        }
-
-        &:hover {
-            color: var(--uioption-mv-carousel-control-active-icon-color);
-            border-color: var(--uioption-mv-carousel-control-active-border-color);
-            background-color: var(--uioption-mv-carousel-control-active-background-color);
-        }
-    }
-}
+@import "./carousel-multiple-view.type.less";

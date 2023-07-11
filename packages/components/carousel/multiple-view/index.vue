@@ -1,16 +1,16 @@
 <template>
-    <div class="ui-mv-carousel" :style="style" ref="main" v-bind="attrs">
+    <div class="ui-mv-carousel" :class="className" :style="style" ref="main" v-bind="$attrs">
         <!-- 轮播图容器, 用来控制轮播滚动 -->
         <div class="ui-mv-carousel-container" ref="container">
             <slot></slot>
         </div>
 
         <!-- 轮播图左侧箭头 -->
-        <div class="ui-mv-carousel-control ui-mv-carousel-left-control" @click="switchCarousel(-1)" v-if="arrow != 'never' && controls">
+        <div class="ui-mv-carousel-control ui-mv-carousel-left-control" @click="switchCarousel(-1)" v-if="isFirstControl">
             <UiIcon name="arrow" />
         </div>
         <!-- 轮播图右侧箭头 -->
-        <div class="ui-mv-carousel-control ui-mv-carousel-right-control" @click="switchCarousel(1)" v-if="arrow != 'never' && controls">
+        <div class="ui-mv-carousel-control ui-mv-carousel-right-control" @click="switchCarousel(1)" v-if="isLastControl">
             <UiIcon name="arrow" />
         </div>
     </div>
@@ -31,9 +31,9 @@ const emits = defineEmits(UiCarouselMultipleViewEmits);
 
 //* 组合函数
 const { refs, methods, computeds } = useComposable(define, emits);
-const { main, controls, container } = refs;
+const { main, container } = refs;
 const { switchCarousel, init } = methods;
-const { style, attrs } = computeds;
+const { style, className, isLastControl, isFirstControl } = computeds;
 
 //* 挂载函数
 onMounted(() => {
