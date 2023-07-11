@@ -1,25 +1,24 @@
 import _ from "lodash";
 import { gsap } from "gsap";
-import { SetupContext, useAttrs, computed, ref } from "vue";
+import { SetupContext, computed, ref } from "vue";
 import { UiCarouselMultipleViewProps, UiCarouselMultipleViewEmits } from "../index";
 
 export const useComposable = (define: UiCarouselMultipleViewProps, emits: SetupContext<typeof UiCarouselMultipleViewEmits>["emit"]) => {
     //* 静态变量
     const variable = {
-        delay: define.transitionDelay / 1000,
+        delay: define.transitionDelay / 1000, //* 轮播图切换过渡的间隔（秒）
         width: 0,
         offset: 0,
-        delayUp: define.transitionDelay * 1.1,
+        delayUp: define.transitionDelay * 1.1, //* 轮播图切换间隔（毫秒）
     };
 
     //* 响应式变量
     const refs = {
         main: ref<HTMLDivElement>(), //* 轮播图组件的主体
-        controls: ref<Boolean>(false), //* 轮播图组件控制器显示状态
+        controls: ref<boolean>(false), //* 轮播图组件控制器显示状态
+        boundary: ref<"first" | "middle" | "last">("first"), //* 轮播图组件的边界状态  first | middle | last
         autoTimer: ref<NodeJS.Timer>(), //* 轮播图组件自动播放定时器
         container: ref<HTMLDivElement>(), //* 轮播图组件列表的容器
-
-        boundary: ref<string>("first"),  //* 是否到达边界  first | middle | last
     };
 
     //* 函数列表
@@ -118,7 +117,6 @@ export const useComposable = (define: UiCarouselMultipleViewProps, emits: SetupC
                 //* 判断是否右侧贴边
                 offset = (refs.container.value.clientWidth / refs.main.value.clientWidth - 1) * refs.main.value.clientWidth;
                 refs.boundary.value = "last";
-
             } else {
                 refs.boundary.value = "middle";
             }
@@ -139,7 +137,8 @@ export const useComposable = (define: UiCarouselMultipleViewProps, emits: SetupC
 
     //* 计算属性
     const computeds = {
-        attrs: computed(() => useAttrs()),
+        //* 主体类名
+        className: computed(() => `ui-mv-carousel-${define.arrow}`),
         style: computed(() => {
             //* 初始化返回列表
             const result: { [name: string]: any } = {};
@@ -159,15 +158,14 @@ export const useComposable = (define: UiCarouselMultipleViewProps, emits: SetupC
             return result;
         }),
 
-        //* 主体类名
-        className: computed(() => {
-            //* 1. 初始化返回值
-            const result: string[] = [];
+        //* 是否显示左侧控制按钮
+        isFirstControl: computed(() => {
+            return define.arrow != "never" && refs.controls.value && refs.boundary.value != "first";
+        }),
 
-            //* 2. hover显示按钮
-            if (define.arrow == 'hover') result.push(`ui-hover-type`);
-
-            return result.join(" ");
+        //* 是否显示右侧控制按钮
+        isLastControl: computed(() => {
+            return define.arrow != "never" && refs.controls.value && refs.boundary.value != "last";
         }),
     };
 
