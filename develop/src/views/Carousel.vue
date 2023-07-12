@@ -13,6 +13,12 @@
                     <div style="background-color: brown; height: 200px">3</div>
                     <div style="background-color: burlywood; height: 200px">4</div>
                 </UiCarousel>
+                <UiCarousel :height="200" :autoplay="true" :loop="false" arrow="always">
+                    <div style="background-color: aquamarine; height: 200px">1</div>
+                    <div style="background-color: bisque; height: 400px">2</div>
+                    <div style="background-color: brown; height: 200px">3</div>
+                    <div style="background-color: burlywood; height: 200px">4</div>
+                </UiCarousel>
             </div>
         </section>
 

@@ -13,6 +13,7 @@ export const useComposable = (define: UiCarouselProps, emits: SetupContext<typeo
     const refs = {
         main: ref<HTMLElement>(), //* 轮播图组件的主体
         container: ref<HTMLElement>(), //* 轮播图组件列表的容器
+        boundary: ref<"first" | "middle" | "last">("first"), //* 轮播图组件的边界状态  first | middle | last
         childrens: ref<HTMLElement[]>([]), //* 轮播图组件列表
         autoTimer: ref<NodeJS.Timer>(), //* 轮播图组件自动播放定时器
         skipTimer: ref<Boolean>(false), //* 轮播图组件是否正在跳转中
@@ -27,6 +28,21 @@ export const useComposable = (define: UiCarouselProps, emits: SetupContext<typeo
             if (!refs.childrens.value?.[current] || !refs.childrens.value?.[ready]) return;
             else {
                 refs.active.value = ready;
+            }
+
+            //* 轮播图组件列表长度
+            const count = refs.childrens.value.length || 0;
+
+            //* 开启无限滚动则取消操作
+            if (!define.loop) {
+                //* 判断轮播图组件的边界状态
+                if (ready == 0) {
+                    refs.boundary.value = "first";
+                } else if (ready >= count - 1) {
+                    refs.boundary.value = "last";
+                } else {
+                    refs.boundary.value = "middle";
+                }
             }
 
             //* 触发change回调
@@ -102,6 +118,9 @@ export const useComposable = (define: UiCarouselProps, emits: SetupContext<typeo
                 if (refs.childrens.value[refs.active.value]) {
                     gsap.set(refs.childrens.value[refs.active.value], { xPercent: -100, position: "relative" });
                 }
+
+                //* 开启无限滚动 设置成无边界状态
+                if (define.loop) refs.boundary.value = "middle";
             }
         },
 
@@ -109,7 +128,6 @@ export const useComposable = (define: UiCarouselProps, emits: SetupContext<typeo
         switchCarousel: (number: number, _data?: any) => {
             //* 轮播图组件列表长度
             const count = refs.childrens.value.length || 0;
-
             //* 检测是否满足运行条件
             if (!refs.container.value || refs.skipTimer.value || count <= 1 || number == refs.active.value) return;
             else {
@@ -123,6 +141,7 @@ export const useComposable = (define: UiCarouselProps, emits: SetupContext<typeo
                 if (number >= count || number < 0) {
                     //* 未开启无限滚动则取消操作
                     if (!define.loop) return;
+
 
                     //* 轮播图到达最后一页
                     if (number >= count) {
@@ -139,7 +158,8 @@ export const useComposable = (define: UiCarouselProps, emits: SetupContext<typeo
 
     //* 计算属性
     const computeds = {
-        attrs: computed(() => useAttrs()),
+        //* 主体类名
+        className: computed(() => `ui-carousel-${define.arrow}`),
         style: computed(() => {
             //* 初始化返回列表
             const result: { [name: string]: any } = {};
@@ -157,6 +177,15 @@ export const useComposable = (define: UiCarouselProps, emits: SetupContext<typeo
             }
 
             return result;
+        }),
+        //* 是否显示左侧控制按钮
+        isFirstControl: computed(() => {
+            return define.arrow != "never" && refs.boundary.value != "first";
+        }),
+
+        //* 是否显示右侧控制按钮
+        isLastControl: computed(() => {
+            return define.arrow != "never" && refs.boundary.value != "last";
         }),
     };
 
