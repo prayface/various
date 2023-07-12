@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { gsap } from "gsap";
-import { SetupContext, computed, ref, useAttrs, watch } from "vue";
+import { SetupContext, computed, ref, watch } from "vue";
 import { UiCarouselProps, UiCarouselEmits } from "../index";
 
 export const useComposable = (define: UiCarouselProps, emits: SetupContext<typeof UiCarouselEmits>["emit"]) => {
@@ -28,6 +28,9 @@ export const useComposable = (define: UiCarouselProps, emits: SetupContext<typeo
             else {
                 refs.active.value = ready;
             }
+
+            //* 轮播图组件列表长度
+            const count = refs.childrens.value.length || 0;
 
             //* 触发change回调
             emits("change", refs.active.value);
@@ -109,7 +112,6 @@ export const useComposable = (define: UiCarouselProps, emits: SetupContext<typeo
         switchCarousel: (number: number, _data?: any) => {
             //* 轮播图组件列表长度
             const count = refs.childrens.value.length || 0;
-
             //* 检测是否满足运行条件
             if (!refs.container.value || refs.skipTimer.value || count <= 1 || number == refs.active.value) return;
             else {
@@ -121,9 +123,6 @@ export const useComposable = (define: UiCarouselProps, emits: SetupContext<typeo
 
                 //* 轮播图触边处理
                 if (number >= count || number < 0) {
-                    //* 未开启无限滚动则取消操作
-                    if (!define.loop) return;
-
                     //* 轮播图到达最后一页
                     if (number >= count) {
                         utils.switch(refs.active.value, 0, true);
@@ -139,7 +138,8 @@ export const useComposable = (define: UiCarouselProps, emits: SetupContext<typeo
 
     //* 计算属性
     const computeds = {
-        attrs: computed(() => useAttrs()),
+        //* 主体类名
+        className: computed(() => `ui-carousel-${define.arrow}`),
         style: computed(() => {
             //* 初始化返回列表
             const result: { [name: string]: any } = {};
@@ -157,6 +157,15 @@ export const useComposable = (define: UiCarouselProps, emits: SetupContext<typeo
             }
 
             return result;
+        }),
+        //* 是否显示左侧控制按钮
+        isFirstControl: computed(() => {
+            return define.arrow != "never";
+        }),
+
+        //* 是否显示右侧控制按钮
+        isLastControl: computed(() => {
+            return define.arrow != "never";
         }),
     };
 

@@ -1,16 +1,16 @@
 <template>
-    <div class="ui-carousel" :style="style" ref="main" v-bind="attrs">
+    <div class="ui-carousel" :class="className" :style="style" ref="main" v-bind="$attrs">
         <!-- 轮播图容器, 用来控制轮播滚动 -->
         <div class="ui-carousel-container" ref="container">
             <slot></slot>
         </div>
 
         <!-- 轮播图左侧箭头 -->
-        <div class="ui-carousel-control ui-carousel-left-control" @click="switchCarousel(active - 1)" v-if="arrow != 'never'">
+        <div class="ui-carousel-control ui-carousel-left-control" @click="switchCarousel(active - 1)" v-if="isFirstControl">
             <UiIcon name="arrow" />
         </div>
         <!-- 轮播图右侧箭头 -->
-        <div class="ui-carousel-control ui-carousel-right-control" @click="switchCarousel(active + 1)" v-if="arrow != 'never'">
+        <div class="ui-carousel-control ui-carousel-right-control" @click="switchCarousel(active + 1)" v-if="isLastControl">
             <UiIcon name="arrow" />
         </div>
 
@@ -39,7 +39,7 @@ const emits = defineEmits(UiCarouselEmits);
 const { refs, watchs, methods, computeds } = useComposable(define, emits);
 const { main, active, container, childrens } = refs;
 const { switchCarousel, init } = methods;
-const { style, attrs } = computeds;
+const { style, className, isLastControl, isFirstControl } = computeds;
 
 //* 挂载函数
 onMounted(() => methods.init());

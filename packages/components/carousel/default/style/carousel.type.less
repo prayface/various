@@ -1,0 +1,21 @@
+//* 轮播图悬浮样式与固定样式
+.ui-carousel.ui-carousel-always,
+.ui-carousel.ui-carousel-hover:hover {
+    .ui-carousel-control {
+        opacity: 1;
+
+        &.ui-carousel-left-control {
+            transform: translate(100%, -50%);
+        }
+
+        &.ui-carousel-right-control {
+            transform: translate(-100%, -50%);
+        }
+
+        &:hover {
+            color: var(--uioption-carousel-control-active-icon-color);
+            border-color: var(--uioption-carousel-control-active-border-color);
+            background-color: var(--uioption-carousel-control-active-background-color);
+        }
+    }
+}
