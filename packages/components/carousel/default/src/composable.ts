@@ -29,9 +29,6 @@ export const useComposable = (define: UiCarouselProps, emits: SetupContext<typeo
                 refs.active.value = ready;
             }
 
-            //* 轮播图组件列表长度
-            const count = refs.childrens.value.length || 0;
-
             //* 触发change回调
             emits("change", refs.active.value);
 
@@ -77,7 +74,13 @@ export const useComposable = (define: UiCarouselProps, emits: SetupContext<typeo
 
         //* 自动播放回调
         autoplayHandler: () => {
-            refs.autoTimer.value = setTimeout(() => define.autoplay && methods.switchCarousel(refs.active.value + 1), define.delay);
+            refs.autoTimer.value && clearTimeout(refs.autoTimer.value);
+            refs.autoTimer.value = setTimeout(() => {
+                refs.autoTimer.value = undefined;
+                if (define.autoplay) {
+                    methods.switchCarousel(refs.active.value + 1);
+                }
+            }, define.delay);
         },
     };
 
