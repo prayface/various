@@ -59,6 +59,9 @@ export const useComposable = (define: UiCarouselProps, emits: SetupContext<typeo
 
                     //* 关闭禁用切换
                     refs.skipTimer.value = false;
+
+                    //* 触发change-after回调
+                    emits("change-after", refs.active.value);
                 },
             };
 
