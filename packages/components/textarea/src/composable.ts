@@ -150,6 +150,8 @@ export default class {
             },
 
             clear: () => {
+                //* 隐藏滚动条
+                this.refs.scrollsize = 0;
                 emit("update:modelValue", "");
                 emit("clear", "clear");
                 emitter?.emit(define.name || "", "change");

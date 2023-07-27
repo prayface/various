@@ -4,8 +4,9 @@
             <div class="title">基本用法</div>
             <div class="descript">从顶部出现, 3秒后自动消失。</div>
             <div class="content">
-                <UiTextarea v-model="value" :height="200" />
+                <UiTextarea v-model="value" :height="200" ref="textarea" />
             </div>
+            <UiButton @click="textarea.clear()">清空</UiButton>
         </section>
         <section>
             <div class="title">禁用状态</div>
