@@ -1,13 +1,13 @@
-import _ from "lodash";
 import mitt from "mitt";
 import { ref } from "vue";
-import { UiTypes } from "@various/constants";
 import { UiFormProps } from "../index";
+import { verify, dispose } from "@various/utils";
+import { UiTypes } from "@various/constants";
 
 export const useComposable = (define: UiFormProps) => {
     //* 静态变量
     const variable = {
-        data: _.cloneDeep(define.data),
+        data: dispose.clone.cloneDeep(define.data),
     };
 
     //* 响应式变量
@@ -21,18 +21,18 @@ export const useComposable = (define: UiFormProps) => {
         //* 表单重置函数
         reset: () => {
             //* 校验重置
-            _.forIn(define.rules, (value, index) => {
+            for (const index in define.rules) {
                 emitter.emit(`reset:${index}`);
-            });
+            }
 
             //* value重置
-            _.forIn(variable.data, (value, index) => {
-                if (_.isArray(define.data[index])) {
+            for (const index in variable.data) {
+                if (verify.isArray(define.data[index])) {
                     define.data[index].splice(0, define.data[index].length);
                 } else {
-                    define.data[index] = value;
+                    define.data[index] = variable.data[0];
                 }
-            });
+            }
         },
 
         //* 表单校验函数

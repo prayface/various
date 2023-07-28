@@ -1,8 +1,7 @@
-import _ from "lodash";
 import { nextTick, computed, inject, ref } from "vue";
 import { UiInputProps, UiInputEmits } from "../index";
 import { UiFormEmitterKey } from "@various/constants";
-import { node, dispose } from "@various/utils";
+import { node, verify, dispose } from "@various/utils";
 
 export const useComposable = (define: UiInputProps, emit: UiInputEmits) => {
     //* 初始化mitt
@@ -151,7 +150,7 @@ export const useComposable = (define: UiInputProps, emit: UiInputEmits) => {
         //* 组件样式
         style: computed(() => {
             //* 宽度处理
-            if (_.isNumber(define.width)) return { width: define.width + "px" };
+            if (verify.isNumber(define.width)) return { width: define.width + "px" };
             else return { width: define.width };
         }),
 

@@ -1,6 +1,6 @@
-import _ from "lodash";
-import { UiSeamlessScrollProps } from "./seamless-scroll";
 import { computed, ComputedRef } from "vue";
+import { UiSeamlessScrollProps } from "./seamless-scroll";
+import { verify } from "@various/utils";
 
 export type UiSeamlessScrollConstructorRefs = {
     main?: HTMLDivElement;
@@ -33,7 +33,7 @@ export default class {
         return {
             style: computed(() => {
                 //* 高度处理
-                if (_.isNumber(define.height)) return { height: define.height + "px" };
+                if (verify.isNumber(define.height)) return { height: define.height + "px" };
                 else return { height: define.height };
             }),
         };

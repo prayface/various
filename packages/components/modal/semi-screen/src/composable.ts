@@ -1,8 +1,6 @@
 import { ref, computed, nextTick } from "vue";
-
-import _ from "lodash";
-
 import { UiModalSemiScreenEmits, UiModalSemiScreenProps } from "../index";
+import { verify } from "@various/utils";
 import { UiEmitFn } from "@various/constants";
 
 export default (define: UiModalSemiScreenProps, emit: UiEmitFn<typeof UiModalSemiScreenEmits>) => {
@@ -27,7 +25,7 @@ export default (define: UiModalSemiScreenProps, emit: UiEmitFn<typeof UiModalSem
         containerStyle: computed(() => {
             //* 初始化返回数据
             const result: { [name: string]: any } = {
-                width: _.isNumber(define.width) ? define.width + "px" : define.width,
+                width: verify.isNumber(define.width) ? define.width + "px" : define.width,
                 padding: define.spacing,
             };
 

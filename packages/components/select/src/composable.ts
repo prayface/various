@@ -1,9 +1,7 @@
-import _ from "lodash";
 import { Emitter } from "mitt";
-import { nextTick, computed } from "vue";
+import { nextTick, computed, SetupContext } from "vue";
 import { UiSelectProps, UiSelectEmits } from "./select";
-import { UiEmitFn } from "@various/constants";
-import { node, dispose } from "@various/utils";
+import { node, verify, dispose } from "@various/utils";
 
 export type UiSelectConstructorRefs = {
     visible: boolean;
@@ -17,13 +15,13 @@ export default class {
     methods;
     computeds;
 
-    constructor(refs: UiSelectConstructorRefs, define: UiSelectProps, emit: UiEmitFn<typeof UiSelectEmits>, emitter?: Emitter<any>) {
+    constructor(refs: UiSelectConstructorRefs, define: UiSelectProps, emit: SetupContext<typeof UiSelectEmits>["emit"], emitter?: Emitter<any>) {
         this.refs = refs;
         this.methods = this.#useMethods(define, emit, emitter);
         this.computeds = this.#useComputeds(define);
     }
 
-    #useMethods(define: UiSelectProps, emit: UiEmitFn<typeof UiSelectEmits>, emitter?: Emitter<any>) {
+    #useMethods(define: UiSelectProps, emit: SetupContext<typeof UiSelectEmits>['emit'], emitter?: Emitter<any>) {
         //? 候选框隐藏事件
         const hidden = (ev?: Event) => {
             if (!this.refs.container) return;
@@ -133,7 +131,7 @@ export default class {
         //? 样式
         const style = computed(() => {
             //* 宽度处理
-            if (_.isNumber(define.width)) return { width: define.width + "px" };
+            if (verify.isNumber(define.width)) return { width: define.width + "px" };
             else return { width: define.width };
         });
 

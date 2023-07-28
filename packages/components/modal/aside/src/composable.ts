@@ -1,9 +1,7 @@
 import { ref, computed } from "vue";
 import { gsap } from "gsap";
-
-import _ from "lodash";
-
 import { UiModalAsideEmits, UiModalAsideProps } from "../index";
+import { verify } from "@various/utils";
 import { UiEmitFn } from "@various/constants";
 
 export default (define: UiModalAsideProps, emit: UiEmitFn<typeof UiModalAsideEmits>) => {
@@ -20,7 +18,7 @@ export default (define: UiModalAsideProps, emit: UiEmitFn<typeof UiModalAsideEmi
         //* 容器样式
         style: computed(() => {
             return {
-                width: _.isNumber(define.width) ? define.width + "px" : define.width,
+                width: verify.isNumber(define.width) ? define.width + "px" : define.width,
                 padding: define.spacing,
             };
         }),

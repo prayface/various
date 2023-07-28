@@ -1,8 +1,6 @@
 import { ref, computed, nextTick } from "vue";
-
-import _ from "lodash";
-
 import { UiModalEmits, UiModalProps } from "../index";
+import { verify } from "@various/utils";
 import { UiEmitFn } from "@various/constants";
 
 export default (define: UiModalProps, emit: UiEmitFn<typeof UiModalEmits>) => {
@@ -27,11 +25,11 @@ export default (define: UiModalProps, emit: UiEmitFn<typeof UiModalEmits>) => {
         containerStyle: computed(() => {
             //* 初始化返回数据
             const result: { [name: string]: any } = {
-                width: _.isNumber(define.width) ? define.width + "px" : define.width,
+                width: verify.isNumber(define.width) ? define.width + "px" : define.width,
                 padding: define.spacing,
             };
             //* 检测是否需要拉伸
-            result[define.magnify ? "min-height" : "height"] = _.isNumber(define.height) ? define.height + "px" : define.height;
+            result[define.magnify ? "min-height" : "height"] = verify.isNumber(define.height) ? define.height + "px" : define.height;
             return result;
         }),
     };

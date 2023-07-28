@@ -1,4 +1,3 @@
 export * from "./analysis.option";
-import * as boundary from "./boundary";
-
-export { boundary };
+export * as boundary from "./boundary";
+export * as clone from "./clone";

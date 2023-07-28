@@ -1,7 +1,7 @@
-import _ from "lodash";
 import { gsap } from "gsap";
 import { SetupContext, computed, ref } from "vue";
 import { UiCarouselMultipleViewProps, UiCarouselMultipleViewEmits } from "../index";
+import { verify } from "@various/utils";
 
 export const useComposable = (define: UiCarouselMultipleViewProps, emits: SetupContext<typeof UiCarouselMultipleViewEmits>["emit"]) => {
     //* 静态变量
@@ -145,13 +145,13 @@ export const useComposable = (define: UiCarouselMultipleViewProps, emits: SetupC
 
             //* 宽度处理
             if (define.width) {
-                if (_.isNumber(define.width)) result.width = define.width + "px";
+                if (verify.isNumber(define.width)) result.width = define.width + "px";
                 else result.width = define.width;
             }
 
             //* 高度处理
             if (define.height) {
-                if (_.isNumber(define.height)) result.height = define.height + "px";
+                if (verify.isNumber(define.height)) result.height = define.height + "px";
                 else result.height = define.height;
             }
 

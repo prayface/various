@@ -1,7 +1,6 @@
-import _ from "lodash";
-import { computed } from "vue";
-import { UiEmitFn } from "@various/constants";
+import { computed, SetupContext } from "vue";
 import { UiPaginationProps, UiPaginationEmits } from "./pagination";
+import { verify } from "@various/utils";
 
 type UiPaginationOption = {
     type: "item" | "skip";
@@ -13,7 +12,7 @@ export default class {
     computeds;
     methods;
 
-    constructor(define: UiPaginationProps, emit: UiEmitFn<typeof UiPaginationEmits>) {
+    constructor(define: UiPaginationProps, emit: SetupContext<typeof UiPaginationEmits>["emit"]) {
         this.computeds = this.#useComputeds(define);
         this.methods = this.#useMethods(define, emit);
     }
@@ -87,10 +86,10 @@ export default class {
         return { info, total, controls };
     }
 
-    #useMethods(define: UiPaginationProps, emit: UiEmitFn<typeof UiPaginationEmits>) {
+    #useMethods(define: UiPaginationProps, emit: SetupContext<typeof UiPaginationEmits>["emit"]) {
         //? 通过页码切换分页
         const cutNumber = (number: number) => {
-            if (!_.isNumber(number) || number == define.modelValue) return;
+            if (!verify.isNumber(number) || number == define.modelValue) return;
             if (number <= 0) {
                 emit("update:modelValue", 1);
                 emit("change", 1);

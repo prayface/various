@@ -1,9 +1,7 @@
-import _ from "lodash";
 import { Emitter } from "mitt";
-import { computed } from "vue";
+import { computed, SetupContext } from "vue";
 import { UiScopeInputProps, UiScopeInputEmits } from "./scope-input";
-import { UiEmitFn } from "@various/constants";
-
+import { verify } from "@various/utils";
 
 export type UiScopeInputRefs = {
     active: boolean;
@@ -15,19 +13,19 @@ export default class {
     methods;
     computeds;
 
-    constructor(refs: UiScopeInputRefs, define: UiScopeInputProps, emit: UiEmitFn<typeof UiScopeInputEmits>, emitter?: Emitter<any>) {
-        this.refs = refs
+    constructor(refs: UiScopeInputRefs, define: UiScopeInputProps, emit: SetupContext<typeof UiScopeInputEmits>["emit"], emitter?: Emitter<any>) {
+        this.refs = refs;
         this.methods = this.#useMethods(define, emit, emitter);
         this.computeds = this.#useComputeds(refs, define);
         this.handles = this.#useOnHandles(refs, define, emit, emitter);
     }
 
-    #useMethods(define: UiScopeInputProps, emit: UiEmitFn<typeof UiScopeInputEmits>, emitter?: Emitter<any>) {
+    #useMethods(define: UiScopeInputProps, emit: SetupContext<typeof UiScopeInputEmits>["emit"], emitter?: Emitter<any>) {
         //? 清空事件
         const clear = () => {
             emit("update:modelValue", {
-                start: '',
-                end: ''
+                start: "",
+                end: "",
             });
             emit("clear", "clear");
             emitter?.emit(define.name || "", "change");
@@ -57,17 +55,17 @@ export default class {
             const obj = {
                 disabled: ["disabled", "loading"].includes(status.value.name),
                 readonly: status.value.name == "readonly",
-            }
+            };
             return {
-                start: { ...obj, placeholder: define.placeholder?.start || "Start", },
-                end: { ...obj, placeholder: define.placeholder?.end || "End", },
+                start: { ...obj, placeholder: define.placeholder?.start || "Start" },
+                end: { ...obj, placeholder: define.placeholder?.end || "End" },
             };
         });
 
         //? 样式
         const style = computed(() => {
             //* 宽度处理
-            if (_.isNumber(define.width)) return { width: define.width + "px" };
+            if (verify.isNumber(define.width)) return { width: define.width + "px" };
             else return { width: define.width };
         });
 
@@ -95,7 +93,7 @@ export default class {
         };
     }
 
-    #useOnHandles(refs: UiScopeInputRefs, define: UiScopeInputProps, emit: UiEmitFn<typeof UiScopeInputEmits>, emitter?: Emitter<any>) {
+    #useOnHandles(refs: UiScopeInputRefs, define: UiScopeInputProps, emit: SetupContext<typeof UiScopeInputEmits>["emit"], emitter?: Emitter<any>) {
         return {
             handles: {
                 change: (ev: Event) => {
@@ -106,11 +104,11 @@ export default class {
                     emit("input", ev as InputEvent);
                 },
                 focus: (ev: FocusEvent | Event) => {
-                    refs.active = true
+                    refs.active = true;
                     emit("focus", ev);
                 },
                 blur: (ev: FocusEvent | Event) => {
-                    refs.active = false
+                    refs.active = false;
                     emit("blur", ev);
                     emitter?.emit(define.name || "", "blur");
                 },
