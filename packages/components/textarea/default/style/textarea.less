@@ -8,11 +8,11 @@
 //* 文本框样式
 .ui-textarea {
     position: relative;
-
     > .ui-form-control {
         resize: none;
-        height: auto;
+        height: 100%;
         display: block;
+        overflow: visible;
         padding: var(--uioption-textarea-spacing-y) var(--uioption-textarea-spacing-x);
         line-height: var(--uioption-textarea-line-height);
 
@@ -25,31 +25,10 @@
             color: transparent;
         }
 
-        &::-webkit-scrollbar {
-            display: none;
+        &::-webkit-scrollbar-track,
+        &::-webkit-scrollbar-track-piece {
+            border-radius: 0 var(--uioption-form-radius) var(--uioption-form-radius) 0;
         }
-    }
-
-    > .ui-scrollbar-container {
-        inset: 1px 1px 1px auto;
-    }
-
-    &::before,
-    &::after {
-        width: calc(100% - 2 * var(--uioption-textarea-spacing-x));
-        height: var(--uioption-textarea-spacing-y);
-        z-index: 1;
-        position: absolute;
-        background-color: #fff;
-        content: "";
-    }
-
-    &::before {
-        inset: 1px auto auto var(--uioption-textarea-spacing-x);
-    }
-
-    &::after {
-        inset: auto auto 1px var(--uioption-textarea-spacing-x);
     }
 }
 

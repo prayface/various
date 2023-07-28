@@ -2,11 +2,17 @@
     <div class="textarea">
         <section>
             <div class="title">基本用法</div>
-            <div class="descript">从顶部出现, 3秒后自动消失。</div>
-            <div class="content">
-                <UiTextarea v-model="value" :height="200" ref="textarea" />
+            <div class="descript">
+                <p>从顶部出现, 3秒后自动消失。</p>
+                <p>
+                    <UiButton @click="clear" size="small">清空</UiButton>
+                    <UiButton @click="focus" size="small" style="margin-left: 8px">获取焦点</UiButton>
+                    <UiButton @click="blur" size="small" style="margin-left: 8px">失去焦点</UiButton>
+                </p>
             </div>
-            <UiButton @click="textarea.clear()">清空</UiButton>
+            <div class="content">
+                <UiTextarea v-model="value" :height="200" ref="node" />
+            </div>
         </section>
         <section>
             <div class="title">禁用状态</div>
@@ -185,8 +191,13 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
-const loading1 = ref(false);
+
+const node = ref();
 const value = ref(
     "asd基本用法as从顶部出现, 3秒后自动消失。基本用法as, 3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现, 3秒后自动消失。基本用法as, 3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现, 3秒后自动消失。基本用法as, 3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现, 3秒后自动消失。基本用法as, 3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现, 3秒后自动消失。基本用法as, 3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现, 3秒后自动消失。基本用法as, 3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现, 3秒后自动消失。基本用法as, 3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现, 3秒后自动消失。基本用法as, 3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现, 3秒后自动消失。基本用法as, 3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现, 3秒后自动消失。基本用法as, 3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现, 3秒后自动消失。基本用法as, 3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现, 3秒后自动消失。基本用法as, 3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现, 3秒后自动消失。基本用法as, 3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现, 3秒后自动消失。基本用法as, 3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现, 3秒后自动消失。基本用法as, 3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现, 3秒后自动消失。基本用法as, 3秒后自动消失。基本用法as从顶部as从顶部出现, 3秒后自动消失。基本用法as, 3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现, 3秒后自动消失。基本用法as, 3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现, 3秒后自动消失。基本用法as, 3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现, 3秒后自动消失。基本用法as, 3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现, 3秒后自动消失。基本用法as, 3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现, 3秒后自动消失。基本用法as, 3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现, 3秒后自动消失。基本用法as, 3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现, 3秒后自动消失。基本用法as, 3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现, 3秒后自动消失。基本用法as, 3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现, 3秒后自动消失。基本用法as, 3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现, 3秒后自动消失。基本用法as, 3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现, 3秒后自动消失。基本用法as, 3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现, 3秒后自动消失。基本用法as, 3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现, 3秒后自动消失。基本用法as, 3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现, 3秒后自动消失。基本用法as, 3秒后自动消失。基本用法as从顶部出asd基本用法as从顶部出现, 3秒后自动消失。基本用法as, 3秒后自动消失。基本用法as从顶部出"
 );
+
+const clear = () => node.value?.clear();
+const focus = () => node.value?.focus();
+const blur = () => node.value?.blur();
 </script>
