@@ -1,9 +1,8 @@
-import { ref, computed, nextTick } from "vue";
+import { ref, computed, nextTick, SetupContext } from "vue";
 import { UiModalEmits, UiModalProps } from "../index";
 import { verify } from "@various/utils";
-import { UiEmitFn } from "@various/constants";
 
-export default (define: UiModalProps, emit: UiEmitFn<typeof UiModalEmits>) => {
+export default (define: UiModalProps, emit: SetupContext<typeof UiModalEmits>["emit"]) => {
     //* 响应式变量
     const refs = {
         open: ref<boolean>(false),

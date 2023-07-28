@@ -1,9 +1,8 @@
-import { ref, computed, nextTick } from "vue";
+import { ref, computed, nextTick, SetupContext } from "vue";
 import { UiModalSemiScreenEmits, UiModalSemiScreenProps } from "../index";
 import { verify } from "@various/utils";
-import { UiEmitFn } from "@various/constants";
 
-export default (define: UiModalSemiScreenProps, emit: UiEmitFn<typeof UiModalSemiScreenEmits>) => {
+export default (define: UiModalSemiScreenProps, emit: SetupContext<typeof UiModalSemiScreenEmits>["emit"]) => {
     //* 响应式变量
     const refs = {
         open: ref<boolean>(false),

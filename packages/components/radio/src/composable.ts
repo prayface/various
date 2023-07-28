@@ -1,5 +1,4 @@
-import { UiEmitFn } from "@various/constants";
-import { computed, inject } from "vue";
+import { SetupContext, computed, inject } from "vue";
 import { UiRadioEmits, UiRadioProps } from "./radio";
 import { UiRadioGroupInjectionKey } from "./radio-group";
 
@@ -8,14 +7,14 @@ export default class {
     computeds;
     methods;
 
-    constructor(define: UiRadioProps, emit: UiEmitFn<typeof UiRadioEmits>) {
+    constructor(define: UiRadioProps, emit: SetupContext<typeof UiRadioEmits>["emit"]) {
         //* 获取父组件注入函数
         this.radioGroup = inject(UiRadioGroupInjectionKey, undefined);
         this.computeds = this.#useComputeds(define);
         this.methods = this.#useMethods(define, emit);
     }
 
-    #useMethods(define: UiRadioProps, emit: UiEmitFn<typeof UiRadioEmits>) {
+    #useMethods(define: UiRadioProps, emit: SetupContext<typeof UiRadioEmits>["emit"]) {
         return {
             trigger: (ev: Event) => {
                 //* 1. 获取Input节点

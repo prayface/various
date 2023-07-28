@@ -1,10 +1,9 @@
-import { ref, computed } from "vue";
+import { ref, computed, SetupContext } from "vue";
 import { gsap } from "gsap";
 import { UiModalAsideEmits, UiModalAsideProps } from "../index";
 import { verify } from "@various/utils";
-import { UiEmitFn } from "@various/constants";
 
-export default (define: UiModalAsideProps, emit: UiEmitFn<typeof UiModalAsideEmits>) => {
+export default (define: UiModalAsideProps, emit: SetupContext<typeof UiModalAsideEmits>["emit"]) => {
     //* 响应式变量
     const refs = {
         open: ref<boolean>(false),
