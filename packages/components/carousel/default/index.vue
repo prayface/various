@@ -38,7 +38,7 @@ const emits = defineEmits(UiCarouselEmits);
 
 const { refs, watchs, methods, computeds } = useComposable(define, emits);
 const { main, active, container, childrens } = refs;
-const { switchCarousel, init } = methods;
+const { switchCarousel, switchBack, switchNext, init } = methods;
 const { style, className, isLastControl, isFirstControl } = computeds;
 
 //* 挂载函数
@@ -53,10 +53,5 @@ onBeforeUnmount(() => {
 //* 组件配置
 defineOptions({ name: "UiCarousel" });
 //* 导出函数
-defineExpose({
-    init: init,
-    cutCarousel: switchCarousel,
-    triggerNext: () => switchCarousel(active.value + 1),
-    triggerBack: () => switchCarousel(active.value - 1),
-});
+defineExpose({ init, switchBack, switchNext, switchCarousel });
 </script>

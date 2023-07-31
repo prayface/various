@@ -32,7 +32,7 @@ const emits = defineEmits(UiCarouselMultipleViewEmits);
 //* 组合函数
 const { refs, methods, computeds } = useComposable(define, emits);
 const { main, container } = refs;
-const { switchCarousel, init } = methods;
+const { switchCarousel, switchBack, switchNext, init } = methods;
 const { style, className, isLastControl, isFirstControl } = computeds;
 
 //* 挂载函数
@@ -56,10 +56,5 @@ onBeforeUnmount(() => {
 //* 组件配置
 defineOptions({ name: "UiCarouselMultipleView" });
 //* 函数导出
-defineExpose({
-    init: init,
-    cutCarousel: switchCarousel,
-    triggerNext: () => switchCarousel(1),
-    triggerBack: () => switchCarousel(-1),
-});
+defineExpose({ init, switchBack, switchNext, switchCarousel });
 </script>

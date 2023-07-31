@@ -140,6 +140,12 @@ export const useComposable = (define: UiCarouselProps, emits: SetupContext<typeo
                 }
             }
         },
+
+        //* 切换函数（上）
+        switchBack: () => methods.switchCarousel(refs.active.value - 1),
+
+        //* 切换函数（下）
+        switchNext: () => methods.switchCarousel(refs.active.value + 1),
     };
 
     //* 计算属性

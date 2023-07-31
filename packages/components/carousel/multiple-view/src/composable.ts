@@ -133,6 +133,12 @@ export const useComposable = (define: UiCarouselMultipleViewProps, emits: SetupC
                 refs.autoTimer.value = undefined;
             }, variable.delayUp);
         },
+
+        //* 切换函数（上）
+        switchBack: () => methods.switchCarousel(-1),
+
+        //* 切换函数（下）
+        switchNext: () => methods.switchCarousel(1),
     };
 
     //* 计算属性
