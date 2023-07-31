@@ -22,7 +22,7 @@
 
                     <UiFormItem>
                         <UiButton @click="click" :loading="loading1">触发校验</UiButton>
-                        <UiButton @click="form && form.reset()">重置表单</UiButton>
+                        <UiButton @click="reset">重置表单</UiButton>
                     </UiFormItem>
                 </UiForm>
             </div>
@@ -271,6 +271,13 @@ const click = () => {
         loading2.value = false;
         console.log(`校验结果: ${valid}`);
     });
+};
+
+const reset = () => {
+    if (!form.value) return;
+    else {
+        form.value.reset();
+    }
 };
 </script>
 

@@ -30,7 +30,7 @@ export const useComposable = (define: UiFormProps) => {
                 if (utility.isArray(define.data[index])) {
                     define.data[index].splice(0, define.data[index].length);
                 } else {
-                    define.data[index] = variable.data[0];
+                    define.data[index] = variable.data[index];
                 }
             }
         },
