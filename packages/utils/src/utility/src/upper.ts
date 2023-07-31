@@ -10,9 +10,9 @@ export const upperFirst = (str: string) => {
         return str.slice(0, 1).toUpperCase() + str.slice(1);
     }
 
-    // @ts-ignore
-    if (str.toString) {
-        const result = str.toString();
+    const strText = str as any;
+    if (strText.toString) {
+        const result = strText.toString();
         return result.slice(0, 1).toUpperCase() + result.slice(1);
     }
 
