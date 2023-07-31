@@ -1,7 +1,7 @@
 import { ref, computed, SetupContext } from "vue";
 import { gsap } from "gsap";
 import { UiModalAsideEmits, UiModalAsideProps } from "../index";
-import { verify } from "@various/utils";
+import { utility } from "@various/utils";
 
 export default (define: UiModalAsideProps, emit: SetupContext<typeof UiModalAsideEmits>["emit"]) => {
     //* 响应式变量
@@ -17,7 +17,7 @@ export default (define: UiModalAsideProps, emit: SetupContext<typeof UiModalAsid
         //* 容器样式
         style: computed(() => {
             return {
-                width: verify.isNumber(define.width) ? define.width + "px" : define.width,
+                width: utility.isNumber(define.width) ? define.width + "px" : define.width,
                 padding: define.spacing,
             };
         }),

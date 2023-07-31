@@ -1,7 +1,7 @@
 import { Emitter } from "mitt";
 import { computed, SetupContext } from "vue";
 import { UiScopeInputProps, UiScopeInputEmits } from "./scope-input";
-import { verify } from "@various/utils";
+import { utility } from "@various/utils";
 
 export type UiScopeInputRefs = {
     active: boolean;
@@ -65,7 +65,7 @@ export default class {
         //? 样式
         const style = computed(() => {
             //* 宽度处理
-            if (verify.isNumber(define.width)) return { width: define.width + "px" };
+            if (utility.isNumber(define.width)) return { width: define.width + "px" };
             else return { width: define.width };
         });
 

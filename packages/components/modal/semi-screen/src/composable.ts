@@ -1,6 +1,6 @@
 import { ref, computed, nextTick, SetupContext } from "vue";
 import { UiModalSemiScreenEmits, UiModalSemiScreenProps } from "../index";
-import { verify } from "@various/utils";
+import { utility } from "@various/utils";
 
 export default (define: UiModalSemiScreenProps, emit: SetupContext<typeof UiModalSemiScreenEmits>["emit"]) => {
     //* 响应式变量
@@ -24,7 +24,7 @@ export default (define: UiModalSemiScreenProps, emit: SetupContext<typeof UiModa
         containerStyle: computed(() => {
             //* 初始化返回数据
             const result: { [name: string]: any } = {
-                width: verify.isNumber(define.width) ? define.width + "px" : define.width,
+                width: utility.isNumber(define.width) ? define.width + "px" : define.width,
                 padding: define.spacing,
             };
 

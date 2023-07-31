@@ -1,7 +1,7 @@
 import { Emitter } from "mitt";
 import { nextTick, computed, SetupContext } from "vue";
 import { UiSelectProps, UiSelectEmits } from "./select";
-import { node, verify, dispose } from "@various/utils";
+import { node, utility, dispose } from "@various/utils";
 
 export type UiSelectConstructorRefs = {
     visible: boolean;
@@ -131,7 +131,7 @@ export default class {
         //? 样式
         const style = computed(() => {
             //* 宽度处理
-            if (verify.isNumber(define.width)) return { width: define.width + "px" };
+            if (utility.isNumber(define.width)) return { width: define.width + "px" };
             else return { width: define.width };
         });
 

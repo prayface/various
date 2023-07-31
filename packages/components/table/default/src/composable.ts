@@ -1,7 +1,7 @@
 import { SetupContext, computed, ref } from "vue";
 import { UiTableProps, UiTableEmits, UiTableOption } from "../index";
 import type { UiTableVars } from "./types";
-import { verify } from "@various/utils";
+import { utility } from "@various/utils";
 
 export const useComposable = (define: UiTableProps, emit: SetupContext<typeof UiTableEmits>["emit"]) => {
     //* 响应式变量
@@ -147,7 +147,7 @@ export const useComposable = (define: UiTableProps, emit: SetupContext<typeof Ui
         //* bodys样式
         receiveBodysStyle: computed(() => {
             if (!define.height) return {};
-            else if (verify.isNumber(define.height)) {
+            else if (utility.isNumber(define.height)) {
                 return { height: define.height + "px" };
             } else {
                 return { height: define.height };

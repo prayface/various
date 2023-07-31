@@ -1,7 +1,7 @@
 import { SetupContext, computed, inject, ref } from "vue";
 import { UiTextareaProps, UiTextareaEmits } from "../index";
 import { UiFormEmitterKey } from "@various/constants";
-import { verify } from "@various/utils";
+import { utility } from "@various/utils";
 
 export const useComposable = (define: UiTextareaProps, emits: SetupContext<typeof UiTextareaEmits>["emit"]) => {
     //* 初始化mitt
@@ -80,7 +80,7 @@ export const useComposable = (define: UiTextareaProps, emits: SetupContext<typeo
 
             //* 宽度设置
             if (define.width) {
-                if (verify.isNumber(define.width)) result.width = define.width + "px";
+                if (utility.isNumber(define.width)) result.width = define.width + "px";
                 else {
                     result.width = define.width as string;
                 }
@@ -88,7 +88,7 @@ export const useComposable = (define: UiTextareaProps, emits: SetupContext<typeo
 
             //* 高度设置
             if (define.height) {
-                if (verify.isNumber(define.height)) result.height = define.height + "px";
+                if (utility.isNumber(define.height)) result.height = define.height + "px";
                 else {
                     result.height = define.height as string;
                 }

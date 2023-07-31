@@ -1,6 +1,6 @@
 import { ref, computed, nextTick, SetupContext } from "vue";
 import { UiModalEmits, UiModalProps } from "../index";
-import { verify } from "@various/utils";
+import { utility } from "@various/utils";
 
 export default (define: UiModalProps, emit: SetupContext<typeof UiModalEmits>["emit"]) => {
     //* 响应式变量
@@ -24,11 +24,11 @@ export default (define: UiModalProps, emit: SetupContext<typeof UiModalEmits>["e
         containerStyle: computed(() => {
             //* 初始化返回数据
             const result: { [name: string]: any } = {
-                width: verify.isNumber(define.width) ? define.width + "px" : define.width,
+                width: utility.isNumber(define.width) ? define.width + "px" : define.width,
                 padding: define.spacing,
             };
             //* 检测是否需要拉伸
-            result[define.magnify ? "min-height" : "height"] = verify.isNumber(define.height) ? define.height + "px" : define.height;
+            result[define.magnify ? "min-height" : "height"] = utility.isNumber(define.height) ? define.height + "px" : define.height;
             return result;
         }),
     };

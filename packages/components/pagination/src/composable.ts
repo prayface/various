@@ -1,6 +1,6 @@
 import { computed, SetupContext } from "vue";
 import { UiPaginationProps, UiPaginationEmits } from "./pagination";
-import { verify } from "@various/utils";
+import { utility } from "@various/utils";
 
 type UiPaginationOption = {
     type: "item" | "skip";
@@ -89,7 +89,7 @@ export default class {
     #useMethods(define: UiPaginationProps, emit: SetupContext<typeof UiPaginationEmits>["emit"]) {
         //? 通过页码切换分页
         const cutNumber = (number: number) => {
-            if (!verify.isNumber(number) || number == define.modelValue) return;
+            if (!utility.isNumber(number) || number == define.modelValue) return;
             if (number <= 0) {
                 emit("update:modelValue", 1);
                 emit("change", 1);

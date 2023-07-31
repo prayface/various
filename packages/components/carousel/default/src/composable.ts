@@ -1,7 +1,7 @@
 import { gsap } from "gsap";
 import { SetupContext, computed, ref, watch } from "vue";
 import { UiCarouselProps, UiCarouselEmits } from "../index";
-import { verify } from "@various/utils";
+import { utility } from "@various/utils";
 
 export const useComposable = (define: UiCarouselProps, emits: SetupContext<typeof UiCarouselEmits>["emit"]) => {
     //* 静态变量
@@ -152,13 +152,13 @@ export const useComposable = (define: UiCarouselProps, emits: SetupContext<typeo
 
             //* 宽度处理
             if (define.width) {
-                if (verify.isNumber(define.width)) result.width = define.width + "px";
+                if (utility.isNumber(define.width)) result.width = define.width + "px";
                 else result.width = define.width;
             }
 
             //* 高度处理
             if (define.height) {
-                if (verify.isNumber(define.height)) result.height = define.height + "px";
+                if (utility.isNumber(define.height)) result.height = define.height + "px";
                 else result.height = define.height;
             }
 

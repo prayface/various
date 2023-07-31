@@ -1,5 +1,5 @@
 export * as node from "./src/node";
-export * as verify from "./src/verify";
+export * as utility from "./src/utility";
 export * as dispose from "./src/dispose";
 
 export const register = {

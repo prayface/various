@@ -1,13 +1,13 @@
 import mitt from "mitt";
 import { ref } from "vue";
 import { UiFormProps } from "../index";
-import { verify, dispose } from "@various/utils";
+import { utility } from "@various/utils";
 import { UiTypes } from "@various/constants";
 
 export const useComposable = (define: UiFormProps) => {
     //* 静态变量
     const variable = {
-        data: dispose.clone.cloneDeep(define.data),
+        data: utility.cloneDeep(define.data),
     };
 
     //* 响应式变量
@@ -27,7 +27,7 @@ export const useComposable = (define: UiFormProps) => {
 
             //* value重置
             for (const index in variable.data) {
-                if (verify.isArray(define.data[index])) {
+                if (utility.isArray(define.data[index])) {
                     define.data[index].splice(0, define.data[index].length);
                 } else {
                     define.data[index] = variable.data[0];

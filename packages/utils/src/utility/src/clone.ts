@@ -1,4 +1,4 @@
-import { isObject, isArray, isDate } from "../../verify";
+import { isObject, isArray, isDate } from "./verify";
 
 export const cloneDeep = (value: any) => {
     //* Date类型, 返回一个新的Date类型
@@ -11,7 +11,7 @@ export const cloneDeep = (value: any) => {
     //* Array类型, 递归拷贝每一个值
     if (isArray(value)) {
         const result: any[] = [];
-        value?.forEach((val) => {
+        value?.forEach((val: any) => {
             result.push(cloneDeep(val));
         });
 
