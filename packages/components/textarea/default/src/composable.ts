@@ -64,13 +64,17 @@ export const useComposable = (define: UiTextareaProps, emits: SetupContext<typeo
     const computeds = {
         //* 文本框属性
         attrs: computed(() => {
-            return {
+            const result: any = {
                 rows: define.rows,
                 value: define.modelValue,
                 disabled: define.disabled,
                 readonly: define.readonly,
                 placeholder: define.placeholder,
             };
+
+            if (define.maxlength) result.maxlength = define.maxlength;
+
+            return define;
         }),
 
         //* 文本框样式

@@ -156,7 +156,7 @@ export const useComposable = (define: UiInputProps, emit: UiInputEmits) => {
 
         //* 标签响应式属性
         attrs: computed(() => {
-            return {
+            const result: any = {
                 type: define.type,
                 value: define.modelValue,
                 disabled: ["disabled", "loading"].includes(options.status.value.name),
@@ -164,6 +164,12 @@ export const useComposable = (define: UiInputProps, emit: UiInputEmits) => {
                 placeholder: define.placeholder,
                 autocomplete: define.autocomplete,
             };
+
+            if (define.maxlength) result.maxlength = define.maxlength;
+            if (define.max) result.max = define.max;
+            if (define.min) result.max = define.min;
+
+            return result;
         }),
 
         //* 输入框回调函数
