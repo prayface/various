@@ -7,11 +7,11 @@
                 <p>组件<span>UiCarousel</span>会将<span>默认插槽</span>中的最顶级节点添加<span>width: 100%</span></p>
             </div>
             <div class="content">
-                <UiCarousel :height="200" :autoplay="false">
-                    <div style="background-color: aquamarine; height: 200px">1</div>
-                    <div style="background-color: bisque; height: 400px">2</div>
-                    <div style="background-color: brown; height: 200px">3</div>
-                    <div style="background-color: burlywood; height: 200px">4</div>
+                <UiCarousel :height="200" :autoplay="false" :drag="true">
+                    <a href="https://baidu.com" target="_blank" style="display: block; background-color: aquamarine; height: 200px">1</a>
+                    <a href="https://baidu.com" target="_blank" style="display: block; background-color: bisque; height: 400px">2</a>
+                    <a href="https://baidu.com" target="_blank" style="display: block; background-color: brown; height: 200px">3</a>
+                    <a href="https://baidu.com" target="_blank" style="display: block; background-color: burlywood; height: 200px">4</a>
                 </UiCarousel>
             </div>
         </section>

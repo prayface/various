@@ -1,7 +1,7 @@
 <template>
     <div class="ui-carousel" :class="className" :style="style" ref="main" v-bind="$attrs">
         <!-- 轮播图容器, 用来控制轮播滚动 -->
-        <div class="ui-carousel-container" ref="container">
+        <div class="ui-carousel-container" ref="container" v-on="containerHandler">
             <slot></slot>
         </div>
 
@@ -39,7 +39,7 @@ const emits = defineEmits(UiCarouselEmits);
 const { refs, watchs, methods, computeds } = useComposable(define, emits);
 const { main, active, container, childrens } = refs;
 const { switchCarousel, switchBack, switchNext, init } = methods;
-const { style, className, isLastControl, isFirstControl } = computeds;
+const { style, className, isLastControl, isFirstControl, containerHandler } = computeds;
 
 //* 挂载函数
 onMounted(() => methods.init());
