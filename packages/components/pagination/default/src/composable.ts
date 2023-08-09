@@ -17,7 +17,10 @@ export const useComposable = (define: UiPaginationProps, emits: SetupContext<typ
         //* 统计信息
         info: computed(() => {
             if (define.count) {
-                return `Items: ${(define.modelValue - 1) * define.limit + 1} to ${define.modelValue * define.limit} of ${define.count}`;
+                const start = (define.modelValue - 1) * define.limit + 1;
+                const end = define.modelValue * define.limit;
+
+                return `Items: ${start} to ${end > define.count ? define.count : end} of ${define.count}`;
             } else {
                 return "";
             }
