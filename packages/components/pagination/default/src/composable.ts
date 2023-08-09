@@ -1,5 +1,5 @@
 import { computed, SetupContext } from "vue";
-import { UiPaginationProps, UiPaginationEmits } from "./pagination";
+import { UiPaginationProps, UiPaginationEmits } from "../index";
 import { utility } from "@various/utils";
 
 type UiPaginationOption = {
@@ -8,37 +8,28 @@ type UiPaginationOption = {
     active: boolean;
 };
 
-export default class {
-    computeds;
-    methods;
+export const useComposable = (define: UiPaginationProps, emits: SetupContext<typeof UiPaginationEmits>["emit"]) => {
+    //* 计算属性
+    const computeds = {
+        //* 分页的总数
+        total: computed(() => Math.ceil(define.count / define.limit)),
 
-    constructor(define: UiPaginationProps, emit: SetupContext<typeof UiPaginationEmits>["emit"]) {
-        this.computeds = this.#useComputeds(define);
-        this.methods = this.#useMethods(define, emit);
-    }
-
-    #useComputeds(define: UiPaginationProps) {
         //* 统计信息
-        const info = computed(() => {
+        info: computed(() => {
             if (define.count) {
                 return `Items: ${(define.modelValue - 1) * define.limit + 1} to ${define.modelValue * define.limit} of ${define.count}`;
             } else {
                 return "";
             }
-        });
-
-        //* 分页的总数
-        const total = computed(() => {
-            return Math.ceil(define.count / define.limit);
-        });
+        }),
 
         //* 分页控制器
-        const controls = computed(() => {
+        controls: computed(() => {
             //* 初始化数据
             const result: UiPaginationOption[] = [];
             //* 1. 当分页总数小于等于9时, 展示全部
-            if (total.value <= 9) {
-                for (let i = 1; i <= total.value; i++) {
+            if (computeds.total.value <= 9) {
+                for (let i = 1; i <= computeds.total.value; i++) {
                     result.push({ type: "item", value: i, active: i == define.modelValue });
                 }
             } else {
@@ -50,16 +41,16 @@ export default class {
 
                     //* 2.2. 补充剩余控制器
                     result.push({ type: "skip", value: 1, active: false });
-                    result.push({ type: "item", value: total.value - 1, active: total.value - 1 == define.modelValue });
-                    result.push({ type: "item", value: total.value, active: total.value == define.modelValue });
-                } else if (define.modelValue >= total.value - 3) {
+                    result.push({ type: "item", value: computeds.total.value - 1, active: computeds.total.value - 1 == define.modelValue });
+                    result.push({ type: "item", value: computeds.total.value, active: computeds.total.value == define.modelValue });
+                } else if (define.modelValue >= computeds.total.value - 3) {
                     //* 3.1. 补充前置控制器
                     result.push({ type: "item", value: 1, active: 1 == define.modelValue });
                     result.push({ type: "item", value: 2, active: 2 == define.modelValue });
                     result.push({ type: "skip", value: -1, active: false });
 
                     //* 3.2. 当前分页大于等于最后4页时, 展示total - 5 ~ total分页
-                    for (let i = total.value - 5; i <= total.value; i++) {
+                    for (let i = computeds.total.value - 5; i <= computeds.total.value; i++) {
                         result.push({ type: "item", value: i, active: i == define.modelValue });
                     }
                 } else {
@@ -75,47 +66,48 @@ export default class {
 
                     //* 4.3. 补充剩余控制器
                     result.push({ type: "skip", value: 1, active: false });
-                    result.push({ type: "item", value: total.value - 1, active: total.value - 1 == define.modelValue });
-                    result.push({ type: "item", value: total.value, active: total.value == define.modelValue });
+                    result.push({ type: "item", value: computeds.total.value - 1, active: computeds.total.value - 1 == define.modelValue });
+                    result.push({ type: "item", value: computeds.total.value, active: computeds.total.value == define.modelValue });
                 }
             }
 
             return result;
-        });
+        }),
+    };
 
-        return { info, total, controls };
-    }
-
-    #useMethods(define: UiPaginationProps, emit: SetupContext<typeof UiPaginationEmits>["emit"]) {
-        //? 通过页码切换分页
-        const cutNumber = (number: number) => {
-            if (!utility.isNumber(number) || number == define.modelValue) return;
-            if (number <= 0) {
-                emit("update:modelValue", 1);
-                emit("change", 1);
-            } else if (number > this.computeds.total.value) {
-                emit("update:modelValue", this.computeds.total.value);
-                emit("change", this.computeds.total.value);
+    //* 函数列表
+    const methods = {
+        //* 切换分页
+        switchNumber: (_number: number) => {
+            if (!utility.isNumber(_number) || _number == define.modelValue) return;
+            if (_number <= 0) {
+                emits("update:modelValue", 1);
+                emits("change", 1);
+            } else if (_number > computeds.total.value) {
+                emits("update:modelValue", computeds.total.value);
+                emits("change", computeds.total.value);
             } else {
-                emit("update:modelValue", number);
-                emit("change", number);
+                emits("update:modelValue", _number);
+                emits("change", _number);
             }
-        };
+        },
 
-        return {
-            cutNumber,
-            next: () => {
-                if (define.modelValue >= this.computeds.total.value) return;
-                else {
-                    cutNumber(define.modelValue + 1);
-                }
-            },
-            back: () => {
-                if (define.modelValue <= 1) return;
-                else {
-                    cutNumber(define.modelValue - 1);
-                }
-            },
-        };
-    }
-}
+        //* 下一页
+        next: () => {
+            if (define.modelValue >= computeds.total.value) return;
+            else {
+                methods.switchNumber(define.modelValue + 1);
+            }
+        },
+
+        //* 上一页
+        back: () => {
+            if (define.modelValue <= 1) return;
+            else {
+                methods.switchNumber(define.modelValue - 1);
+            }
+        },
+    };
+
+    return { computeds, methods };
+};

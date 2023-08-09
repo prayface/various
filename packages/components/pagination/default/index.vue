@@ -2,7 +2,7 @@
     <div class="ui-pagination" v-if="total">
         <!-- * 分页信息 -->
         <div class="ui-pagination-items" v-if="items">
-            <slot name="items">{{ info }}</slot>
+            <slot name="items" :page="modelValue" :limit="limit" :total="total" :count="count">{{ info }}</slot>
         </div>
 
         <!-- * 分页控制器 -->
@@ -14,9 +14,9 @@
 
             <template v-for="control in controls" :key="control.type + control.value">
                 <!-- * 跳跃控制器 -->
-                <div v-if="control.type == 'skip'" class="ui-pagination-control" @click="cutNumber(modelValue + skip * control.value)">...</div>
+                <div v-if="control.type == 'skip'" class="ui-pagination-control" @click="switchNumber(modelValue + skip * control.value)">...</div>
                 <!-- * 选择控制器 -->
-                <div v-else class="ui-pagination-control" :class="{ 'ui-active': control.active }" @click="cutNumber(control.value)">
+                <div v-else class="ui-pagination-control" :class="{ 'ui-active': control.active }" @click="switchNumber(control.value)">
                     {{ control.value }}
                 </div>
             </template>
@@ -29,28 +29,24 @@
     </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-import { UiPaginationPropsOption, UiPaginationEmits } from "./pagination";
-import Composable from "./composable";
+<script lang="ts" setup>
+//* 组件引入
 import UiIcon from "@various/components/icon";
 
-export default defineComponent({
-    name: "UiPagination",
-    emits: UiPaginationEmits,
-    props: UiPaginationPropsOption,
-    components: { UiIcon },
-    setup(define, { emit, expose }) {
-        //* 实例化组合函数
-        const composable = new Composable(define, emit);
+//* 函数引入
+import { UiPaginationEmits, UiPaginationPropsOption } from "./index";
+import { useComposable } from "./src/composable";
 
-        //* 导出公共方法
-        expose({ ...composable.methods });
+//* 注册组件CTX
+const define = defineProps(UiPaginationPropsOption);
+const emits = defineEmits(UiPaginationEmits);
 
-        return {
-            ...composable.computeds,
-            ...composable.methods,
-        };
-    },
-});
+//* 组合函数
+const { computeds, methods } = useComposable(define, emits);
+const { controls, total, info } = computeds;
+const { switchNumber, next, back } = methods;
+
+//* 声明组件配置
+defineExpose({ switchNumber, next, back });
+defineOptions({ name: "UiPagination" });
 </script>
