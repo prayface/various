@@ -3,9 +3,6 @@ import { UiCarouselSeamlessProps } from "../index";
 import { utility } from "@various/utils";
 
 export const useComposable = (define: UiCarouselSeamlessProps) => {
-    //* 播放间隔
-    const delay = define.delay / 1000;
-
     //* 响应式变量
     const refs = {
         offset: ref<number>(0),
@@ -24,7 +21,7 @@ export const useComposable = (define: UiCarouselSeamlessProps) => {
             if (refs.offset.value >= refs.content.value.offsetWidth) {
                 refs.offset.value = 0;
             } else {
-                refs.offset.value += delay;
+                refs.offset.value += define.delay;
             }
 
             //* 绘制
