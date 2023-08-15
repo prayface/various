@@ -6,10 +6,10 @@ import { utility } from "@various/utils";
 export const useComposable = (define: UiCarouselMultipleViewProps, emits: SetupContext<typeof UiCarouselMultipleViewEmits>["emit"]) => {
     //* 静态变量
     const variable = {
-        delay: define.transitionDelay / 1000, //* 轮播图切换过渡的间隔（秒）
+        delay: define.delay / 1000, //* 轮播图切换过渡的间隔（秒）
         width: 0,
         offset: 0,
-        delayUp: define.transitionDelay * 1.1, //* 轮播图切换间隔（毫秒）
+        delayUp: define.delay * 1.1, //* 轮播图切换间隔（毫秒）
     };
 
     //* 响应式变量
