@@ -89,7 +89,7 @@ export const useComposable = (define: UiScopeInputProps, emits: SetupContext<typ
             //* 判断是否需要添加size类名
             if (define.size != "default") result.push(`ui-${define.size}`);
             //* 判断是否激活
-            if (refs.active) result.push("ui-active");
+            if (refs.active.value) result.push("ui-active");
 
             return result.join(" ");
         }),
