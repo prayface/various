@@ -1,6 +1,8 @@
+import Select from "./default/index.vue";
 import { register } from "@various/utils";
-import Select from "./src/select.vue";
 
 export const UiSelect = register.use(Select, "component") as typeof Select;
-export * from "./src/select";
+
+export * from "./default";
+
 export default UiSelect;

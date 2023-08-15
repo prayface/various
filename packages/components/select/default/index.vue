@@ -19,7 +19,7 @@
                             <div
                                 class="ui-form-candidate"
                                 :class="{ 'ui-active': value.value == modelValue }"
-                                @mousedown="cutCandidate(value.value, $event)">
+                                @mousedown="switchCandidate(value.value, $event)">
                                 <slot name="candidate" :data="value">{{ value.label }}</slot>
                             </div>
                         </template>
@@ -37,53 +37,34 @@
     </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, inject, reactive, toRefs, onBeforeUnmount } from "vue";
-import { UiSelectEmits, UiSelectPropsOption } from "./select";
-import { UiFormEmitterKey } from "@various/constants";
+<script lang="ts" setup>
+//* 按需移入的插件
+import { onBeforeUnmount } from "vue";
+
+//* 组件属性
+import { UiSelectPropsOption, UiSelectEmits } from "./index";
+import { useComposable } from "./src/composable";
+
+//* 公共属性
 import { node } from "@various/utils";
-import Composable, { UiSelectConstructorRefs } from "./composable";
-import UiIcon from "@various/components/icon";
 
-export default defineComponent({
-    name: "UiSelect",
-    emits: UiSelectEmits,
-    props: UiSelectPropsOption,
-    components: { UiIcon },
-    setup(define, { emit, expose }) {
-        //* 初始化mitt
-        const emitter = inject(UiFormEmitterKey, undefined);
+//* 注册组件属性
+const define = defineProps(UiSelectPropsOption);
+const emits = defineEmits(UiSelectEmits);
 
-        //* 初始化响应式变量
-        const refs = reactive<UiSelectConstructorRefs>({
-            visible: false,
-            triangle: undefined,
-            container: undefined,
-            candidate: undefined,
-        });
+//* 组合函数
+const { refs, status, methods, computeds } = useComposable(define, emits);
+const { visible, triangle, candidate, container } = refs;
+const { show, clear, hidden, switchCandidate } = methods;
+const { value, attrs, style, className } = computeds;
 
-        //* 实例化组合函数
-        const composable = new Composable(refs, define, emit, emitter);
-
-        //* 导出公共函数
-        expose({
-            hidden: composable.methods.hidden,
-            clear: composable.methods.clear,
-            show: composable.methods.show,
-        });
-
-        //* 销毁事件
-        onBeforeUnmount(() => {
-            if (!refs.candidate) return;
-            //* 将内容从视图容器中移除
-            node.remove(document.body, refs.candidate);
-        });
-
-        return {
-            ...toRefs(refs),
-            ...composable.methods,
-            ...composable.computeds,
-        };
-    },
+//* 销毁事件
+onBeforeUnmount(() => {
+    //* 将内容从视图容器中移除
+    candidate.value && node.remove(document.body, candidate.value);
 });
+
+//* 注册组件配置
+defineOptions({ name: "UiSelect" });
+defineExpose({ show, clear, hidden });
 </script>
