@@ -12,7 +12,6 @@ export const routes = [
     { path: "/message", name: "Message", component: () => import("../views/Message.vue") },
     { path: "/tooltip", name: "Tooltip", component: () => import("../views/Tooltip.vue") },
     { path: "/carousel", name: "Carousel", component: () => import("../views/Carousel.vue") },
-    { path: "/seamless-scroll", name: "SeamlessScroll", component: () => import("../views/SeamlessScroll.vue") },
     { path: "/pagination", name: "Pagination", component: () => import("../views/Pagination.vue") },
     { path: "/textarea", name: "Textarea", component: () => import("../views/Textarea.vue") },
     { path: "/modal", name: "Modal", component: () => import("../views/Modal.vue") },
