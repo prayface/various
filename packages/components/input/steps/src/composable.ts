@@ -1,8 +1,8 @@
-import { computed, inject, ref } from "vue";
+import { SetupContext, computed, inject, ref } from "vue";
 import { UiStepsInputProps, UiStepsInputEmits } from "../index";
 import { UiFormEmitterKey } from "@various/constants";
 
-export const useComposable = (define: UiStepsInputProps, emit: UiStepsInputEmits) => {
+export const useComposable = (define: UiStepsInputProps, emit: SetupContext<typeof UiStepsInputEmits>["emit"]) => {
     //* 初始化mitt
     const emitter = inject(UiFormEmitterKey, undefined);
 

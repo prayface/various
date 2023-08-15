@@ -7,7 +7,6 @@ declare module "@vue/runtime-core" {
         UiTooltip: typeof import("various-ui")["UiTooltip"];
         UiTooltipFollow: typeof import("various-ui")["UiTooltipFollow"];
         UiTooltipFunction: typeof import("various-ui")["UiTooltipFunction"];
-        UiScrollbar: typeof import("various-ui")["UiScrollbar"];
         UiForm: typeof import("various-ui")["UiForm"];
         UiInput: typeof import("various-ui")["UiInput"];
         UiStepsInput: typeof import("various-ui")["UiStepsInput"];

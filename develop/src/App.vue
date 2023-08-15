@@ -1,13 +1,11 @@
 <template>
     <header></header>
     <main>
-        <UiScrollbar class="aside" :width="280">
-            <aside>
-                <template v-for="route in $router.options.routes">
-                    <RouterLink :to="route.path" exact-active-class>{{ route.name }}</RouterLink>
-                </template>
-            </aside>
-        </UiScrollbar>
+        <aside>
+            <template v-for="route in $router.options.routes">
+                <RouterLink :to="route.path" exact-active-class>{{ route.name }}</RouterLink>
+            </template>
+        </aside>
         <article>
             <div class="title">{{ $route.name }}</div>
             <RouterView />
@@ -44,13 +42,11 @@ main {
     margin: 40px auto 60px;
     display: flex !important;
     align-items: flex-start;
-    .aside {
-        margin-top: 64px;
-        aside {
-            overflow: hidden;
-            padding-right: 40px;
-        }
 
+    aside {
+        overflow: hidden;
+        margin-top: 64px;
+        padding-right: 40px;
         a {
             width: 100%;
             margin: 8px 0 0;

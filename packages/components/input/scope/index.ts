@@ -13,12 +13,12 @@ export const UiScopeInputPropsOption = {
 } as const;
 
 export const UiScopeInputEmits = {
-    "update:modelValue": (ev: any) => true,
-    change: (ev?: Event) => true,
-    clear: (ev?: any) => true,
-    input: (ev?: InputEvent | Event) => true,
-    focus: (ev?: FocusEvent | Event) => true,
-    blur: (ev?: FocusEvent | Event) => true,
+    "update:modelValue": (_ev: any) => true,
+    "change": (_ev?: Event) => true,
+    "clear": (_ev?: any) => true,
+    "input": (_ev?: InputEvent | Event) => true,
+    "focus": (_ev?: FocusEvent | Event) => true,
+    "blur": (_ev?: FocusEvent | Event) => true,
 };
 
 export type UiScopeInputProps = ExtractPropTypes<typeof UiScopeInputPropsOption>;

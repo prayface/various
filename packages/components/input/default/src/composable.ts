@@ -1,9 +1,9 @@
-import { nextTick, computed, inject, ref } from "vue";
+import { SetupContext, nextTick, computed, inject, ref } from "vue";
 import { UiInputProps, UiInputEmits } from "../index";
 import { UiFormEmitterKey } from "@various/constants";
 import { node, utility, dispose } from "@various/utils";
 
-export const useComposable = (define: UiInputProps, emit: UiInputEmits) => {
+export const useComposable = (define: UiInputProps, emits: SetupContext<typeof UiInputEmits>["emit"]) => {
     //* 初始化mitt
     const emitter = inject(UiFormEmitterKey, undefined);
 
@@ -62,7 +62,7 @@ export const useComposable = (define: UiInputProps, emit: UiInputEmits) => {
                 refs.visible.value = false;
 
                 //* 触发blur回调
-                emit("blur", ev);
+                emits("blur", ev);
 
                 //* 触发表单blur相关校验
                 emitter?.emit(define.name || "", "blur");
@@ -78,14 +78,14 @@ export const useComposable = (define: UiInputProps, emit: UiInputEmits) => {
                 utils.show();
 
                 //* 触发focus回调
-                emit("focus", ev);
+                emits("focus", ev);
             }
         },
 
         //* 清空事件
         clear: () => {
-            emit("update:modelValue", "");
-            emit("clear");
+            emits("update:modelValue", "");
+            emits("clear");
             if (emitter?.emit) {
                 emitter.emit(define.name || "", "change");
             }
@@ -100,30 +100,29 @@ export const useComposable = (define: UiInputProps, emit: UiInputEmits) => {
             utils.show();
 
             //* 触发v-model变更和input回调
-            emit("update:modelValue", target.value);
-            emit("input", ev as InputEvent);
+            emits("update:modelValue", target.value);
+            emits("input", ev as InputEvent);
         },
 
         //* Input触发回车事件
         enter: (ev: KeyboardEvent | Event) => {
-            emit("enter", ev);
+            emits("enter", ev);
         },
 
         //* Input触发change事件
         change: (ev: Event) => {
             //* 触发change回调
-            emit("change", ev);
+            emits("change", ev);
 
             //* 触发表单change相关校验
             emitter?.emit(define.name || "", "change");
         },
 
         //* 候选项选择事件
-        cutCandidate: (content: String, ev: Event) => {
-            console.log(1212);
-            emit("update:modelValue", content);
-            emit("select", ev);
-            emit("change", ev);
+        switchCandidate: (content: String, ev: Event) => {
+            emits("update:modelValue", content);
+            emits("select", ev);
+            emits("change", ev);
             if (emitter?.emit) {
                 emitter.emit(define.name || "", "change");
             }

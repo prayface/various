@@ -16,7 +16,7 @@
                             <div
                                 class="ui-form-candidate"
                                 :class="{ 'ui-active': value.value == modelValue }"
-                                @mousedown="cutCandidate(value.value, $event)">
+                                @mousedown="switchCandidate(value.value, $event)">
                                 <slot name="candidate" :data="value">{{ value.label }}</slot>
                             </div>
                         </template>
@@ -34,39 +34,41 @@
     </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, onBeforeUnmount } from "vue";
-import { UiInputPropsOption, UiInputEmitsOption } from "./index";
-import { node } from "@various/utils";
+<script lang="ts" setup>
+//* 按需导出插件
+import { onBeforeUnmount } from "vue";
+
+//* 组件属性
+import { UiInputPropsOption, UiInputEmits } from "./index";
 import { useComposable } from "./src/composable";
+
+//* 项目函数
+import { node } from "@various/utils";
+
+//* 组件
 import UiIcon from "@various/components/icon";
 
-export default defineComponent({
-    name: "UiInput",
-    props: UiInputPropsOption,
-    emits: UiInputEmitsOption,
-    components: { UiIcon },
-    setup(define, { emit, expose }) {
-        //* 获取组合函数
-        const { refs, options, methods, computeds } = useComposable(define, emit);
+//* 注册组件属性
+const define = defineProps(UiInputPropsOption);
+const emits = defineEmits(UiInputEmits);
 
-        //* 导出公共函数
-        expose({ clear: methods.clear, focus: methods.focus, blur: methods.blur });
+//* 组合函数
+const { refs, methods, options, computeds } = useComposable(define, emits);
+const { main, visible, triangle, container, candidate } = refs;
+const { blur, clear, enter, focus, switchCandidate } = methods;
+const { status } = options;
+const { attrs, style, inputOns, className } = computeds;
 
-        //* 销毁事件
-        onBeforeUnmount(() => {
-            //* 检测是否满足运行条件
-            if (!refs.candidate.value) return;
-            //* 将内容从视图容器中移除
-            node.remove(document.body, refs.candidate.value);
-        });
-
-        return {
-            ...refs,
-            ...options,
-            ...methods,
-            ...computeds,
-        };
-    },
+//* 销毁时间
+onBeforeUnmount(() => {
+    //* 检测是否满足运行条件
+    if (refs.candidate.value) {
+        //* 将内容从视图容器中移除
+        node.remove(document.body, refs.candidate.value);
+    }
 });
+
+//* 注册化组件配置
+defineOptions({ name: "UiInput" });
+defineExpose({ clear, focus, blur });
 </script>

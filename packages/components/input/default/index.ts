@@ -24,14 +24,13 @@ export const UiInputPropsOption = {
 
 export type UiInputProps = ExtractPropTypes<typeof UiInputPropsOption>;
 
-export const UiInputEmitsOption = ["update:modelValue", "select", "change", "clear", "enter", "input", "focus", "blur"];
-export type UiInputEmits = {
-    (event: "update:modelValue", value: any): void;
-    (event: "clear"): void;
-    (event: "select", ev: Event): void;
-    (event: "change", ev: Event): void;
-    (event: "enter", ev: KeyboardEvent | Event): void;
-    (event: "input", ev: InputEvent | Event): void;
-    (event: "focus", ev: FocusEvent | Event): void;
-    (event: "blur", ev: FocusEvent | Event): void;
+export const UiInputEmits = {
+    "update:modelValue": (_value: any) => true,
+    "select": (_ev: Event) => true,
+    "change": (_ev: Event) => true,
+    "enter": (_ev: KeyboardEvent | Event) => true,
+    "input": (_ev: InputEvent | Event) => true,
+    "focus": (_ev: FocusEvent | Event) => true,
+    "clear": () => true,
+    "blur": (_ev: FocusEvent | Event) => true,
 };

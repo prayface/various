@@ -11,22 +11,20 @@
     </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-import { UiStepsInputPropsOption, UiStepsInputEmitsOption } from "./index";
+<script lang="ts" setup>
+//* 组件属性
+import { UiStepsInputPropsOption, UiStepsInputEmits } from "./index";
 import { useComposable } from "./src/composable";
 
-export default defineComponent({
-    name: "UiStepsInput",
-    emits: UiStepsInputEmitsOption,
-    props: UiStepsInputPropsOption,
-    setup(define, { emit }) {
-        const { refs, computeds } = useComposable(define, emit);
+//* 注册组件属性
+const define = defineProps(UiStepsInputPropsOption);
+const emits = defineEmits(UiStepsInputEmits);
 
-        return {
-            ...refs,
-            ...computeds,
-        };
-    },
-});
+//* 组合函数
+const { refs, computeds } = useComposable(define, emits);
+const { currentPage } = refs;
+const { style, endOns, endAttrs, startOns, startAttrs } = computeds;
+
+//* 注册化组件配置
+defineOptions({ name: "UiStepsInput" });
 </script>
