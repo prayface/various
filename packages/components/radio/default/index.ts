@@ -6,8 +6,8 @@ export const UiRadioPropsOption = {
 } as const;
 
 export const UiRadioEmits = {
-    "change": (ev: Event) => true,
-    "update:modelValue": (data: any) => true,
+    "change": (_ev: Event) => true,
+    "update:modelValue": (_data: any) => true,
 };
 
 export type UiRadioProps = ExtractPropTypes<typeof UiRadioPropsOption>;
