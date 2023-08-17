@@ -74,7 +74,7 @@ export const useComposable = (define: UiTextareaProps, emits: SetupContext<typeo
 
             if (define.maxlength) result.maxlength = define.maxlength;
 
-            return define;
+            return result;
         }),
 
         //* 文本框样式

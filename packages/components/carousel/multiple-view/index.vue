@@ -1,5 +1,5 @@
 <template>
-    <div class="ui-mv-carousel" :class="className" :style="style" ref="main" v-bind="$attrs">
+    <div class="ui-mv-carousel" :class="className" :style="style" ref="main">
         <!-- 轮播图容器, 用来控制轮播滚动 -->
         <div class="ui-mv-carousel-container" ref="container">
             <slot></slot>

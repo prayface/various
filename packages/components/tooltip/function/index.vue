@@ -1,5 +1,5 @@
 <template>
-    <div v-bind="$attrs" class="ui-tooltip-container" ref="main">
+    <div class="ui-tooltip-container" ref="main">
         <slot name="default"></slot>
     </div>
 
