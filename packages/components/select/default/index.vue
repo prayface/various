@@ -41,6 +41,9 @@
 //* 按需移入的插件
 import { onBeforeUnmount } from "vue";
 
+//* 组件引入
+import UiIcon from "@various/components/icon";
+
 //* 组件属性
 import { UiSelectPropsOption, UiSelectEmits } from "./index";
 import { useComposable } from "./src/composable";
