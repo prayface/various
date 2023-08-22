@@ -1,6 +1,7 @@
 import { Emitter } from "mitt";
 import { InjectionKey, App, ComponentPublicInstance } from "vue";
 
+//* 类型
 export namespace UiTypes {
     export type size = "default" | "middle" | "large" | "small";
     export type type = "success" | "warning" | "info" | "error";
@@ -19,16 +20,16 @@ export namespace UiTypes {
     };
 }
 
-// 表单触发器Key
-export const UiFormEmitterKey: InjectionKey<Emitter<any>> = Symbol("UiFormEmitterKey");
-// 表单数据Key
-export const UiFormDataKey: InjectionKey<{ [name: string]: any }> = Symbol("UiFormDataKey");
-// 表单校验规则Key
-export const UiFormRulesKey: InjectionKey<{ [name: string]: UiTypes.verifyRule[] }> = Symbol("UiFormRulesKey");
-
 export interface UiHTMLElement extends HTMLElement {
     app?: App<Element>;
     instance?: ComponentPublicInstance;
 }
+
+//* 表单触发器Key
+export const UiFormEmitterKey: InjectionKey<Emitter<any>> = Symbol("UiFormEmitterKey");
+//* 表单数据Key
+export const UiFormDataKey: InjectionKey<{ [name: string]: any }> = Symbol("UiFormDataKey");
+//* 表单校验规则Key
+export const UiFormRulesKey: InjectionKey<{ [name: string]: UiTypes.verifyRule[] }> = Symbol("UiFormRulesKey");
 
 export * from "./components";

@@ -118,8 +118,6 @@ export const useComposable = (define: UiTextareaProps, emits: SetupContext<typeo
             if (computeds.status.value.name == "disabled") result.push("ui-disabled-status");
             else if (computeds.status.value.name == "readonly") result.push("ui-readonly-status");
             else if (computeds.status.value.name == "loading") result.push("ui-loading-status");
-            //* 判断是否需要添加size类名
-            if (define.size != "default") result.push(`ui-${define.size}`);
 
             return result.join(" ");
         }),

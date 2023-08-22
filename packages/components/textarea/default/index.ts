@@ -1,5 +1,4 @@
 import { ExtractPropTypes, PropType } from "vue";
-import { UiTypes } from "@various/constants";
 
 export const UiTextareaPropsOption = {
     placeholder: { type: String, default: "Please input" }, //* 提示文本
@@ -10,7 +9,6 @@ export const UiTextareaPropsOption = {
     loading: { type: Boolean, default: false }, //* 是否启动内置loading
     height: { type: [String, Number] as PropType<number | string> },
     width: { type: [String, Number] as PropType<number | string> },
-    size: { type: String as PropType<UiTypes.size>, default: "default" },
     name: { type: String },
     rows: { type: Number, default: 3 },
 } as const;
