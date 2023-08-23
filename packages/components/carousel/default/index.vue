@@ -36,17 +36,26 @@ import UiIcon from "@various/components/icon";
 const define = defineProps(UiCarouselPropsOption);
 const emits = defineEmits(UiCarouselEmits);
 
-const { refs, watchs, methods, computeds } = useComposable(define, emits);
+const { refs, watchs, methods, computeds, variable } = useComposable(define, emits);
 const { main, active, container, childrens } = refs;
 const { switchCarousel, switchBack, switchNext, init } = methods;
 const { style, className, isLastControl, isFirstControl, containerHandler } = computeds;
 
 //* 挂载函数
-onMounted(() => methods.init());
+onMounted(() => {
+    variable.observer = new ResizeObserver(() => methods.init());
+    if (main.value) {
+        variable.observer.observe(main.value);
+    }
+});
 
 //* 卸载函数
 onBeforeUnmount(() => {
+    //* 注销挂载的Observer
+    variable.observer && variable.observer.disconnect();
+    //* 清除残留的定时器
     refs.autoTimer.value && clearInterval(refs.autoTimer.value);
+    //* 清除侦听器
     watchs.stopAutoPlay && watchs.stopAutoPlay();
 });
 

@@ -30,7 +30,7 @@ const define = defineProps(UiCarouselMultipleViewPropsOption);
 const emits = defineEmits(UiCarouselMultipleViewEmits);
 
 //* 组合函数
-const { refs, methods, computeds } = useComposable(define, emits);
+const { refs, methods, computeds, variable } = useComposable(define, emits);
 const { main, container } = refs;
 const { switchCarousel, switchBack, switchNext, init } = methods;
 const { style, className, isLastControl, isFirstControl } = computeds;
@@ -40,17 +40,17 @@ onMounted(() => {
     //* 检测是否向下执行
     if (!main.value) return;
     else {
-        //* 初始化函数
-        methods.init();
-        //* 当窗口尺寸发送变化时, 触发初始化函数
-        main.value.onresize = () => methods.init();
+        variable.observer = new ResizeObserver(() => methods.init());
+        variable.observer.observe(main.value);
     }
 });
 
 //* 卸载函数
 onBeforeUnmount(() => {
+    //* 注销挂载的Observer
+    variable.observer && variable.observer.disconnect();
+    //* 清除残留的定时器
     refs.autoTimer.value && clearInterval(refs.autoTimer.value);
-    main.value && (main.value.onresize = null);
 });
 
 //* 组件配置

@@ -10,6 +10,7 @@ export const useComposable = (define: UiCarouselMultipleViewProps, emits: SetupC
         width: 0,
         offset: 0,
         delayUp: define.delay * 1.1, //* 轮播图切换间隔（毫秒）
+        observer: undefined as ResizeObserver | undefined,
     };
 
     //* 响应式变量
@@ -175,5 +176,5 @@ export const useComposable = (define: UiCarouselMultipleViewProps, emits: SetupC
         }),
     };
 
-    return { refs, methods, computeds };
+    return { refs, methods, computeds, variable };
 };

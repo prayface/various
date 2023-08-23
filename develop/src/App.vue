@@ -38,7 +38,8 @@ header {
 }
 
 main {
-    width: 1440px;
+    width: 100%;
+    min-width: 1440px;
     margin: 40px auto 60px;
     display: flex !important;
     align-items: flex-start;

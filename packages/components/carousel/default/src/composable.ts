@@ -7,6 +7,7 @@ export const useComposable = (define: UiCarouselProps, emits: SetupContext<typeo
     //* 静态变量
     const variable = {
         delay: define.transitionDelay / 1000,
+        observer: undefined as ResizeObserver | undefined,
     };
 
     //* 响应式变量
@@ -289,5 +290,5 @@ export const useComposable = (define: UiCarouselProps, emits: SetupContext<typeo
         }),
     };
 
-    return { refs, watchs, methods, computeds };
+    return { refs, watchs, methods, computeds, variable };
 };
