@@ -3,12 +3,12 @@ import { PropType, ExtractPropTypes } from "vue";
 export type UiStepsInputModelValue = {
     "end"?: number;
     "start"?: number;
-    "end-steps": number;
-    "start-steps": number;
+    "end-steps"?: number;
+    "start-steps"?: number;
 };
 
 export const UiStepsInputPropsOption = {
-    placeholder: { type: Object as PropType<{ start: string; end: string }> } /**提示文本 */,
+    placeholder: { type: Object as PropType<{ start?: string; end?: string }> } /**提示文本 */,
     modelValue: { type: Object as PropType<UiStepsInputModelValue>, required: true },
     disabled: { type: Boolean, default: false } /**是否禁用 */,
     readonly: { type: Boolean, default: false } /**是否只读 */,

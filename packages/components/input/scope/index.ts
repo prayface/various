@@ -2,8 +2,8 @@ import { ExtractPropTypes, PropType } from "vue";
 import { UiTypes } from "@various/constants";
 
 export const UiScopeInputPropsOption = {
-    placeholder: { type: Object as PropType<{ start: string; end: string }> },
-    modelValue: { type: Object as PropType<{ start: number; end: number }>, required: true },
+    placeholder: { type: Object as PropType<{ start?: string; end?: string }> },
+    modelValue: { type: Object as PropType<{ start?: number; end?: number }>, required: true },
     disabled: { type: Boolean, default: false },
     readonly: { type: Boolean, default: false },
     loading: { type: Boolean, default: false },

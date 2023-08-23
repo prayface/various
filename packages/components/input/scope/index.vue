@@ -20,6 +20,9 @@
 import { UiScopeInputPropsOption, UiScopeInputEmits } from "./index";
 import { useComposable } from "./src/composable";
 
+//* 组件
+import UiIcon from "@various/components/icon";
+
 //* 注册组件属性
 const define = defineProps(UiScopeInputPropsOption);
 const emits = defineEmits(UiScopeInputEmits);
