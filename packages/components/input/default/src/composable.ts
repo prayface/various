@@ -166,7 +166,7 @@ export const useComposable = (define: UiInputProps, emits: SetupContext<typeof U
 
             if (define.maxlength) result.maxlength = define.maxlength;
             if (define.max) result.max = define.max;
-            if (define.min) result.max = define.min;
+            if (define.min) result.min = define.min;
 
             return result;
         }),
