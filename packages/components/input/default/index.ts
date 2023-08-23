@@ -18,8 +18,6 @@ export const UiInputPropsOption = {
     type: { type: String as PropType<"email" | "number" | "search" | "tel" | "text">, default: "text" } /**文本框类型 */,
     size: { type: String as PropType<UiTypes.size>, default: "default" },
     name: { type: String },
-    max: { type: Number },
-    min: { type: Number },
 } as const;
 
 export type UiInputProps = ExtractPropTypes<typeof UiInputPropsOption>;
