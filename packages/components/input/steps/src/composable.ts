@@ -39,8 +39,8 @@ export const useComposable = (define: UiStepsInputProps, emit: SetupContext<type
 
         //* Input触发change事件
         change: (ev: Event) => {
-            const isMainValue = !define.modelValue.start?.toString() || !define.modelValue.end?.toString();
-            const isStepsValue = !define.modelValue["end-steps"].toString() || !define.modelValue["start-steps"].toString();
+            const isMainValue = !define.modelValue?.start?.toString() || !define.modelValue?.end?.toString();
+            const isStepsValue = !define.modelValue?.["end-steps"]?.toString() || !define.modelValue?.["start-steps"]?.toString();
             //* 当输入完整时, 触发change回调
             if (isMainValue || isStepsValue) return;
             else {
