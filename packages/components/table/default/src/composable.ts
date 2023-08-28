@@ -178,13 +178,13 @@ export const useComposable = (define: UiTableProps, emit: SetupContext<typeof Ui
         receiveAlignStyle: (data: any) => {
             switch (data.align) {
                 case "center":
-                    return { "justify-content": "center" };
+                    return { "justify-content": "center", "text-align": "center" };
 
                 case "end":
-                    return { "justify-content": "flex-end" };
+                    return { "justify-content": "flex-end", "text-align": "right" };
 
                 default:
-                    return { "justify-content": "flex-start" };
+                    return { "justify-content": "flex-start", "text-align": "left" };
             }
         },
     };
