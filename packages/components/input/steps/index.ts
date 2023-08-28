@@ -10,8 +10,6 @@ export type UiStepsInputModelValue = {
 export const UiStepsInputPropsOption = {
     placeholder: { type: Object as PropType<{ start?: string; end?: string }> } /**提示文本 */,
     modelValue: { type: Object as PropType<UiStepsInputModelValue>, required: true },
-    disabled: { type: Boolean, default: false } /**是否禁用 */,
-    readonly: { type: Boolean, default: false } /**是否只读 */,
     width: { type: Number, default: 408 },
     name: { type: String },
 } as const;
