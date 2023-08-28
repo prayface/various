@@ -33,19 +33,7 @@
         <section>
             <div class="title">测试表格2</div>
             <div class="content">
-                <UiTable :children="true" :option="option2" :height="600" :data="data2" style="width: 700px;">
-                    <template #children>
-                        <span>子列表1</span>
-                        <span>子列表2</span>
-                        <span>子列表3</span>
-                        <span>子列表4</span>
-                        <span>子列表5</span>
-                        <span>子列表6</span>
-                        <span>子列表7</span>
-                        <span>子列表8</span>
-                        <span>子列表9</span>
-                    </template>
-                </UiTable>
+                <UiTable :children="true" :option="option2" :height="600" :data="data2" style="width: 700px" />
             </div>
         </section>
     </div>

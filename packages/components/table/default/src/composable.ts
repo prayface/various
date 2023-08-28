@@ -39,6 +39,9 @@ export const useComposable = (define: UiTableProps, emit: SetupContext<typeof Ui
                 data: [],
             };
 
+            //* 容器宽度不足, 停止初始化
+            if (vars.size <= 0) return;
+
             //* 第一次遍历进行数据初始化
             define.option.forEach((value) => {
                 //* 数据初始化
