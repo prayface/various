@@ -89,5 +89,51 @@
         { "key": "group", "name": "研发组织" },
         { "key": "mechanism_of_action", "name": "作用机理" },
         { "key": "pubmed_id", "name": "Pubmed ID", "sort": true }
+    ],
+
+    "data2": [
+        {
+            "name": "黄黄黄黄杯",
+            "year": "2023",
+            "price": "100",
+            "inventory": "123000",
+            "detail": "这是一个黄黄的杯子这是一个黄黄的杯子这不是一个黄黄的杯子"
+        },
+        {
+            "name": "红红杯",
+            "year": "2000",
+            "price": "1",
+            "inventory": "999000",
+            "detail": "这是一个红红的杯子"
+        },
+        {
+            "name": "蓝蓝杯",
+            "year": "2023",
+            "price": "100",
+            "inventory": "5000000",
+            "detail": "这是一个蓝蓝的杯子"
+        },
+        {
+            "name": "不锈钢钢钢",
+            "year": "1890",
+            "price": "9999",
+            "inventory": "10",
+            "detail": "这是一个不锈钢的杯子"
+        },
+        {
+            "name": "拉菲",
+            "year": "1982",
+            "price": "999",
+            "inventory": "1",
+            "detail": "这是一个拉菲"
+        }
+    ],
+
+    "option2": [
+        { "key": "name", "name": "名字" },
+        { "key": "year", "name": "年份" },
+        { "key": "price", "name": "价格", "max-width": 80 },
+        { "key": "inventory", "name": "库存", "min-width": 120 },
+        { "key": "detail", "name": "描述", "width": 200, "max-width": 600, "min-width": 50 }
     ]
 }

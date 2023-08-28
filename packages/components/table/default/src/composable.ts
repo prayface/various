@@ -64,7 +64,7 @@ export const useComposable = (define: UiTableProps, emit: SetupContext<typeof Ui
 
                             //* 判断当前尺寸是否为最大尺寸
                             if (node.clientWidth > result.width) {
-                                if (result.max && node.clientWidth > result.max) {
+                                if (result.max != -1 && node.clientWidth > result.max) {
                                     result.width = result.max;
                                 } else {
                                     result.width = Math.ceil(node.clientWidth) + 4;
@@ -88,7 +88,7 @@ export const useComposable = (define: UiTableProps, emit: SetupContext<typeof Ui
 
             //* 第二次遍历, 检测当前表格是需要进行补足还是删减尺寸, 并进行对应操作
             vars.replenish = vars.size - real;
-            while (vars.replenish != 0) {
+            while (Math.floor(Math.abs(vars.replenish)) != 0) {
                 //* 初始化允许增减长度的数据列表
                 const data = vars.data.filter((val) => {
                     return val.replenish && (vars.replenish > 0 ? val.max == -1 || val.width < val.max : val.min == -1 || val.width > val.min);
@@ -123,7 +123,7 @@ export const useComposable = (define: UiTableProps, emit: SetupContext<typeof Ui
                                 data[i].width = data[i].min;
                             } else {
                                 vars.replenish += 1;
-                                data[i].width += 1;
+                                data[i].width -= 1;
                             }
                         }
                     }
