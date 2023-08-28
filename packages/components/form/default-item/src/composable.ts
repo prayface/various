@@ -50,9 +50,9 @@ export const useComposable = (define: UiFormItemProps) => {
         },
 
         //* 校验函数
-        validator: async (name: string, callBack?: (result: boolean) => void) => {
+        validator: async (name?: string, callBack?: (result: boolean) => void) => {
             //* 获取校验规则
-            const rule = rules[define.prop as string].filter((value) => value.trigger == name || name == "all");
+            const rule = rules[define.prop as string].filter((value) => !name || value.trigger == name);
             //* 检测是否存在校验选项
             if (!rule.length) return;
             else {
