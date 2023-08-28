@@ -35,6 +35,7 @@ export const useComposable = (define: UiTableProps, emit: SetupContext<typeof Ui
             const rows = [refs.HeaderNode.value, ...bodys];
             const vars: UiTableVars = {
                 replenish: 0,
+                number: 0,
                 size: refs.TableNode.value.offsetWidth - 14 - define.spacing * 2,
                 data: [],
             };
@@ -47,32 +48,39 @@ export const useComposable = (define: UiTableProps, emit: SetupContext<typeof Ui
                     min: value["min-width"] || 0,
                     max: value["max-width"] || 0,
                     width: value.width || value["min-width"] || 0,
+                    isReplenish: false,
                 };
 
-                //* 遍历td、th用于获取row尺寸
-                rows.forEach((row) => {
-                    //* 获取对应的col node
-                    const node = row.querySelector(`.ui-table-column[name=${value.key}]`) as HTMLElement;
-                    //* 检测col node是否存在
-                    if (!node) return;
-                    else {
-                        //* 重置node属性
-                        node.style.whiteSpace = "nowrap";
-                        node.style.width = "";
+                if (!value.width) {
+                    //* 标记该列允许补充列宽
+                    result.isReplenish = true;
+                    //* 记录需要分配的列数
+                    vars.number++;
+                    //* 遍历td、th用于获取row尺寸
+                    rows.forEach((row) => {
+                        //* 获取对应的col node
+                        const node = row.querySelector(`.ui-table-column[name=${value.key}]`) as HTMLElement;
+                        //* 检测col node是否存在
+                        if (!node) return;
+                        else {
+                            //* 重置node属性
+                            node.style.whiteSpace = "nowrap";
+                            node.style.width = "";
 
-                        //* 判断当前尺寸是否为最大尺寸
-                        if (node.clientWidth > result.width) {
-                            if (result.max && node.clientWidth > result.max) {
-                                result.width = result.max;
-                            } else {
-                                result.width = Math.ceil(node.clientWidth) + 4;
+                            //* 判断当前尺寸是否为最大尺寸
+                            if (node.clientWidth > result.width) {
+                                if (result.max && node.clientWidth > result.max) {
+                                    result.width = result.max;
+                                } else {
+                                    result.width = Math.ceil(node.clientWidth) + 4;
+                                }
                             }
-                        }
 
-                        //* 回退样式调整
-                        node.style.whiteSpace = "";
-                    }
-                });
+                            //* 回退样式调整
+                            node.style.whiteSpace = "";
+                        }
+                    });
+                }
 
                 //* 数据添加
                 vars.data.push(result);
@@ -85,11 +93,21 @@ export const useComposable = (define: UiTableProps, emit: SetupContext<typeof Ui
 
             //* 第二次遍历, 检测当前表格是需要进行补足还是删减尺寸, 并进行对应操作
             if (real < vars.size) {
-                //* 统计当前需补充的长度
-                const replenish = (vars.size - real) / vars.data.length;
-                vars.data.forEach((val) => {
-                    val.width += replenish;
-                });
+                if (vars.number) {
+                    //* 统计当前需补充的长度
+                    const replenish = (vars.size - real) / vars.number;
+                    vars.data.forEach((val) => {
+                        if (val.isReplenish) {
+                            val.width += replenish;
+                        }
+                    });
+                } else {
+                    //* 统计当前需补充的长度
+                    const replenish = (vars.size - real) / vars.data.length;
+                    vars.data.forEach((val) => {
+                        val.width += replenish;
+                    });
+                }
             } else if (real > vars.size) {
                 //* 统计当前需删减的长度
                 let omit = real - vars.size;
@@ -160,7 +178,7 @@ export const useComposable = (define: UiTableProps, emit: SetupContext<typeof Ui
                 case "center":
                     return { "justify-content": "center" };
 
-                case "right":
+                case "end":
                     return { "justify-content": "flex-end" };
 
                 default:
