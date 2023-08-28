@@ -27,7 +27,6 @@ export const disposeLayshaft = (option: DisposeLayshaftOption) => {
 
                 //* 检测右对齐时, 左侧是否未超出边界
                 if (option.offset - difference >= option.min) {
-                    console.log(option, difference);
                     result.offset = option.offset - difference;
                 }
             }

@@ -35,8 +35,7 @@ export const useComposable = (define: UiTableProps, emit: SetupContext<typeof Ui
             const rows = [refs.HeaderNode.value, ...bodys];
             const vars: UiTableVars = {
                 replenish: 0,
-                number: 0,
-                size: refs.TableNode.value.offsetWidth - 14 - define.spacing * 2,
+                size: Math.floor(refs.TableNode.value.clientWidth) - define.spacing * 2 - 4, //! 这里-4是预留宽度，用于解决因小数点计算导致的尺寸偏差
                 data: [],
             };
 
@@ -45,18 +44,14 @@ export const useComposable = (define: UiTableProps, emit: SetupContext<typeof Ui
                 //* 数据初始化
                 const result = {
                     key: value.key,
-                    min: value["min-width"] || 0,
-                    max: value["max-width"] || 0,
+                    min: value["min-width"] || -1,
+                    max: value["max-width"] || -1,
                     width: value.width || value["min-width"] || 0,
-                    isReplenish: false,
+                    replenish: !value.width,
                 };
 
+                //* 遍历td、th用于获取row尺寸
                 if (!value.width) {
-                    //* 标记该列允许补充列宽
-                    result.isReplenish = true;
-                    //* 记录需要分配的列数
-                    vars.number++;
-                    //* 遍历td、th用于获取row尺寸
                     rows.forEach((row) => {
                         //* 获取对应的col node
                         const node = row.querySelector(`.ui-table-column[name=${value.key}]`) as HTMLElement;
@@ -92,36 +87,43 @@ export const useComposable = (define: UiTableProps, emit: SetupContext<typeof Ui
             }, 0);
 
             //* 第二次遍历, 检测当前表格是需要进行补足还是删减尺寸, 并进行对应操作
-            if (real < vars.size) {
-                if (vars.number) {
-                    //* 统计当前需补充的长度
-                    const replenish = (vars.size - real) / vars.number;
-                    vars.data.forEach((val) => {
-                        if (val.isReplenish) {
-                            val.width += replenish;
+            vars.replenish = vars.size - real;
+            while (vars.replenish != 0) {
+                //* 初始化允许增减长度的数据列表
+                const data = vars.data.filter((val) => {
+                    return val.replenish && (vars.replenish > 0 ? val.max == -1 || val.width < val.max : val.min == -1 || val.width > val.min);
+                });
+
+                //* 当不存在允许增减长度的数据列表时退出...
+                if (!data.length || vars.replenish / data.length == 0) break;
+
+                //* 增减尺寸...
+                if (vars.replenish > 0) {
+                    //* 补充尺寸（平均分配）
+                    const replenish = vars.replenish / data.length;
+                    data.forEach((value) => {
+                        if (value.max != -1 && value.width + replenish > value.max) {
+                            vars.replenish -= value.max - value.width;
+                            value.width = value.max;
+                        } else {
+                            value.width += replenish;
+                            vars.replenish -= replenish;
                         }
                     });
-                } else {
-                    //* 统计当前需补充的长度
-                    const replenish = (vars.size - real) / vars.data.length;
-                    vars.data.forEach((val) => {
-                        val.width += replenish;
-                    });
-                }
-            } else if (real > vars.size) {
-                //* 统计当前需删减的长度
-                let omit = real - vars.size;
-                //* 无限循环删减omit
-                while (omit > 0) {
-                    const data = vars.data.filter((val) => val.width > val.min);
+                } else if (vars.replenish < 0) {
+                    //* 删减尺寸（优先删减最长的尺寸）
+                    //* 获取data中最大的尺寸
                     const max = data.sort((a, b) => b.width - a.width)?.[0]?.width || 0;
-                    if (!data.length) return;
-                    else {
-                        for (let i = 0; i < data.length; i++) {
-                            if (omit <= 0) break;
-                            if (data[i].width == max) {
-                                omit--;
-                                data[i].width--;
+                    for (let i = 0; i < data.length; i++) {
+                        if (vars.replenish == 0) break;
+                        if (data[i].width == max && data[i].width > data[i].min) {
+                            //* 当width与min之间的距离小于1时：特殊处理
+                            if (data[i].min != -1 && data[i].width - 1 < data[i].min) {
+                                vars.replenish += data[i].width - data[i].min;
+                                data[i].width = data[i].min;
+                            } else {
+                                vars.replenish += 1;
+                                data[i].width += 1;
                             }
                         }
                     }
