@@ -178,7 +178,7 @@ export const useComposable = (define: UiTableProps, emit: SetupContext<typeof Ui
         }),
 
         //* 对齐样式
-        receiveAlignStyle: (data: any) => {
+        receiveAlignStyle: (data: any): { [name: string]: string } => {
             switch (data.align) {
                 case "center":
                     return { "justify-content": "center", "text-align": "center" };
