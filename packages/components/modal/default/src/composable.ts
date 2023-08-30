@@ -24,11 +24,11 @@ export default (define: UiModalProps, emit: SetupContext<typeof UiModalEmits>["e
         containerStyle: computed(() => {
             //* 初始化返回数据
             const result: { [name: string]: any } = {
-                width: utility.isNumber(define.width) ? define.width + "px" : define.width,
-                padding: define.spacing,
+                "width": utility.isNumber(define.width) ? define.width + "px" : define.width,
+                "padding": define.spacing,
+                "min-height": utility.isNumber(define.height) ? define.height + "px" : define.height,
             };
-            //* 检测是否需要拉伸
-            result[define.magnify ? "min-height" : "height"] = utility.isNumber(define.height) ? define.height + "px" : define.height;
+
             return result;
         }),
     };
@@ -40,9 +40,9 @@ export default (define: UiModalProps, emit: SetupContext<typeof UiModalEmits>["e
             nextTick(() => {
                 if (!refs.container.value || !refs.main.value) return;
                 if (refs.container.value.offsetHeight >= window.innerHeight) {
-                    refs.main.value.style.justifyContent = "flex-start";
+                    refs.main.value.style.alignItems = "flex-start";
                 } else {
-                    refs.main.value.style.justifyContent = "center";
+                    refs.main.value.style.alignItems = "center";
                 }
             });
         },

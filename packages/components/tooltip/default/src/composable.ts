@@ -97,14 +97,14 @@ export const useComposable = (define: UiTooltipProps) => {
         mainHandles: {
             //* 鼠标移入事件
             mouseenter: () => {
-                if (define.trigger == "hover" && !define.disabled) {
+                if (define.trigger == "hover") {
                     methods.show();
                 }
             },
 
             //* 鼠标移出事件
             mouseleave: () => {
-                if (define.trigger == "hover" && !define.disabled) {
+                if (define.trigger == "hover") {
                     methods.hidden();
                 }
             },
@@ -114,14 +114,14 @@ export const useComposable = (define: UiTooltipProps) => {
         contentHandles: {
             //* 鼠标移入事件
             mouseenter: () => {
-                if (define.trigger == "hover" && !define.disabled) {
+                if (define.trigger == "hover") {
                     methods.show();
                 }
             },
 
             //* 鼠标移出事件
             mouseleave: () => {
-                if (define.trigger == "hover" && !define.disabled) {
+                if (define.trigger == "hover") {
                     methods.hidden();
                 }
             },

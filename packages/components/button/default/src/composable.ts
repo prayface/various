@@ -50,7 +50,7 @@ export const useComposable = (define: UiButtonProps, emits: SetupContext<typeof 
 
     //* 函数列表
     const methods = {
-        click: (ev?: MouseEvent | Event) => {
+        click: (ev?: MouseEvent) => {
             if (computeds.disabled.value) return;
             else {
                 emits("click", ev);
