@@ -1,16 +1,16 @@
 <template>
     <div class="ui-tooltip-container" v-on="mainHandles" ref="main">
         <slot name="default"></slot>
-    </div>
 
-    <Transition @enter="entranceAnimation" @leave="departureAnimation" @before-enter="entrancePreAnimation">
-        <div v-if="visible" v-on="contentHandles" class="ui-tooltip" ref="tooltip" :style="style" :class="classExtraName">
-            <div class="ui-tooltip-triangle" ref="triangle"></div>
-            <div class="ui-tooltip-content">
-                <slot name="content">{{ content }}</slot>
+        <Transition @enter="entranceAnimation" @leave="departureAnimation" @before-enter="entrancePreAnimation">
+            <div v-if="visible" v-on="contentHandles" class="ui-tooltip" ref="tooltip" :style="style" :class="classExtraName">
+                <div class="ui-tooltip-triangle" ref="triangle"></div>
+                <div class="ui-tooltip-content">
+                    <slot name="content">{{ content }}</slot>
+                </div>
             </div>
-        </div>
-    </Transition>
+        </Transition>
+    </div>
 </template>
 
 <script lang="ts" setup>
