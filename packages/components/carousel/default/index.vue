@@ -6,13 +6,18 @@
         </div>
 
         <!-- 轮播图左侧箭头 -->
-        <div class="ui-carousel-control ui-carousel-left-control" @click="switchCarousel(active - 1)" v-if="isFirstControl">
-            <UiIcon name="arrow" />
-        </div>
+        <slot name="arrow-back" v-if="isFirstControl">
+            <div class="ui-carousel-control ui-carousel-left-control" @click="switchCarousel(active - 1)">
+                <UiIcon name="arrow" />
+            </div>
+        </slot>
+
         <!-- 轮播图右侧箭头 -->
-        <div class="ui-carousel-control ui-carousel-right-control" @click="switchCarousel(active + 1)" v-if="isLastControl">
-            <UiIcon name="arrow" />
-        </div>
+        <slot name="arrow-next" v-if="isLastControl">
+            <div class="ui-carousel-control ui-carousel-right-control" @click="switchCarousel(active + 1)">
+                <UiIcon name="arrow" />
+            </div>
+        </slot>
 
         <!-- 轮播图分页器 -->
         <div class="ui-carousel-schedules" v-if="pagination">
