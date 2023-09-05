@@ -15,14 +15,18 @@
 
 //* 轮播图公共样式
 .ui-mv-carousel {
-    overflow: hidden;
     position: relative;
-    > .ui-mv-carousel-container {
+    > .ui-mv-carousel-main {
+        width: 100%;
         height: 100%;
-        display: inline-flex;
-        position: relative;
-        > * {
-            transition: none !important;
+        overflow: hidden;
+        > .ui-mv-carousel-container {
+            height: 100%;
+            display: inline-flex;
+            position: relative;
+            > * {
+                transition: none !important;
+            }
         }
     }
 

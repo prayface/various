@@ -1,8 +1,10 @@
 <template>
-    <div class="ui-mv-carousel" :class="className" :style="style" ref="main">
+    <div class="ui-mv-carousel" :class="className" :style="style">
         <!-- 轮播图容器, 用来控制轮播滚动 -->
-        <div class="ui-mv-carousel-container" ref="container">
-            <slot></slot>
+        <div class="ui-mv-carousel-main" ref="main">
+            <div class="ui-mv-carousel-container" ref="container">
+                <slot></slot>
+            </div>
         </div>
 
         <!-- 轮播图左侧箭头 -->
