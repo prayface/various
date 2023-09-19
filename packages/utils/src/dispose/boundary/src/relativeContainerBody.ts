@@ -33,12 +33,20 @@ export const relativeContainerBody = (container: HTMLElement, view: HTMLElement,
     const rect = useElementOption(container);
 
     //* 获取窗口宽高
-    const viewWidth = Math.ceil(option.width || view.offsetWidth);
-    const viewHeight = Math.ceil(option.height || view.offsetHeight);
+    let viewWidth = view.offsetWidth;
+    let viewHeight = view.offsetHeight;
 
-    //* 设置窗口宽度
-    view.style.width = viewWidth + "px";
-    view.style.maxHeight = viewHeight + "px";
+    //* 窗口宽度调整
+    if (option.width) {
+        viewWidth = Math.ceil(option.width);
+        view.style.width = viewWidth + "px";
+    }
+
+    //* 窗口高度调整
+    if (option.height) {
+        viewHeight = Math.ceil(option.height);
+        view.style.maxHeight = viewHeight + "px";
+    }
 
     switch (option.direction) {
         case "top": {
