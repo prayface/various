@@ -34,6 +34,19 @@
             }
         }
     }
+
+    &:hover,
+    &.ui-active {
+        .ui-form-control {
+            border-color: var(--uioption-form-active-color);
+        }
+    }
+
+    &.ui-active {
+        .ui-date-picker-icons.ui-date-picker-arrow {
+            transform: translate(0, -50%) rotate(180deg);
+        }
+    }
 }
 
 //* 组件候选窗口样式

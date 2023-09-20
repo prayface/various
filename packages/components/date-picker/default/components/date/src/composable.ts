@@ -7,10 +7,11 @@ import type { ModuleDay } from "./types";
 export const useComposable = (emits: SetupContext<typeof UiPickerEmits>["emit"]) => {
     //* 响应式变量
     const refs = {
-        day: ref<number>(-1), //* 日
-        year: ref<number>(-1), //* 年
-        month: ref<number>(-1), //* 月
-        days: ref<ModuleDay[]>([]), //* 日期列表
+        day: ref<number>(-1),
+        days: ref<ModuleDay[]>([]),
+        year: ref<number>(-1),
+        month: ref<number>(-1),
+        realityDate: ref<Date | undefined>(), //* 真实日期
     };
 
     //* 函数列表
@@ -26,11 +27,12 @@ export const useComposable = (emits: SetupContext<typeof UiPickerEmits>["emit"])
     //* 处理函数列表
     const disposes = {
         //* 初始化函数
-        init: (date: Date) => {
-            //* 设置年份与月份
+        init: (date: Date, realityDate?: Date) => {
+            //* 初始化日期数据
             refs.day.value = date.getDate();
             refs.year.value = date.getFullYear();
             refs.month.value = date.getMonth();
+            refs.realityDate.value = realityDate;
 
             //* 初始化日份列表
             refs.days.value = [];
@@ -64,7 +66,10 @@ export const useComposable = (emits: SetupContext<typeof UiPickerEmits>["emit"])
         receiveDayClassName: (year: number, month: number, day: number) => {
             return {
                 "ui-readonly-status": refs.month.value != month,
-                "ui-active": refs.day.value == day && refs.year.value == year && refs.month.value == month,
+                "ui-active":
+                    refs.realityDate.value?.getDate() == day &&
+                    refs.realityDate.value?.getFullYear() == year &&
+                    refs.realityDate.value?.getMonth() == month,
             };
         },
     };

@@ -4,13 +4,6 @@
     --uioption-scope-input-active-border-color: var(--uioption-form-active-color); // 默认范围输入框激活边框色
 }
 
-.ui-form-control {
-    &:hover,
-    &:focus {
-        border-color: var(--uioption-scope-input-active-border-color);
-    }
-}
-
 .ui-scope-input {
     position: relative;
 
@@ -19,6 +12,10 @@
         display: inline-flex;
         align-items: center;
         justify-content: space-between;
+        &:hover,
+        &:focus {
+            border-color: var(--uioption-scope-input-active-border-color);
+        }
     }
 
     .ui-scope-input-control {

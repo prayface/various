@@ -1,13 +1,16 @@
 //* 插件
-import { ref, computed, nextTick, SetupContext } from "vue";
+import { ref, inject, computed, nextTick, SetupContext } from "vue";
 import { gsap } from "gsap";
+
+//* 公共属性
+import { UiFormEmitterKey } from "@various/constants";
+
+//* 工具函数
+import { node, utility, dispose } from "@various/utils";
 
 //* 组件属性
 import { UiDatePickerProps, UiDatePickerEmits } from "../index";
 import type { ModuleUpdateData } from "./types";
-
-//* 工具函数
-import { node, utility, dispose } from "@various/utils";
 
 //* 组件引入
 import PickerDate from "../components/date/index.vue";
@@ -16,6 +19,9 @@ import PickerMonth from "../components/month/index.vue";
 type ComponentNodeType = InstanceType<typeof PickerDate> | InstanceType<typeof PickerMonth>;
 
 export const useComposable = (define: UiDatePickerProps, emits: SetupContext<typeof UiDatePickerEmits>["emit"]) => {
+    //* 初始化mitt
+    const emitter = inject(UiFormEmitterKey, undefined);
+
     //* 响应式变量
     const refs = {
         date: ref<Date>(), //* 临时的日期对象
@@ -60,6 +66,8 @@ export const useComposable = (define: UiDatePickerProps, emits: SetupContext<typ
             if (define.size != "default") result.push(`ui-${define.size}`);
             //* 判断是否需要添加clearable类名
             if (define.modelValue) result.push(`ui-clearable`);
+            //* 判断是否需要添加ui-active类名
+            if (refs.visible.value) result.push("ui-active");
 
             return result.join(" ");
         }),
@@ -109,7 +117,7 @@ export const useComposable = (define: UiDatePickerProps, emits: SetupContext<typ
             //* 下一帧进行候选项组件初始化
             nextTick(() => {
                 //* 组件内容初始化
-                nodes.componentNode.value?.init(analyzes.analyzeDate.value);
+                nodes.componentNode.value?.init(analyzes.analyzeDate.value, new Date(define.modelValue || ""));
                 //* 下一帧进行候选窗口的定位与时间挂载
                 nextTick(() => {
                     //* 检测是否满足运行条件
@@ -128,6 +136,22 @@ export const useComposable = (define: UiDatePickerProps, emits: SetupContext<typ
                     window.addEventListener("click", methods.hidden, true);
                 });
             });
+        },
+
+        //* 清空函数
+        clear: () => {
+            //* 更新input value
+            emits("update:modelValue", "");
+            //* 响应input清空事件
+            emits("clear");
+
+            //* 响应表单事件
+            if (emitter?.emit) {
+                emitter.emit(define.name || "", "change");
+            }
+
+            //* 关闭候选窗口
+            methods.hidden();
         },
 
         //* 隐藏函数
@@ -157,7 +181,7 @@ export const useComposable = (define: UiDatePickerProps, emits: SetupContext<typ
             refs.mode.value = mode;
             //* 下一帧初始化组件
             nextTick(() => {
-                nodes.componentNode.value?.init(analyzes.analyzeDate.value);
+                nodes.componentNode.value?.init(analyzes.analyzeDate.value, new Date(define.modelValue || ""));
                 //* 下一帧进行候选窗口的定位与时间挂载
                 nextTick(() => {
                     //* 检测是否满足运行条件
@@ -193,6 +217,11 @@ export const useComposable = (define: UiDatePickerProps, emits: SetupContext<typ
                 if (define.mode == "month") emits("update:modelValue", `${cYear}-${cMonth}`);
                 else {
                     emits("update:modelValue", `${cYear}-${cMonth}-${cDate}`);
+                }
+
+                //* 响应表单事件
+                if (emitter?.emit) {
+                    emitter.emit(define.name || "", "change");
                 }
 
                 //* 关闭候选窗口

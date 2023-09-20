@@ -9,10 +9,12 @@ export const UiDatePickerPropsOption = {
     width: { type: [String, Number] as PropType<number | string>, default: 264 },
     size: { type: String as PropType<UiTypes.size>, default: "default" },
     mode: { type: String as PropType<"date" | "month">, default: "date" },
+    name: { type: String },
 };
 
 export type UiDatePickerProps = ExtractPropTypes<typeof UiDatePickerPropsOption>;
 
 export const UiDatePickerEmits = {
     "update:modelValue": (_data: string) => true,
+    "clear": () => true,
 };

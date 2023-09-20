@@ -29,7 +29,7 @@
         <div class="ui-date-picker-candidate-content">
             <div class="ui-date-picker-candidate-content-container">
                 <template v-for="value in months">
-                    <div class="ui-picker-candidate" :class="{ 'ui-active': value == month }" @click="changeMonth(value)">{{ value + 1 }}月</div>
+                    <div class="ui-picker-candidate" :class="receiveDayClassName(value)" @click="changeMonth(value)">{{ value + 1 }}月</div>
                 </template>
             </div>
         </div>
@@ -46,9 +46,9 @@ const emits = defineEmits(UiPickerEmits);
 
 //* 组合函数
 const { refs, methods, disposes } = useComposable(emits);
-const { months, month, year } = refs;
+const { months, year } = refs;
 const { changeDate, changeMonth } = methods;
-const { init } = disposes;
+const { init, receiveDayClassName } = disposes;
 
 defineExpose({ init });
 </script>

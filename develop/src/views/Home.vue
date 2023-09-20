@@ -1,13 +1,30 @@
 <template>
     <div>
         <UiDatePicker v-model="date1" style="width: 240px" />
-        <UiDatePicker v-model="date2" style="width: 240px; margin-top: 20px" />
+        <UiForm :data="data" :rules="rules">
+            <UiFormItem prop="date">
+                <UiDatePicker v-model="data.date" mode="month" name="date" style="width: 240px; margin-top: 20px" />
+            </UiFormItem>
+        </UiForm>
     </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, reactive } from "vue";
 
-const date1 = ref("2022-09-03");
-const date2 = ref("");
+const date1 = ref("");
+const data = reactive({
+    date: "",
+});
+
+const rules = {
+    date: [
+        {
+            trigger: "change",
+            verify: (data) => {
+                return { verify: false, message: "校验不通过, 奈我何!!!" };
+            },
+        },
+    ],
+};
 </script>
