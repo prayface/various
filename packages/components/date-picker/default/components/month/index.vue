@@ -37,6 +37,9 @@
 </template>
 
 <script lang="ts" setup>
+//* 组件引入
+import UiIcon from "@various/components/icon";
+
 //* 组件属性
 import { useComposable } from "./src/composable";
 import { UiPickerEmits } from "./index";
