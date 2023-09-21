@@ -219,6 +219,9 @@ export const useComposable = (define: UiDatePickerProps, emits: SetupContext<typ
                     emits("update:modelValue", `${cYear}-${cMonth}-${cDate}`);
                 }
 
+                //* 响应时间选择事件
+                emits("change");
+
                 //* 响应表单事件
                 if (emitter?.emit) {
                     emitter.emit(define.name || "", "change");
