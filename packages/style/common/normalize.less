@@ -32,7 +32,7 @@
 body {
     color: var(--uioption-font-color);
     font-size: var(--uisize-font-size);
-    line-height: var(--uisize-font-height);
+    line-height: calc(var(--uisize-font-size) + var(--uisize-font-spacing) * 2);
     margin: 0;
 }
 
@@ -126,8 +126,7 @@ optgroup,
 select,
 textarea {
     font-family: inherit;
-    /* 1 */
-    line-height: var(--uisize-font-height);
+    line-height: calc(var(--uisize-font-size) + var(--uisize-font-spacing) * 2);
     background: none;
     font-size: 1em;
     outline: none;
