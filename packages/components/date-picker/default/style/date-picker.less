@@ -1,6 +1,7 @@
 //* 组件样式
 .ui-date-picker {
     position: relative;
+
     .ui-date-picker-icons {
         inset: 50% var(--uioption-form-spacing-x) auto auto;
         cursor: text;
@@ -9,10 +10,12 @@
         transform: translate(0, -50%);
         transition: all 0.3s;
         transform-origin: center;
+
         &.ui-date-picker-clearable {
             cursor: pointer;
             transform: translate(0, -50%) scale(0);
             border-radius: 50%;
+
             &:hover {
                 color: #fff;
                 background-color: var(--uicolor-main-color);
@@ -56,16 +59,20 @@
     border-radius: var(--uioption-form-radius);
     box-shadow: var(--uioption-form-candidate-box-shadow);
     position: absolute;
+
     //* 组件候选窗口样式（默认）
     .ui-date-picker-candidate {
+
         //* 候选项头部控制器
         .ui-date-picker-candidate-header {
             height: 40px;
             display: flex;
             padding: 0 calc(var(--uioption-form-spacing-x) - 2px);
             border-bottom: 1px solid var(--uicolor-font-4-05);
+
             .ui-date-picker-candidate-controls {
                 display: flex;
+
                 .ui-date-picker-candidate-control {
                     cursor: pointer;
                     display: flex;
@@ -74,6 +81,7 @@
                     user-select: none;
                     align-items: center;
                     transition: color 0.5s;
+
                     &:hover {
                         color: var(--uicolor-main-color);
                     }
@@ -103,13 +111,14 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                > * {
+
+                >* {
                     color: var(--uicolor-font-1);
                     transition: color 0.3s;
                     font-weight: bold;
                 }
 
-                > .ui-date-picker-candidate-month:not(:first-child) {
+                >.ui-date-picker-candidate-month:not(:first-child) {
                     margin-left: 8px;
                 }
             }
@@ -118,10 +127,12 @@
         //* 候选项内容
         .ui-date-picker-candidate-content {
             padding: 16px var(--uioption-form-spacing-x);
+
             .ui-picker-candidate {
                 display: flex;
                 align-items: center;
                 justify-content: center;
+
                 &.ui-readonly-status {
                     color: var(--uicolor-font-4);
                 }
@@ -134,11 +145,13 @@
             .ui-date-picker-candidate-content-container {
                 display: flex;
                 flex-wrap: wrap;
+
                 .ui-picker-candidate {
                     cursor: pointer;
                     transition: background-color 0.5s;
                     user-select: none;
                     border-radius: var(--uisize-radius);
+
                     &:hover {
                         background-color: var(--uicolor-font-5);
                     }
@@ -146,6 +159,11 @@
                     &.ui-active {
                         color: #fff;
                         background-color: var(--uicolor-main-color);
+                    }
+
+                    &.ui-disabled-status {
+                        color: var(--uicolor-font-4);
+                        background-color: var(--uioption-form-background-color);
                     }
                 }
             }
@@ -157,7 +175,8 @@
         .ui-date-picker-candidate-header {
             .ui-date-picker-candidate-context:hover {
                 cursor: pointer;
-                > * {
+
+                >* {
                     color: var(--uicolor-main-color);
                 }
             }
@@ -165,6 +184,7 @@
 
         .ui-date-picker-candidate-content {
             width: calc((var(--uioption-form-spacing-x) * 2) + (36px * 7));
+
             .ui-picker-candidate {
                 width: 36px;
                 height: 36px;
@@ -176,6 +196,7 @@
     .ui-date-picker-candidate.ui-picker-month {
         .ui-date-picker-candidate-content {
             width: calc((var(--uioption-form-spacing-x) * 2) + (80px * 3) + 16px);
+
             .ui-date-picker-candidate-content-container {
                 justify-content: space-between;
             }
@@ -183,6 +204,7 @@
             .ui-picker-candidate {
                 width: 80px;
                 height: 36px;
+
                 &:nth-child(n + 4) {
                     margin-top: 8px;
                 }
