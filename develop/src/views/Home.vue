@@ -12,7 +12,8 @@
             mode="month"
             placeholder="开始时间"
             :disabledDateStart="new Date(date3)"
-            style="width: 240px; margin-top: 20px" />
+            style="width: 240px; margin-top: 20px"
+            ref="datepicker" />
         <UiDatePicker v-model="date3" mode="month" placeholder="截止时间" style="width: 240px; margin-top: 20px" @change="change()" />
     </div>
 </template>
@@ -28,10 +29,12 @@ const disabledDate1 = ref({
     end: new Date("2025/08"),
 });
 
+const datepicker = ref();
+
 const change = () => {
     console.log("change");
     if (date2.value > date3.value) {
-        date2.value = "";
+        datepicker.value.clear();
         console.log("date2", date2.value);
     }
 };
