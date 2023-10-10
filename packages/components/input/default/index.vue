@@ -1,28 +1,27 @@
 <template>
-    <div class="ui-input" :class="className" :style="style" ref="container">
-        <!-- Input主体 -->
-        <input ref="main" class="ui-form-control" v-bind="attrs" v-on="inputOns" @keydown.enter="enter" />
+    <div class="ui-input" ref="container" v-bind="attrContainer">
+        <!-- * 输入框主体 -->
+        <input ref="main" class="ui-form-control" v-bind="attrMain" v-on="eventMain" @keydown.enter="enter" />
 
-        <!-- 清空按钮 -->
+        <!-- * 清空按钮 -->
         <UiIcon name="error" class="ui-form-clearable" v-if="clearable && modelValue" @click="clear" />
 
-        <!-- 候选项 -->
-        <Transition>
-            <template v-if="visible">
-                <div class="ui-form-candidates" ref="candidate" v-show="candidates?.length" :class="classExtraName || ''" :style="{ zIndex: zIndex }">
-                    <div class="ui-form-candidates-triangle" ref="triangle"></div>
-                    <div class="ui-form-candidate-container" :style="{ maxHeight: height + 'px' }">
+        <!-- * 候选项 -->
+        <Transition @before-enter="aniEnterBefore" @enter="aniEnter" @leave="aniLeave">
+            <div class="ui-form-candidates" ref="candidate" v-if="visible" v-show="candidates.length" v-bind="attrCandidates">
+                <!-- * 候选项的三角型图标 -->
+                <div class="ui-form-candidates-triangle" ref="triangle"></div>
+                <!-- * 候选项的内容容器 -->
+                <div class="ui-form-candidate-container">
+                    <div class="ui-form-candidate-content" v-bind="attrCandidatesContent">
                         <template v-for="value in candidates">
-                            <div
-                                class="ui-form-candidate"
-                                :class="{ 'ui-active': value.value == modelValue }"
-                                @mousedown="switchCandidate(value.value, $event)">
+                            <div class="ui-form-candidate" :class="useCandidateName(value.value)" @mousedown="switchCandidate(value.value, $event)">
                                 <slot name="candidate" :data="value">{{ value.label }}</slot>
                             </div>
                         </template>
                     </div>
                 </div>
-            </template>
+            </div>
         </Transition>
 
         <!-- 遮罩层 -->
@@ -53,11 +52,14 @@ const define = defineProps(UiInputPropsOption);
 const emits = defineEmits(UiInputEmits);
 
 //* 组合函数
-const { refs, methods, options, computeds } = useComposable(define, emits);
+const { refs, attrs, events, methods, dynamics, computeds, animations } = useComposable(define, emits);
 const { main, visible, triangle, container, candidate } = refs;
+const { attrContainer, attrMain, attrCandidates, attrCandidatesContent } = attrs;
+const { eventMain } = events;
 const { blur, clear, enter, focus, switchCandidate } = methods;
-const { status } = options;
-const { attrs, style, inputOns, className } = computeds;
+const { useCandidateName } = dynamics;
+const { status } = computeds;
+const { aniEnterBefore, aniEnter, aniLeave } = animations;
 
 //* 销毁时间
 onBeforeUnmount(() => {

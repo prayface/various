@@ -1,11 +1,5 @@
 <template>
-    <header></header>
     <main>
-        <aside>
-            <template v-for="route in $router.options.routes">
-                <RouterLink :to="route.path" exact-active-class>{{ route.name }}</RouterLink>
-            </template>
-        </aside>
         <article>
             <div class="title">{{ $route.name }}</div>
             <RouterView />
@@ -16,56 +10,13 @@
 <script setup></script>
 
 <style lang="less">
-footer {
-    width: 100%;
-    height: 200px;
-    background: var(--uicolor-font-4);
-    border-top: 1px solid var(--uicolor-font-4);
-}
-
-header {
-    top: 0;
-    width: 100%;
-    height: 55px;
-    z-index: 1;
-    position: sticky;
-    font-size: 20px;
-    text-align: center;
-    background: #fff;
-    font-weight: bold;
-    line-height: 55px;
-    border-bottom: 1px solid var(--uicolor-font-4);
-}
-
 main {
     width: 100%;
-    min-width: 1440px;
+    min-width: 768px;
+    max-width: 1280px;
     margin: 40px auto 60px;
     display: flex !important;
     align-items: flex-start;
-
-    aside {
-        overflow: hidden;
-        margin-top: 64px;
-        padding-right: 40px;
-        a {
-            width: 100%;
-            margin: 8px 0 0;
-            border: 1px solid var(--uicolor-font-4);
-            display: block;
-            padding: 8px 20px;
-            border-radius: 4px;
-            &:hover {
-                border-color: var(--uicolor-main-color);
-            }
-
-            &.router-link-active {
-                color: var(--uicolor-main-color);
-                border-color: var(--uicolor-main-color);
-                background: var(--uicolor-main-color-005);
-            }
-        }
-    }
 
     article {
         flex: 1;

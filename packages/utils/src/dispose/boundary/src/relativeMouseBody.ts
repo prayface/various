@@ -1,6 +1,6 @@
 import { gsap } from "gsap";
 import { UiTypes } from "@various/constants";
-import { disposeLayshaft } from "../utils";
+import { disposeSubAxis } from "../utils";
 
 type RelativeMouseBodyEV = MouseEvent | { pageX: number; pageY: number };
 type RelativeMouseBodyOption = {
@@ -17,34 +17,36 @@ type RelativeMouseBodyOption = {
  * @returns
  */
 export const relativeMouseBody = (ev: RelativeMouseBodyEV, view: HTMLElement, option: RelativeMouseBodyOption) => {
-    const result = {
-        offsetX: ev.pageX + option.offsetX,
-        offsetY: ev.pageY + option.offsetY,
-    };
+    //* 数据初始化
+    const result = { offsetX: 0, offsetY: 0 };
 
-    //* 副轴计算
-    const layshaft = disposeLayshaft({
-        size: 0,
-        align: option.align || "start",
-        offset: result.offsetY,
-        min: window.scrollY,
-        max: window.scrollY + window.innerHeight,
-        viewSize: view.clientHeight,
-    });
+    //* X轴的位置计算
+    const axisX = disposeSubAxis(
+        { container: 0, space: 8, view: view.clientWidth },
+        { min: scrollX, max: innerWidth + scrollX, align: option.align || "start", offset: ev.pageX }
+    );
 
-    //* 水平方向边界检测
-    const offsetX = result.offsetX + view.offsetWidth;
-    const offsetNewX = ev.pageX - view.offsetWidth - option.offsetX;
-    if (offsetX > window.innerWidth + window.scrollX - 20 && offsetNewX >= window.scrollX + 20) {
-        result.offsetX = offsetNewX;
+    if (axisX.align == "end") result.offsetX = axisX.offset - option.offsetX;
+    else {
+        result.offsetX = axisX.offset + option.offsetX;
+    }
+
+    //* Y轴的位置计算
+    const axisY = disposeSubAxis(
+        { container: 0, space: 8, view: view.clientHeight },
+        { min: scrollY, max: innerHeight + scrollY, align: option.align || "start", offset: ev.pageY }
+    );
+
+    if (axisY.align == "end") result.offsetY = axisY.offset - option.offsetY;
+    else {
+        result.offsetY = axisY.offset + option.offsetY;
     }
 
     //* 未进行过定位时, 默认定位到当前位置
     if (view.style.opacity == "0") {
-        gsap.set(view, { x: result.offsetX, y: layshaft.offset });
+        gsap.set(view, { x: result.offsetX, y: result.offsetY });
     }
 
-    gsap.to(view, { duration: 0.2, x: result.offsetX, y: layshaft.offset });
-
-    return result;
+    //* 设置属性
+    gsap.to(view, { duration: 0.2, x: result.offsetX, y: result.offsetY });
 };

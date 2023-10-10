@@ -1,18 +1,24 @@
 import { UiTypes } from "@various/constants";
 import { useElementOption } from "./useElementOption";
-import { disposeLayshaft } from "../utils";
-import { relativeContainer } from "./relativeContainer";
+import { disposeMainAxis, disposeSubAxis, setTriangleAttr } from "../utils";
+
+/**@name 窗口相对于容器定位的可视区域边界算法的节点 */
+export type RelativeContainerBodyNodes = {
+    container: HTMLElement; //* 相对的容器节点
+    triangle?: HTMLElement; //* 窗口上方的三角形节点
+    view: HTMLElement; //* 窗口节点
+};
 
 /**@name 窗口相对于容器定位的可视区域边界算法的配置项 */
 export type RelativeContainerBodyOption = {
+    //* 副轴对齐方式
+    align: UiTypes.align;
+
     //* 主轴偏移位置
     offset: number;
 
     //* 主轴方向
     direction: UiTypes.direction;
-
-    //* 副轴对齐方式
-    align: UiTypes.align;
 
     //* 窗口宽度
     width?: number;
@@ -28,213 +34,121 @@ export type RelativeContainerBodyOption = {
  * @param option
  * @returns
  */
-export const relativeContainerBody = (container: HTMLElement, view: HTMLElement, option: RelativeContainerBodyOption) => {
+export const relativeContainerBody = (nodes: RelativeContainerBodyNodes, option: RelativeContainerBodyOption) => {
     //* 获取容器位置参数
-    const rect = useElementOption(container);
+    const rect = useElementOption(nodes.container);
 
     //* 获取窗口宽高
-    let viewWidth = view.offsetWidth;
-    let viewHeight = view.offsetHeight;
+    const viewWidth = Math.ceil(option.width || nodes.view.offsetWidth);
+    const viewHeight = Math.ceil(option.height || nodes.view.offsetHeight);
 
-    //* 窗口宽度调整
-    if (option.width) {
-        viewWidth = Math.ceil(option.width);
-        view.style.width = viewWidth + "px";
-    }
-
-    //* 窗口高度调整
-    if (option.height) {
-        viewHeight = Math.ceil(option.height);
-        view.style.maxHeight = viewHeight + "px";
-    }
+    //* 窗口尺寸调整
+    if (option.width) nodes.view.style.width = viewWidth + "px";
+    if (option.height) nodes.view.style.maxHeight = viewHeight + "px";
 
     switch (option.direction) {
         case "top": {
-            //* 副轴计算
-            const layshaft = disposeLayshaft({
-                align: option.align,
-                size: rect.width,
-                offset: rect.rootX,
-                min: window.scrollX,
-                max: window.scrollX + window.innerWidth,
-                viewSize: viewWidth,
-            });
+            //* 计算主轴位置
+            const mainAxis = disposeMainAxis(
+                { container: rect.height, space: option.offset, view: viewHeight },
+                { min: scrollY, max: innerHeight + scrollY, offset: rect.rootY - option.offset, orientation: -1 }
+            );
 
-            //* 数据初始化
-            const result = {
-                rotate: "90deg",
-                offsetY: rect.rootY - viewHeight - option.offset,
-                triangle: "auto",
-                offsetX: layshaft.offset,
-            };
+            //* 计算副轴位置
+            const subAxis = disposeSubAxis(
+                { container: rect.width, space: 8, view: viewWidth },
+                { min: scrollX, max: innerWidth + scrollX, align: option.align, offset: rect.rootX }
+            );
 
-            //* 获取窗口偏移后左下角位置
-            const offsetNewY = rect.rootY + rect.height + option.offset + viewHeight;
-            //* 获取小三角偏移位置
-            const triangleOffset = relativeContainer(viewWidth, 8, { align: option.align, offset: 8 });
+            //* 设置属性
+            nodes.view.style.inset = `${mainAxis.offset}px auto auto ${subAxis.offset}px`;
+            nodes.triangle && setTriangleAttr(nodes.triangle, mainAxis.exceed ? "bottom" : "top", subAxis.align);
 
-            //* 超出边界, 且另外一边存在足够位置时进行偏移, 否之原计划不变
-            if (result.offsetY < window.scrollY && offsetNewY < window.innerHeight + window.scrollY) {
-                //* 调整数据
-                result.rotate = "-90deg";
-                result.offsetY = rect.rootY + rect.height + option.offset;
-                result.triangle = `-6px auto auto ${triangleOffset}px`;
-
-                //* 样式调整
-                view.style.transformOrigin = "center top";
-                view.style.inset = `${result.offsetY}px auto auto ${result.offsetX}px`;
-            } else {
-                //* 调整数据
-                result.triangle = `${viewHeight - 1}px auto auto ${triangleOffset}px`;
-
-                //* 样式调整
-                view.style.transformOrigin = "center bottom";
-                view.style.inset = `${result.offsetY}px auto auto ${result.offsetX}px`;
+            //* 边界处理（未超出）
+            if (!mainAxis.exceed) {
+                nodes.view.style.transform = "translateY(-100%)";
             }
 
-            return result;
-        }
-
-        case "bottom": {
-            //* 副轴计算
-            const layshaft = disposeLayshaft({
-                align: option.align,
-                size: rect.width,
-                offset: rect.rootX,
-                min: window.scrollX,
-                max: window.scrollX + window.innerWidth,
-                viewSize: viewWidth,
-            });
-
-            //* 数据初始化
-            const result = {
-                rotate: "-90deg",
-                offsetY: rect.rootY + rect.height + option.offset,
-                triangle: "auto",
-                offsetX: layshaft.offset,
-            };
-
-            //* 获取窗口偏移前左下角位置
-            const offsetY = result.offsetY + viewHeight;
-            //* 获取窗口偏移后左上角位置
-            const offsetNewY = rect.rootY - option.offset - viewHeight;
-            //* 获取小三角偏移位置
-            const triangleOffset = relativeContainer(viewWidth, 8, { align: option.align, offset: 8 });
-
-            //* 超出边界处理
-            if (offsetY > window.innerHeight + window.scrollY && offsetNewY >= window.scrollY) {
-                //* 调整数据
-                result.rotate = "90deg";
-                result.offsetY = rect.rootY - viewHeight - option.offset;
-                result.triangle = `${viewHeight - 1}px auto auto ${triangleOffset}px`;
-
-                //* 样式调整
-                view.style.transformOrigin = "center bottom";
-                view.style.inset = `${result.offsetY}px auto auto ${result.offsetX}px`;
-            } else {
-                //* 调整数据
-                result.triangle = `-6px auto auto ${triangleOffset}px`;
-
-                //* 样式调整
-                view.style.transformOrigin = "center top";
-                view.style.inset = `${result.offsetY}px auto auto ${result.offsetX}px`;
-            }
-
-            return result;
+            //* 退出
+            break;
         }
 
         case "left": {
-            //* 副轴计算
-            const layshaft = disposeLayshaft({
-                align: option.align,
-                size: rect.height,
-                offset: rect.rootY,
-                min: window.scrollY,
-                max: window.scrollY + window.innerHeight,
-                viewSize: viewHeight,
-            });
+            //* 计算主轴位置
+            const mainAxis = disposeMainAxis(
+                { container: rect.width, space: option.offset, view: viewWidth },
+                { min: scrollX, max: innerWidth + scrollX, offset: rect.rootX - option.offset, orientation: -1 }
+            );
 
-            //* 数据初始化
-            const result = {
-                rotate: "",
-                offsetX: rect.rootX - viewWidth - option.offset,
-                triangle: "auto",
-                offsetY: layshaft.offset,
-            };
+            //* 计算副轴位置
+            const subAxis = disposeSubAxis(
+                { container: rect.height, space: 8, view: viewHeight },
+                { min: scrollY, max: innerHeight + scrollY, align: option.align, offset: rect.rootY }
+            );
 
-            //* 获取窗口偏移后右边位置
-            const offsetNewX = rect.rootY + rect.width + option.offset + viewWidth;
-            //* 获取小三角偏移位置
-            const triangleOffset = relativeContainer(viewHeight, 8, { align: option.align, offset: 8 });
+            //* 设置属性
+            nodes.view.style.inset = `${subAxis.offset}px auto auto ${mainAxis.offset}px`;
+            nodes.triangle && setTriangleAttr(nodes.triangle, mainAxis.exceed ? "right" : "left", subAxis.align);
 
-            //* 超出边界处理
-            if (result.offsetX < window.scrollX && offsetNewX <= window.innerWidth + window.scrollX) {
-                //* 调整数据
-                result.rotate = "180deg";
-                result.offsetX = rect.rootX + rect.width + option.offset;
-                result.triangle = `${triangleOffset}px auto auto -6px`;
-
-                //* 样式调整
-                view.style.transformOrigin = `left ${layshaft.origin}`;
-                view.style.inset = `${result.offsetY}px auto auto ${result.offsetX}px`;
-            } else {
-                //* 调整数据
-                result.triangle = `${triangleOffset}px auto auto ${viewWidth - 1}px`;
-
-                //* 样式调整
-                view.style.transformOrigin = `right ${layshaft.origin}`;
-                view.style.inset = `${result.offsetY}px auto auto ${result.offsetX}px`;
+            //* 边界处理（未超出）
+            if (!mainAxis.exceed) {
+                nodes.view.style.transform = "translateX(-100%)";
             }
 
-            return result;
+            //* 退出
+            break;
         }
 
         case "right": {
-            //* 副轴计算
-            const layshaft = disposeLayshaft({
-                align: option.align,
-                size: rect.height,
-                offset: rect.rootY,
-                min: window.scrollY,
-                max: window.scrollY + window.innerHeight,
-                viewSize: viewHeight,
-            });
+            //* 计算主轴位置
+            const mainAxis = disposeMainAxis(
+                { container: rect.width, space: option.offset, view: viewWidth },
+                { min: scrollX, max: innerWidth + scrollX, offset: rect.rootX + rect.width + option.offset, orientation: 1 }
+            );
 
-            //* 数据初始化
-            const result = {
-                rotate: "180deg",
-                offsetX: rect.rootX + rect.width + option.offset,
-                triangle: "auto",
-                offsetY: layshaft.offset,
-            };
+            //* 计算副轴位置
+            const subAxis = disposeSubAxis(
+                { container: rect.height, space: 8, view: viewHeight },
+                { min: scrollY, max: innerHeight + scrollY, align: option.align, offset: rect.rootY }
+            );
 
-            //* 获取窗口偏移前左边位置
-            const offsetX = result.offsetX + viewWidth;
-            //* 获取窗口偏移后右边位置
-            const offsetNewX = rect.rootY - option.offset - viewWidth;
-            //* 获取小三角偏移位置
-            const triangleOffset = relativeContainer(viewHeight, 8, { align: option.align, offset: 8 });
+            //* 设置属性
+            nodes.view.style.inset = `${subAxis.offset}px auto auto ${mainAxis.offset}px`;
+            nodes.triangle && setTriangleAttr(nodes.triangle, mainAxis.exceed ? "left" : "right", subAxis.align);
 
-            //* 超出边界处理
-            if (offsetX > window.innerWidth + window.scrollX && offsetNewX >= window.scrollX) {
-                //* 调整数据
-                result.rotate = "";
-                result.offsetX = rect.rootX - viewWidth - option.offset;
-                result.triangle = `${triangleOffset}px auto auto ${viewWidth}px`;
-
-                //* 样式调整
-                view.style.transformOrigin = `right ${layshaft.origin}`;
-                view.style.inset = `${result.offsetY}px auto auto ${result.offsetX}px`;
-            } else {
-                //* 样式调整
-                result.triangle = `${triangleOffset}px auto auto -6px`;
-
-                //* 样式调整
-                view.style.transformOrigin = `left ${layshaft.origin}`;
-                view.style.inset = `${result.offsetY}px auto auto ${result.offsetX}px`;
+            //* 边界处理（未超出）
+            if (mainAxis.exceed) {
+                nodes.view.style.transform = "translateX(-100%)";
             }
 
-            return result;
+            //* 退出
+            break;
+        }
+
+        case "bottom": {
+            //* 计算主轴位置
+            const mainAxis = disposeMainAxis(
+                { container: rect.height, space: option.offset, view: viewHeight },
+                { min: scrollY, max: innerHeight + scrollY, offset: rect.rootY + rect.height + option.offset, orientation: 1 }
+            );
+
+            //* 计算副轴位置
+            const subAxis = disposeSubAxis(
+                { container: rect.width, space: 8, view: viewWidth },
+                { min: scrollX, max: innerWidth + scrollX, align: option.align, offset: rect.rootX }
+            );
+
+            //* 设置属性
+            nodes.view.style.inset = `${mainAxis.offset}px auto auto ${subAxis.offset}px`;
+            nodes.triangle && setTriangleAttr(nodes.triangle, mainAxis.exceed ? "top" : "bottom", subAxis.align);
+
+            //* 边界处理（超出）
+            if (mainAxis.exceed) {
+                nodes.view.style.transform = "translateY(-100%)";
+            }
+
+            //* 退出
+            break;
         }
     }
 };

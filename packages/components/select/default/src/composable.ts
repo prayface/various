@@ -1,7 +1,15 @@
+//* 按需导入插件
 import { SetupContext, nextTick, computed, inject, ref } from "vue";
+import { gsap } from "gsap";
+
+//* 组件属性
 import { UiSelectProps, UiSelectEmits } from "../index";
-import { node, utility, dispose } from "@various/utils";
+
+//* 公共属性
 import { UiFormEmitterKey } from "@various/constants";
+
+//* 公共函数
+import { node, utility, dispose } from "@various/utils";
 
 export const useComposable = (define: UiSelectProps, emits: SetupContext<typeof UiSelectEmits>["emit"]) => {
     //* 初始化mitt
@@ -14,19 +22,6 @@ export const useComposable = (define: UiSelectProps, emits: SetupContext<typeof 
         container: ref<HTMLElement>(),
         candidate: ref<HTMLElement>(),
     };
-
-    //* 组件状态
-    const status = computed(() => {
-        if (define.loading) {
-            return { is: true, name: "loading" };
-        } else if (define.disabled) {
-            return { is: false, name: "disabled" };
-        } else if (define.readonly) {
-            return { is: false, name: "readonly" };
-        } else {
-            return { is: false, name: "default" };
-        }
-    });
 
     //* 函数列表
     const methods = {
@@ -65,7 +60,7 @@ export const useComposable = (define: UiSelectProps, emits: SetupContext<typeof 
         //* 候选框显示事件
         show: () => {
             //* 判断选择框是否处于异常状态
-            if (status.value.name != "default") return;
+            if (computeds.status.value.name != "default") return;
             //* 判断候选项是否已被激活
             if (refs.visible.value) {
                 methods.hidden();
@@ -76,19 +71,16 @@ export const useComposable = (define: UiSelectProps, emits: SetupContext<typeof 
                     //* 将内容添加到视图容器中
                     node.append(document.body, refs.candidate.value);
                     //* 根据配置计算当前窗口位置
-                    const rect = dispose.boundary.relativeContainerBody(refs.container.value, refs.candidate.value, {
-                        direction: "bottom",
-                        height: define.height,
-                        offset: 8,
-                        width: refs.container.value?.offsetWidth || 0,
-                        align: "start",
-                    });
-
-                    //* 判断是否需要调整小三角位置
-                    if (rect.triangle && refs.triangle.value) {
-                        refs.triangle.value.style.inset = rect.triangle;
-                        refs.triangle.value.style.transform = `rotate(${rect.rotate})`;
-                    }
+                    dispose.boundary.relativeContainerBody(
+                        { container: refs.container.value, triangle: refs.triangle.value, view: refs.candidate.value },
+                        {
+                            direction: "bottom",
+                            height: define.height,
+                            offset: 8,
+                            width: refs.container.value?.offsetWidth || 0,
+                            align: "start",
+                        }
+                    );
 
                     //* 隐藏事件
                     window.addEventListener("click", methods.hidden, true);
@@ -99,12 +91,55 @@ export const useComposable = (define: UiSelectProps, emits: SetupContext<typeof 
 
     //* 计算属性
     const computeds = {
-        //* 输入框内容
-        value: computed(() => define.candidates.find((candidate) => candidate.value == define.modelValue)?.label || ""),
-        //* 标签属性
-        attrs: computed(() => {
-            const disabled = ["disabled", "loading"].includes(status.value.name);
+        status: computed(() => {
+            if (define.loading) {
+                return { is: true, name: "loading" };
+            } else if (define.disabled) {
+                return { is: false, name: "disabled" };
+            } else if (define.readonly) {
+                return { is: false, name: "readonly" };
+            } else {
+                return { is: false, name: "default" };
+            }
+        }),
+    };
+
+    //* 属性列表
+    const attrs = {
+        //* 选择器容器属性
+        attrContainer: computed(() => {
+            //* 初始化数据
+            const className: string[] = [];
+            const style: { [name: string]: any } = {
+                width: define.width,
+            };
+
+            //* 判断宽度类型并进行处理
+            if (utility.isNumber(define.width)) style.width = define.width + "px";
+
+            //* 判断是否是禁用或只读状态
+            if (computeds.status.value.name == "disabled") className.push("ui-disabled-status");
+            else if (computeds.status.value.name == "readonly") className.push("ui-readonly-status");
+            else if (computeds.status.value.name == "loading") className.push("ui-loading-status");
+            //* 判断是否需要添加size类名
+            if (define.size != "default") className.push(`ui-${define.size}`);
+            //* 判断是否需要添加clearable类名
+            if (define.clearable) className.push("ui-clearable");
+            //* 判断候选项是否处于展示状态
+            if (refs.visible.value && define.candidates?.length) className.push("ui-candidates-show");
+
             return {
+                class: className.join(" "),
+                style: style,
+            };
+        }),
+
+        //* 选择器本体属性
+        attrMain: computed(() => {
+            const disabled = ["disabled", "loading"].includes(computeds.status.value.name);
+
+            return {
+                value: define.candidates.find((candidate) => candidate.value == define.modelValue)?.label || "",
                 disabled: disabled,
                 readonly: !disabled,
                 placeholder: define.placeholder,
@@ -112,33 +147,55 @@ export const useComposable = (define: UiSelectProps, emits: SetupContext<typeof 
             };
         }),
 
-        //* 标签样式
-        style: computed(() => {
-            //* 宽度处理
-            if (utility.isNumber(define.width)) return { width: define.width + "px" };
-            else {
-                return { width: define.width };
-            }
+        //* 候选项外层窗口属性
+        attrCandidates: computed(() => {
+            return {
+                class: define.classExtraName || "",
+                style: {
+                    zIndex: define.zIndex,
+                },
+            };
         }),
 
-        //* 标签类名
-        className: computed(() => {
-            //* 初始化输出列表
-            const result: string[] = [];
-            //* 判断是否是禁用或只读状态
-            if (status.value.name == "disabled") result.push("ui-disabled-status");
-            else if (status.value.name == "readonly") result.push("ui-readonly-status");
-            else if (status.value.name == "loading") result.push("ui-loading-status");
-            //* 判断是否需要添加size类名
-            if (define.size != "default") result.push(`ui-${define.size}`);
-            //* 判断是否需要添加clearable类名
-            if (define.clearable) result.push("ui-clearable");
-            //* 判断候选项是否处于展示状态
-            if (refs.visible.value && define.candidates?.length) result.push("ui-candidates-show");
-
-            return result.join(" ");
+        //* 候选项容器属性
+        attrCandidatesContent: computed(() => {
+            return {
+                style: {
+                    maxHeight: define.height + "px",
+                },
+            };
         }),
     };
 
-    return { refs, status, methods, computeds };
+    //* 动态计算列表
+    const dynamics = {
+        //* 动态计算候选项类名
+        useCandidateName: (value: string) => {
+            if (define.modelValue == value) return "ui-active";
+            else {
+                return "";
+            }
+        },
+    };
+
+    //* 动画函数列表
+    const animations = {
+        aniEnterBefore: (el: Element) => define.animation && gsap.set(el, { height: 0, opacity: 0 }),
+        aniEnter: (el: Element, callBack: () => void) => {
+            if (define.animation) {
+                gsap.to(el, { height: "auto", opacity: 1, duration: 0.2, onComplete: () => callBack && callBack() });
+            } else {
+                callBack && callBack();
+            }
+        },
+        aniLeave: (el: Element, callBack: () => void) => {
+            if (define.animation) {
+                gsap.to(el, { height: 0, opacity: 0, duration: 0.2, onComplete: () => callBack && callBack() });
+            } else {
+                callBack && callBack();
+            }
+        },
+    };
+
+    return { refs, attrs, methods, dynamics, computeds, animations };
 };

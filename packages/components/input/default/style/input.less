@@ -1,12 +1,12 @@
 .ui-input {
     display: inline-block;
     position: relative;
-    //* 调整loading尺寸
+    //* 加载样式
     .ui-mask {
         font-size: 20px;
     }
 
-    //* 提示文案调整
+    //* 提示文案样式
     .ui-form-control {
         &::placeholder {
             color: var(--uioption-form-placeholder-color);
@@ -18,25 +18,4 @@
     }
 }
 
-//* 可清空状态
-.ui-input.ui-clearable {
-    .ui-form-control {
-        padding: 0 32px 0 var(--uioption-form-spacing-x);
-    }
-}
-
-//* 禁用状态
-.ui-input.ui-disabled-status {
-    .ui-form-control {
-        cursor: auto;
-    }
-}
-
-//* 只读状态
-.ui-input.ui-readonly-status {
-    .ui-form-control {
-        &:focus::placeholder {
-            color: var(--uioption-form-placeholder-color);
-        }
-    }
-}
+@import "./input.status.less";

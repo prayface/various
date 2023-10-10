@@ -36,21 +36,8 @@
     background-color: var(--uioption-form-candidate-background-color);
     transform-origin: center top;
     border-radius: var(--uioption-form-radius);
-    transition: opacity 0.2s, transform 0.3s;
     box-shadow: var(--uioption-form-candidate-box-shadow);
     position: absolute;
-    &.v-enter-from,
-    &.v-leave-to {
-        opacity: 0;
-        transform: scale(0);
-    }
-
-    &.v-enter-to,
-    &.v-leave-from {
-        opacity: 1;
-        transform: scale(1);
-    }
-
     > .ui-form-candidates-triangle {
         position: absolute;
         border-style: solid;
@@ -59,28 +46,32 @@
     }
 
     > .ui-form-candidate-container {
-        overflow-y: auto;
-        > .ui-form-candidate {
-            cursor: pointer;
-            height: var(--uisize-size);
-            padding: 0 var(--uioption-form-candidate-spacing-x);
-            overflow: hidden;
-            transition: all 0.3s;
-            white-space: nowrap;
-            line-height: var(--uisize-size);
-            text-overflow: ellipsis;
-            &:hover,
-            &.ui-active {
-                background: var(--uioption-form-candidate-active-background-color);
-                color: var(--uioption-form-candidate-active-color);
-            }
+        height: 100%;
+        overflow: hidden;
+        > .ui-form-candidate-content {
+            overflow-y: auto;
+            > .ui-form-candidate {
+                cursor: pointer;
+                height: var(--uisize-size);
+                padding: 0 var(--uioption-form-candidate-spacing-x);
+                overflow: hidden;
+                transition: all 0.3s;
+                white-space: nowrap;
+                line-height: var(--uisize-size);
+                text-overflow: ellipsis;
+                &:hover,
+                &.ui-active {
+                    background: var(--uioption-form-candidate-active-background-color);
+                    color: var(--uioption-form-candidate-active-color);
+                }
 
-            &:last-child {
-                border-radius: 0 0 var(--uioption-form-radius) var(--uioption-form-radius);
-            }
+                &:last-child {
+                    border-radius: 0 0 var(--uioption-form-radius) var(--uioption-form-radius);
+                }
 
-            &:first-child {
-                border-radius: var(--uioption-form-radius) var(--uioption-form-radius) 0 0;
+                &:first-child {
+                    border-radius: var(--uioption-form-radius) var(--uioption-form-radius) 0 0;
+                }
             }
         }
     }

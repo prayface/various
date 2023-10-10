@@ -1,6 +1,14 @@
+//* 按需导入插件
 import { SetupContext, nextTick, computed, inject, ref } from "vue";
+import { gsap } from "gsap";
+
+//* 组件属性
 import { UiInputProps, UiInputEmits } from "../index";
+
+//* 公共属性
 import { UiFormEmitterKey } from "@various/constants";
+
+//* 公共函数
 import { node, utility, dispose } from "@various/utils";
 
 export const useComposable = (define: UiInputProps, emits: SetupContext<typeof UiInputEmits>["emit"]) => {
@@ -31,21 +39,17 @@ export const useComposable = (define: UiInputProps, emits: SetupContext<typeof U
                     if (!refs.container.value || !refs.candidate.value) return;
                     //* 将内容添加到视图容器中
                     node.append(document.body, refs.candidate.value);
-
                     //* 根据配置计算当前窗口位置
-                    const rect = dispose.boundary.relativeContainerBody(refs.container.value, refs.candidate.value, {
-                        direction: "bottom",
-                        offset: 8,
-                        height: define.height,
-                        width: refs.container.value?.offsetWidth || 0,
-                        align: "start",
-                    });
-
-                    //* 判断是否需要调整小三角位置
-                    if (rect.triangle && refs.triangle.value) {
-                        refs.triangle.value.style.inset = rect.triangle;
-                        refs.triangle.value.style.transform = `rotate(${rect.rotate})`;
-                    }
+                    dispose.boundary.relativeContainerBody(
+                        { container: refs.container.value, triangle: refs.triangle.value, view: refs.candidate.value },
+                        {
+                            direction: "bottom",
+                            offset: 8,
+                            height: define.height,
+                            width: refs.container.value?.offsetWidth || 0,
+                            align: "start",
+                        }
+                    );
                 });
             }
         },
@@ -63,7 +67,6 @@ export const useComposable = (define: UiInputProps, emits: SetupContext<typeof U
 
                 //* 触发blur回调
                 emits("blur", ev);
-
                 //* 触发表单blur相关校验
                 emitter?.emit(define.name || "", "blur");
             }
@@ -113,7 +116,6 @@ export const useComposable = (define: UiInputProps, emits: SetupContext<typeof U
         change: (ev: Event) => {
             //* 触发change回调
             emits("change", ev);
-
             //* 触发表单change相关校验
             emitter?.emit(define.name || "", "change");
         },
@@ -129,8 +131,9 @@ export const useComposable = (define: UiInputProps, emits: SetupContext<typeof U
         },
     };
 
-    //* 配置项
-    const options = {
+    //* 计算属性
+    const computeds = {
+        //* 输入框当前状态
         status: computed(() => {
             if (define.loading) {
                 return { is: true, name: "loading" };
@@ -144,22 +147,43 @@ export const useComposable = (define: UiInputProps, emits: SetupContext<typeof U
         }),
     };
 
-    //* 计算属性
-    const computeds = {
-        //* 组件样式
-        style: computed(() => {
-            //* 宽度处理
-            if (utility.isNumber(define.width)) return { width: define.width + "px" };
-            else return { width: define.width };
+    //* 属性列表
+    const attrs = {
+        //* 输入框容器属性
+        attrContainer: computed(() => {
+            //* 初始化数据
+            const className: string[] = [];
+            const style: { [name: string]: any } = {
+                width: define.width,
+            };
+
+            //* 判断宽度类型并进行处理
+            if (utility.isNumber(define.width)) style.width = define.width + "px";
+
+            //* 判断是否是禁用或只读状态
+            if (computeds.status.value.name == "disabled") className.push("ui-disabled-status");
+            else if (computeds.status.value.name == "readonly") className.push("ui-readonly-status");
+            else if (computeds.status.value.name == "loading") className.push("ui-loading-status");
+            //* 判断是否需要添加size类名
+            if (define.size != "default") className.push(`ui-${define.size}`);
+            //* 判断是否需要添加clearable类名
+            if (define.clearable) className.push("ui-clearable");
+            //* 判断候选项是否处于展示状态
+            if (refs.visible.value && define.candidates?.length) className.push("ui-candidates-show");
+
+            return {
+                class: className.join(" "),
+                style: style,
+            };
         }),
 
-        //* 标签响应式属性
-        attrs: computed(() => {
+        //* 输入框本体属性
+        attrMain: computed(() => {
             const result: any = {
                 type: define.type,
                 value: define.modelValue,
-                disabled: ["disabled", "loading"].includes(options.status.value.name),
-                readonly: options.status.value.name == "readonly",
+                disabled: ["disabled", "loading"].includes(computeds.status.value.name),
+                readonly: computeds.status.value.name == "readonly",
                 placeholder: define.placeholder,
                 autocomplete: define.autocomplete,
             };
@@ -169,34 +193,66 @@ export const useComposable = (define: UiInputProps, emits: SetupContext<typeof U
             return result;
         }),
 
-        //* 输入框回调函数
-        inputOns: computed(() => {
+        //* 候选项外层窗口属性
+        attrCandidates: computed(() => {
             return {
-                change: methods.change,
-                focus: methods.focus,
-                input: methods.input,
-                blur: methods.blur,
+                class: define.classExtraName || "",
+                style: {
+                    zIndex: define.zIndex,
+                },
             };
         }),
 
-        //* 组件类名
-        className: computed(() => {
-            //* 初始化输出列表
-            const result: string[] = [];
-            //* 判断是否是禁用或只读状态
-            if (options.status.value.name == "disabled") result.push("ui-disabled-status");
-            else if (options.status.value.name == "readonly") result.push("ui-readonly-status");
-            else if (options.status.value.name == "loading") result.push("ui-loading-status");
-            //* 判断是否需要添加size类名
-            if (define.size != "default") result.push(`ui-${define.size}`);
-            //* 判断是否需要添加clearable类名
-            if (define.clearable) result.push("ui-clearable");
-            //* 判断候选项是否处于展示状态
-            if (refs.visible.value && define.candidates?.length) result.push("ui-candidates-show");
-
-            return result.join(" ");
+        //* 候选项容器属性
+        attrCandidatesContent: computed(() => {
+            return {
+                style: {
+                    maxHeight: define.height + "px",
+                },
+            };
         }),
     };
 
-    return { refs, options, methods, computeds };
+    //* 事件列表
+    const events = {
+        //* 输入框主体事件
+        eventMain: {
+            change: methods.change,
+            focus: methods.focus,
+            input: methods.input,
+            blur: methods.blur,
+        },
+    };
+
+    //* 动态计算列表
+    const dynamics = {
+        //* 动态计算候选项类名
+        useCandidateName: (value: string) => {
+            if (define.modelValue == value) return "ui-active";
+            else {
+                return "";
+            }
+        },
+    };
+
+    //* 动画函数列表
+    const animations = {
+        aniEnterBefore: (el: Element) => define.animation && gsap.set(el, { height: 0, opacity: 0 }),
+        aniEnter: (el: Element, callBack: () => void) => {
+            if (define.animation) {
+                gsap.to(el, { height: "auto", opacity: 1, duration: 0.2, onComplete: () => callBack && callBack() });
+            } else {
+                callBack && callBack();
+            }
+        },
+        aniLeave: (el: Element, callBack: () => void) => {
+            if (define.animation) {
+                gsap.to(el, { height: 0, opacity: 0, duration: 0.2, onComplete: () => callBack && callBack() });
+            } else {
+                callBack && callBack();
+            }
+        },
+    };
+
+    return { refs, attrs, events, methods, dynamics, computeds, animations };
 };

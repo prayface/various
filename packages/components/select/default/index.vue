@@ -1,7 +1,7 @@
 <template>
-    <div class="ui-select" :class="className" :style="style" ref="container">
+    <div class="ui-select" ref="container" v-bind="attrContainer">
         <!-- Select主体 -->
-        <input class="ui-form-control" type="text" v-bind="attrs" :value="value" @click="show" />
+        <input class="ui-form-control" type="text" v-bind="attrMain" @click="show" />
 
         <!-- 下拉箭头 -->
         <UiIcon name="arrow" class="ui-select-arrow" @click="show" />
@@ -10,22 +10,19 @@
         <UiIcon name="error" class="ui-form-clearable" v-if="clearable && modelValue" @click="clear" />
 
         <!-- 候选项 -->
-        <Transition>
-            <template v-if="visible">
-                <div class="ui-form-candidates" ref="candidate" v-show="candidates?.length" :class="classExtraName || ''" :style="{ zIndex: zIndex }">
-                    <div class="ui-form-candidates-triangle" ref="triangle"></div>
-                    <div class="ui-form-candidate-container" :style="{ maxHeight: height + 'px' }">
+        <Transition @before-enter="aniEnterBefore" @enter="aniEnter" @leave="aniLeave">
+            <div class="ui-form-candidates" ref="candidate" v-if="visible" v-show="candidates.length" v-bind="attrCandidates">
+                <div class="ui-form-candidates-triangle" ref="triangle"></div>
+                <div class="ui-form-candidate-container">
+                    <div class="ui-form-candidate-content" v-bind="attrCandidatesContent">
                         <template v-for="value in candidates">
-                            <div
-                                class="ui-form-candidate"
-                                :class="{ 'ui-active': value.value == modelValue }"
-                                @mousedown="switchCandidate(value.value, $event)">
+                            <div class="ui-form-candidate" :class="useCandidateName(value.value)" @mousedown="switchCandidate(value.value, $event)">
                                 <slot name="candidate" :data="value">{{ value.label }}</slot>
                             </div>
                         </template>
                     </div>
                 </div>
-            </template>
+            </div>
         </Transition>
 
         <!-- 遮罩层 -->
@@ -56,10 +53,13 @@ const define = defineProps(UiSelectPropsOption);
 const emits = defineEmits(UiSelectEmits);
 
 //* 组合函数
-const { refs, status, methods, computeds } = useComposable(define, emits);
+const { refs, attrs, methods, dynamics, computeds, animations } = useComposable(define, emits);
 const { visible, triangle, candidate, container } = refs;
+const { attrCandidatesContent, attrCandidates, attrContainer, attrMain } = attrs;
 const { show, clear, hidden, switchCandidate } = methods;
-const { value, attrs, style, className } = computeds;
+const { useCandidateName } = dynamics;
+const { status } = computeds;
+const { aniEnterBefore, aniEnter, aniLeave } = animations;
 
 //* 销毁事件
 onBeforeUnmount(() => {

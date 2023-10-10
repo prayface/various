@@ -126,11 +126,10 @@ export const useComposable = (define: UiDatePickerProps, emits: SetupContext<typ
                     //* 将内容添加到视图容器中
                     node.append(document.body, nodes.candidateNode.value);
                     //* 根据配置计算当前窗口位置
-                    dispose.boundary.relativeContainerBody(nodes.containerNode.value, nodes.candidateNode.value, {
-                        direction: "bottom",
-                        offset: 8,
-                        align: "center",
-                    });
+                    dispose.boundary.relativeContainerBody(
+                        { container: nodes.containerNode.value, view: nodes.candidateNode.value },
+                        { direction: "bottom", offset: 8, align: "center" }
+                    );
 
                     //* 隐藏事件
                     window.addEventListener("click", methods.hidden, true);
@@ -190,11 +189,10 @@ export const useComposable = (define: UiDatePickerProps, emits: SetupContext<typ
                     //* 将内容添加到视图容器中
                     node.append(document.body, nodes.candidateNode.value);
                     //* 根据配置计算当前窗口位置
-                    dispose.boundary.relativeContainerBody(nodes.containerNode.value, nodes.candidateNode.value, {
-                        direction: "bottom",
-                        offset: 8,
-                        align: "center",
-                    });
+                    dispose.boundary.relativeContainerBody(
+                        { container: nodes.containerNode.value, view: nodes.candidateNode.value },
+                        { direction: "bottom", offset: 8, align: "center" }
+                    );
                 });
             });
         },

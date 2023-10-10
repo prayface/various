@@ -35,18 +35,15 @@ export const useComposable = (define: UiTooltipProps) => {
                     //* 将内容添加到视图容器中
                     node.append(document.body, refs.tooltip.value);
                     //* 根据配置计算当前窗口位置
-                    const rect = dispose.boundary.relativeContainerBody(refs.main.value, refs.tooltip.value, {
-                        direction: define.direction,
-                        offset: define.offset,
-                        align: define.align,
-                        width: define.width,
-                    });
-
-                    //* 判断是否需要调整小三角位置
-                    if (rect.triangle && refs.triangle.value) {
-                        refs.triangle.value.style.inset = rect.triangle;
-                        refs.triangle.value.style.transform = `rotate(${rect.rotate})`;
-                    }
+                    dispose.boundary.relativeContainerBody(
+                        { container: refs.main.value, triangle: refs.triangle.value, view: refs.tooltip.value },
+                        {
+                            direction: define.direction,
+                            offset: define.offset,
+                            align: define.align,
+                            width: define.width,
+                        }
+                    );
                 }
             });
         },
