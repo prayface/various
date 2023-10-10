@@ -116,8 +116,9 @@ export const useComposable = (define: UiDatePickerProps, emits: SetupContext<typ
             refs.visible.value = true;
             //* 下一帧进行候选项组件初始化
             nextTick(() => {
+                console.log(define);
                 //* 组件内容初始化
-                nodes.componentNode.value?.init(analyzes.analyzeDate.value, new Date(define.modelValue || ""));
+                nodes.componentNode.value?.init(analyzes.analyzeDate.value, new Date(define.modelValue || ""), { start: define.disabledDateStart, end: define.disabledDateEnd });
                 //* 下一帧进行候选窗口的定位与时间挂载
                 nextTick(() => {
                     //* 检测是否满足运行条件
@@ -180,7 +181,7 @@ export const useComposable = (define: UiDatePickerProps, emits: SetupContext<typ
             refs.mode.value = mode;
             //* 下一帧初始化组件
             nextTick(() => {
-                nodes.componentNode.value?.init(analyzes.analyzeDate.value, new Date(define.modelValue || ""));
+                nodes.componentNode.value?.init(analyzes.analyzeDate.value, new Date(define.modelValue || ""), { start: define.disabledDateStart, end: define.disabledDateEnd });
                 //* 下一帧进行候选窗口的定位与时间挂载
                 nextTick(() => {
                     //* 检测是否满足运行条件

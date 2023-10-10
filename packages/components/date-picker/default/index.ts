@@ -10,6 +10,8 @@ export const UiDatePickerPropsOption = {
     size: { type: String as PropType<UiTypes.size>, default: "default" },
     mode: { type: String as PropType<"date" | "month">, default: "date" },
     name: { type: String },
+    disabledDateStart: { type: [Date, undefined] as PropType<Date | undefined> },
+    disabledDateEnd: { type: [Date, undefined] as PropType<Date | undefined> },
 };
 
 export type UiDatePickerProps = ExtractPropTypes<typeof UiDatePickerPropsOption>;
