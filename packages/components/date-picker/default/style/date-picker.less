@@ -53,16 +53,9 @@
 }
 
 //* 组件候选窗口样式
-.ui-date-picker-candidates {
-    background-color: #fff;
-    transform-origin: center top;
-    border-radius: var(--uioption-form-radius);
-    box-shadow: var(--uioption-form-candidate-box-shadow);
-    position: absolute;
-
+.ui-form-candidates {
     //* 组件候选窗口样式（默认）
     .ui-date-picker-candidate {
-
         //* 候选项头部控制器
         .ui-date-picker-candidate-header {
             height: 40px;
@@ -112,13 +105,13 @@
                 align-items: center;
                 justify-content: center;
 
-                >* {
+                > * {
                     color: var(--uicolor-font-1);
                     transition: color 0.3s;
                     font-weight: bold;
                 }
 
-                >.ui-date-picker-candidate-month:not(:first-child) {
+                > .ui-date-picker-candidate-month:not(:first-child) {
                     margin-left: 8px;
                 }
             }
@@ -177,8 +170,7 @@
         .ui-date-picker-candidate-header {
             .ui-date-picker-candidate-context:hover {
                 cursor: pointer;
-
-                >* {
+                > * {
                     color: var(--uicolor-main-color);
                 }
             }

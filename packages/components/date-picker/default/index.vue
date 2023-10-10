@@ -1,8 +1,8 @@
 <template>
     <!-- * 时间选择器 -->
-    <div class="ui-date-picker" ref="containerNode" :style="style" :class="className">
+    <div class="ui-date-picker" ref="containerNode" v-bind="attrContainer">
         <!-- * 选择器主体 -->
-        <input class="ui-form-control" type="text" v-bind="attrs" readonly @click="show" />
+        <input class="ui-form-control" type="text" v-bind="attrMain" @click="show" readonly />
 
         <!-- * 清空图标 -->
         <UiIcon class="ui-date-picker-icons ui-date-picker-clearable" name="error" @click="clear" />
@@ -10,9 +10,12 @@
         <UiIcon class="ui-date-picker-icons ui-date-picker-arrow" name="arrow" @click="show" />
 
         <!-- * 候选列表 -->
-        <Transition @before-enter="enterBefore" @enter="enter" @leave="leave">
-            <div class="ui-date-picker-candidates" ref="candidateNode" v-bind="candidateAttrs" v-if="visible">
-                <component ref="componentNode" :is="analyzeComponent" @update="update" @change="change"></component>
+        <Transition @before-enter="aniEnterBefore" @enter="aniEnter" @leave="aniLeave">
+            <div class="ui-form-candidates" ref="candidateNode" v-if="visible" v-bind="attrCandidates">
+                <div class="ui-form-candidates-triangle" ref="triangleNode"></div>
+                <div class="ui-form-candidate-container">
+                    <component ref="componentNode" :is="analyzeComponent" @update="update" @change="change"></component>
+                </div>
             </div>
         </Transition>
     </div>
@@ -37,13 +40,13 @@ const define = defineProps(UiDatePickerPropsOption);
 const emits = defineEmits(UiDatePickerEmits);
 
 //* 组合函数
-const { refs, nodes, methods, analyzes, computeds, animations } = useComposable(define, emits);
+const { refs, nodes, attrs, methods, analyzes, animations } = useComposable(define, emits);
 const { visible } = refs;
-const { componentNode, candidateNode, containerNode } = nodes;
+const { componentNode, candidateNode, containerNode, triangleNode } = nodes;
+const { attrCandidates, attrContainer, attrMain } = attrs;
 const { show, clear, update, change } = methods;
 const { analyzeComponent } = analyzes;
-const { style, attrs, className, candidateAttrs } = computeds;
-const { enterBefore, enter, leave } = animations;
+const { aniEnterBefore, aniEnter, aniLeave } = animations;
 
 //* 销毁事件
 onBeforeUnmount(() => {

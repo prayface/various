@@ -1,6 +1,6 @@
 import { SetupContext, ref } from "vue";
 
-import type { ModuleUpdateData } from "../../../src/types";
+import type { ModuleUpdateData, ModuleInitData } from "../../../src/types";
 import type { UiPickerEmits } from "../index";
 import type { ModuleDay } from "./types";
 
@@ -27,18 +27,18 @@ export const useComposable = (emits: SetupContext<typeof UiPickerEmits>["emit"])
     //* 处理函数列表
     const disposes = {
         //* 初始化函数
-        init: (date: Date, realityDate?: Date) => {
+        init: (data: ModuleInitData, disabled?: (date: Date) => boolean) => {
             //* 初始化日期数据
-            refs.day.value = date.getDate();
-            refs.year.value = date.getFullYear();
-            refs.month.value = date.getMonth();
-            refs.realityDate.value = realityDate;
+            refs.day.value = data.date.getDate();
+            refs.year.value = data.date.getFullYear();
+            refs.month.value = data.date.getMonth();
+            refs.realityDate.value = data.realityDate;
 
             //* 初始化日份列表
             refs.days.value = [];
 
             //* 获取日份列表的开始日期
-            const dateNext = disposes.receiveStartDate(new Date(date.getFullYear(), date.getMonth()));
+            const dateNext = disposes.receiveStartDate(new Date(data.date.getFullYear(), data.date.getMonth()));
             for (let i = 0; i < 42; i++) {
                 const current = new Date(dateNext.getFullYear(), dateNext.getMonth(), dateNext.getDate() + i);
                 refs.days.value.push({

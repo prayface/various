@@ -34,53 +34,7 @@ export const useComposable = (define: UiDatePickerProps, emits: SetupContext<typ
         componentNode: ref<ComponentNodeType>(), //* 候选项组件节点
         candidateNode: ref<HTMLElement>(), //* 候选项容器节点
         containerNode: ref<HTMLElement>(), //* 时间选择器节点
-    };
-
-    //* 计算属性
-    const computeds = {
-        //* 输入框动态属性
-        attrs: computed(() => {
-            return {
-                value: define.modelValue,
-                placeholder: define.placeholder,
-            };
-        }),
-
-        //* 组件容器样式
-        style: computed(() => {
-            //* 宽度处理
-            if (utility.isNumber(define.width)) return { width: define.width + "px" };
-            else if (define.width) {
-                return { width: define.width };
-            } else {
-                return {};
-            }
-        }),
-
-        //* 组件容器类名
-        className: computed(() => {
-            //* 初始化输出列表
-            const result: string[] = [];
-
-            //* 判断是否需要添加size类名
-            if (define.size != "default") result.push(`ui-${define.size}`);
-            //* 判断是否需要添加clearable类名
-            if (define.modelValue) result.push(`ui-clearable`);
-            //* 判断是否需要添加ui-active类名
-            if (refs.visible.value) result.push("ui-active");
-
-            return result.join(" ");
-        }),
-
-        //* 候选窗口动态属性
-        candidateAttrs: computed(() => {
-            return {
-                class: define.classExtraName,
-                style: {
-                    zIndex: define.zIndex,
-                },
-            };
-        }),
+        triangleNode: ref<HTMLElement>(), //* 时间选择器三角节点
     };
 
     //* 解析数据
@@ -116,9 +70,11 @@ export const useComposable = (define: UiDatePickerProps, emits: SetupContext<typ
             refs.visible.value = true;
             //* 下一帧进行候选项组件初始化
             nextTick(() => {
-                console.log(define);
+                //* 组件数据初始化
+                const data = { date: analyzes.analyzeDate.value, realityDate: new Date(define.modelValue || "") };
                 //* 组件内容初始化
-                nodes.componentNode.value?.init(analyzes.analyzeDate.value, new Date(define.modelValue || ""), { start: define.disabledDateStart, end: define.disabledDateEnd });
+                nodes.componentNode.value?.init(data, define.disabled);
+
                 //* 下一帧进行候选窗口的定位与时间挂载
                 nextTick(() => {
                     //* 检测是否满足运行条件
@@ -128,7 +84,7 @@ export const useComposable = (define: UiDatePickerProps, emits: SetupContext<typ
                     node.append(document.body, nodes.candidateNode.value);
                     //* 根据配置计算当前窗口位置
                     dispose.boundary.relativeContainerBody(
-                        { container: nodes.containerNode.value, view: nodes.candidateNode.value },
+                        { container: nodes.containerNode.value, triangle: nodes.triangleNode.value, view: nodes.candidateNode.value },
                         { direction: "bottom", offset: 8, align: "center" }
                     );
 
@@ -181,7 +137,11 @@ export const useComposable = (define: UiDatePickerProps, emits: SetupContext<typ
             refs.mode.value = mode;
             //* 下一帧初始化组件
             nextTick(() => {
-                nodes.componentNode.value?.init(analyzes.analyzeDate.value, new Date(define.modelValue || ""), { start: define.disabledDateStart, end: define.disabledDateEnd });
+                //* 组件数据初始化
+                const data = { date: analyzes.analyzeDate.value, realityDate: new Date(define.modelValue || "") };
+                //* 组件内容初始化
+                nodes.componentNode.value?.init(data, define.disabled);
+
                 //* 下一帧进行候选窗口的定位与时间挂载
                 nextTick(() => {
                     //* 检测是否满足运行条件
@@ -219,7 +179,7 @@ export const useComposable = (define: UiDatePickerProps, emits: SetupContext<typ
                 }
 
                 //* 响应时间选择事件
-                emits("change");
+                emits("change", analyzes.analyzeDate.value);
 
                 //* 响应表单事件
                 if (emitter?.emit) {
@@ -234,23 +194,70 @@ export const useComposable = (define: UiDatePickerProps, emits: SetupContext<typ
         },
     };
 
+    //* 属性列表
+    const attrs = {
+        //* 选择器容器属性
+        attrContainer: computed(() => {
+            //* 初始化数据
+            const style: { [name: string]: any } = {};
+            const className: string[] = [];
+
+            //* 宽度处理
+            if (utility.isNumber(define.width)) style.width = define.width + "px";
+            else if (define.width) {
+                style.width = define.width;
+            }
+
+            //* 判断是否需要添加size类名
+            if (define.size != "default") className.push(`ui-${define.size}`);
+            //* 判断是否需要添加clearable类名
+            if (define.modelValue) className.push(`ui-clearable`);
+            //* 判断是否需要添加ui-active类名
+            if (refs.visible.value) className.push("ui-active");
+
+            return {
+                class: className.join(" "),
+                style: style,
+            };
+        }),
+
+        //* 选择器本体属性
+        attrMain: computed(() => {
+            return {
+                value: define.modelValue,
+                placeholder: define.placeholder,
+            };
+        }),
+
+        //* 候选项外层窗口属性
+        attrCandidates: computed(() => {
+            return {
+                class: define.classExtraName || "",
+                style: {
+                    zIndex: define.zIndex,
+                },
+            };
+        }),
+    };
+
     //* 动画函数
     const animations = {
-        //* 入场前函数
-        enterBefore: (node: Element) => {
-            gsap.set(node, { opacity: 0, scaleY: 0.5 });
+        aniEnterBefore: (el: Element) => define.animation && gsap.set(el, { height: 0, opacity: 0 }),
+        aniEnter: (el: Element, callBack: () => void) => {
+            if (define.animation) {
+                gsap.to(el, { height: "auto", opacity: 1, duration: 0.2, onComplete: () => callBack && callBack() });
+            } else {
+                callBack && callBack();
+            }
         },
-
-        //* 入场函数
-        enter: (node: Element, next: () => void) => {
-            gsap.to(node, { duration: 0.2, opacity: 1, scaleY: 1, onComplete: () => next() });
-        },
-
-        //* 离场函数
-        leave: (node: Element, next: () => void) => {
-            gsap.to(node, { duration: 0.2, opacity: 0, scaleY: 0.8, onComplete: () => next() });
+        aniLeave: (el: Element, callBack: () => void) => {
+            if (define.animation) {
+                gsap.to(el, { height: 0, opacity: 0, duration: 0.2, onComplete: () => callBack && callBack() });
+            } else {
+                callBack && callBack();
+            }
         },
     };
 
-    return { refs, nodes, methods, computeds, analyzes, animations };
+    return { refs, nodes, attrs, methods, analyzes, animations };
 };

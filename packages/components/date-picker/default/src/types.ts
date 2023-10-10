@@ -3,3 +3,8 @@ export interface ModuleUpdateData {
     year?: number;
     month?: number;
 }
+
+export interface ModuleInitData {
+    date: Date;
+    realityDate?: Date;
+}
