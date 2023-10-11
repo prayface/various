@@ -28,7 +28,7 @@ export const useComposable = (emits: SetupContext<typeof UiPickerEmits>["emit"])
         //* 选择日期
         changeDay: (date: ModuleDay) => {
             if (!(variable.disabled && variable.disabled(new Date(`${date.year}-${date.month + 1}-${date.day}`)))) {
-                emits("change", date)
+                emits("change", date);
             }
         },
     };
@@ -75,12 +75,12 @@ export const useComposable = (emits: SetupContext<typeof UiPickerEmits>["emit"])
         //* 获取当前日期的className
         receiveDayClassName: (year: number, month: number, day: number) => {
             return {
+                "ui-disabled-status": variable.disabled && variable.disabled(new Date(`${year}-${month + 1}-${day}`)),
                 "ui-readonly-status": refs.month.value != month,
                 "ui-active":
                     refs.realityDate.value?.getDate() == day &&
                     refs.realityDate.value?.getFullYear() == year &&
                     refs.realityDate.value?.getMonth() == month,
-                "ui-disabled-status": variable.disabled && variable.disabled(new Date(`${year}-${month + 1}-${day}`)),
             };
         },
     };

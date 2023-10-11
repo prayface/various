@@ -177,11 +177,18 @@
         }
 
         .ui-date-picker-candidate-content {
-            width: calc((var(--uioption-form-spacing-x) * 2) + (36px * 7));
+            width: calc((var(--uioption-form-spacing-x) * 2) + (36px * 7) + (4px * 6));
 
             .ui-picker-candidate {
                 width: 36px;
                 height: 36px;
+                &:not(:nth-child(7n + 1)) {
+                    margin-left: 4px;
+                }
+
+                &:nth-child(n + 8) {
+                    margin-top: 4px;
+                }
             }
         }
     }
