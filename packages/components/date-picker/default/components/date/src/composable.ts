@@ -14,6 +14,11 @@ export const useComposable = (emits: SetupContext<typeof UiPickerEmits>["emit"])
         realityDate: ref<Date | undefined>(), //* 真实日期
     };
 
+    //* 静态变量
+    const variable = {
+        disabled: undefined as ((date: Date) => boolean) | undefined,
+    };
+
     //* 函数列表
     const methods = {
         //* 切换选择器组件
@@ -21,7 +26,11 @@ export const useComposable = (emits: SetupContext<typeof UiPickerEmits>["emit"])
         //* 切换时间
         changeDate: (date: ModuleUpdateData) => emits("update", "date", date),
         //* 选择日期
-        changeDay: (date: ModuleDay) => emits("change", date),
+        changeDay: (date: ModuleDay) => {
+            if (!(variable.disabled && variable.disabled(new Date(`${date.year}-${date.month + 1}-${date.day}`)))) {
+                emits("change", date)
+            }
+        },
     };
 
     //* 处理函数列表
@@ -33,6 +42,7 @@ export const useComposable = (emits: SetupContext<typeof UiPickerEmits>["emit"])
             refs.year.value = data.date.getFullYear();
             refs.month.value = data.date.getMonth();
             refs.realityDate.value = data.realityDate;
+            variable.disabled = disabled;
 
             //* 初始化日份列表
             refs.days.value = [];
@@ -70,6 +80,7 @@ export const useComposable = (emits: SetupContext<typeof UiPickerEmits>["emit"])
                     refs.realityDate.value?.getDate() == day &&
                     refs.realityDate.value?.getFullYear() == year &&
                     refs.realityDate.value?.getMonth() == month,
+                "ui-disabled-status": variable.disabled && variable.disabled(new Date(`${year}-${month + 1}-${day}`)),
             };
         },
     };
