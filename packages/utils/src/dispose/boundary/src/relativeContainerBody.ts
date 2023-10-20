@@ -61,7 +61,10 @@ export const relativeContainerBody = (nodes: RelativeContainerBodyNodes, option:
             );
 
             //* 设置属性
-            nodes.view.style.inset = `${mainAxis.offset}px auto auto ${subAxis.offset}px`;
+            nodes.view.style.top = `${mainAxis.offset}px`;
+            nodes.view.style.left = `auto`;
+            nodes.view.style.right = `auto`;
+            nodes.view.style.bottom = `${subAxis.offset}px`;
             nodes.triangle && setTriangleAttr(nodes.triangle, mainAxis.exceed ? "bottom" : "top", subAxis.align);
 
             //* 边界处理（未超出）
@@ -87,7 +90,10 @@ export const relativeContainerBody = (nodes: RelativeContainerBodyNodes, option:
             );
 
             //* 设置属性
-            nodes.view.style.inset = `${subAxis.offset}px auto auto ${mainAxis.offset}px`;
+            nodes.view.style.top = `${subAxis.offset}px`;
+            nodes.view.style.left = `${mainAxis.offset}px`;
+            nodes.view.style.right = `auto`;
+            nodes.view.style.bottom = `auto`;
             nodes.triangle && setTriangleAttr(nodes.triangle, mainAxis.exceed ? "right" : "left", subAxis.align);
 
             //* 边界处理（未超出）
@@ -113,7 +119,10 @@ export const relativeContainerBody = (nodes: RelativeContainerBodyNodes, option:
             );
 
             //* 设置属性
-            nodes.view.style.inset = `${subAxis.offset}px auto auto ${mainAxis.offset}px`;
+            nodes.view.style.top = `${subAxis.offset}px`;
+            nodes.view.style.left = `${mainAxis.offset}px`;
+            nodes.view.style.right = `auto`;
+            nodes.view.style.bottom = `auto`;
             nodes.triangle && setTriangleAttr(nodes.triangle, mainAxis.exceed ? "left" : "right", subAxis.align);
 
             //* 边界处理（未超出）
@@ -139,7 +148,10 @@ export const relativeContainerBody = (nodes: RelativeContainerBodyNodes, option:
             );
 
             //* 设置属性
-            nodes.view.style.inset = `${mainAxis.offset}px auto auto ${subAxis.offset}px`;
+            nodes.view.style.top = `${mainAxis.offset}px`;
+            nodes.view.style.left = `${subAxis.offset}px`;
+            nodes.view.style.right = `auto`;
+            nodes.view.style.bottom = `auto`;
             nodes.triangle && setTriangleAttr(nodes.triangle, mainAxis.exceed ? "top" : "bottom", subAxis.align);
 
             //* 边界处理（超出）

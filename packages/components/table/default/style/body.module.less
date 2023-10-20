@@ -23,7 +23,8 @@
                     .ui-table-context {
                         position: relative;
                         .ui-table-icon {
-                            inset: 50% auto auto 100%;
+                            top: 50%;
+                            left: 100%;
                             width: 14px;
                             height: 14px;
                             border: 1px solid var(--ui-table-icon-color);
@@ -40,13 +41,15 @@
                             }
 
                             &::after {
-                                inset: 5px auto auto 2px;
+                                top: 5px;
+                                left: 2px;
                                 width: 8px;
                                 height: 2px;
                             }
 
                             &::before {
-                                inset: 2px auto auto 5px;
+                                top: 2px;
+                                left: 5px;
                                 width: 2px;
                                 height: 8px;
                             }
