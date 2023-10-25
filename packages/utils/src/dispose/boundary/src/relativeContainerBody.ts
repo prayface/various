@@ -62,9 +62,9 @@ export const relativeContainerBody = (nodes: RelativeContainerBodyNodes, option:
 
             //* 设置属性
             nodes.view.style.top = `${mainAxis.offset}px`;
-            nodes.view.style.left = `auto`;
+            nodes.view.style.left = `${subAxis.offset}px`;
             nodes.view.style.right = `auto`;
-            nodes.view.style.bottom = `${subAxis.offset}px`;
+            nodes.view.style.bottom = `auto`;
             nodes.triangle && setTriangleAttr(nodes.triangle, mainAxis.exceed ? "bottom" : "top", subAxis.align);
 
             //* 边界处理（未超出）
