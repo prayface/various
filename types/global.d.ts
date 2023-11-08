@@ -4,6 +4,7 @@ declare module "@vue/runtime-core" {
     export interface GlobalComponents {
         UiIcon: typeof import("various-ui")["UiIcon"];
         UiTable: typeof import("various-ui")["UiTable"];
+        UiTableMerge: typeof import("various-ui")["UiTableMerge"];
         UiButton: typeof import("various-ui")["UiButton"];
         UiPagination: typeof import("various-ui")["UiPagination"];
 

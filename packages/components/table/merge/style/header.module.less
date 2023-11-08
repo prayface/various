@@ -1,0 +1,50 @@
+.ui-table-merge {
+
+    //* 表格头部样式
+    .ui-table-header {
+        background-color: var(--ui-table-header-background-color);
+        min-height: var(--ui-table-size);
+        min-width: 100%;
+
+        th {
+            color: var(--ui-table-header-color);
+            padding: 8px var(--ui-table-col-spacing);
+        }
+
+        //* 表格列样式
+        .ui-table-column {
+            display: flex;
+            align-items: center;
+
+            //* 表格排序控件
+            .ui-table-sort {
+                cursor: pointer;
+                padding: 4px;
+
+                //* 排序控件 - 三角形
+                .ui-table-sort-trigger {
+                    width: 0;
+                    height: 0;
+                    transition: all 0.3s;
+                    border-style: solid;
+                    border-width: 0 4px 5px 4px;
+                    border-color: transparent transparent var(--ui-table-icon-color) transparent;
+
+                    &.ui-active {
+                        border-color: transparent transparent var(--ui-table-icon-active-color) transparent;
+                    }
+                }
+
+                //* 排序控件 - 三角形样式调整
+                .ui-table-down-sort {
+                    margin-top: 2px;
+                    transform: rotate(180deg);
+
+                    &.ui-active {
+                        border-color: transparent transparent var(--ui-table-icon-active-color) transparent;
+                    }
+                }
+            }
+        }
+    }
+}

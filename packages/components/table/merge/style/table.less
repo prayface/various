@@ -1,0 +1,17 @@
+@import "./variable.module.less";
+@import "./header.module.less";
+@import "./body.module.less";
+
+.ui-table-layout {
+    overflow: hidden auto;
+}
+
+.ui-table-merge {
+    width: 1240px;
+    border-collapse: collapse;
+
+    th,
+    td {
+        border: var(--ui-table-border-width) solid var(--ui-table-border-color);
+    }
+}

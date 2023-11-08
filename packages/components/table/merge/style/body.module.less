@@ -1,0 +1,71 @@
+.ui-table-merge {
+
+    //* 表格内容样式
+    .ui-table-bodys {
+        overflow: hidden auto;
+
+
+        .ui-table-row {
+            background-color: var(--ui-table-body-background-color);
+
+            &.ui-table-row-even {
+                background-color: var(--ui-table-body-background-color-even);
+            }
+
+            &.ui-table-row-odd {
+                background-color: var(--ui-table-body-background-color-odd);
+            }
+
+            .ui-table-column {
+                padding: 8px var(--ui-table-col-spacing);
+                min-height: var(--ui-table-size);
+
+                //* 不显示
+                &[colspan="0"] {
+                    display: none;
+                }
+
+                .ui-table-context {
+                    position: relative;
+
+                    //* 列表样式
+                    ul {
+                        padding: 0;
+                        margin: 0;
+
+                        li {
+                            display: flex;
+
+                            &::before {
+                                flex-shrink: 0;
+                                margin: 12px 8px 0 0;
+                                display: inline-block;
+                                content: "";
+                                width: 6px;
+                                height: 6px;
+                                background: var(--uicolor-font-2);
+                                border-radius: 50%;
+                            }
+
+                            &:not(:last-child) {
+                                margin-bottom: 8px;
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+
+
+        //* 无数据样式
+        .ui-table-row.ui-table-error {
+            background-color: var(--ui-table-body-background-color);
+            border: 1px solid var(--ui-table-border-color);
+
+            .ui-table-row {
+                text-align: center;
+            }
+        }
+    }
+}
