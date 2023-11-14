@@ -21,12 +21,12 @@ export const disposeMainAxis = (size: DisposeNodeRectSize, option: DisposeMainRe
 //* 副轴的边界处理函数
 export const disposeSubAxis = (size: DisposeNodeRectSize, option: DisposeSubRectOption) => {
     //* 数据初始化
-    const result = { offset: option.offset, align: option.align };
+    const result = { offset: option.offset + size.space, align: option.align };
     const difference = size.view - size.container;
 
     //* 减小最小最大位置的判定范围
-    option.max -= 20;
-    option.min += 20;
+    option.max -= 40;
+    option.min += 40;
 
     //* 方向处理
     switch (option.align) {
@@ -37,11 +37,11 @@ export const disposeSubAxis = (size: DisposeNodeRectSize, option: DisposeSubRect
             //* 检测左侧或者右侧超出边界
             if (result.offset + size.view > option.max && option.offset - difference >= option.min) {
                 //* 检测右对齐时, 左侧是否未超出边界
-                result.offset = option.offset - difference;
+                result.offset = option.offset - size.space - difference;
                 result.align = "end";
             } else if (result.offset < option.min && option.offset + size.view <= option.max) {
                 //* 检测左对齐时, 右侧是否未超出边界
-                result.offset = option.offset;
+                result.offset = option.offset + size.space;
                 result.align = "start";
             }
 
@@ -51,7 +51,7 @@ export const disposeSubAxis = (size: DisposeNodeRectSize, option: DisposeSubRect
         case "start": {
             //* 检测是否左对齐时右侧超出边界并且右对齐时左侧是否在边界内
             if (result.offset + size.view > option.max && option.offset - difference >= option.min) {
-                result.offset = option.offset - difference;
+                result.offset = option.offset - size.space - difference;
                 result.align = "end";
             }
 
@@ -60,11 +60,11 @@ export const disposeSubAxis = (size: DisposeNodeRectSize, option: DisposeSubRect
 
         case "end": {
             //* 计算初始位置
-            result.offset = option.offset - difference;
+            result.offset = option.offset - size.space - difference;
 
             //* 检测是否右对齐时左侧超出边界并且左对齐时右侧是否在边界内
             if (result.offset < option.min && option.offset + size.view <= option.max) {
-                result.offset = option.offset;
+                result.offset = option.offset + size.space;
                 result.align = "start";
             }
 

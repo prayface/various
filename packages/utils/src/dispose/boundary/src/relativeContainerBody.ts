@@ -56,7 +56,7 @@ export const relativeContainerBody = (nodes: RelativeContainerBodyNodes, option:
 
             //* 计算副轴位置
             const subAxis = disposeSubAxis(
-                { container: rect.width, space: 8, view: viewWidth },
+                { container: rect.width, space: 0, view: viewWidth },
                 { min: scrollX, max: innerWidth + scrollX, align: option.align, offset: rect.rootX }
             );
 
@@ -85,7 +85,7 @@ export const relativeContainerBody = (nodes: RelativeContainerBodyNodes, option:
 
             //* 计算副轴位置
             const subAxis = disposeSubAxis(
-                { container: rect.height, space: 8, view: viewHeight },
+                { container: rect.height, space: 0, view: viewHeight },
                 { min: scrollY, max: innerHeight + scrollY, align: option.align, offset: rect.rootY }
             );
 
@@ -114,7 +114,7 @@ export const relativeContainerBody = (nodes: RelativeContainerBodyNodes, option:
 
             //* 计算副轴位置
             const subAxis = disposeSubAxis(
-                { container: rect.height, space: 8, view: viewHeight },
+                { container: rect.height, space: 0, view: viewHeight },
                 { min: scrollY, max: innerHeight + scrollY, align: option.align, offset: rect.rootY }
             );
 
@@ -143,7 +143,7 @@ export const relativeContainerBody = (nodes: RelativeContainerBodyNodes, option:
 
             //* 计算副轴位置
             const subAxis = disposeSubAxis(
-                { container: rect.width, space: 8, view: viewWidth },
+                { container: rect.width, space: 0, view: viewWidth },
                 { min: scrollX, max: innerWidth + scrollX, align: option.align, offset: rect.rootX }
             );
 

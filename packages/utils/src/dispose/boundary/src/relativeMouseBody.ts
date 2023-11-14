@@ -17,36 +17,23 @@ type RelativeMouseBodyOption = {
  * @returns
  */
 export const relativeMouseBody = (ev: RelativeMouseBodyEV, view: HTMLElement, option: RelativeMouseBodyOption) => {
-    //* 数据初始化
-    const result = { offsetX: 0, offsetY: 0 };
-
     //* X轴的位置计算
     const axisX = disposeSubAxis(
-        { container: 0, space: 8, view: view.clientWidth },
+        { container: 0, space: option.offsetX, view: view.clientWidth },
         { min: scrollX, max: innerWidth + scrollX, align: option.align || "start", offset: ev.pageX }
     );
 
-    if (axisX.align == "end") result.offsetX = axisX.offset - option.offsetX;
-    else {
-        result.offsetX = axisX.offset + option.offsetX;
-    }
-
     //* Y轴的位置计算
     const axisY = disposeSubAxis(
-        { container: 0, space: 8, view: view.clientHeight },
+        { container: 0, space: option.offsetY, view: view.clientHeight },
         { min: scrollY, max: innerHeight + scrollY, align: option.align || "start", offset: ev.pageY }
     );
 
-    if (axisY.align == "end") result.offsetY = axisY.offset - option.offsetY;
-    else {
-        result.offsetY = axisY.offset + option.offsetY;
-    }
-
     //* 未进行过定位时, 默认定位到当前位置
     if (view.style.opacity == "0") {
-        gsap.set(view, { x: result.offsetX, y: result.offsetY });
+        gsap.set(view, { x: axisX.offset, y: axisY.offset });
     }
 
     //* 设置属性
-    gsap.to(view, { duration: 0.2, x: result.offsetX, y: result.offsetY });
+    gsap.to(view, { duration: 0.2, x: axisX.offset, y: axisY.offset });
 };
