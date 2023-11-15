@@ -15,7 +15,7 @@ export const useComposable = (define: UiCarouselProps, emits: SetupContext<typeo
         main: ref<HTMLElement>(), //* 轮播图组件的主体
         container: ref<HTMLElement>(), //* 轮播图组件列表的容器
         childrens: ref<HTMLElement[]>([]), //* 轮播图组件列表
-        autoTimer: ref<NodeJS.Timer>(), //* 轮播图组件自动播放定时器
+        autoTimer: ref<NodeJS.Timeout>(), //* 轮播图组件自动播放定时器
         skipTimer: ref<Boolean>(false), //* 轮播图组件是否正在跳转中
         active: ref<number>(0), //* 轮播图组件当前激活的列表项
     };

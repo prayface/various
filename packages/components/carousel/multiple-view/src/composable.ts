@@ -18,7 +18,7 @@ export const useComposable = (define: UiCarouselMultipleViewProps, emits: SetupC
         main: ref<HTMLDivElement>(), //* 轮播图组件的主体
         controls: ref<boolean>(false), //* 轮播图组件控制器显示状态
         boundary: ref<"first" | "middle" | "last">("first"), //* 轮播图组件的边界状态  first | middle | last
-        autoTimer: ref<NodeJS.Timer>(), //* 轮播图组件自动播放定时器
+        autoTimer: ref<NodeJS.Timeout>(), //* 轮播图组件自动播放定时器
         container: ref<HTMLDivElement>(), //* 轮播图组件列表的容器
     };
 

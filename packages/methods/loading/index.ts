@@ -8,7 +8,7 @@ export type UiLoadingShowOption = {
 };
 
 export type UiLoadingHandles = {
-    timer?: NodeJS.Timer;
+    timer?: NodeJS.Timeout;
     delay: boolean;
     open: (config?: UiLoadingShowOption) => void;
     close: () => void;

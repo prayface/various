@@ -10,7 +10,7 @@ export const useComposable = (define: UiFormItemProps) => {
 
     //* 响应式变量
     const refs = {
-        verifyTimer: ref<NodeJS.Timer>(), //* 校验过渡定时器
+        verifyTimer: ref<NodeJS.Timeout>(), //* 校验过渡定时器
         visible: ref<boolean>(false), //* 校验提示显示状态
         content: ref<string>(""), //* 校验提示的文本
         status: ref<UiTypes.type>("info"), //* 校验提示的类型

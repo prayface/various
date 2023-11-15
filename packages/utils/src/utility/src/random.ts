@@ -1,5 +1,5 @@
 /**
- *
+ * @name 随机数
  * @param {number} [min=0] 最小值
  * @param {number} [max=1] 最大值
  * @param {boolean} [floating] 是否允许出现小数点
@@ -25,9 +25,9 @@ export const random = (min?: number, max?: number, floating?: boolean) => {
         const arr = result.toString().split(".");
         if (arr.length == 1) return result;
         else if (Number(arr.slice(-1)[0].charAt(0)) >= 5) {
-            return Math.ceil(result)
+            return Math.ceil(result);
         } else {
-            return Math.floor(result)
+            return Math.floor(result);
         }
     }
 };

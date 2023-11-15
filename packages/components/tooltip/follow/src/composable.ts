@@ -17,7 +17,7 @@ export const useComposable = (define: UiTooltipFollowProps) => {
         //* 显示控制变量
         event: ref<MouseEvent>(),
         visible: ref<boolean>(false),
-        visibleTimer: ref<NodeJS.Timer>(),
+        visibleTimer: ref<NodeJS.Timeout>(),
     };
 
     //* 函数列表

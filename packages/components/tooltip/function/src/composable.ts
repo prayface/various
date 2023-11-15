@@ -17,7 +17,7 @@ export const useComposable = (define: UiTooltipFunctionProps) => {
         //* 显示控制变量
         data: ref<{ align: UiTypes.align; option: { pageX: number; pageY: number } }>(),
         visible: ref<boolean>(false),
-        visibleTimer: ref<NodeJS.Timer>(),
+        visibleTimer: ref<NodeJS.Timeout>(),
     };
 
     //* 函数列表
