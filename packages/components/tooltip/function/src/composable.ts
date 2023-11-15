@@ -35,7 +35,7 @@ export const useComposable = (define: UiTooltipFunctionProps) => {
                     node.append(document.body, refs.tooltip.value);
                     //* 根据配置计算当前窗口位置
                     dispose.boundary.relativeMouseBody(option, refs.tooltip.value, {
-                        align: align,
+                        alignY: align,
                         offsetX: define.offsetX,
                         offsetY: define.offsetY,
                     });

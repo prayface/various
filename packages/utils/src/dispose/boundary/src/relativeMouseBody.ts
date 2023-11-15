@@ -6,6 +6,8 @@ type RelativeMouseBodyEV = MouseEvent | { pageX: number; pageY: number };
 type RelativeMouseBodyOption = {
     offsetX: number;
     offsetY: number;
+    alignX?: UiTypes.align;
+    alignY?: UiTypes.align;
     align?: UiTypes.align;
 };
 
@@ -20,13 +22,13 @@ export const relativeMouseBody = (ev: RelativeMouseBodyEV, view: HTMLElement, op
     //* X轴的位置计算
     const axisX = disposeSubAxis(
         { container: 0, space: option.offsetX, view: view.clientWidth },
-        { min: scrollX, max: innerWidth + scrollX, align: option.align || "start", offset: ev.pageX }
+        { min: scrollX, max: innerWidth + scrollX, align: option.alignX || option.align || "start", offset: ev.pageX }
     );
 
     //* Y轴的位置计算
     const axisY = disposeSubAxis(
         { container: 0, space: option.offsetY, view: view.clientHeight },
-        { min: scrollY, max: innerHeight + scrollY, align: option.align || "start", offset: ev.pageY }
+        { min: scrollY, max: innerHeight + scrollY, align: option.alignY || option.align || "start", offset: ev.pageY }
     );
 
     //* 未进行过定位时, 默认定位到当前位置
