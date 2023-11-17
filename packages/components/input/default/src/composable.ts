@@ -1,13 +1,10 @@
 //* 按需导入插件
 import { SetupContext, nextTick, computed, inject, ref } from "vue";
 import { gsap } from "gsap";
-
 //* 组件属性
 import { UiInputProps, UiInputEmits } from "../index";
-
 //* 公共属性
-import { UiFormEmitterKey } from "@various/constants";
-
+import { UiTypes, UiFormEmitterKey } from "@various/constants";
 //* 公共函数
 import { node, utility, dispose } from "@various/utils";
 
@@ -121,9 +118,9 @@ export const useComposable = (define: UiInputProps, emits: SetupContext<typeof U
         },
 
         //* 候选项选择事件
-        switchCandidate: (content: String, ev: Event) => {
-            emits("update:modelValue", content);
-            emits("select", ev);
+        switchCandidate: (data: UiTypes.candidate, ev: Event) => {
+            emits("update:modelValue", data.value);
+            emits("select", ev, data);
             emits("change", ev);
             if (emitter?.emit) {
                 emitter.emit(define.name || "", "change");
