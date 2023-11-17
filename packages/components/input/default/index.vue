@@ -15,7 +15,7 @@
                 <div class="ui-form-candidate-container">
                     <div class="ui-form-candidate-content" v-bind="attrCandidatesContent">
                         <template v-for="value in candidates">
-                            <div class="ui-form-candidate" :class="useCandidateName(value.value)" @mousedown="switchCandidate(value.value, $event)">
+                            <div class="ui-form-candidate" :class="useCandidateName(value.value)" @mousedown="switchCandidate(value, $event)">
                                 <slot name="candidate" :data="value">{{ value.label }}</slot>
                             </div>
                         </template>
