@@ -25,6 +25,10 @@ export type UiInputProps = ExtractPropTypes<typeof UiInputPropsOption>;
 
 export const UiInputEmits = {
     "update:modelValue": (_value: any) => true,
+    "show": () => true,
+    "hidden": () => true,
+    "show-after": () => true,
+    "hidden-after": () => true,
     "select": (_ev: Event, _data: UiTypes.candidate) => true,
     "change": (_ev: Event) => true,
     "enter": (_ev: KeyboardEvent | Event) => true,

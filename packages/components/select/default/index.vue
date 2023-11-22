@@ -12,7 +12,6 @@
         <!-- 候选项 -->
         <Transition @before-enter="aniEnterBefore" @enter="aniEnter" @leave="aniLeave">
             <div class="ui-form-candidates" ref="candidate" v-if="visible" v-show="candidates.length" v-bind="attrCandidates">
-                <div class="ui-form-candidates-triangle" ref="triangle"></div>
                 <div class="ui-form-candidate-container">
                     <div class="ui-form-candidate-content" v-bind="attrCandidatesContent">
                         <template v-for="value in candidates">
@@ -54,7 +53,7 @@ const emits = defineEmits(UiSelectEmits);
 
 //* 组合函数
 const { refs, attrs, methods, dynamics, computeds, animations } = useComposable(define, emits);
-const { visible, triangle, candidate, container } = refs;
+const { visible, candidate, container } = refs;
 const { attrCandidatesContent, attrCandidates, attrContainer, attrMain } = attrs;
 const { show, clear, hidden, switchCandidate } = methods;
 const { useCandidateName } = dynamics;

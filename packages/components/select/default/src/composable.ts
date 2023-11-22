@@ -18,7 +18,6 @@ export const useComposable = (define: UiSelectProps, emits: SetupContext<typeof 
     //* 响应式变量
     const refs = {
         visible: ref<boolean>(false),
-        triangle: ref<HTMLElement>(),
         container: ref<HTMLElement>(),
         candidate: ref<HTMLElement>(),
     };
@@ -72,7 +71,7 @@ export const useComposable = (define: UiSelectProps, emits: SetupContext<typeof 
                     node.append(document.body, refs.candidate.value);
                     //* 根据配置计算当前窗口位置
                     dispose.boundary.relativeContainerBody(
-                        { container: refs.container.value, triangle: refs.triangle.value, view: refs.candidate.value },
+                        { container: refs.container.value, view: refs.candidate.value },
                         {
                             direction: "bottom",
                             height: define.height,
@@ -182,16 +181,36 @@ export const useComposable = (define: UiSelectProps, emits: SetupContext<typeof 
     const animations = {
         aniEnterBefore: (el: Element) => define.animation && gsap.set(el, { height: 0, opacity: 0 }),
         aniEnter: (el: Element, callBack: () => void) => {
+            emits("show-after");
             if (define.animation) {
-                gsap.to(el, { height: "auto", opacity: 1, duration: 0.2, onComplete: () => callBack && callBack() });
+                gsap.to(el, {
+                    height: "auto",
+                    opacity: 1,
+                    duration: 0.2,
+                    onComplete: () => {
+                        emits("show");
+                        callBack && callBack();
+                    },
+                });
             } else {
+                emits("show");
                 callBack && callBack();
             }
         },
         aniLeave: (el: Element, callBack: () => void) => {
+            emits("hidden-after");
             if (define.animation) {
-                gsap.to(el, { height: 0, opacity: 0, duration: 0.2, onComplete: () => callBack && callBack() });
+                gsap.to(el, {
+                    height: 0,
+                    opacity: 0,
+                    duration: 0.2,
+                    onComplete: () => {
+                        emits("hidden");
+                        callBack && callBack();
+                    },
+                });
             } else {
+                emits("hidden");
                 callBack && callBack();
             }
         },

@@ -9,8 +9,6 @@
         <!-- * 候选项 -->
         <Transition @before-enter="aniEnterBefore" @enter="aniEnter" @leave="aniLeave">
             <div class="ui-form-candidates" ref="candidate" v-if="visible" v-show="candidates.length" v-bind="attrCandidates">
-                <!-- * 候选项的三角型图标 -->
-                <div class="ui-form-candidates-triangle" ref="triangle"></div>
                 <!-- * 候选项的内容容器 -->
                 <div class="ui-form-candidate-container">
                     <div class="ui-form-candidate-content" v-bind="attrCandidatesContent">
@@ -53,7 +51,7 @@ const emits = defineEmits(UiInputEmits);
 
 //* 组合函数
 const { refs, attrs, events, methods, dynamics, computeds, animations } = useComposable(define, emits);
-const { main, visible, triangle, container, candidate } = refs;
+const { main, visible, container, candidate } = refs;
 const { attrContainer, attrMain, attrCandidates, attrCandidatesContent } = attrs;
 const { eventMain } = events;
 const { blur, clear, enter, focus, switchCandidate } = methods;

@@ -1,133 +1,80 @@
 <template>
-    <div class="tooltip">
-        <section class="tooltip-1">
-            <div class="title">基础用法</div>
+    <div class="form">
+        <section>
+            <div class="title">基本用法</div>
             <div class="descript">
-                <p>在这里我们提供<span>固定模式(UiTooltip)</span>和<span>跟随模式(UiTooltipFollow)</span>两种展示方式, 你可根据需求选择不同模式</p>
-                <p><span class="warn">注</span>固定模式下以下属性将失效: <span>offsetX</span>、<span>offsetY</span></p>
-                <p><span class="warn">注</span>跟随模式下以下属性将失效: <span>direction</span>、<span>trigger</span>、<span>align</span></p>
+                <p>通过<span>size</span>属性可以<span>input</span>组件的尺寸</p>
+                <p>尺寸<span>size</span>: large | middle | default | small</p>
             </div>
             <div class="content">
-                <UiTooltip content="悬浮信息">
-                    <UiButton size="small">固定模式</UiButton>
-                </UiTooltip>
-                <UiTooltipFollow content="悬浮信息">
-                    <UiButton size="small">跟随模式</UiButton>
-                </UiTooltipFollow>
-            </div>
-        </section>
-
-        <section class="tooltip-2">
-            <div class="title">固定模式的触发条件</div>
-            <div class="descript">
-                <p>固定模式拥有2中触发条件: <span>悬浮(hover)</span>、<span>无触发条件(none)</span></p>
-            </div>
-            <div class="content">
-                <UiTooltip direction="top" content="悬浮信息">
-                    <UiButton size="small">悬浮时触发</UiButton>
-                </UiTooltip>
-                <UiTooltip direction="top" trigger="click" content="悬浮信息">
-                    <UiButton size="small">没有任何触发条件</UiButton>
-                </UiTooltip>
-            </div>
-        </section>
-
-        <section class="tooltip-3">
-            <div class="title">固定模式的主轴侧轴对齐方向</div>
-            <div class="descript">
-                <p>在这里我们提供主轴和侧轴的对齐方式, 通过组合有12种不同方向的展示方式, 可以通过以下完整示例来理解, 选择你要的效果。</p>
-                <p>主轴<span>direction</span>: top | left | right | bottom</p>
-                <p>侧轴<span>align</span>: top | center | bottom</p>
-            </div>
-            <div class="content">
-                <section class="tooltip-top">
-                    <UiTooltip direction="top" content="悬浮信息">
-                        <UiButton size="small">上左按钮</UiButton>
-                    </UiTooltip>
-                    <UiTooltip direction="top" align="center" content="悬浮信息">
-                        <UiButton size="small">上中按钮</UiButton>
-                    </UiTooltip>
-                    <UiTooltip direction="top" align="end" content="悬浮信息">
-                        <UiButton size="small">上右按钮</UiButton>
-                    </UiTooltip>
-                </section>
-
-                <section class="tooltip-left">
-                    <UiTooltip direction="left" content="悬浮信息">
-                        <UiButton size="small">左上按钮</UiButton>
-                    </UiTooltip>
-                    <UiTooltip direction="left" align="center" content="悬浮信息">
-                        <UiButton size="small">左中按钮</UiButton>
-                    </UiTooltip>
-                    <UiTooltip direction="left" align="end" content="悬浮信息">
-                        <UiButton size="small">左下按钮</UiButton>
-                    </UiTooltip>
-                </section>
-
-                <section class="tooltip-right">
-                    <UiTooltip direction="right" content="悬浮信息">
-                        <UiButton size="small">右上按钮</UiButton>
-                    </UiTooltip>
-                    <UiTooltip direction="right" align="center" content="悬浮信息">
-                        <UiButton size="small">右中按钮</UiButton>
-                    </UiTooltip>
-                    <UiTooltip direction="right" align="end" content="悬浮信息">
-                        <UiButton size="small">右下按钮</UiButton>
-                    </UiTooltip>
-                </section>
-
-                <section class="tooltip-bottom">
-                    <UiTooltip direction="bottom" content="悬浮信息">
-                        <UiButton size="small">下左按钮</UiButton>
-                    </UiTooltip>
-                    <UiTooltip direction="bottom" align="center" content="悬浮信息">
-                        <UiButton size="small">下中按钮</UiButton>
-                    </UiTooltip>
-                    <UiTooltip direction="bottom" align="end" content="悬浮信息">
-                        <UiButton size="small">下右按钮</UiButton>
-                    </UiTooltip>
-                </section>
-            </div>
-        </section>
-
-        <section class="tooltip-4">
-            <div class="title">禁用和隐藏</div>
-            <div class="descript">
-                <p>禁用模式下将无悬浮信息, 隐藏模式顾名思义</p>
-            </div>
-            <div class="content">
-                <UiTooltip direction="top" :disabled="true" content="悬浮信息">
-                    <UiButton size="small">该悬浮窗口已被禁用</UiButton>
-                </UiTooltip>
-                <UiTooltip v-model:visible="visible" content="悬浮信息">
-                    <UiButton size="small" @click="click">点击我隐藏</UiButton>
-                </UiTooltip>
-            </div>
-        </section>
-
-        <section class="tooltip-4">
-            <div class="title">基于方法的悬浮信息窗口</div>
-            <div class="descript">
-                <p>基于方法的悬浮信息窗口, 顾名思义</p>
-            </div>
-            <div class="content">
-                <UiTooltipFunction ref="container" content="悬浮信息">
-                    <template #default>
-                        <div style="width: 1000px; height: 240px; display: flex">
-                            <div style="flex: 1; height: 100%; background-color: red" @mouseenter="show" @mouseleave="hidden"></div>
-                            <div style="flex: 1; height: 100%; background-color: yellow" @mouseenter="show" @mouseleave="hidden"></div>
-                            <div style="flex: 1; height: 100%; background-color: blue" @mouseenter="show" @mouseleave="hidden"></div>
-                        </div>
-                    </template>
-                    <template #content>
-                        <div style="width: 400px; height: 240px">我可是很大的</div>
-                    </template>
-                </UiTooltipFunction>
+                <UiInput v-model="value" size="large" :width="200" style="margin-right: 8px" />
+                <UiInput v-model="value" size="middle" :width="200" style="margin-right: 8px" />
+                <UiInput v-model="value" :width="200" style="margin-right: 8px" />
+                <UiInput v-model="value" size="small" :width="200" @change="change" />
             </div>
         </section>
 
         <section>
-            <div class="title">UiTooltip 属性</div>
+            <div class="title">禁用状态</div>
+            <div class="descript">
+                <p>通过<span>disabled</span>属性来指定是否禁用<span>input</span>组件</p>
+            </div>
+            <div class="content">
+                <UiInput v-model="value" :disabled="true" />
+            </div>
+        </section>
+
+        <section>
+            <div class="title">只读状态</div>
+            <div class="descript">
+                <p>通过<span>readonly</span>属性来指定<span>input</span>组件是否只读</p>
+            </div>
+            <div class="content">
+                <UiInput v-model="value" :readonly="true" />
+            </div>
+        </section>
+
+        <section>
+            <div class="title">加载状态</div>
+            <div class="descript">
+                <p>通过<span>loading</span>属性来指定<span>input</span>组件是否加载</p>
+            </div>
+            <div class="content">
+                <UiInput v-model="value" :loading="true" />
+            </div>
+        </section>
+
+        <section>
+            <div class="title">一键清空</div>
+            <div class="descript">
+                <p>使用<span>clearable</span>属性即可在当输入框存在内容时出现一个可一键清空的按钮</p>
+            </div>
+            <div class="content">
+                <UiInput v-model="value" :clearable="true" />
+            </div>
+        </section>
+
+        <section>
+            <div class="title">候选项</div>
+            <div class="descript">
+                <p>可以通过<span>candidates</span>属性设置<span>input</span>的候选项, 当<span>candidates</span>长度不为0时, 展示候选项列表</p>
+                <p>候选项<span>candidates</span>支持<span>UiTypes.candidate[]</span>类型</p>
+            </div>
+            <div class="content">
+                <UiInput
+                    v-model="value"
+                    ref="input"
+                    :candidates="candidates"
+                    @blur="blur"
+                    @focus="trigger"
+                    @input="trigger"
+                    @change="change"
+                    @enter="input.blur()" />
+            </div>
+        </section>
+
+        <section>
+            <div class="title">属性</div>
             <table>
                 <tr>
                     <th>名称</th>
@@ -137,115 +84,160 @@
                     <th>默认值</th>
                 </tr>
                 <tr>
-                    <td>class-extra-name</td>
-                    <td>用于指定窗口的className</td>
+                    <td>autocomplete</td>
+                    <td>是否启动浏览器的自动填充</td>
                     <td>string</td>
+                    <td>off | on</td>
+                    <td>off</td>
+                </tr>
+                <tr>
+                    <td>placeholder</td>
+                    <td>提示文本</td>
+                    <td>string</td>
+                    <td>--</td>
+                    <td>Please input</td>
+                </tr>
+                <tr>
+                    <td>modelValue</td>
+                    <td>v-model</td>
+                    <td>string | number</td>
                     <td>--</td>
                     <td>--</td>
                 </tr>
                 <tr>
-                    <td>direction</td>
-                    <td>Tooltip的主轴位置</td>
-                    <td>string</td>
-                    <td>top | left | right | bottom</td>
-                    <td>right</td>
-                </tr>
-                <tr>
-                    <td>align</td>
-                    <td>Tooltip的侧轴位置</td>
-                    <td>string</td>
-                    <td>end | start | center</td>
-                    <td>top</td>
-                </tr>
-                <tr>
-                    <td>offset</td>
-                    <td>Tooltip的主轴偏移距离</td>
-                    <td>number</td>
+                    <td>candidates</td>
+                    <td>候选项</td>
+                    <td>UiTypes.candidate[]</td>
                     <td>--</td>
-                    <td>8</td>
+                    <td>--</td>
                 </tr>
                 <tr>
-                    <td>disabled</td>
-                    <td>Tooltip的是否禁用, 禁用状态将无信息悬浮</td>
+                    <td>clearable</td>
+                    <td>是否显示可清空按钮</td>
                     <td>boolean</td>
                     <td>--</td>
                     <td>false</td>
                 </tr>
                 <tr>
-                    <td>trigger</td>
-                    <td>Tooltip的触发条件</td>
-                    <td>string</td>
-                    <td>none | hover</td>
-                    <td>hover</td>
+                    <td>disabled</td>
+                    <td>是否禁用</td>
+                    <td>boolean</td>
+                    <td>--</td>
+                    <td>false</td>
                 </tr>
                 <tr>
-                    <td>content</td>
-                    <td>Tooltip的内容, 该内容会被slot#content覆盖</td>
-                    <td>string</td>
+                    <td>readonly</td>
+                    <td>是否只读</td>
+                    <td>boolean</td>
                     <td>--</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>loading</td>
+                    <td>内置Loading</td>
+                    <td>boolean</td>
                     <td>--</td>
+                    <td>false</td>
                 </tr>
                 <tr>
                     <td>width</td>
-                    <td>Tooltip的最大尺寸</td>
+                    <td>输入框尺寸</td>
                     <td>number</td>
                     <td>--</td>
-                    <td>200</td>
+                    <td>--</td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>原生输入框输入类型</td>
+                    <td>string</td>
+                    <td>email | number | search | tel | text</td>
+                    <td>text</td>
+                </tr>
+                <tr>
+                    <td>size</td>
+                    <td>输入框尺寸</td>
+                    <td>UiTypes.size</td>
+                    <td>default | middle | large | small</td>
+                    <td>default</td>
+                </tr>
+                <tr>
+                    <td>name</td>
+                    <td>原生输入框name属性</td>
+                    <td>string</td>
+                    <td>--</td>
+                    <td>--</td>
                 </tr>
             </table>
         </section>
 
         <section>
-            <div class="title">UiTooltipFollow 属性</div>
+            <div class="title">事件</div>
             <table>
                 <tr>
                     <th>名称</th>
                     <th>说明</th>
-                    <th>类型</th>
-                    <th>可选值</th>
-                    <th>默认值</th>
+                    <th>回调参数</th>
                 </tr>
                 <tr>
-                    <td>class-extra-name</td>
-                    <td>用于指定窗口的className</td>
-                    <td>string</td>
-                    <td>--</td>
-                    <td>--</td>
+                    <td>change</td>
+                    <td>change事件回调</td>
+                    <td>(event: Event) => void</td>
                 </tr>
                 <tr>
-                    <td>disabled</td>
-                    <td>Tooltip的是否禁用, 禁用状态将无信息悬浮</td>
-                    <td>boolean</td>
-                    <td>--</td>
-                    <td>false</td>
+                    <td>select</td>
+                    <td>候选项选择事件回调</td>
+                    <td>(event: Event) => void</td>
                 </tr>
                 <tr>
-                    <td>offsetX</td>
-                    <td>Tooltip的X轴偏移位置</td>
-                    <td>number</td>
-                    <td>--</td>
-                    <td>20</td>
+                    <td>clear</td>
+                    <td>清空事件回调</td>
+                    <td>(event?: any) => void</td>
                 </tr>
                 <tr>
-                    <td>offsetY</td>
-                    <td>Tooltip的Y轴偏移位置</td>
-                    <td>number</td>
-                    <td>--</td>
-                    <td>20</td>
+                    <td>input</td>
+                    <td>input事件回调</td>
+                    <td>(event: InputEvent | Event) => void</td>
                 </tr>
                 <tr>
-                    <td>content</td>
-                    <td>Tooltip的内容, 该内容会被slot#content覆盖</td>
-                    <td>string</td>
-                    <td>--</td>
-                    <td>--</td>
+                    <td>enter</td>
+                    <td>keydown enter事件回调</td>
+                    <td>(event: KeyboardEvent | Event) => void</td>
                 </tr>
                 <tr>
-                    <td>width</td>
-                    <td>Tooltip的最大尺寸</td>
-                    <td>number</td>
-                    <td>--</td>
-                    <td>200</td>
+                    <td>focus</td>
+                    <td>focus事件回调</td>
+                    <td>(event: FocusEvent | Event) => void</td>
+                </tr>
+                <tr>
+                    <td>blur</td>
+                    <td>blur事件回调</td>
+                    <td>(event: FocusEvent | Event) => void</td>
+                </tr>
+            </table>
+        </section>
+
+        <section>
+            <div class="title">方法</div>
+            <table>
+                <tr>
+                    <th>名称</th>
+                    <th>说明</th>
+                    <th>回调参数</th>
+                </tr>
+                <tr>
+                    <td>clear</td>
+                    <td>清空输入框内容</td>
+                    <td>() => void</td>
+                </tr>
+                <tr>
+                    <td>focus</td>
+                    <td>输入框获取焦点事件</td>
+                    <td>() => void</td>
+                </tr>
+                <tr>
+                    <td>blur</td>
+                    <td>输入框失去焦点事件</td>
+                    <td>() => void</td>
                 </tr>
             </table>
         </section>
@@ -259,14 +251,9 @@
                     <th>数据</th>
                 </tr>
                 <tr>
-                    <td>default</td>
-                    <td>悬浮窗跟随内容的插槽</td>
-                    <td>--</td>
-                </tr>
-                <tr>
-                    <td>content</td>
-                    <td>悬浮窗内容的插槽</td>
-                    <td>--</td>
+                    <td>candidate</td>
+                    <td>下拉候选项的插槽</td>
+                    <td>data</td>
                 </tr>
             </table>
         </section>
@@ -275,71 +262,30 @@
 
 <script setup>
 import { ref } from "vue";
-const visible = ref(false);
-const click = () => {
-    visible.value = true;
-    setTimeout(() => {
-        visible.value = false;
-    }, 2000);
-};
 
-const container = ref();
-const show = (ev) => {
-    if (!container.value) return;
-    else {
-        container.value.show("center", { pageX: ev.pageX, pageY: ev.pageY });
+const input = ref();
+const value = ref("");
+const candidates = ref([]);
+
+const trigger = () => {
+    const number = candidates.value.length + 1;
+    if (number > 10) {
+        candidates.value = [
+            { label: "测试选项1", value: "test1" },
+            { label: "测试选项2", value: "test2" },
+            { label: "测试选项3", value: "test3" },
+            { label: "测试选项4", value: "test4" },
+        ];
+    } else {
+        candidates.value.push({ label: "测试选项" + number, value: "test" + number });
     }
 };
 
-const hidden = () => {
-    if (!container.value) return;
-    else {
-        container.value.hidden();
-    }
+const blur = () => {
+    console.log("blur");
+};
+
+const change = () => {
+    console.log("change");
 };
 </script>
-
-<style lang="less">
-.tooltip {
-    .tooltip-1,
-    .tooltip-2,
-    .tooltip-4 {
-        .ui-tooltip-container {
-            margin: 0 8px;
-        }
-    }
-
-    .tooltip-3 {
-        .tooltip-top {
-            margin: 20px 120px;
-            .ui-tooltip-container {
-                margin: 0 8px;
-            }
-        }
-
-        .tooltip-left {
-            display: inline-flex;
-            flex-direction: column;
-            .ui-tooltip-container {
-                margin: 8px 0;
-            }
-        }
-
-        .tooltip-right {
-            margin: 0 0 0 360px;
-            display: inline-flex;
-            flex-direction: column;
-            .ui-tooltip-container {
-                margin: 8px 0;
-            }
-        }
-
-        .tooltip-bottom {
-            margin: 20px 120px;
-            .ui-tooltip-container {
-                margin: 0 8px;
-            }
-        }
-    }
-}
-</style>

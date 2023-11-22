@@ -24,4 +24,8 @@ export const UiSelectEmits = {
     "update:modelValue": (_ev: any) => true,
     "change": (_ev?: Event) => true,
     "clear": (_ev?: any) => true,
+    "show": () => true,
+    "hidden": () => true,
+    "show-after": () => true,
+    "hidden-after": () => true,
 };
