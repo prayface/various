@@ -15,7 +15,7 @@
                 <div class="ui-form-candidate-container">
                     <div class="ui-form-candidate-content" v-bind="binds.candidate.value">
                         <template v-for="value in candidates">
-                            <div class="ui-form-candidate" :class="useCandidateName(value.value)" @mousedown="switchCandidate(value.value, $event)">
+                            <div class="ui-form-candidate" :class="dynamics.activate(value)" v-on="ons.candidate(value)">
                                 <slot name="candidate" :data="value">{{ value.label }}</slot>
                             </div>
                         </template>
@@ -54,8 +54,7 @@ const emits = defineEmits(UiSelectEmits);
 //* 组合函数
 const { ons, refs, binds, methods, dynamics, computeds } = useComposable(define, emits);
 const { visible, candidate, container } = refs;
-const { show, clear, hidden, switchCandidate } = methods;
-const { useCandidateName } = dynamics;
+const { show, clear, hidden } = methods;
 const { status } = computeds;
 
 //* 销毁事件

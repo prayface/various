@@ -3,7 +3,7 @@ import { SetupContext, nextTick, computed, inject, ref } from "vue";
 //* 组件属性
 import { UiSelectProps, UiSelectEmits } from "../index";
 //* 公共属性
-import { UiFormEmitterKey } from "@various/constants";
+import { UiFormEmitterKey, UiTypes } from "@various/constants";
 //* 公共函数
 import { node, utility, dispose, animations } from "@various/utils";
 
@@ -20,26 +20,13 @@ export const useComposable = (define: UiSelectProps, emits: SetupContext<typeof 
 
     //* 函数列表
     const methods = {
-        //* 候选项切换事件
-        switchCandidate: (content: String, ev: Event) => {
-            emits("update:modelValue", content);
-            emits("change", ev);
-            if (emitter?.emit) {
-                emitter.emit(define.name || "", "change");
-            }
-
-            if (refs.visible.value) {
-                methods.hidden();
-            }
-        },
-
         //* 候选框隐藏事件
         hidden: (ev?: Event) => {
+            console.log(1212);
             if (!refs.container.value) return;
             if (ev?.target && node.includes(ev.target as HTMLElement, refs.container.value)) return;
             else {
                 refs.visible.value = false;
-                window.removeEventListener("click", methods.hidden);
             }
         },
 
@@ -78,7 +65,7 @@ export const useComposable = (define: UiSelectProps, emits: SetupContext<typeof 
                     );
 
                     //* 隐藏事件
-                    window.addEventListener("click", methods.hidden, true);
+                    addEventListener("click", methods.hidden, { capture: true, once: true });
                 });
             }
         },
@@ -102,8 +89,8 @@ export const useComposable = (define: UiSelectProps, emits: SetupContext<typeof 
     //* 动态计算列表
     const dynamics = {
         //* 动态计算候选项类名
-        useCandidateName: (value: string) => {
-            if (define.modelValue == value) return "ui-active";
+        activate: (option: UiTypes.candidate) => {
+            if ((option.activate && option.activate(option)) || define.modelValue == option.value) return "ui-active";
             else {
                 return "";
             }
@@ -174,12 +161,39 @@ export const useComposable = (define: UiSelectProps, emits: SetupContext<typeof 
 
     //* 响应事件
     const ons = {
+        //* 候选项容器事件
         candidates: animations.selector(define.animation, {
             enterBefore: () => emits("before-enter"),
             leaveBefore: () => emits("before-leave"),
             enterAfter: () => emits("after-enter"),
             leaveAfter: () => emits("after-leave"),
         }),
+
+        //* 候选项事件
+        candidate: (option: UiTypes.candidate) => {
+            return {
+                //* 候选项选择事件
+                mousedown: (ev: Event) => {
+                    if (option.children?.length) {
+                        removeEventListener("click", methods.hidden, { capture: true });
+                    } else {
+                        emits("update:modelValue", option.value);
+                        emits("change", ev);
+                        emitter?.emit(define.name || "", "change");
+                        if (refs.visible.value) {
+                            methods.hidden();
+                        }
+                    }
+                },
+
+                //* 补充被移除的点击事件
+                mouseup: () => {
+                    if (option.children?.length) {
+                        setTimeout(() => addEventListener("click", methods.hidden, { capture: true, once: true }), 100);
+                    }
+                },
+            };
+        },
     };
 
     return { ons, refs, binds, methods, dynamics, computeds, animations };

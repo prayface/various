@@ -50,7 +50,18 @@
                 <p>使用<span>clearable</span>属性即可在当输入框存在内容时出现一个可一键清空的按钮</p>
             </div>
             <div class="content">
-                <UiSelect v-model="value" :clearable="true" :candidates="candidates" />
+                <UiSelect v-model="value" :candidates="candidates">
+                    <template #candidate="{ data }">
+                        <UiTooltip>
+                            <template #default>{{ data.label }}</template>
+                            <template #content>
+                                <div class="candidate-childrens">
+                                    <div class="candidate-children" v-for="value in data.children">{{ value.label }}</div>
+                                </div>
+                            </template>
+                        </UiTooltip>
+                    </template>
+                </UiSelect>
             </div>
         </section>
 
@@ -214,14 +225,23 @@ import { ref } from "vue";
 
 const value = ref("");
 const candidates = [
-    { label: "测试选项11111111111111111111111111111111111", value: "test1" },
+    { label: "测试选项1", value: "test1" },
     { label: "测试选项2", value: "test2" },
     { label: "测试选项3", value: "test3" },
     { label: "测试选项4", value: "test4" },
-    { label: "测试选项1", value: "test5" },
-    { label: "测试选项2", value: "test6" },
-    { label: "测试选项3", value: "test7" },
-    { label: "测试选项4", value: "test8" },
-    { label: "测试选项1", value: "test9" },
+    { label: "测试选项5", value: "test5" },
+    { label: "测试选项6", value: "test6" },
+    { label: "测试选项7", value: "test7" },
+    { label: "测试选项8", value: "test8" },
+    {
+        label: "测试选项9",
+        value: "test9",
+        children: [
+            { label: "测试选项11", value: "test15" },
+            { label: "测试选项12", value: "test16" },
+            { label: "测试选项13", value: "test17" },
+            { label: "测试选项14", value: "test18" },
+        ],
+    },
 ];
 </script>

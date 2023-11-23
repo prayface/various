@@ -83,7 +83,7 @@ export const useComposable = (define: UiDatePickerProps, emits: SetupContext<typ
                     );
 
                     //* 隐藏事件
-                    window.addEventListener("click", methods.hidden, true);
+                    window.addEventListener("click", methods.hidden, { capture: true, once: true });
                 });
             });
         },
@@ -116,7 +116,6 @@ export const useComposable = (define: UiDatePickerProps, emits: SetupContext<typ
             if (target && (node.includes(target, nodes.containerNode.value) || node.includes(target, nodes.candidateNode.value))) return;
             else {
                 refs.visible.value = false;
-                window.removeEventListener("click", methods.hidden);
             }
         },
 
