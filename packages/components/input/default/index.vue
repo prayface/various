@@ -1,17 +1,17 @@
 <template>
-    <div class="ui-input" ref="container" v-bind="attrContainer">
+    <div class="ui-input" ref="container" v-bind="binds.container.value">
         <!-- * 输入框主体 -->
-        <input ref="main" class="ui-form-control" v-bind="attrMain" v-on="eventMain" @keydown.enter="enter" />
+        <input ref="main" class="ui-form-control" v-bind="binds.main.value" v-on="ons.main" @keydown.enter="enter" />
 
         <!-- * 清空按钮 -->
         <UiIcon name="error" class="ui-form-clearable" v-if="clearable && modelValue" @click="clear" />
 
         <!-- * 候选项 -->
-        <Transition @before-enter="aniEnterBefore" @enter="aniEnter" @leave="aniLeave">
-            <div class="ui-form-candidates" ref="candidate" v-if="visible" v-show="candidates.length" v-bind="attrCandidates">
+        <Transition v-on="ons.candidates">
+            <div class="ui-form-candidates" ref="candidate" v-if="visible" v-show="candidates.length" v-bind="binds.candidates.value">
                 <!-- * 候选项的内容容器 -->
                 <div class="ui-form-candidate-container">
-                    <div class="ui-form-candidate-content" v-bind="attrCandidatesContent">
+                    <div class="ui-form-candidate-content" v-bind="binds.candidate.value">
                         <template v-for="value in candidates">
                             <div class="ui-form-candidate" :class="useCandidateName(value.value)" @mousedown="switchCandidate(value, $event)">
                                 <slot name="candidate" :data="value">{{ value.label }}</slot>
@@ -25,7 +25,7 @@
         <!-- 遮罩层 -->
         <Transition>
             <div class="ui-mask ui-loading" v-if="status.name == 'loading'">
-                <UiIcon name="loading" class="ui-mask-icon" v-show="status.is" />
+                <UiIcon name="loading" class="ui-mask-icon" />
             </div>
         </Transition>
     </div>
@@ -50,14 +50,11 @@ const define = defineProps(UiInputPropsOption);
 const emits = defineEmits(UiInputEmits);
 
 //* 组合函数
-const { refs, attrs, events, methods, dynamics, computeds, animations } = useComposable(define, emits);
+const { ons, refs, binds, methods, dynamics, computeds } = useComposable(define, emits);
 const { main, visible, container, candidate } = refs;
-const { attrContainer, attrMain, attrCandidates, attrCandidatesContent } = attrs;
-const { eventMain } = events;
 const { blur, clear, enter, focus, switchCandidate } = methods;
 const { useCandidateName } = dynamics;
 const { status } = computeds;
-const { aniEnterBefore, aniEnter, aniLeave } = animations;
 
 //* 销毁时间
 onBeforeUnmount(() => {

@@ -22,10 +22,10 @@ export type UiSelectProps = ExtractPropTypes<typeof UiSelectPropsOption>;
 
 export const UiSelectEmits = {
     "update:modelValue": (_ev: any) => true,
+    "before-enter": () => true,
+    "before-leave": () => true,
+    "after-enter": () => true,
+    "after-leave": () => true,
     "change": (_ev?: Event) => true,
     "clear": (_ev?: any) => true,
-    "show": () => true,
-    "hidden": () => true,
-    "show-after": () => true,
-    "hidden-after": () => true,
 };

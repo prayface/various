@@ -18,6 +18,10 @@ export type UiDatePickerProps = ExtractPropTypes<typeof UiDatePickerPropsOption>
 
 export const UiDatePickerEmits = {
     "update:modelValue": (_data: string) => true,
+    "before-enter": () => true,
+    "before-leave": () => true,
+    "after-enter": () => true,
+    "after-leave": () => true,
     "change": (_date: Date) => true,
     "clear": () => true,
 };

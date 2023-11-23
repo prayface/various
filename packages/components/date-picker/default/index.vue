@@ -1,8 +1,8 @@
 <template>
     <!-- * 时间选择器 -->
-    <div class="ui-date-picker" ref="containerNode" v-bind="attrContainer">
+    <div class="ui-date-picker" ref="containerNode" v-bind="binds.container.value">
         <!-- * 选择器主体 -->
-        <input class="ui-form-control" type="text" v-bind="attrMain" @click="show" readonly />
+        <input class="ui-form-control" type="text" v-bind="binds.main.value" @click="show" readonly />
 
         <!-- * 清空图标 -->
         <UiIcon class="ui-date-picker-icons ui-date-picker-clearable" name="error" @click="clear" />
@@ -10,9 +10,8 @@
         <UiIcon class="ui-date-picker-icons ui-date-picker-arrow" name="arrow" @click="show" />
 
         <!-- * 候选列表 -->
-        <Transition @before-enter="aniEnterBefore" @enter="aniEnter" @leave="aniLeave">
-            <div class="ui-form-candidates" ref="candidateNode" v-if="visible" v-bind="attrCandidates">
-                <div class="ui-form-candidates-triangle" ref="triangleNode"></div>
+        <Transition v-on="ons.candidates">
+            <div class="ui-form-candidates" ref="candidateNode" v-if="visible" v-bind="binds.candidates.value">
                 <div class="ui-form-candidate-container">
                     <component ref="componentNode" :is="analyzeComponent" @update="update" @change="change"></component>
                 </div>
@@ -40,13 +39,11 @@ const define = defineProps(UiDatePickerPropsOption);
 const emits = defineEmits(UiDatePickerEmits);
 
 //* 组合函数
-const { refs, nodes, attrs, methods, analyzes, animations } = useComposable(define, emits);
+const { ons, refs, nodes, binds, methods, analyzes } = useComposable(define, emits);
 const { visible } = refs;
-const { componentNode, candidateNode, containerNode, triangleNode } = nodes;
-const { attrCandidates, attrContainer, attrMain } = attrs;
+const { componentNode, candidateNode, containerNode } = nodes;
 const { show, clear, update, change } = methods;
 const { analyzeComponent } = analyzes;
-const { aniEnterBefore, aniEnter, aniLeave } = animations;
 
 //* 销毁事件
 onBeforeUnmount(() => {

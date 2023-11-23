@@ -3,14 +3,14 @@
         <section>
             <div class="title">基本用法</div>
             <div class="descript">
-                <p>通过<span>size</span>属性可以<span>input</span>组件的尺寸</p>
+                <p>通过<span>size</span>属性可以<span>select</span>组件的尺寸</p>
                 <p>尺寸<span>size</span>: large | middle | default | small</p>
             </div>
             <div class="content">
-                <UiInput v-model="value" size="large" :width="200" style="margin-right: 8px" />
-                <UiInput v-model="value" size="middle" :width="200" style="margin-right: 8px" />
-                <UiInput v-model="value" :width="200" style="margin-right: 8px" />
-                <UiInput v-model="value" size="small" :width="200" @change="change" />
+                <UiSelect v-model="value" size="large" :width="200" :candidates="candidates" style="margin-right: 8px" />
+                <UiSelect v-model="value" size="middle" :width="200" :candidates="candidates" style="margin-right: 8px" />
+                <UiSelect v-model="value" :width="200" :candidates="candidates" style="margin-right: 8px" />
+                <UiSelect v-model="value" size="small" :width="200" :candidates="candidates" />
             </div>
         </section>
 
@@ -20,7 +20,7 @@
                 <p>通过<span>disabled</span>属性来指定是否禁用<span>input</span>组件</p>
             </div>
             <div class="content">
-                <UiInput v-model="value" :disabled="true" />
+                <UiSelect v-model="value" :disabled="true" :candidates="candidates" />
             </div>
         </section>
 
@@ -30,7 +30,7 @@
                 <p>通过<span>readonly</span>属性来指定<span>input</span>组件是否只读</p>
             </div>
             <div class="content">
-                <UiInput v-model="value" :readonly="true" />
+                <UiSelect v-model="value" :readonly="true" :candidates="candidates" />
             </div>
         </section>
 
@@ -40,7 +40,7 @@
                 <p>通过<span>loading</span>属性来指定<span>input</span>组件是否加载</p>
             </div>
             <div class="content">
-                <UiInput v-model="value" :loading="true" />
+                <UiSelect v-model="value" :loading="true" :candidates="candidates" />
             </div>
         </section>
 
@@ -50,26 +50,7 @@
                 <p>使用<span>clearable</span>属性即可在当输入框存在内容时出现一个可一键清空的按钮</p>
             </div>
             <div class="content">
-                <UiInput v-model="value" :clearable="true" />
-            </div>
-        </section>
-
-        <section>
-            <div class="title">候选项</div>
-            <div class="descript">
-                <p>可以通过<span>candidates</span>属性设置<span>input</span>的候选项, 当<span>candidates</span>长度不为0时, 展示候选项列表</p>
-                <p>候选项<span>candidates</span>支持<span>UiTypes.candidate[]</span>类型</p>
-            </div>
-            <div class="content">
-                <UiInput
-                    v-model="value"
-                    ref="input"
-                    :candidates="candidates"
-                    @blur="blur"
-                    @focus="trigger"
-                    @input="trigger"
-                    @change="change"
-                    @enter="input.blur()" />
+                <UiSelect v-model="value" :clearable="true" :candidates="candidates" />
             </div>
         </section>
 
@@ -84,11 +65,11 @@
                     <th>默认值</th>
                 </tr>
                 <tr>
-                    <td>autocomplete</td>
-                    <td>是否启动浏览器的自动填充</td>
+                    <td>class-extra-name</td>
+                    <td>用于指定候选项的className</td>
                     <td>string</td>
-                    <td>off | on</td>
-                    <td>off</td>
+                    <td>--</td>
+                    <td>--</td>
                 </tr>
                 <tr>
                     <td>placeholder</td>
@@ -142,16 +123,9 @@
                 <tr>
                     <td>width</td>
                     <td>输入框尺寸</td>
-                    <td>number</td>
+                    <td>number | string</td>
                     <td>--</td>
                     <td>--</td>
-                </tr>
-                <tr>
-                    <td>type</td>
-                    <td>原生输入框输入类型</td>
-                    <td>string</td>
-                    <td>email | number | search | tel | text</td>
-                    <td>text</td>
                 </tr>
                 <tr>
                     <td>size</td>
@@ -181,37 +155,12 @@
                 <tr>
                     <td>change</td>
                     <td>change事件回调</td>
-                    <td>(event: Event) => void</td>
-                </tr>
-                <tr>
-                    <td>select</td>
-                    <td>候选项选择事件回调</td>
-                    <td>(event: Event) => void</td>
+                    <td>(event?: Event) => void</td>
                 </tr>
                 <tr>
                     <td>clear</td>
                     <td>清空事件回调</td>
                     <td>(event?: any) => void</td>
-                </tr>
-                <tr>
-                    <td>input</td>
-                    <td>input事件回调</td>
-                    <td>(event: InputEvent | Event) => void</td>
-                </tr>
-                <tr>
-                    <td>enter</td>
-                    <td>keydown enter事件回调</td>
-                    <td>(event: KeyboardEvent | Event) => void</td>
-                </tr>
-                <tr>
-                    <td>focus</td>
-                    <td>focus事件回调</td>
-                    <td>(event: FocusEvent | Event) => void</td>
-                </tr>
-                <tr>
-                    <td>blur</td>
-                    <td>blur事件回调</td>
-                    <td>(event: FocusEvent | Event) => void</td>
                 </tr>
             </table>
         </section>
@@ -225,18 +174,18 @@
                     <th>回调参数</th>
                 </tr>
                 <tr>
+                    <td>show</td>
+                    <td>显示选择器的候选项</td>
+                    <td>() => void</td>
+                </tr>
+                <tr>
                     <td>clear</td>
                     <td>清空输入框内容</td>
                     <td>() => void</td>
                 </tr>
                 <tr>
-                    <td>focus</td>
-                    <td>输入框获取焦点事件</td>
-                    <td>() => void</td>
-                </tr>
-                <tr>
-                    <td>blur</td>
-                    <td>输入框失去焦点事件</td>
+                    <td>hidden</td>
+                    <td>隐藏选择器的候选项</td>
                     <td>() => void</td>
                 </tr>
             </table>
@@ -263,29 +212,16 @@
 <script setup>
 import { ref } from "vue";
 
-const input = ref();
 const value = ref("");
-const candidates = ref([]);
-
-const trigger = () => {
-    const number = candidates.value.length + 1;
-    if (number > 10) {
-        candidates.value = [
-            { label: "测试选项1", value: "test1" },
-            { label: "测试选项2", value: "test2" },
-            { label: "测试选项3", value: "test3" },
-            { label: "测试选项4", value: "test4" },
-        ];
-    } else {
-        candidates.value.push({ label: "测试选项" + number, value: "test" + number });
-    }
-};
-
-const blur = () => {
-    console.log("blur");
-};
-
-const change = () => {
-    console.log("change");
-};
+const candidates = [
+    { label: "测试选项11111111111111111111111111111111111", value: "test1" },
+    { label: "测试选项2", value: "test2" },
+    { label: "测试选项3", value: "test3" },
+    { label: "测试选项4", value: "test4" },
+    { label: "测试选项1", value: "test5" },
+    { label: "测试选项2", value: "test6" },
+    { label: "测试选项3", value: "test7" },
+    { label: "测试选项4", value: "test8" },
+    { label: "测试选项1", value: "test9" },
+];
 </script>

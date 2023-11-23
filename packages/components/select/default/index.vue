@@ -1,19 +1,19 @@
 <template>
-    <div class="ui-select" ref="container" v-bind="attrContainer">
-        <!-- Select主体 -->
-        <input class="ui-form-control" type="text" v-bind="attrMain" @click="show" />
+    <div class="ui-select" ref="container" v-bind="binds.container.value">
+        <!-- * 主体 -->
+        <input class="ui-form-control" type="text" v-bind="binds.main.value" @click="show" />
 
-        <!-- 下拉箭头 -->
+        <!-- * 箭头 -->
         <UiIcon name="arrow" class="ui-select-arrow" @click="show" />
 
-        <!-- 清空按钮 -->
+        <!-- * 清空 -->
         <UiIcon name="error" class="ui-form-clearable" v-if="clearable && modelValue" @click="clear" />
 
-        <!-- 候选项 -->
-        <Transition @before-enter="aniEnterBefore" @enter="aniEnter" @leave="aniLeave">
-            <div class="ui-form-candidates" ref="candidate" v-if="visible" v-show="candidates.length" v-bind="attrCandidates">
+        <!-- * 候选项 -->
+        <Transition v-on="ons.candidates">
+            <div class="ui-form-candidates" ref="candidate" v-if="visible" v-show="candidates.length" v-bind="binds.candidates.value">
                 <div class="ui-form-candidate-container">
-                    <div class="ui-form-candidate-content" v-bind="attrCandidatesContent">
+                    <div class="ui-form-candidate-content" v-bind="binds.candidate.value">
                         <template v-for="value in candidates">
                             <div class="ui-form-candidate" :class="useCandidateName(value.value)" @mousedown="switchCandidate(value.value, $event)">
                                 <slot name="candidate" :data="value">{{ value.label }}</slot>
@@ -24,10 +24,10 @@
             </div>
         </Transition>
 
-        <!-- 遮罩层 -->
+        <!-- * 遮罩层 -->
         <Transition>
             <div class="ui-mask ui-loading" v-if="status.name == 'loading'">
-                <UiIcon name="loading" class="ui-mask-icon" v-show="status.is" />
+                <UiIcon class="ui-mask-icon" name="loading" />
             </div>
         </Transition>
     </div>
@@ -52,13 +52,11 @@ const define = defineProps(UiSelectPropsOption);
 const emits = defineEmits(UiSelectEmits);
 
 //* 组合函数
-const { refs, attrs, methods, dynamics, computeds, animations } = useComposable(define, emits);
+const { ons, refs, binds, methods, dynamics, computeds } = useComposable(define, emits);
 const { visible, candidate, container } = refs;
-const { attrCandidatesContent, attrCandidates, attrContainer, attrMain } = attrs;
 const { show, clear, hidden, switchCandidate } = methods;
 const { useCandidateName } = dynamics;
 const { status } = computeds;
-const { aniEnterBefore, aniEnter, aniLeave } = animations;
 
 //* 销毁事件
 onBeforeUnmount(() => {

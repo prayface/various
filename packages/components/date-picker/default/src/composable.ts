@@ -1,17 +1,12 @@
 //* 插件
 import { ref, inject, computed, nextTick, SetupContext } from "vue";
-import { gsap } from "gsap";
-
 //* 公共属性
 import { UiFormEmitterKey } from "@various/constants";
-
 //* 工具函数
-import { node, utility, dispose } from "@various/utils";
-
+import { node, utility, dispose, animations } from "@various/utils";
 //* 组件属性
 import { UiDatePickerProps, UiDatePickerEmits } from "../index";
 import type { ModuleUpdateData } from "./types";
-
 //* 组件引入
 import PickerDate from "../components/date/index.vue";
 import PickerMonth from "../components/month/index.vue";
@@ -34,7 +29,6 @@ export const useComposable = (define: UiDatePickerProps, emits: SetupContext<typ
         componentNode: ref<ComponentNodeType>(), //* 候选项组件节点
         candidateNode: ref<HTMLElement>(), //* 候选项容器节点
         containerNode: ref<HTMLElement>(), //* 时间选择器节点
-        triangleNode: ref<HTMLElement>(), //* 时间选择器三角节点
     };
 
     //* 解析数据
@@ -84,7 +78,7 @@ export const useComposable = (define: UiDatePickerProps, emits: SetupContext<typ
                     node.append(document.body, nodes.candidateNode.value);
                     //* 根据配置计算当前窗口位置
                     dispose.boundary.relativeContainerBody(
-                        { container: nodes.containerNode.value, triangle: nodes.triangleNode.value, view: nodes.candidateNode.value },
+                        { container: nodes.containerNode.value, view: nodes.candidateNode.value },
                         { direction: "bottom", offset: 8, align: "center" }
                     );
 
@@ -194,10 +188,20 @@ export const useComposable = (define: UiDatePickerProps, emits: SetupContext<typ
         },
     };
 
-    //* 属性列表
-    const attrs = {
-        //* 选择器容器属性
-        attrContainer: computed(() => {
+    //* 属性
+    const binds = {
+        //* 候选项容器
+        candidates: computed(() => {
+            return {
+                class: define.classExtraName || "",
+                style: {
+                    zIndex: define.zIndex,
+                },
+            };
+        }),
+
+        //* 容器
+        container: computed(() => {
             //* 初始化数据
             const style: { [name: string]: any } = {};
             const className: string[] = [];
@@ -221,43 +225,25 @@ export const useComposable = (define: UiDatePickerProps, emits: SetupContext<typ
             };
         }),
 
-        //* 选择器本体属性
-        attrMain: computed(() => {
+        //* 主体
+        main: computed(() => {
             return {
                 value: define.modelValue,
                 placeholder: define.placeholder,
             };
         }),
+    };
 
-        //* 候选项外层窗口属性
-        attrCandidates: computed(() => {
-            return {
-                class: define.classExtraName || "",
-                style: {
-                    zIndex: define.zIndex,
-                },
-            };
+    //* 响应时间
+    const ons = {
+        //* 候选项
+        candidates: animations.selector(define.animation, {
+            enterBefore: () => emits("before-enter"),
+            leaveBefore: () => emits("before-leave"),
+            enterAfter: () => emits("after-enter"),
+            leaveAfter: () => emits("after-leave"),
         }),
     };
 
-    //* 动画函数
-    const animations = {
-        aniEnterBefore: (el: Element) => define.animation && gsap.set(el, { height: 0, opacity: 0 }),
-        aniEnter: (el: Element, callBack: () => void) => {
-            if (define.animation) {
-                gsap.to(el, { height: "auto", opacity: 1, duration: 0.2, onComplete: () => callBack && callBack() });
-            } else {
-                callBack && callBack();
-            }
-        },
-        aniLeave: (el: Element, callBack: () => void) => {
-            if (define.animation) {
-                gsap.to(el, { height: 0, opacity: 0, duration: 0.2, onComplete: () => callBack && callBack() });
-            } else {
-                callBack && callBack();
-            }
-        },
-    };
-
-    return { refs, nodes, attrs, methods, analyzes, animations };
+    return { ons, refs, nodes, binds, methods, analyzes, animations };
 };

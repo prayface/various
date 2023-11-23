@@ -67,15 +67,11 @@
                     background: var(--uioption-form-candidate-active-background-color);
                     color: var(--uioption-form-candidate-active-color);
                 }
-
-                &:last-child {
-                    border-radius: 0 0 var(--uioption-form-radius) var(--uioption-form-radius);
-                }
-
-                &:first-child {
-                    border-radius: var(--uioption-form-radius) var(--uioption-form-radius) 0 0;
-                }
             }
+        }
+
+        > .ui-form-candidate-content::-webkit-scrollbar-thumb {
+            border-width: 1px 1px 1px 2px;
         }
     }
 }

@@ -1,6 +1,7 @@
 export * as node from "./src/node";
 export * as utility from "./src/utility";
 export * as dispose from "./src/dispose";
+export * as animations from "./src/animation";
 
 export const register = {
     components: [] as any[],

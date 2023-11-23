@@ -1,12 +1,11 @@
 //* 按需导入插件
 import { SetupContext, nextTick, computed, inject, ref } from "vue";
-import { gsap } from "gsap";
 //* 组件属性
 import { UiInputProps, UiInputEmits } from "../index";
 //* 公共属性
 import { UiTypes, UiFormEmitterKey } from "@various/constants";
 //* 公共函数
-import { node, utility, dispose } from "@various/utils";
+import { node, utility, dispose, animations } from "@various/utils";
 
 export const useComposable = (define: UiInputProps, emits: SetupContext<typeof UiInputEmits>["emit"]) => {
     //* 初始化mitt
@@ -143,10 +142,40 @@ export const useComposable = (define: UiInputProps, emits: SetupContext<typeof U
         }),
     };
 
-    //* 属性列表
-    const attrs = {
-        //* 输入框容器属性
-        attrContainer: computed(() => {
+    //* 动态计算列表
+    const dynamics = {
+        //* 动态计算候选项类名
+        useCandidateName: (value: string) => {
+            if (define.modelValue == value) return "ui-active";
+            else {
+                return "";
+            }
+        },
+    };
+
+    //* 属性
+    const binds = {
+        //* 候选项容器
+        candidates: computed(() => {
+            return {
+                class: define.classExtraName || "",
+                style: {
+                    zIndex: define.zIndex,
+                },
+            };
+        }),
+
+        //* 候选项
+        candidate: computed(() => {
+            return {
+                style: {
+                    maxHeight: define.height + "px",
+                },
+            };
+        }),
+
+        //* 容器
+        container: computed(() => {
             //* 初始化数据
             const className: string[] = [];
             const style: { [name: string]: any } = {
@@ -173,8 +202,8 @@ export const useComposable = (define: UiInputProps, emits: SetupContext<typeof U
             };
         }),
 
-        //* 输入框本体属性
-        attrMain: computed(() => {
+        //* 主体
+        main: computed(() => {
             const result: any = {
                 type: define.type,
                 value: define.modelValue,
@@ -188,87 +217,26 @@ export const useComposable = (define: UiInputProps, emits: SetupContext<typeof U
 
             return result;
         }),
-
-        //* 候选项外层窗口属性
-        attrCandidates: computed(() => {
-            return {
-                class: define.classExtraName || "",
-                style: {
-                    zIndex: define.zIndex,
-                },
-            };
-        }),
-
-        //* 候选项容器属性
-        attrCandidatesContent: computed(() => {
-            return {
-                style: {
-                    maxHeight: define.height + "px",
-                },
-            };
-        }),
     };
 
-    //* 事件列表
-    const events = {
-        //* 输入框主体事件
-        eventMain: {
+    //* 响应事件
+    const ons = {
+        //* 主体
+        main: {
             change: methods.change,
             focus: methods.focus,
             input: methods.input,
             blur: methods.blur,
         },
+
+        //* 候选项
+        candidates: animations.selector(define.animation, {
+            enterBefore: () => emits("before-enter"),
+            leaveBefore: () => emits("before-leave"),
+            enterAfter: () => emits("after-enter"),
+            leaveAfter: () => emits("after-leave"),
+        }),
     };
 
-    //* 动态计算列表
-    const dynamics = {
-        //* 动态计算候选项类名
-        useCandidateName: (value: string) => {
-            if (define.modelValue == value) return "ui-active";
-            else {
-                return "";
-            }
-        },
-    };
-
-    //* 动画函数列表
-    const animations = {
-        aniEnterBefore: (el: Element) => define.animation && gsap.set(el, { height: 0, opacity: 0 }),
-        aniEnter: (el: Element, callBack: () => void) => {
-            emits("show-after");
-            if (define.animation) {
-                gsap.to(el, {
-                    height: "auto",
-                    opacity: 1,
-                    duration: 0.2,
-                    onComplete: () => {
-                        emits("show");
-                        callBack && callBack();
-                    },
-                });
-            } else {
-                emits("show");
-                callBack && callBack();
-            }
-        },
-        aniLeave: (el: Element, callBack: () => void) => {
-            emits("hidden-after");
-            if (define.animation) {
-                gsap.to(el, {
-                    height: 0,
-                    opacity: 0,
-                    duration: 0.2,
-                    onComplete: () => {
-                        emits("hidden");
-                        callBack && callBack();
-                    },
-                });
-            } else {
-                emits("hidden");
-                callBack && callBack();
-            }
-        },
-    };
-
-    return { refs, attrs, events, methods, dynamics, computeds, animations };
+    return { ons, refs, binds, methods, dynamics, computeds, animations };
 };
