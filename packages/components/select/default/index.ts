@@ -13,6 +13,7 @@ export const UiSelectPropsOption = {
     loading: { type: Boolean, default: false }, //* 选择器内置加载器是否开启
     height: { type: Number, default: 240 },
     zIndex: { type: Number, default: 66 },
+    active: { type: String }, //* 选择器激活的候选项
     width: { type: [String, Number] as PropType<number | string>, default: 264 },
     size: { type: String as PropType<UiTypes.size>, default: "default" },
     name: { type: String },

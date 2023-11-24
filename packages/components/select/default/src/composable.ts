@@ -89,7 +89,8 @@ export const useComposable = (define: UiSelectProps, emits: SetupContext<typeof 
     const dynamics = {
         //* 动态计算候选项类名
         activate: (option: UiTypes.candidate) => {
-            if ((option.activate && option.activate(define.modelValue, option)) || define.modelValue == option.value) return "ui-active";
+            if (option.activate?.(define.modelValue, option) || define.modelValue == option.value || define.active == option.value)
+                return "ui-active";
             else {
                 return "";
             }

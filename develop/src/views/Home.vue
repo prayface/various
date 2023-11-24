@@ -50,12 +50,12 @@
                 <p>使用<span>clearable</span>属性即可在当输入框存在内容时出现一个可一键清空的按钮</p>
             </div>
             <div class="content">
-                <UiSelect v-model="value" :candidates="candidates">
+                <UiSelect v-model="value" :active="active" :candidates="candidates">
                     <template #candidate="{ data }">
                         <UiTooltip>
                             <template #default>{{ data.label }}</template>
                             <template #content>
-                                <div class="candidate-childrens">
+                                <div class="candidate-childrens" @mousemove="active = data.value" @mouseleave="active = ''">
                                     <div class="candidate-children" v-for="value in data.children">{{ value.label }}</div>
                                 </div>
                             </template>
@@ -224,6 +224,7 @@
 import { ref } from "vue";
 
 const value = ref("");
+const active = ref("");
 const candidates = [
     { label: "测试选项1", value: "test1" },
     { label: "测试选项2", value: "test2" },
