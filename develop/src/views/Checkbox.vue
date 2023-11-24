@@ -214,9 +214,7 @@ const rules1 = ref({
     ],
 });
 
-const change = () => {
-    console.log(data2.value);
-};
+const change = () => {};
 </script>
 
 <style lang="less" scoped>

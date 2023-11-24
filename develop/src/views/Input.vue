@@ -281,11 +281,7 @@ const trigger = () => {
     }
 };
 
-const blur = () => {
-    console.log("blur");
-};
+const blur = () => {};
 
-const change = () => {
-    console.log("change");
-};
+const change = () => {};
 </script>

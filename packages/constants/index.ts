@@ -8,7 +8,13 @@ export namespace UiTypes {
     export type align = "end" | "start" | "center";
     export type loading = boolean | { is: boolean; context?: string };
     export type direction = "top" | "left" | "right" | "bottom";
-    export type candidate = { label: any; value: any; activate?: (option: candidate) => boolean; children?: candidate[]; [name: string]: any };
+    export type candidate = {
+        label: any;
+        value: any;
+        activate?: (data: any, option: candidate) => boolean;
+        children?: candidate[];
+        [name: string]: any;
+    };
     export type verifyResult = {
         type?: UiTypes.type;
         verify: boolean;

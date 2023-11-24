@@ -22,7 +22,6 @@ export const useComposable = (define: UiSelectProps, emits: SetupContext<typeof 
     const methods = {
         //* 候选框隐藏事件
         hidden: (ev?: Event) => {
-            console.log(1212);
             if (!refs.container.value) return;
             if (ev?.target && node.includes(ev.target as HTMLElement, refs.container.value)) return;
             else {
@@ -90,7 +89,7 @@ export const useComposable = (define: UiSelectProps, emits: SetupContext<typeof 
     const dynamics = {
         //* 动态计算候选项类名
         activate: (option: UiTypes.candidate) => {
-            if ((option.activate && option.activate(option)) || define.modelValue == option.value) return "ui-active";
+            if ((option.activate && option.activate(define.modelValue, option)) || define.modelValue == option.value) return "ui-active";
             else {
                 return "";
             }

@@ -269,7 +269,6 @@ const click = () => {
     loading2.value = true;
     form.value.validator((valid) => {
         loading2.value = false;
-        console.log(`校验结果: ${valid}`);
     });
 };
 

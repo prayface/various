@@ -176,9 +176,7 @@
 </template>
 
 <script setup>
-const click = () => {
-    console.log("I am Button");
-};
+const click = () => {};
 </script>
 
 <style lang="less">
