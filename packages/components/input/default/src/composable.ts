@@ -1,5 +1,5 @@
 //* 按需导入插件
-import { SetupContext, nextTick, computed, inject, ref } from "vue";
+import { SetupContext, nextTick, computed, inject, ref, reactive } from "vue";
 //* 组件属性
 import { UiInputProps, UiInputEmits } from "../index";
 //* 公共属性
@@ -13,10 +13,14 @@ export const useComposable = (define: UiInputProps, emits: SetupContext<typeof U
 
     //* 响应式变量
     const refs = {
-        main: ref<HTMLElement>(),
         visible: ref<boolean>(false),
+    };
+
+    //* 节点
+    const nodes = {
+        main: ref<HTMLElement>(),
+        body: ref<HTMLElement>(),
         container: ref<HTMLElement>(),
-        candidate: ref<HTMLElement>(),
     };
 
     //* 工具函数
@@ -31,17 +35,17 @@ export const useComposable = (define: UiInputProps, emits: SetupContext<typeof U
                 //* 下一帧运行
                 nextTick(() => {
                     //* 检测是否向下执行
-                    if (!refs.container.value || !refs.candidate.value) return;
+                    if (!nodes.container.value || !nodes.body.value) return;
                     //* 将内容添加到视图容器中
-                    node.append(document.body, refs.candidate.value);
+                    node.append(document.body, nodes.body.value);
                     //* 根据配置计算当前窗口位置
                     dispose.boundary.relativeContainerBody(
-                        { container: refs.container.value, view: refs.candidate.value },
+                        { container: nodes.container.value, view: nodes.body.value },
                         {
                             direction: "bottom",
                             offset: 8,
                             height: define.height,
-                            width: refs.container.value?.offsetWidth || 0,
+                            width: nodes.container.value?.offsetWidth || 0,
                             align: "start",
                         }
                     );
@@ -55,7 +59,7 @@ export const useComposable = (define: UiInputProps, emits: SetupContext<typeof U
         //* Input失去焦点事件
         blur: (ev?: FocusEvent | Event) => {
             //* 当ev不存在时, 触发Input失去焦点
-            if (!ev) return refs.main.value?.blur();
+            if (!ev) return nodes.main.value?.blur();
             else {
                 //* 隐藏候选项
                 refs.visible.value = false;
@@ -70,7 +74,7 @@ export const useComposable = (define: UiInputProps, emits: SetupContext<typeof U
         //* Input获取焦点事件
         focus: (ev?: FocusEvent | Event) => {
             //* 当ev不存在时, 触发Input获取焦点
-            if (!ev) return refs.main.value?.blur();
+            if (!ev) return nodes.main.value?.blur();
             else {
                 //* 显示候选项
                 utils.show();
@@ -97,6 +101,8 @@ export const useComposable = (define: UiInputProps, emits: SetupContext<typeof U
             //* 显示候选项窗口, 针对某些情况下提前隐藏候选项, 但触发input时候选项需要显示的场景
             utils.show();
 
+            console.log(define.modelValue, target.value);
+
             //* 触发v-model变更和input回调
             emits("update:modelValue", target.value);
             emits("input", ev as InputEvent);
@@ -114,110 +120,69 @@ export const useComposable = (define: UiInputProps, emits: SetupContext<typeof U
             //* 触发表单change相关校验
             emitter?.emit(define.name || "", "change");
         },
-
-        //* 候选项选择事件
-        switchCandidate: (data: UiTypes.candidate, ev: Event) => {
-            emits("update:modelValue", data.value);
-            emits("select", ev, data);
-            emits("change", ev);
-            if (emitter?.emit) {
-                emitter.emit(define.name || "", "change");
-            }
-        },
     };
 
     //* 计算属性
     const computeds = {
-        //* 输入框当前状态
-        status: computed(() => {
-            if (define.loading) {
-                return { is: true, name: "loading" };
-            } else if (define.disabled) {
-                return { is: false, name: "disabled" };
-            } else if (define.readonly) {
-                return { is: false, name: "readonly" };
-            } else {
-                return { is: false, name: "default" };
-            }
-        }),
-    };
+        //* 禁用状态
+        disabled: computed(() => define.loading || define.disabled),
 
-    //* 动态计算列表
-    const dynamics = {
-        //* 动态计算候选项类名
-        useCandidateName: (value: string) => {
-            if (define.modelValue == value) return "ui-active";
-            else {
-                return "";
-            }
-        },
-    };
-
-    //* 属性
-    const binds = {
-        //* 候选项容器
-        candidates: computed(() => {
-            return {
-                class: define.classExtraName || "",
-                style: {
-                    zIndex: define.zIndex,
-                },
-            };
-        }),
-
-        //* 候选项
-        candidate: computed(() => {
-            return {
-                style: {
-                    maxHeight: define.height + "px",
-                },
-            };
-        }),
-
-        //* 容器
-        container: computed(() => {
+        //* 组件类
+        className: computed(() => {
             //* 初始化数据
             const className: string[] = [];
-            const style: { [name: string]: any } = {
-                width: define.width,
-            };
-
-            //* 判断宽度类型并进行处理
-            if (utility.isNumber(define.width)) style.width = define.width + "px";
-
-            //* 判断是否是禁用或只读状态
-            if (computeds.status.value.name == "disabled") className.push("ui-disabled-status");
-            else if (computeds.status.value.name == "readonly") className.push("ui-readonly-status");
-            else if (computeds.status.value.name == "loading") className.push("ui-loading-status");
             //* 判断是否需要添加size类名
             if (define.size != "default") className.push(`ui-${define.size}`);
             //* 判断是否需要添加clearable类名
             if (define.clearable) className.push("ui-clearable");
             //* 判断候选项是否处于展示状态
             if (refs.visible.value && define.candidates?.length) className.push("ui-candidates-show");
+            //* 判断是否是禁用或只读状态
+            if (define.loading) className.push("ui-loading-status");
+            else if (define.disabled) className.push("ui-disabled-status");
+            else if (define.readonly) {
+                className.push("ui-readonly-status");
+            }
 
-            return {
-                class: className.join(" "),
-                style: style,
-            };
-        }),
-
-        //* 主体
-        main: computed(() => {
-            const result: any = {
-                type: define.type,
-                value: define.modelValue,
-                disabled: ["disabled", "loading"].includes(computeds.status.value.name),
-                readonly: computeds.status.value.name == "readonly",
-                placeholder: define.placeholder,
-                autocomplete: define.autocomplete,
-            };
-
-            if (define.maxlength) result.maxlength = define.maxlength;
-
-            return result;
+            return className.join(" ");
         }),
     };
+
+    //* 属性
+    const binds = reactive({
+        //* 主体
+        main: {
+            type: define.type,
+            disabled: computeds.disabled,
+            readonly: define.readonly,
+            maxlength: define.maxlength,
+            placeholder: define.placeholder,
+            autocomplete: define.autocomplete,
+        },
+
+        //* 候选项容器
+        body: {
+            class: define.classExtraName || "",
+            style: {
+                zIndex: define.zIndex,
+            },
+        },
+
+        //* 容器
+        container: {
+            class: computeds.className,
+            style: {
+                width: utility.isNumber(define.width) ? define.width + "px" : define.width,
+            },
+        },
+
+        //* 候选项列表
+        candidates: {
+            style: {
+                maxHeight: define.height + "px",
+            },
+        },
+    });
 
     //* 响应事件
     const ons = {
@@ -230,13 +195,27 @@ export const useComposable = (define: UiInputProps, emits: SetupContext<typeof U
         },
 
         //* 候选项
-        candidates: animations.selector(define.animation, {
-            enterBefore: () => emits("before-enter"),
-            leaveBefore: () => emits("before-leave"),
-            enterAfter: () => emits("after-enter"),
-            leaveAfter: () => emits("after-leave"),
+        candidate: (option: UiTypes.candidate) => {
+            return {
+                mousedown: (ev: Event) => {
+                    emits("update:modelValue", option.value);
+                    emits("select", ev, option);
+                    emits("change", ev);
+                    if (emitter?.emit) {
+                        emitter.emit(define.name || "", "change");
+                    }
+                },
+            };
+        },
+
+        //* 动画函数
+        animation: animations.selector(define.animation, {
+            beforeEnter: () => emits("before-enter"),
+            beforeLeave: () => emits("before-leave"),
+            afterEnter: () => emits("after-enter"),
+            afterLeave: () => emits("after-leave"),
         }),
     };
 
-    return { ons, refs, binds, methods, dynamics, computeds, animations };
+    return { ons, refs, binds, nodes, methods, computeds, animations };
 };

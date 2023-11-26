@@ -1,0 +1,55 @@
+.ui-cascade {
+    position: relative;
+    //* 调整loading尺寸
+    .ui-mask {
+        font-size: 20px;
+    }
+
+    //* 调整输入框右间距
+    .ui-form-control {
+        cursor: pointer;
+        padding-right: calc(var(--uioption-form-spacing-x) + 24px);
+        //* 提示文案调整
+        &::placeholder {
+            color: var(--uioption-form-placeholder-color);
+        }
+
+        &:focus::placeholder {
+            color: var(--uioption-form-placeholder-color);
+        }
+    }
+
+    //* 下拉箭头样式
+    .ui-cascade-arrow {
+        top: 50%;
+        right: var(--uioption-form-spacing-x);
+        cursor: pointer;
+        position: absolute;
+        font-size: 20px;
+        transform: translate(0, -50%);
+        transition: all 0.3s;
+    }
+}
+
+//* 候选项展开状态
+.ui-cascade.ui-candidates-show {
+    .ui-cascade-arrow {
+        transform: translate(0, -50%) rotate(180deg);
+    }
+}
+
+//* 禁用状态
+.ui-cascade.ui-disabled-status {
+    .ui-form-control,
+    .ui-cascade-arrow {
+        cursor: auto;
+    }
+}
+
+//* 只读状态
+.ui-cascade.ui-readonly-status {
+    .ui-form-control,
+    .ui-cascade-arrow {
+        cursor: auto;
+    }
+}

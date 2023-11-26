@@ -3,7 +3,7 @@ import { UiTypes } from "@various/constants";
 
 export const UiDatePickerPropsOption = {
     classExtraName: { type: String, default: "" }, //* 候选项容器类名
-    placeholder: { type: String, default: "" },
+    placeholder: { type: String },
     modelValue: { type: String, required: true },
     animation: { type: Boolean, default: true }, //* 过渡动画是否开启
     disabled: { type: Function as PropType<(date: Date) => boolean> },

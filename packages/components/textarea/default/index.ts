@@ -1,7 +1,7 @@
 import { ExtractPropTypes, PropType } from "vue";
 
 export const UiTextareaPropsOption = {
-    placeholder: { type: String, default: "Please input" }, //* 提示文本
+    placeholder: { type: String }, //* 提示文本
     modelValue: { type: [String, Number] as PropType<string | number>, required: true },
     maxlength: { type: Number },
     disabled: { type: Boolean, default: false }, //* 是否禁用

@@ -64,8 +64,8 @@ export const useComposable = (define: UiScopeInputProps, emits: SetupContext<typ
             const isDisabled = ["disabled", "loading"].includes(status.value.name);
             const isReadonly = status.value.name == "readonly";
             return {
-                start: { disabled: isDisabled, readonly: isReadonly, placeholder: define.placeholder?.start || "Start" },
-                end: { disabled: isDisabled, readonly: isReadonly, placeholder: define.placeholder?.end || "End" },
+                start: { disabled: isDisabled, readonly: isReadonly, placeholder: define.placeholder?.start },
+                end: { disabled: isDisabled, readonly: isReadonly, placeholder: define.placeholder?.end },
             };
         }),
 

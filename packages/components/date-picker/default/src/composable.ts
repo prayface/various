@@ -1,5 +1,5 @@
 //* 插件
-import { ref, inject, computed, nextTick, SetupContext } from "vue";
+import { ref, inject, reactive, computed, nextTick, SetupContext } from "vue";
 //* 公共属性
 import { UiFormEmitterKey } from "@various/constants";
 //* 工具函数
@@ -26,9 +26,9 @@ export const useComposable = (define: UiDatePickerProps, emits: SetupContext<typ
 
     //* 响应式节点变量
     const nodes = {
-        componentNode: ref<ComponentNodeType>(), //* 候选项组件节点
-        candidateNode: ref<HTMLElement>(), //* 候选项容器节点
-        containerNode: ref<HTMLElement>(), //* 时间选择器节点
+        components: ref<ComponentNodeType>(), //* 候选项组件节点
+        container: ref<HTMLElement>(), //* 时间选择器节点
+        body: ref<HTMLElement>(), //* 候选项容器节点
     };
 
     //* 解析数据
@@ -67,18 +67,18 @@ export const useComposable = (define: UiDatePickerProps, emits: SetupContext<typ
                 //* 组件数据初始化
                 const data = { date: analyzes.analyzeDate.value, realityDate: new Date(define.modelValue || "") };
                 //* 组件内容初始化
-                nodes.componentNode.value?.init(data, define.disabled);
+                nodes.components.value?.init(data, define.disabled);
 
                 //* 下一帧进行候选窗口的定位与时间挂载
                 nextTick(() => {
                     //* 检测是否满足运行条件
-                    if (!nodes.containerNode.value || !nodes.candidateNode.value) return;
+                    if (!nodes.container.value || !nodes.body.value) return;
 
                     //* 将内容添加到视图容器中
-                    node.append(document.body, nodes.candidateNode.value);
+                    node.append(document.body, nodes.body.value);
                     //* 根据配置计算当前窗口位置
                     dispose.boundary.relativeContainerBody(
-                        { container: nodes.containerNode.value, view: nodes.candidateNode.value },
+                        { container: nodes.container.value, view: nodes.body.value },
                         { direction: "bottom", offset: 8, align: "center" }
                     );
 
@@ -107,13 +107,13 @@ export const useComposable = (define: UiDatePickerProps, emits: SetupContext<typ
         //* 隐藏函数
         hidden: (ev?: Event) => {
             //* 检测是否满足运行条件
-            if (!nodes.containerNode.value || !nodes.candidateNode.value) return;
+            if (!nodes.container.value || !nodes.body.value) return;
 
             //* 初始化数据
             const target = ev?.target as HTMLElement;
 
             //* 检测是否需要进行关闭候选菜单
-            if (target && (node.includes(target, nodes.containerNode.value) || node.includes(target, nodes.candidateNode.value))) return;
+            if (target && (node.includes(target, nodes.container.value) || node.includes(target, nodes.body.value))) return;
             else {
                 refs.visible.value = false;
             }
@@ -133,18 +133,18 @@ export const useComposable = (define: UiDatePickerProps, emits: SetupContext<typ
                 //* 组件数据初始化
                 const data = { date: analyzes.analyzeDate.value, realityDate: new Date(define.modelValue || "") };
                 //* 组件内容初始化
-                nodes.componentNode.value?.init(data, define.disabled);
+                nodes.components.value?.init(data, define.disabled);
 
                 //* 下一帧进行候选窗口的定位与时间挂载
                 nextTick(() => {
                     //* 检测是否满足运行条件
-                    if (!nodes.containerNode.value || !nodes.candidateNode.value) return;
+                    if (!nodes.container.value || !nodes.body.value) return;
 
                     //* 将内容添加到视图容器中
-                    node.append(document.body, nodes.candidateNode.value);
+                    node.append(document.body, nodes.body.value);
                     //* 根据配置计算当前窗口位置
                     dispose.boundary.relativeContainerBody(
-                        { container: nodes.containerNode.value, view: nodes.candidateNode.value },
+                        { container: nodes.container.value, view: nodes.body.value },
                         { direction: "bottom", offset: 8, align: "center" }
                     );
                 });
@@ -187,30 +187,14 @@ export const useComposable = (define: UiDatePickerProps, emits: SetupContext<typ
         },
     };
 
-    //* 属性
-    const binds = {
-        //* 候选项容器
-        candidates: computed(() => {
-            return {
-                class: define.classExtraName || "",
-                style: {
-                    zIndex: define.zIndex,
-                },
-            };
-        }),
-
-        //* 容器
-        container: computed(() => {
+    //* 计算属性
+    const computeds = {
+        //* 组件值
+        value: computed(() => define.modelValue),
+        //* 组件类
+        className: computed(() => {
             //* 初始化数据
-            const style: { [name: string]: any } = {};
             const className: string[] = [];
-
-            //* 宽度处理
-            if (utility.isNumber(define.width)) style.width = define.width + "px";
-            else if (define.width) {
-                style.width = define.width;
-            }
-
             //* 判断是否需要添加size类名
             if (define.size != "default") className.push(`ui-${define.size}`);
             //* 判断是否需要添加clearable类名
@@ -218,29 +202,43 @@ export const useComposable = (define: UiDatePickerProps, emits: SetupContext<typ
             //* 判断是否需要添加ui-active类名
             if (refs.visible.value) className.push("ui-active");
 
-            return {
-                class: className.join(" "),
-                style: style,
-            };
-        }),
-
-        //* 主体
-        main: computed(() => {
-            return {
-                value: define.modelValue,
-                placeholder: define.placeholder,
-            };
+            return className.join(" ");
         }),
     };
+
+    //* 属性
+    const binds = reactive({
+        //* 主体
+        main: {
+            value: computeds.value,
+            placeholder: define.placeholder,
+        },
+
+        //* 候选项容器
+        body: {
+            class: define.classExtraName || "",
+            style: {
+                zIndex: define.zIndex,
+            },
+        },
+
+        //* 容器
+        container: {
+            class: computeds.className,
+            style: {
+                width: utility.isNumber(define.width) ? define.width + "px" : define.width,
+            },
+        },
+    });
 
     //* 响应时间
     const ons = {
         //* 候选项
         candidates: animations.selector(define.animation, {
-            enterBefore: () => emits("before-enter"),
-            leaveBefore: () => emits("before-leave"),
-            enterAfter: () => emits("after-enter"),
-            leaveAfter: () => emits("after-leave"),
+            beforeEnter: () => emits("before-enter"),
+            beforeLeave: () => emits("before-leave"),
+            afterEnter: () => emits("after-enter"),
+            afterLeave: () => emits("after-leave"),
         }),
     };
 

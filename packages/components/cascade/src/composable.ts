@@ -1,24 +1,33 @@
 //* 按需导入插件
-import { SetupContext, nextTick, reactive, computed, inject, ref } from "vue";
+import { ref, inject, computed, nextTick, SetupContext, reactive, shallowRef } from "vue";
 //* 组件属性
-import { UiSelectProps, UiSelectEmits } from "../index";
+import type { UiCascadeProps, UiCascadeEmits, UiCascadeOption } from "./index";
 //* 公共属性
-import { UiFormEmitterKey, UiTypes } from "@various/constants";
+import { UiFormEmitterKey } from "@various/constants";
 //* 公共函数
 import { node, utility, dispose, animations } from "@various/utils";
 
-export const useComposable = (define: UiSelectProps, emits: SetupContext<typeof UiSelectEmits>["emit"]) => {
+export const useComposable = (define: UiCascadeProps, emits: SetupContext<typeof UiCascadeEmits>["emit"]) => {
     //* 初始化mitt
     const emitter = inject(UiFormEmitterKey, undefined);
 
     //* 响应式变量
     const refs = {
         visible: ref<boolean>(false),
+        ephemeral: ref<any>(),
     };
 
+    //* 节点
     const nodes = {
         body: ref<HTMLElement>(),
+        body2: ref<HTMLElement>(),
         container: ref<HTMLElement>(),
+        candidates: ref<HTMLElement[]>([]),
+    };
+
+    //* 静态属性
+    const variable = {
+        timer: shallowRef<NodeJS.Timeout>(),
     };
 
     //* 函数列表
@@ -28,16 +37,10 @@ export const useComposable = (define: UiSelectProps, emits: SetupContext<typeof 
             if (!nodes.container.value) return;
             if (ev?.target && node.includes(ev.target as HTMLElement, nodes.container.value)) return;
             else {
+                variable.timer.value && clearTimeout(variable.timer.value);
+                variable.timer.value = undefined;
+                refs.ephemeral.value = undefined;
                 refs.visible.value = false;
-            }
-        },
-
-        //* 选择器清空事件
-        clear: () => {
-            emits("update:modelValue", "");
-            emits("clear", "clear");
-            if (emitter?.emit) {
-                emitter.emit(define.name || "", "change");
             }
         },
 
@@ -77,22 +80,27 @@ export const useComposable = (define: UiSelectProps, emits: SetupContext<typeof 
     const computeds = {
         //* 组件值
         value: computed(() => {
-            return define.candidates.find((candidate) => candidate.value == define.modelValue)?.label || "";
+            return define.resolveName?.() || define.modelValue?.join?.("/") || "";
         }),
 
         //* 禁用状态
         disabled: computed(() => define.loading || define.disabled),
+
+        //* 次级菜单配置
+        children: computed(() => {
+            const option = define.option.find((value) => refs.ephemeral.value == value.value);
+            if (!option) return [];
+            else {
+                return define.sort?.(option) || option.children;
+            }
+        }),
 
         //* 组件类
         className: computed(() => {
             //* 初始化数据
             const className: string[] = [];
             //* 判断候选项是否处于展示状态
-            if (refs.visible.value && define.candidates?.length) className.push("ui-candidates-show");
-            //* 判断是否需要添加clearable类名
-            if (define.clearable) className.push("ui-clearable");
-            //* 判断是否需要添加size类名
-            if (define.size != "default") className.push(`ui-${define.size}`);
+            if (refs.visible.value && define.option?.length) className.push("ui-candidates-show");
             //* 判断是否是禁用或只读状态
             if (define.loading) className.push("ui-loading-status");
             else if (define.disabled) className.push("ui-disabled-status");
@@ -142,28 +150,72 @@ export const useComposable = (define: UiSelectProps, emits: SetupContext<typeof 
     //* 响应事件
     const ons = {
         //* 候选项容器事件
-        animation: animations.selector(define.animation, {
+        animation: animations.selector(true, {
             beforeEnter: () => emits("before-enter"),
             beforeLeave: () => emits("before-leave"),
             afterEnter: () => emits("after-enter"),
             afterLeave: () => emits("after-leave"),
         }),
 
-        //* 候选项事件
-        candidate: (option: UiTypes.candidate) => {
+        //* 候选项事件（主要）
+        candidate1: (data: UiCascadeOption, index: number) => {
             return {
-                //* 候选项选择事件
+                mousemove: () => {
+                    variable.timer.value && clearTimeout(variable.timer.value);
+                    variable.timer.value = undefined;
+                    refs.ephemeral.value = data.value;
+                    nextTick(() => {
+                        if (!nodes.candidates.value[index] || !nodes.body2.value) return;
+                        //* 将内容添加到视图容器中
+                        node.append(document.body, nodes.body2.value);
+                        //* 根据配置计算当前窗口位置
+                        dispose.boundary.relativeContainerBody(
+                            { container: nodes.candidates.value[index], view: nodes.body2.value },
+                            {
+                                direction: "right",
+                                height: define.height,
+                                offset: 0,
+                                align: "start",
+                            }
+                        );
+                    });
+                },
+
+                mouseleave: () => {
+                    variable.timer.value && clearTimeout(variable.timer.value);
+                    variable.timer.value = setTimeout(() => {
+                        refs.ephemeral.value = undefined;
+                    }, 200);
+                },
+            };
+        },
+
+        //* 候选项事件（次要）
+        candidate2: (data: { name: string; value: any }) => {
+            return {
                 mousedown: (ev: Event) => {
-                    emits("update:modelValue", option.value);
+                    emits("update:modelValue", [refs.ephemeral.value, data.value]);
                     emits("change", ev);
                     emitter?.emit(define.name || "", "change");
                     if (refs.visible.value) {
                         methods.hidden();
                     }
                 },
+
+                mousemove: () => {
+                    variable.timer.value && clearTimeout(variable.timer.value);
+                    variable.timer.value = undefined;
+                },
+
+                mouseleave: () => {
+                    variable.timer.value && clearTimeout(variable.timer.value);
+                    variable.timer.value = setTimeout(() => {
+                        refs.ephemeral.value = undefined;
+                    }, 200);
+                },
             };
         },
     };
 
-    return { ons, refs, nodes, binds, methods, computeds, animations };
+    return { ons, refs, nodes, binds, methods, computeds };
 };

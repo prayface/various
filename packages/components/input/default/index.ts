@@ -4,7 +4,7 @@ import { UiTypes } from "@various/constants";
 export const UiInputPropsOption = {
     classExtraName: { type: String } /**候选项类名 */,
     autocomplete: { type: String, values: ["off", "on"], default: "off" },
-    placeholder: { type: String, default: "Please input" } /**提示文本 */,
+    placeholder: { type: String } /**提示文本 */,
     modelValue: { type: [String, Number] as PropType<string | number>, required: true },
     candidates: { type: Array as PropType<UiTypes.candidate[]>, default: [] } /**候选项 */,
     maxlength: { type: Number },

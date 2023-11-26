@@ -2,21 +2,21 @@
 import { gsap } from "gsap";
 
 interface AnimationOptions {
-    enterBefore?: () => void;
-    leaveBefore?: () => void;
-    enterAfter?: () => void;
-    leaveAfter?: () => void;
+    beforeEnter?: () => void;
+    beforeLeave?: () => void;
+    afterEnter?: () => void;
+    afterLeave?: () => void;
 }
 
 //* 动画（选择器）
 export const selector = (is: boolean, dones?: AnimationOptions) => {
     return {
         //* 动画（离场前）
-        "before-leave": () => dones?.leaveBefore?.(),
+        "before-leave": () => dones?.beforeLeave?.(),
         //* 动画（入场前）
         "before-enter": (el: Element) => {
             //* 回调
-            dones?.enterBefore?.();
+            dones?.beforeEnter?.();
             //* 动画脚本
             is && gsap.set(el, { height: 0, opacity: 0 });
         },
@@ -24,7 +24,7 @@ export const selector = (is: boolean, dones?: AnimationOptions) => {
         "leave": (el: Element, done: () => void) => {
             //* 回调
             if (!is) {
-                dones?.leaveAfter?.();
+                dones?.afterLeave?.();
                 done?.();
             } else {
                 //* 动画脚本
@@ -34,7 +34,7 @@ export const selector = (is: boolean, dones?: AnimationOptions) => {
                     duration: 0.2,
                     onComplete: () => {
                         //* 结束
-                        dones?.leaveAfter?.();
+                        dones?.afterLeave?.();
                         done?.();
                     },
                 });
@@ -45,7 +45,7 @@ export const selector = (is: boolean, dones?: AnimationOptions) => {
             //* 动画脚本
             if (!is) {
                 //* 结束
-                dones?.enterAfter?.();
+                dones?.afterEnter?.();
                 done?.();
             } else {
                 gsap.to(el, {
@@ -54,7 +54,7 @@ export const selector = (is: boolean, dones?: AnimationOptions) => {
                     duration: 0.2,
                     onComplete: () => {
                         //* 结束
-                        dones?.enterAfter?.();
+                        dones?.afterEnter?.();
                         done?.();
                     },
                 });
