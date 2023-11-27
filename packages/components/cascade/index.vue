@@ -24,7 +24,7 @@
         </Transition>
 
         <!-- * 次级候选项 -->
-        <div class="ui-form-candidates" ref="body2" v-if="ephemeral" v-show="children.length" v-bind="binds.body">
+        <div class="ui-form-candidates ui-cascade-ephemeral" ref="body2" v-if="ephemeral" v-show="children.length" v-bind="binds.body">
             <div class="ui-form-candidate-container">
                 <div class="ui-form-candidate-content" v-bind="binds.candidates">
                     <template v-for="v in children">

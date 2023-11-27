@@ -101,8 +101,6 @@ export const useComposable = (define: UiInputProps, emits: SetupContext<typeof U
             //* 显示候选项窗口, 针对某些情况下提前隐藏候选项, 但触发input时候选项需要显示的场景
             utils.show();
 
-            console.log(define.modelValue, target.value);
-
             //* 触发v-model变更和input回调
             emits("update:modelValue", target.value);
             emits("input", ev as InputEvent);
