@@ -15,7 +15,7 @@ import { provide } from "vue";
 const define = defineProps(UiFormPropsOption);
 
 const { refs, methods, emitter } = useComposable(define);
-const { reset, validator } = methods;
+const { reset, clear, validator } = methods;
 const { form } = refs;
 
 //* 数据注入
@@ -26,5 +26,5 @@ provide(UiFormRulesKey, define.rules);
 //* 组件配置
 defineOptions({ name: "UiForm" });
 //* 公共方法导出
-defineExpose({ reset, validator });
+defineExpose({ reset, clear, validator });
 </script>

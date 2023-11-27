@@ -37,6 +37,15 @@ export const useComposable = (define: UiFormProps) => {
             }
         },
 
+        //* 表单校验清理函数
+        clear: (keys?: string[]) => {
+            for (const index in define.rules) {
+                if (!keys || keys.includes(index)) {
+                    emitter.emit(`reset:${index}`);
+                }
+            }
+        },
+
         //* 表单校验函数
         validator: async (callBack: (result: boolean) => void, list?: string[]) => {
             //* 检测是否存在校验选项
