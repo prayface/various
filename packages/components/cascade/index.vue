@@ -14,7 +14,7 @@
                                 class="ui-form-candidate"
                                 v-on="ons.candidate1(v, i)"
                                 ref="candidates"
-                                :class="{ 'ui-active': define.modelValue?.[0] == v.value }">
+                                :class="{ 'ui-active': define.modelValue?.[0] == v.value || ephemeral == v.value }">
                                 <slot name="candidate" :data="v">{{ v.name }}</slot>
                             </div>
                         </template>
