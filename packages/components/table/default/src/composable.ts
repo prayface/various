@@ -133,9 +133,12 @@ export const useComposable = (define: UiTableProps, emit: SetupContext<typeof Ui
                         }
                     }
                 }
-            } else {
-                refs.HeaderNode.value.style.width = real + "px";
-                refs.BodysNode.value.style.width = real + "px";
+            } else if (vars.size < real) {
+                //* 数据初始化
+                const size = real + define.spacing * 2 + 4;
+                //* 属性更新
+                refs.HeaderNode.value.style.width = size + "px";
+                refs.BodysNode.value.style.width = size + "px";
             }
 
             //* 第三次遍历设置定框的Row

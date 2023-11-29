@@ -8,7 +8,7 @@
                 <p><span class="warn">注</span>跟随模式下以下属性将失效: <span>direction</span>、<span>trigger</span>、<span>align</span></p>
             </div>
             <div class="content">
-                <UiTable :option="option1" :data="data1" :height="298" :overflow="true"></UiTable>
+                <UiTable :option="option1" :data="data1" :overflow="true"></UiTable>
             </div>
         </section>
     </div>
@@ -29,7 +29,7 @@ const data1 = [
         year: "2023",
         price: "100",
         inventory: "123000",
-        detail: "这是一个黄黄的杯子这是一个黄黄的杯子这不是一个黄黄的杯子这是一个黄黄的杯子这是一个黄黄的杯子这不是一个黄黄的杯子这是一个黄黄的杯子这是一个黄黄的杯子这不是一个黄黄的杯子这是一个黄黄的杯子这是一个黄黄的杯子这不是一个黄黄的杯子",
+        detail: "这是一个黄黄的杯子这是一个黄黄的杯子这不是一个黄黄的杯子这是一个黄黄的杯子这是一个黄黄的杯子这不是一个黄",
     },
     {
         name: "红红杯",
@@ -64,7 +64,7 @@ const data1 = [
         year: "2023",
         price: "100",
         inventory: "123000",
-        detail: "这是一个黄黄的杯子这是一个黄黄的杯子这不是一个黄黄的杯子这是一个黄黄的杯子这是一个黄黄的杯子这不是一个黄黄的杯子这是一个黄黄的杯子这是一个黄黄的杯子这不是一个黄黄的杯子这是一个黄黄的杯子这是一个黄黄的杯子这不是一个黄黄的杯子",
+        detail: "这是一个黄黄的杯子这是一个黄黄的杯子这不是一个黄黄的杯子",
     },
     {
         name: "红红杯",
