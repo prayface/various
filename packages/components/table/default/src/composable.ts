@@ -28,6 +28,11 @@ export const useComposable = (define: UiTableProps, emit: SetupContext<typeof Ui
         init: () => {
             //* 检测是否满足运行条件
             if (!refs.TableNode.value || !refs.HeaderNode.value || !refs.BodysNode.value) return;
+            else {
+                //* 属性更新
+                refs.HeaderNode.value.style.width = "";
+                refs.BodysNode.value.style.width = "";
+            }
 
             //* 数据初始化
             const bodys = refs.BodysNode.value.querySelectorAll(".ui-table-body") || [];
