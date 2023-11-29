@@ -11,3 +11,9 @@ export const UiTooltipFollowPropsOption = {
 } as const;
 
 export type UiTooltipFollowProps = ExtractPropTypes<typeof UiTooltipFollowPropsOption>;
+export const UiTooltipFollowEmits = {
+    "before-enter": () => true,
+    "before-leave": () => true,
+    "after-enter": () => true,
+    "after-leave": () => true,
+};

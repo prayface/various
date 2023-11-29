@@ -20,12 +20,14 @@ export interface UiTableOption {
 }
 
 export const UiTablePropsOption = {
-    //* 表单数据源
+    //* 表格数据源
     data: { type: Array as PropType<any[]>, required: true },
-    //* 表单高度, 超出高度将出现滚动条
+    //* 表格高度, 超出高度将出现滚动条
     height: { type: [String, Number] as PropType<string | number> },
-    //* 表单左右两侧间距
+    //* 表格左右两侧间距
     spacing: { type: Number, default: 40 },
+    //* 表格宽度溢出状态
+    overflow: { type: Boolean, default: false },
     //* 无数据处理
     noData: { type: String, default: "" },
 
@@ -39,7 +41,7 @@ export const UiTablePropsOption = {
     //* 嵌套表格索引Key
     childrenIndex: { type: String },
 
-    //* 表单配置项
+    //* 表格配置项
     option: { type: Array as PropType<UiTableOption[]>, required: true },
 } as const;
 

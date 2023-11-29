@@ -1,23 +1,24 @@
-//* 公共插件
-import { gsap } from "gsap";
+//* Vue
 import { ref, computed, nextTick } from "vue";
+import type { SetupContext } from 'vue'
 //* 工具函数
-import { node, dispose } from "@various/utils";
+import { node, dispose, animations } from "@various/utils";
 //* 类型
-import { UiTooltipFollowProps } from "../index";
+import { type UiTooltipFollowProps, UiTooltipFollowEmits } from "../index";
 
 //* 组合函数
-export const useComposable = (define: UiTooltipFollowProps) => {
+export const useComposable = (define: UiTooltipFollowProps, emits: SetupContext<typeof UiTooltipFollowEmits>["emit"]) => {
     //* 响应式变量
     const refs = {
-        //* HTML节点
-        main: ref<HTMLDivElement>(),
-        tooltip: ref<HTMLDivElement>(),
+        event: ref<MouseEvent>(), //* Event缓存
+        active: ref<boolean>(false), //* 激活状态
+        visible: ref<boolean>(false), //* 隐藏状态
+        visibleTimer: ref<NodeJS.Timeout>(), //* 隐藏状态延迟器
+    };
 
-        //* 显示控制变量
-        event: ref<MouseEvent>(),
-        visible: ref<boolean>(false),
-        visibleTimer: ref<NodeJS.Timeout>(),
+    //* 节点
+    const nodes = {
+        tooltip: ref<HTMLDivElement>(),
     };
 
     //* 函数列表
@@ -28,13 +29,13 @@ export const useComposable = (define: UiTooltipFollowProps) => {
             refs.visibleTimer.value = undefined;
             refs.visible.value = true;
             nextTick(() => {
-                if (ev && refs.tooltip.value) {
+                if (ev && nodes.tooltip.value) {
                     //* 将event缓存中
                     refs.event.value = ev;
                     //* 将content添加到视图容器中
-                    node.append(document.body, refs.tooltip.value);
+                    node.append(document.body, nodes.tooltip.value);
                     //* 根据配置计算当前窗口位置
-                    dispose.boundary.relativeMouseBody(ev, refs.tooltip.value, {
+                    dispose.boundary.relativeMouseBody(ev, nodes.tooltip.value, {
                         offsetX: define.offsetX,
                         offsetY: define.offsetY,
                     });
@@ -48,21 +49,6 @@ export const useComposable = (define: UiTooltipFollowProps) => {
             refs.visibleTimer.value = setTimeout(() => {
                 refs.visible.value = false;
             }, delay);
-        },
-
-        //* 入场前样式调整
-        entrancePreAnimation: (el: Element) => {
-            gsap.set(el, { opacity: 0 });
-        },
-
-        //* 入场动画
-        entranceAnimation: (el: Element, done: () => void) => {
-            gsap.to(el, { duration: 0.2, opacity: 1, onComplete: () => done() });
-        },
-
-        //* 离场动画
-        departureAnimation: (el: Element, done: () => void) => {
-            gsap.to(el, { duration: 0.2, opacity: 0, onComplete: () => done() });
         },
     };
 
@@ -83,16 +69,27 @@ export const useComposable = (define: UiTooltipFollowProps) => {
     };
 
     //* 处理函数列表
-    const methodsOn = {
-        //* main处理函数
-        mainHandles: {
+    const ons = {
+        animation: animations.tooltip({
+            afterEnter: () => emits("after-enter"),
+            afterLeave: () => emits("after-leave"),
+            beforeEnter: () => {
+                refs.active.value = true;
+                emits("before-enter");
+            },
+            beforeLeave: () => {
+                refs.active.value = false;
+                emits("before-leave");
+            },
+        }),
+
+        container: {
             mouseenter: (ev: MouseEvent) => methods.show(ev),
             mouseleave: () => methods.hidden(),
             mousemove: (ev: MouseEvent) => methods.show(ev),
         },
 
-        //* content处理函数
-        contentHandles: {
+        content: {
             mouseleave: () => methods.hidden(),
             mouseenter: () => {
                 refs.visible.value = true;
@@ -101,5 +98,5 @@ export const useComposable = (define: UiTooltipFollowProps) => {
         },
     };
 
-    return { refs, methods, computeds, methodsOn };
+    return { ons, refs, nodes, methods, computeds };
 };

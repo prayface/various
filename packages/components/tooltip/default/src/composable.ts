@@ -1,23 +1,25 @@
 //* 公共插件
-import { gsap } from "gsap";
 import { computed, nextTick, ref } from "vue";
+import type { SetupContext } from "vue";
 //* 工具函数
-import { dispose, node } from "@various/utils";
+import { animations, dispose, node } from "@various/utils";
 //* 类型
-import { UiTooltipProps } from "../index";
+import { type UiTooltipProps, UiTooltipEmits } from "../index";
 
 //* 组合函数
-export const useComposable = (define: UiTooltipProps) => {
+export const useComposable = (define: UiTooltipProps, emits: SetupContext<typeof UiTooltipEmits>["emit"]) => {
     //* 响应式变量
     const refs = {
-        //* HTML节点
-        main: ref<HTMLDivElement>(),
-        tooltip: ref<HTMLDivElement>(),
-        triangle: ref<HTMLDivElement>(),
+        active: ref<boolean>(false), //* 激活状态
+        visible: ref<boolean>(false), //* 隐藏状态
+        visibleTimer: ref<NodeJS.Timeout>(), //* 隐藏状态延迟器
+    };
 
-        //* 显示控制变量
-        visible: ref<boolean>(false),
-        visibleTimer: ref<NodeJS.Timeout>(),
+    //* 节点
+    const nodes = {
+        container: ref<HTMLDivElement>(),
+        triangle: ref<HTMLDivElement>(),
+        tooltip: ref<HTMLDivElement>(),
     };
 
     //* 函数列表
@@ -30,13 +32,13 @@ export const useComposable = (define: UiTooltipProps) => {
             refs.visible.value = true;
             nextTick(() => {
                 //* 检测是否满足运行条件
-                if (!refs.main.value || !refs.tooltip.value) return;
+                if (!nodes.container.value || !nodes.tooltip.value) return;
                 else {
                     //* 将内容添加到视图容器中
-                    node.append(document.body, refs.tooltip.value);
+                    node.append(document.body, nodes.tooltip.value);
                     //* 根据配置计算当前窗口位置
                     dispose.boundary.relativeContainerBody(
-                        { container: refs.main.value, triangle: refs.triangle.value, view: refs.tooltip.value },
+                        { container: nodes.container.value, triangle: nodes.triangle.value, view: nodes.tooltip.value },
                         {
                             direction: define.direction,
                             offset: define.offset,
@@ -54,21 +56,6 @@ export const useComposable = (define: UiTooltipProps) => {
             refs.visibleTimer.value = setTimeout(() => {
                 refs.visible.value = false;
             }, delay);
-        },
-
-        //* 入场前样式调整
-        entrancePreAnimation: (el: Element) => {
-            gsap.set(el, { opacity: 0 });
-        },
-
-        //* 入场动画
-        entranceAnimation: (el: Element, done: () => void) => {
-            gsap.to(el, { duration: 0.2, opacity: 1, onComplete: () => done() });
-        },
-
-        //* 离场动画
-        departureAnimation: (el: Element, done: () => void) => {
-            gsap.to(el, { duration: 0.2, opacity: 0, onComplete: () => done() });
         },
     };
 
@@ -89,41 +76,34 @@ export const useComposable = (define: UiTooltipProps) => {
     };
 
     //* 处理函数列表
-    const methodsOn = {
-        //* main处理函数
-        mainHandles: {
-            //* 鼠标移入事件
-            mouseenter: () => {
-                if (define.trigger == "hover") {
-                    methods.show();
-                }
+    const ons = {
+        animation: animations.tooltip({
+            afterEnter: () => emits("after-enter"),
+            afterLeave: () => emits("after-leave"),
+            beforeEnter: () => {
+                refs.active.value = true;
+                emits("before-enter");
             },
+            beforeLeave: () => {
+                refs.active.value = false;
+                emits("before-leave");
+            },
+        }),
 
+        container: {
+            //* 鼠标移入事件
+            mouseenter: () => define.trigger == "hover" && methods.show(),
             //* 鼠标移出事件
-            mouseleave: () => {
-                if (define.trigger == "hover") {
-                    methods.hidden();
-                }
-            },
+            mouseleave: () => define.trigger == "hover" && methods.hidden(),
         },
 
-        //* content处理函数
-        contentHandles: {
+        content: {
             //* 鼠标移入事件
-            mouseenter: () => {
-                if (define.trigger == "hover") {
-                    methods.show();
-                }
-            },
-
+            mouseenter: () => define.trigger == "hover" && methods.show(),
             //* 鼠标移出事件
-            mouseleave: () => {
-                if (define.trigger == "hover") {
-                    methods.hidden();
-                }
-            },
+            mouseleave: () => define.trigger == "hover" && methods.hidden(),
         },
     };
 
-    return { refs, methods, computeds, methodsOn };
+    return { ons, refs, nodes, methods, computeds };
 };

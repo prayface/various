@@ -62,3 +62,39 @@ export const selector = (is: boolean, dones?: AnimationOptions) => {
         },
     };
 };
+
+export const tooltip = (dones?: AnimationOptions) => {
+    return {
+        //* 动画（离场前）
+        "before-leave": () => dones?.beforeLeave?.(),
+        //* 动画（入场前）
+        "before-enter": (el: Element) => {
+            //* 回调
+            dones?.beforeEnter?.();
+            //* 动画脚本
+            gsap.set(el, { opacity: 0 });
+        },
+        //* 动画（离场）
+        "leave": (el: Element, done: () => void) => {
+            gsap.to(el, {
+                duration: 0.2,
+                opacity: 0,
+                onComplete: () => {
+                    dones?.afterLeave?.();
+                    done?.();
+                },
+            });
+        },
+        //* 动画（入场）
+        "enter": (el: Element, done: () => void) => {
+            gsap.to(el, {
+                duration: 0.2,
+                opacity: 1,
+                onComplete: () => {
+                    dones?.afterEnter?.();
+                    done?.();
+                },
+            });
+        },
+    };
+};

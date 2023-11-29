@@ -10,3 +10,10 @@ export const UiTooltipFunctionPropsOption = {
 } as const;
 
 export type UiTooltipFunctionProps = ExtractPropTypes<typeof UiTooltipFunctionPropsOption>;
+export const UiTooltipFunctionEmits = {
+    "before-enter": () => true,
+    "before-leave": () => true,
+    "after-enter": () => true,
+    "after-leave": () => true,
+};
+

@@ -1,9 +1,9 @@
 <template>
-    <div v-on="mainHandles" class="ui-tooltip-container" ref="main">
+    <div class="ui-tooltip-container" :class="{ 'ui-active': active }" v-on="ons.container">
         <slot name="default"></slot>
 
-        <Transition @enter="entranceAnimation" @leave="departureAnimation" @before-enter="entrancePreAnimation">
-            <div v-if="visible" v-on="contentHandles" class="ui-tooltip" ref="tooltip" :style="style" :class="classExtraName">
+        <Transition v-on="ons.animation">
+            <div v-if="visible" v-on="ons.content" class="ui-tooltip" ref="tooltip" :style="style" :class="classExtraName">
                 <div class="ui-tooltip-content">
                     <slot name="content">{{ content }}</slot>
                 </div>
@@ -15,21 +15,20 @@
 <script lang="ts" setup>
 //* 按需引入的插件
 import { onBeforeUnmount } from "vue";
-
 //* 组件库工具函数
 import { node } from "@various/utils";
-
 //* 资源引入
-import { UiTooltipFollowPropsOption } from "./index";
+import { UiTooltipFollowPropsOption, UiTooltipFollowEmits } from "./index";
 import { useComposable } from "./src/composable";
 
 //* 获取组件属性
+const emits = defineEmits(UiTooltipFollowEmits);
 const define = defineProps(UiTooltipFollowPropsOption);
 
-const { refs, methods, computeds, methodsOn } = useComposable(define);
-const { main, tooltip, visible } = refs;
-const { show, hidden, entranceAnimation, departureAnimation, entrancePreAnimation } = methods;
-const { mainHandles, contentHandles } = methodsOn;
+const { ons, refs, nodes, methods, computeds } = useComposable(define, emits);
+const { active, visible } = refs;
+const { tooltip } = nodes;
+const { show, hidden } = methods;
 const { style } = computeds;
 
 //* 组件卸载时, 若存在残留的悬浮窗口则进行移除

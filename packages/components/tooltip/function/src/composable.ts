@@ -1,23 +1,25 @@
-//* 公共插件
-import { gsap } from "gsap";
+//* Vue
 import { ref, computed, nextTick } from "vue";
+import type { SetupContext } from "vue";
 //* 工具函数
-import { node, dispose } from "@various/utils";
-//* 类型
-import type { UiTooltipFunctionProps } from "../index";
+import { node, dispose, animations } from "@various/utils";
+//* 公共变量
 import type { UiTypes } from "@various/constants";
+//* 类型
+import { type UiTooltipFunctionProps, UiTooltipFunctionEmits } from "../index";
 
-export const useComposable = (define: UiTooltipFunctionProps) => {
+export const useComposable = (define: UiTooltipFunctionProps, emits: SetupContext<typeof UiTooltipFunctionEmits>["emit"]) => {
     //* 响应式变量
     const refs = {
-        //* HTML节点
-        main: ref<HTMLDivElement>(),
-        tooltip: ref<HTMLDivElement>(),
+        data: ref<{ align: UiTypes.align; option: { pageX: number; pageY: number } }>(), //* 数据缓存
+        active: ref<boolean>(false), //* 激活状态
+        visible: ref<boolean>(false), //* 隐藏状态
+        visibleTimer: ref<NodeJS.Timeout>(), //* 隐藏状态延迟器
+    };
 
-        //* 显示控制变量
-        data: ref<{ align: UiTypes.align; option: { pageX: number; pageY: number } }>(),
-        visible: ref<boolean>(false),
-        visibleTimer: ref<NodeJS.Timeout>(),
+    //* 节点
+    const nodes = {
+        tooltip: ref<HTMLDivElement>(),
     };
 
     //* 函数列表
@@ -28,13 +30,13 @@ export const useComposable = (define: UiTooltipFunctionProps) => {
             refs.visibleTimer.value = undefined;
             refs.visible.value = true;
             nextTick(() => {
-                if (refs.tooltip.value) {
+                if (nodes.tooltip.value) {
                     //* 数据缓存
                     refs.data.value = { align, option };
                     //* 将content添加到视图容器中
-                    node.append(document.body, refs.tooltip.value);
+                    node.append(document.body, nodes.tooltip.value);
                     //* 根据配置计算当前窗口位置
-                    dispose.boundary.relativeMouseBody(option, refs.tooltip.value, {
+                    dispose.boundary.relativeMouseBody(option, nodes.tooltip.value, {
                         alignY: align,
                         offsetX: define.offsetX,
                         offsetY: define.offsetY,
@@ -84,9 +86,21 @@ export const useComposable = (define: UiTooltipFunctionProps) => {
     };
 
     //* 处理函数列表
-    const methodsOn = {
-        //* content处理函数
-        contentHandles: {
+    const ons = {
+        animation: animations.tooltip({
+            afterEnter: () => emits("after-enter"),
+            afterLeave: () => emits("after-leave"),
+            beforeEnter: () => {
+                refs.active.value = true;
+                emits("before-enter");
+            },
+            beforeLeave: () => {
+                refs.active.value = false;
+                emits("before-leave");
+            },
+        }),
+
+        content: {
             mouseleave: () => methods.hidden(),
             mouseenter: () => {
                 refs.visible.value = true;
@@ -95,5 +109,5 @@ export const useComposable = (define: UiTooltipFunctionProps) => {
         },
     };
 
-    return { refs, methods, computeds, methodsOn };
+    return { ons, refs, nodes, methods, computeds };
 };

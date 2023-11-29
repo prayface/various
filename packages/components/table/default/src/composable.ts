@@ -90,47 +90,52 @@ export const useComposable = (define: UiTableProps, emit: SetupContext<typeof Ui
             }, 0);
 
             //* 第二次遍历, 检测当前表格是需要进行补足还是删减尺寸, 并进行对应操作
-            vars.replenish = vars.size - real;
-            while (Math.floor(Math.abs(vars.replenish)) != 0) {
-                //* 初始化允许增减长度的数据列表
-                const data = vars.data.filter((val) => {
-                    return val.replenish && (vars.replenish > 0 ? val.max == -1 || val.width < val.max : val.min == -1 || val.width > val.min);
-                });
-
-                //* 当不存在允许增减长度的数据列表时退出...
-                if (!data.length || vars.replenish / data.length == 0) break;
-
-                //* 增减尺寸...
-                if (vars.replenish > 0) {
-                    //* 补充尺寸（平均分配）
-                    const replenish = vars.replenish / data.length;
-                    data.forEach((value) => {
-                        if (value.max != -1 && value.width + replenish > value.max) {
-                            vars.replenish -= value.max - value.width;
-                            value.width = value.max;
-                        } else {
-                            value.width += replenish;
-                            vars.replenish -= replenish;
-                        }
+            if (!define.overflow) {
+                vars.replenish = vars.size - real;
+                while (Math.floor(Math.abs(vars.replenish)) != 0) {
+                    //* 初始化允许增减长度的数据列表
+                    const data = vars.data.filter((val) => {
+                        return val.replenish && (vars.replenish > 0 ? val.max == -1 || val.width < val.max : val.min == -1 || val.width > val.min);
                     });
-                } else if (vars.replenish < 0) {
-                    //* 删减尺寸（优先删减最长的尺寸）
-                    //* 获取data中最大的尺寸
-                    const max = data.sort((a, b) => b.width - a.width)?.[0]?.width || 0;
-                    for (let i = 0; i < data.length; i++) {
-                        if (vars.replenish == 0) break;
-                        if (data[i].width == max && data[i].width > data[i].min) {
-                            //* 当width与min之间的距离小于1时：特殊处理
-                            if (data[i].min != -1 && data[i].width - 1 < data[i].min) {
-                                vars.replenish += data[i].width - data[i].min;
-                                data[i].width = data[i].min;
+
+                    //* 当不存在允许增减长度的数据列表时退出...
+                    if (!data.length || vars.replenish / data.length == 0) break;
+
+                    //* 增减尺寸...
+                    if (vars.replenish > 0) {
+                        //* 补充尺寸（平均分配）
+                        const replenish = vars.replenish / data.length;
+                        data.forEach((value) => {
+                            if (value.max != -1 && value.width + replenish > value.max) {
+                                vars.replenish -= value.max - value.width;
+                                value.width = value.max;
                             } else {
-                                vars.replenish += 1;
-                                data[i].width -= 1;
+                                value.width += replenish;
+                                vars.replenish -= replenish;
+                            }
+                        });
+                    } else if (vars.replenish < 0) {
+                        //* 删减尺寸（优先删减最长的尺寸）
+                        //* 获取data中最大的尺寸
+                        const max = data.sort((a, b) => b.width - a.width)?.[0]?.width || 0;
+                        for (let i = 0; i < data.length; i++) {
+                            if (vars.replenish == 0) break;
+                            if (data[i].width == max && data[i].width > data[i].min) {
+                                //* 当width与min之间的距离小于1时：特殊处理
+                                if (data[i].min != -1 && data[i].width - 1 < data[i].min) {
+                                    vars.replenish += data[i].width - data[i].min;
+                                    data[i].width = data[i].min;
+                                } else {
+                                    vars.replenish += 1;
+                                    data[i].width -= 1;
+                                }
                             }
                         }
                     }
                 }
+            } else {
+                refs.HeaderNode.value.style.width = real + "px";
+                refs.BodysNode.value.style.width = real + "px";
             }
 
             //* 第三次遍历设置定框的Row

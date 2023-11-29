@@ -1,5 +1,5 @@
-import { PropType, ExtractPropTypes } from "vue";
-import { UiTypes } from "@various/constants";
+import type { PropType, ExtractPropTypes } from "vue";
+import type { UiTypes } from "@various/constants";
 
 export const UiInputPropsOption = {
     classExtraName: { type: String } /**候选项类名 */,
