@@ -95,7 +95,7 @@ export const useComposable = (define: UiTableProps, emit: SetupContext<typeof Ui
             }, 0);
 
             //* 第二次遍历, 检测当前表格是需要进行补足还是删减尺寸, 并进行对应操作
-            if (!define.overflow) {
+            if (!define.overflow || (define.overflow && vars.size >= real)) {
                 vars.replenish = vars.size - real;
                 while (Math.floor(Math.abs(vars.replenish)) != 0) {
                     //* 初始化允许增减长度的数据列表
@@ -138,7 +138,7 @@ export const useComposable = (define: UiTableProps, emit: SetupContext<typeof Ui
                         }
                     }
                 }
-            } else if (vars.size < real) {
+            } else {
                 //* 数据初始化
                 const size = real + define.spacing * 2 + 4;
                 //* 属性更新
