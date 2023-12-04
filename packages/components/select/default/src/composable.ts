@@ -110,7 +110,6 @@ export const useComposable = (define: UiSelectProps, emits: SetupContext<typeof 
         main: {
             value: computeds.value,
             disabled: computeds.disabled,
-            readonly: !computeds.disabled,
             placeholder: define.placeholder,
             autocomplete: "off",
         },

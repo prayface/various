@@ -1,7 +1,7 @@
 <template>
     <div class="ui-select" ref="container" v-bind="binds.container">
         <!-- * 主体 -->
-        <input class="ui-form-control" type="text" v-bind="binds.main" @click="show" />
+        <input class="ui-form-control" type="text" v-bind="binds.main" @click="show" readonly />
 
         <!-- * 箭头 -->
         <UiIcon name="arrow" class="ui-select-arrow" @click="show" />
