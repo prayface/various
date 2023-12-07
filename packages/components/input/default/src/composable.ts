@@ -74,7 +74,7 @@ export const useComposable = (define: UiInputProps, emits: SetupContext<typeof U
         //* Input获取焦点事件
         focus: (ev?: FocusEvent | Event) => {
             //* 当ev不存在时, 触发Input获取焦点
-            if (!ev) return nodes.main.value?.blur();
+            if (!ev) return nodes.main.value?.focus();
             else {
                 //* 显示候选项
                 utils.show();
