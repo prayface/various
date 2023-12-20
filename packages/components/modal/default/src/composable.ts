@@ -1,8 +1,8 @@
-import { ref, computed, nextTick, SetupContext } from "vue";
+import { ref, computed, nextTick, SetupContext, reactive } from "vue";
 import { UiModalEmits, UiModalProps } from "../index";
 import { utility } from "@various/utils";
 
-export default (define: UiModalProps, emit: SetupContext<typeof UiModalEmits>["emit"]) => {
+export const useComposable = (define: UiModalProps, emit: SetupContext<typeof UiModalEmits>["emit"]) => {
     //* 响应式变量
     const refs = {
         open: ref<boolean>(false),
@@ -87,5 +87,13 @@ export default (define: UiModalProps, emit: SetupContext<typeof UiModalEmits>["e
         },
     };
 
-    return { refs, methods, computeds };
+    //* 属性
+    const binds = reactive({
+        main: {
+            style: computeds.mainStyle,
+            class: define.classExtraName,
+        },
+    });
+
+    return { refs, binds, methods, computeds };
 };

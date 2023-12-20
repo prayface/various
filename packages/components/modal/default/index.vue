@@ -1,6 +1,6 @@
 <template>
     <Transition>
-        <div class="ui-modal ui-mask" v-show="open" ref="main" :style="mainStyle" :class="classExtraName || ''" @click.self="closeModal">
+        <div class="ui-modal ui-mask" v-show="open" ref="main" v-bind="binds.main" @click.self="closeOnClick && closeModal()">
             <div class="ui-modal-container" ref="container" :style="containerStyle">
                 <!-- 头部信息 -->
                 <div class="ui-modal-header">
@@ -21,47 +21,45 @@
     </Transition>
 </template>
 
-<script lang="ts">
-import { defineComponent, onMounted, onBeforeUnmount } from "vue";
-import { UiModalPropsOption, UiModalEmits } from "./index";
+<script lang="ts" setup>
+//* Vue
+import { onMounted, onBeforeUnmount } from "vue";
+//* 公共工具库
 import { node } from "@various/utils";
-
-import Composable from "./src/composable";
+//* 组件属性
+import { useComposable } from "./src/composable";
+import { UiModalPropsOption, UiModalEmits } from "./index";
+//* 组件
 import UiIcon from "@various/components/icon";
 
-export default defineComponent({
-    name: "UiModal",
-    emits: UiModalEmits,
-    props: UiModalPropsOption,
-    components: { UiIcon },
-    setup(define, { emit, expose }) {
-        const { refs, methods, computeds } = Composable(define, emit);
+//* 组件属性注册
+const define = defineProps(UiModalPropsOption);
+const emits = defineEmits(UiModalEmits);
 
-        // 挂载函数
-        onMounted(() => {
-            refs.observer.value = new ResizeObserver(methods.resizeHandler);
-            if (refs.main.value) {
-                node.append(document.body, refs.main.value);
-            }
-        });
+//* 组合函数
+const { refs, binds, methods, computeds } = useComposable(define, emits);
+const { containerStyle } = computeds;
+const { scrollTo, openModal, closeModal } = methods;
+const { open, main, container } = refs;
 
-        // 卸载函数
-        onBeforeUnmount(() => {
-            document.body.style.overflow = "";
-            refs.observer.value?.disconnect();
-            if (refs.main.value) {
-                node.remove(document.body, refs.main.value);
-            }
-        });
-
-        // 导出公共方法
-        expose({ scrollTo: methods.scrollTo, openModal: methods.openModal, closeModal: methods.closeModal });
-
-        return {
-            ...refs,
-            ...methods,
-            ...computeds,
-        };
-    },
+//* 挂载函数
+onMounted(() => {
+    refs.observer.value = new ResizeObserver(methods.resizeHandler);
+    if (refs.main.value) {
+        node.append(document.body, refs.main.value);
+    }
 });
+
+//* 卸载函数
+onBeforeUnmount(() => {
+    document.body.style.overflow = "";
+    refs.observer.value?.disconnect();
+    if (refs.main.value) {
+        node.remove(document.body, refs.main.value);
+    }
+});
+
+//* 组件属性导出
+defineOptions({ name: "UiModal" });
+defineExpose({ scrollTo, openModal, closeModal });
 </script>

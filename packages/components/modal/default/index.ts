@@ -8,6 +8,7 @@ export const UiModalPropsOption = {
     zIndex: { type: Number, default: 666 }, //? 层叠优先级
     margin: { type: Number, default: 0 }, //? 外间距
     spacing: { type: String, default: "68px 112px" }, //? 内间距
+    closeOnClick: { type: Boolean, default: true }, //? 是否通过点击关闭模态窗
     classExtraName: { type: String }, //? 模态框class名称,
 };
 
