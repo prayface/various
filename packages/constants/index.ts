@@ -16,7 +16,7 @@ export namespace UiTypes {
     };
     export type verifyRule = {
         trigger: "change" | "verify" | "blur";
-        verify: (data: { [name: string]: any }) => verifyResult;
+        verify: ((data: { [name: string]: any }) => verifyResult) | ((data: { [name: string]: any }) => Promise<verifyResult>);
     };
 }
 
