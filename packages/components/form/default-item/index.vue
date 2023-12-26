@@ -21,14 +21,14 @@ import { onBeforeUnmount } from "vue";
 const define = defineProps(UiFormItemPropsOption);
 
 const { refs, rules, methods, computeds, emitter } = useComposable(define);
-const { show, hidden, trigger, validator } = methods;
+const { show, hidden, validator } = methods;
 const { visible, content, verifyTimer } = refs;
 const { style, className } = computeds;
 
 //* 根据Prop、Emitter和Rule注册响应函数
 if (rules && define.prop && rules[define.prop]) {
     emitter?.on(define.prop, async (type: string) => methods.validator(type));
-    emitter?.on(`trigger:${define.prop}`, (error: UiTypes.verifyResult) => methods.trigger(error.message, error.type || "error"));
+    emitter?.on(`trigger:${define.prop}`, (error: UiTypes.verifyResult) => methods.show(error.message, error.type || "error"));
     emitter?.on(`reset:${define.prop}`, () => methods.hidden());
 }
 
@@ -40,5 +40,5 @@ onBeforeUnmount(() => {
 //* 组件配置
 defineOptions({ name: "UiFormItem" });
 //* 公共方法导出
-defineExpose({ show, hidden, trigger, validator });
+defineExpose({ show, hidden, validator });
 </script>

@@ -31,24 +31,6 @@ export const useComposable = (define: UiFormItemProps) => {
             refs.status.value = "info";
         },
 
-        //* 校验提示显示函数
-        trigger: (content: string, type?: UiTypes.type) => {
-            //* 未触发校验提示则直接显示
-            if (!refs.visible.value) methods.show(content, type);
-            else {
-                //* 隐藏旧的校验提示
-                methods.hidden();
-                //* 重新挂载校验提示过渡计时器
-                refs.verifyTimer.value && clearTimeout(refs.verifyTimer.value);
-                refs.verifyTimer.value = setTimeout(() => {
-                    refs.verifyTimer.value = undefined;
-                    refs.content.value = content;
-                    refs.visible.value = true;
-                    refs.status.value = type || "info";
-                }, 200);
-            }
-        },
-
         //* 校验函数
         validator: async (name?: string, callBack?: (result: boolean) => void) => {
             //* 获取校验规则
@@ -67,7 +49,7 @@ export const useComposable = (define: UiFormItemProps) => {
                 //* 根据是否存在校验失败选择触发提示or隐藏提示
                 if (error.length) {
                     callBack && callBack(false);
-                    methods.trigger(error[0].message || "", error[0].type || "error");
+                    methods.show(error[0].message || "", error[0].type || "error");
                 } else {
                     methods.hidden();
                     callBack && callBack(true);
