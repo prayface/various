@@ -16,7 +16,7 @@ export const UiInputPropsOption = {
     height: { type: Number, default: 240 },
     zIndex: { type: Number, default: 66 },
     width: { type: [String, Number] as PropType<number | string>, default: 264 },
-    type: { type: String as PropType<"email" | "number" | "search" | "tel" | "text">, default: "text" }, //* 原生的文本框类型
+    type: { type: String as PropType<"email" | "number" | "password" | "search" | "tel" | "text">, default: "text" }, //* 原生的文本框类型
     size: { type: String as PropType<UiTypes.size>, default: "default" },
     name: { type: String },
 } as const;

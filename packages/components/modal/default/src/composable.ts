@@ -89,10 +89,12 @@ export const useComposable = (define: UiModalProps, emit: SetupContext<typeof Ui
 
     //* 属性
     const binds = reactive({
-        main: {
-            style: computeds.mainStyle,
-            class: define.classExtraName,
-        },
+        main: computed(() => {
+            return {
+                style: computeds.mainStyle.value,
+                class: define.classExtraName,
+            };
+        }),
     });
 
     return { refs, binds, methods, computeds };

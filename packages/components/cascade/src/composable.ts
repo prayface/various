@@ -115,36 +115,44 @@ export const useComposable = (define: UiCascadeProps, emits: SetupContext<typeof
     //* 属性
     const binds = reactive({
         //* 主体
-        main: {
-            value: computeds.value,
-            disabled: computeds.disabled,
-            readonly: !computeds.disabled,
-            placeholder: define.placeholder,
-            autocomplete: "off",
-        },
+        main: computed(() => {
+            return {
+                value: computeds.value.value,
+                disabled: computeds.disabled.value,
+                readonly: !computeds.disabled.value,
+                placeholder: define.placeholder,
+                autocomplete: "off",
+            };
+        }),
 
         //* 候选项容器
-        body: {
-            class: define.classExtraName || "",
-            style: {
-                zIndex: define.zIndex,
-            },
-        },
+        body: computed(() => {
+            return {
+                class: define.classExtraName || "",
+                style: {
+                    zIndex: define.zIndex,
+                },
+            };
+        }),
 
         //* 容器
-        container: {
-            class: computeds.className,
-            style: {
-                width: utility.isNumber(define.width) ? define.width + "px" : define.width,
-            },
-        },
+        container: computed(() => {
+            return {
+                class: computeds.className.value,
+                style: {
+                    width: utility.isNumber(define.width) ? define.width + "px" : define.width,
+                },
+            };
+        }),
 
         //* 候选项列表
-        candidates: {
-            style: {
-                maxHeight: define.height + "px",
-            },
-        },
+        candidates: computed(() => {
+            return {
+                style: {
+                    maxHeight: define.height + "px",
+                },
+            };
+        }),
     });
 
     //* 响应事件

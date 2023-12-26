@@ -149,37 +149,45 @@ export const useComposable = (define: UiInputProps, emits: SetupContext<typeof U
     //* 属性
     const binds = reactive({
         //* 主体
-        main: {
-            type: define.type,
-            disabled: computeds.disabled,
-            readonly: define.readonly,
-            maxlength: define.maxlength,
-            placeholder: define.placeholder,
-            autocomplete: define.autocomplete,
-        },
+        main: computed(() => {
+            return {
+                type: define.type,
+                disabled: computeds.disabled.value,
+                readonly: define.readonly,
+                maxlength: define.maxlength,
+                placeholder: define.placeholder,
+                autocomplete: define.autocomplete,
+            };
+        }),
 
         //* 候选项容器
-        body: {
-            class: define.classExtraName || "",
-            style: {
-                zIndex: define.zIndex,
-            },
-        },
+        body: computed(() => {
+            return {
+                class: define.classExtraName || "",
+                style: {
+                    zIndex: define.zIndex,
+                },
+            };
+        }),
 
         //* 容器
-        container: {
-            class: computeds.className,
-            style: {
-                width: utility.isNumber(define.width) ? define.width + "px" : define.width,
-            },
-        },
+        container: computed(() => {
+            return {
+                class: computeds.className.value,
+                style: {
+                    width: utility.isNumber(define.width) ? define.width + "px" : define.width,
+                },
+            };
+        }),
 
         //* 候选项列表
-        candidates: {
-            style: {
-                maxHeight: define.height + "px",
-            },
-        },
+        candidates: computed(() => {
+            return {
+                style: {
+                    maxHeight: define.height + "px",
+                },
+            };
+        }),
     });
 
     //* 响应事件

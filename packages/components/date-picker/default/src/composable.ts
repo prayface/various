@@ -209,26 +209,32 @@ export const useComposable = (define: UiDatePickerProps, emits: SetupContext<typ
     //* 属性
     const binds = reactive({
         //* 主体
-        main: {
-            value: computeds.value,
-            placeholder: define.placeholder,
-        },
+        main: computed(() => {
+            return {
+                value: computeds.value.value,
+                placeholder: define.placeholder,
+            };
+        }),
 
         //* 候选项容器
-        body: {
-            class: define.classExtraName || "",
-            style: {
-                zIndex: define.zIndex,
-            },
-        },
+        body: computed(() => {
+            return {
+                class: define.classExtraName || "",
+                style: {
+                    zIndex: define.zIndex,
+                },
+            };
+        }),
 
         //* 容器
-        container: {
-            class: computeds.className,
-            style: {
-                width: utility.isNumber(define.width) ? define.width + "px" : define.width,
-            },
-        },
+        container: computed(() => {
+            return {
+                class: computeds.className.value,
+                style: {
+                    width: utility.isNumber(define.width) ? define.width + "px" : define.width,
+                },
+            };
+        }),
     });
 
     //* 响应时间
