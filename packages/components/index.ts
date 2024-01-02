@@ -11,5 +11,6 @@ export * from "./textarea";
 export * from "./modal";
 export * from "./table";
 export * from "./radio";
+export * from "./region-selector";
 export * from "./date-picker";
 export * from "./cascade";

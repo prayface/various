@@ -100,7 +100,7 @@ export const useComposable = (define: UiCascadeProps, emits: SetupContext<typeof
             //* 初始化数据
             const className: string[] = [];
             //* 判断候选项是否处于展示状态
-            if (refs.visible.value && define.option?.length) className.push("ui-candidates-show");
+            if (refs.visible.value && define.option?.length) className.push("ui-form-selector");
             //* 判断是否是禁用或只读状态
             if (define.loading) className.push("ui-loading-status");
             else if (define.disabled) className.push("ui-disabled-status");

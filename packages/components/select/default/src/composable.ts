@@ -88,7 +88,7 @@ export const useComposable = (define: UiSelectProps, emits: SetupContext<typeof 
             //* 初始化数据
             const className: string[] = [];
             //* 判断候选项是否处于展示状态
-            if (refs.visible.value && define.candidates?.length) className.push("ui-candidates-show");
+            if (refs.visible.value && define.candidates?.length) className.push("ui-form-selector");
             //* 判断是否需要添加clearable类名
             if (define.clearable) className.push("ui-clearable");
             //* 判断是否需要添加size类名

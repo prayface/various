@@ -1,0 +1,74 @@
+.ui-region-selector {
+    position: relative;
+    background-color: var(--uioption-form-background-color);
+    //* 调整loading尺寸
+    .ui-mask {
+        font-size: 20px;
+    }
+
+    //* 样式调整
+    .ui-form-control {
+        cursor: pointer;
+        input {
+            width: 100%;
+            color: transparent;
+            height: 100%;
+        }
+    }
+
+    //* 下拉箭头样式
+    .ui-region-selector-arrow {
+        top: 50%;
+        right: var(--uioption-form-spacing-x);
+        cursor: pointer;
+        position: absolute;
+        font-size: 20px;
+        transform: translate(0, -50%);
+        transition: all 0.3s;
+    }
+
+    .ui-region-selector-content {
+        top: 50%;
+        left: var(--uioption-form-spacing-x);
+        right: calc(var(--uioption-form-spacing-x) + 24px);
+        cursor: pointer;
+        overflow: hidden;
+        position: absolute;
+        transform: translateY(-50%);
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        .ui-region-selector-division {
+            width: 8px;
+            height: 1px;
+            margin: 0 4px;
+            background-color: var(--uicolor-font-2);
+        }
+
+        .ui-region-selector-context.ui-active {
+            color: var(--uicolor-main-color);
+        }
+    }
+}
+
+//* 候选项展开状态
+.ui-region-selector.ui-form-selector {
+    .ui-region-selector-arrow {
+        transform: translate(0, -50%) rotate(180deg);
+    }
+}
+
+//* 禁用状态
+.ui-region-selector.ui-disabled-status {
+    .ui-form-control,
+    .ui-region-selector-arrow {
+        cursor: auto;
+    }
+}
+
+//* 只读状态
+.ui-region-selector.ui-readonly-status {
+    .ui-form-control,
+    .ui-region-selector-arrow {
+        cursor: auto;
+    }
+}

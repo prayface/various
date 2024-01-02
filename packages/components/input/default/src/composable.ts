@@ -134,7 +134,7 @@ export const useComposable = (define: UiInputProps, emits: SetupContext<typeof U
             //* 判断是否需要添加clearable类名
             if (define.clearable) className.push("ui-clearable");
             //* 判断候选项是否处于展示状态
-            if (refs.visible.value && define.candidates?.length) className.push("ui-candidates-show");
+            if (refs.visible.value && define.candidates?.length) className.push("ui-form-selector");
             //* 判断是否是禁用或只读状态
             if (define.loading) className.push("ui-loading-status");
             else if (define.disabled) className.push("ui-disabled-status");

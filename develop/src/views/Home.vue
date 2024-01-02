@@ -7,11 +7,7 @@
                 <p>尺寸<span>size</span>: large | middle | default | small</p>
             </div>
             <div class="content">
-                <UiInput v-model="value" :width="width" :disabled="disabled" :placeholder="placeholder" />
-
-                <button @click="placeholder = '121212'">更改提示语</button>
-                <button @click="width = 300">更改宽度</button>
-                <button @click="disabled = !disabled">更改状态</button>
+                <UiRegionSelector v-model="value" />
             </div>
         </section>
     </div>
@@ -20,7 +16,7 @@
 <script setup>
 import { ref } from "vue";
 
-const value = ref("");
+const value = ref([]);
 const placeholder = ref("");
 const disabled = ref(false);
 const width = ref(200);
