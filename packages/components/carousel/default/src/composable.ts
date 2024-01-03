@@ -101,7 +101,7 @@ export const useComposable = (define: UiCarouselProps, emits: SetupContext<typeo
     //* 函数列表
     const methods = {
         //* 初始化函数
-        init: () => {
+        init: (number?: number) => {
             //* 获取模块容器失败则取消后续操作
             if (!refs.container.value || !refs.container.value?.children?.length) return;
             else {
@@ -112,6 +112,7 @@ export const useComposable = (define: UiCarouselProps, emits: SetupContext<typeo
                 }
 
                 //* 显示轮播图组件当前激活的列表项
+                if (utility.isNumber(number)) refs.active.value = number;
                 if (refs.childrens.value[refs.active.value]) {
                     gsap.set(refs.childrens.value[refs.active.value], {
                         translateX: `${-1 * refs.container.value.clientWidth}px`,

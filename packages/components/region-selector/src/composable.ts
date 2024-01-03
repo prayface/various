@@ -37,7 +37,10 @@ export const useComposable = (define: UiRegionSelectorProps, emits: SetupContext
                     refs.visible.value = false;
                 }
             } else {
+                //* 数据更新
                 refs.data.value = region.children.map((value) => value);
+                //* 回到顶部
+                nodes.body.value?.querySelector(".ui-form-candidate-content")?.scrollTo({ top: 0 });
             }
         },
 
@@ -60,50 +63,46 @@ export const useComposable = (define: UiRegionSelectorProps, emits: SetupContext
             //* 判断选择框是否处于异常状态
             if (define.readonly || define.disabled || define.loading) return;
             //* 显示or隐藏候选菜单
-            refs.visible.value = !refs.visible.value;
+            if (region) refs.visible.value = true;
+            else {
+                refs.visible.value = !refs.visible.value;
+            }
+
             //* 判断候选项是否已被激活
             if (refs.visible.value) {
-                //* 索引初始化
-                const index = computeds.regions.value.findIndex((value) => value.name == region);
-                const regions = computeds.regions.value?.[index - 1];
+                //* 区域初始化
+                const index = region ? computeds.regions.value.findIndex((value) => value.name == region) : computeds.regions.value.length;
+                const regions = computeds.regions.value.filter((value, key) => {
+                    return key < index && value.children?.length;
+                });
 
-                //* 检测开启的候选框等级
-                if (!regions) {
-                    const r_list = computeds.regions.value.filter((value) => value.children);
-                    const r1 = r_list.slice(-1)[0];
-                    if (!r_list.length) {
-                        refs.data.value = options.regions;
-                        refs.result.value = [];
-                    } else if (r1.children?.length) {
-                        refs.data.value = r1.children.map((value) => value);
-                        refs.result.value = computeds.regions.value.slice(0, -1).map((value) => value.name);
-                    } else {
-                        refs.data.value = r_list.slice(-2)[0].children?.map((value) => value) || [];
-                        refs.result.value = computeds.regions.value.slice(0, -2).map((value) => value.name);
-                    }
-                } else {
-                    refs.data.value = regions.children?.map((value) => value) || [];
-                    refs.result.value = computeds.regions.value.slice(0, index).map((value) => value.name);
-                }
+                //* 候选项更新
+                refs.data.value = regions.slice(-1)[0]?.children || options.regions;
+                refs.result.value = regions.map((value) => value.name);
 
+                //* 显示候选项
                 nextTick(() => {
                     if (!nodes.container.value || !nodes.body.value) return;
-                    //* 将内容添加到视图容器中
-                    node.append(document.body, nodes.body.value);
-                    //* 根据配置计算当前窗口位置
-                    dispose.boundary.relativeContainerBody(
-                        { container: nodes.container.value, view: nodes.body.value },
-                        {
-                            direction: "bottom",
-                            height: define.height,
-                            offset: 4,
-                            width: nodes.container.value?.offsetWidth || 0,
-                            align: "start",
-                        }
-                    );
+                    else {
+                        //* 回到顶部
+                        nodes.body.value?.querySelector(".ui-form-candidate-content")?.scrollTo({ top: 0 });
+                        //* 将内容添加到视图容器中
+                        node.append(document.body, nodes.body.value);
+                        //* 根据配置计算当前窗口位置
+                        dispose.boundary.relativeContainerBody(
+                            { container: nodes.container.value, view: nodes.body.value },
+                            {
+                                direction: "bottom",
+                                height: define.height,
+                                offset: 4,
+                                width: nodes.container.value?.offsetWidth || 0,
+                                align: "start",
+                            }
+                        );
 
-                    //* 隐藏事件
-                    addEventListener("click", methods.hidden, { capture: true, once: true });
+                        //* 隐藏事件
+                        addEventListener("click", methods.hidden, { capture: true, once: true });
+                    }
                 });
             }
         },
