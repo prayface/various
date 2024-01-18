@@ -48,14 +48,18 @@
                 cursor: auto;
                 background-color: var(--uioption-pagination-disabled-background-color);
             }
-        }
 
-        .ui-pagination-next {
-            transform: rotate(90deg);
-        }
+            &.ui-next {
+                .ui-icon {
+                    transform: rotate(90deg);
+                }
+            }
 
-        .ui-pagination-back {
-            transform: rotate(-90deg);
+            &.ui-back {
+                .ui-icon {
+                    transform: rotate(-90deg);
+                }
+            }
         }
     }
 }

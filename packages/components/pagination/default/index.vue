@@ -8,8 +8,10 @@
         <!-- * 分页控制器 -->
         <div class="ui-pagination-controls">
             <!-- * 后退控制器 -->
-            <div class="ui-pagination-control" @click="back" :class="{ 'ui-disabled-status': modelValue <= 1 }">
-                <UiIcon name="arrow" class="ui-pagination-next" />
+            <div class="ui-pagination-control ui-next" @click="back" :class="{ 'ui-disabled-status': modelValue <= 1 }">
+                <slot name="arrow">
+                    <UiIcon name="arrow" />
+                </slot>
             </div>
 
             <template v-for="control in controls" :key="control.type + control.value">
@@ -22,8 +24,10 @@
             </template>
 
             <!-- * 前进控制器 -->
-            <div class="ui-pagination-control" @click="next" :class="{ 'ui-disabled-status': modelValue >= total }">
-                <UiIcon name="arrow" class="ui-pagination-back" />
+            <div class="ui-pagination-control ui-back" @click="next" :class="{ 'ui-disabled-status': modelValue >= total }">
+                <slot name="arrow">
+                    <UiIcon name="arrow" />
+                </slot>
             </div>
         </div>
     </div>
