@@ -108,7 +108,12 @@ export const useComposable = (define: UiCarouselProps, emits: SetupContext<typeo
                 //* 初始化并缓存轮播图组件列表
                 refs.childrens.value = [];
                 for (let i = 0; i < refs.container.value.children.length; i++) {
-                    refs.childrens.value.push(refs.container.value.children[i] as HTMLElement);
+                    //* 节点初始化
+                    const node = refs.container.value.children[i] as HTMLElement;
+                    //* 样式初始化
+                    gsap.set(node, { translateX: 0, position: "absolute" });
+                    //* 缓存节点
+                    refs.childrens.value.push(node);
                 }
 
                 //* 显示轮播图组件当前激活的列表项
