@@ -27,9 +27,7 @@ export const useComposable = (define: UiFormProps) => {
 
             //* value重置
             for (const index in variable.data) {
-                if (utility.isArray(define.data[index])) {
-                    define.data[index].splice(0, define.data[index].length);
-                } else if (utility.isObject(define.data[index])) {
+                if (utility.isArray(define.data[index]) || utility.isObject(define.data[index])) {
                     define.data[index] = utility.cloneDeep(variable.data[index]);
                 } else {
                     define.data[index] = variable.data[index];
