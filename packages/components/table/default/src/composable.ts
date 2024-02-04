@@ -1,7 +1,10 @@
-import { SetupContext, computed, ref } from "vue";
+//* Vue
+import { SetupContext, computed, watch, ref } from "vue";
+//* 公共函数
+import { utility } from "@various/utils";
+//* 组件信息
 import { UiTableProps, UiTableEmits, UiTableOption } from "../index";
 import type { UiTableVars } from "./types";
-import { utility } from "@various/utils";
 
 export const useComposable = (define: UiTableProps, emit: SetupContext<typeof UiTableEmits>["emit"]) => {
     //* 响应式变量
@@ -276,5 +279,12 @@ export const useComposable = (define: UiTableProps, emit: SetupContext<typeof Ui
         },
     };
 
-    return { refs, utils, styles, methods, className };
+    //* 侦听器
+    const watchs = {
+        watch_stop: watch(define.data, () => {
+            refs.childrens.value = [];
+        }),
+    };
+
+    return { refs, utils, watchs, styles, methods, className };
 };

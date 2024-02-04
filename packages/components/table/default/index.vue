@@ -68,7 +68,7 @@ defineOptions({ name: "UiTable" });
 const define = defineProps(UiTablePropsOption);
 const emit = defineEmits(UiTableEmits);
 
-const { className, methods, styles, utils, refs } = useComposable(define, emit);
+const { className, methods, styles, watchs, utils, refs } = useComposable(define, emit);
 const { switchChild, changeSort, changeRatio } = methods;
 const { classSortName, classBodyName } = className;
 const { receiveRowStyle, receiveBodysStyle, receiveAlignStyle } = styles;
@@ -91,13 +91,12 @@ onMounted(() => {
 });
 
 //* 触发数据更新时, 进行一次初始化
-onUpdated(() => {
-    utils.init();
-});
+onUpdated(() => utils.init());
 
 //* 组件卸载进行observer移除
 onBeforeUnmount(() => {
     observer.disconnect();
+    watchs.watch_stop?.();
 });
 
 //* 导出函数
