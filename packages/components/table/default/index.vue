@@ -22,27 +22,22 @@
             <!-- * 遍历生成表格行 -->
             <template v-if="data && data.length">
                 <template v-for="value in data">
-                    <div class="ui-table-body" :class="classRatioName(value)" :style="receiveRowStyle" @click="changeRatio(value)">
+                    <div class="ui-table-body" :class="classBodyName(value)" :style="receiveRowStyle" @click="changeRatio(value)">
                         <!-- * 表格行 -->
                         <div class="ui-table-row">
                             <!-- * 遍历生成表格列 -->
                             <template v-for="row in option">
-                                <div class="ui-table-column" :class="classBodyColumnName(row)" :name="row.key" :style="receiveAlignStyle(row)">
+                                <div class="ui-table-column" :class="row.className" :name="row.key" :style="receiveAlignStyle(row)">
+                                    <!-- * 表格文本内容区域 -->
                                     <div class="ui-table-context">
-                                        <!-- * 表格文本内容区域 -->
                                         <slot :name="row.slot" :data="value">{{ value[row.key] }}</slot>
-
-                                        <!-- * 表格图标 -->
-                                        <template v-if="disposeChildIcon(row)">
-                                            <span class="ui-table-icon" :class="classColumnChildName(value)" @click="switchChild(value)"></span>
-                                        </template>
                                     </div>
                                 </div>
                             </template>
                         </div>
 
                         <!-- * 嵌套表格 -->
-                        <div class="ui-table-children" v-if="disposeChild(value)">
+                        <div class="ui-table-children" v-if="children && childrenIndex && childrens.includes(value[childrenIndex])">
                             <slot name="children" :data="value"></slot>
                         </div>
                     </div>
@@ -73,12 +68,11 @@ defineOptions({ name: "UiTable" });
 const define = defineProps(UiTablePropsOption);
 const emit = defineEmits(UiTableEmits);
 
-const { className, methods, states, styles, utils, refs } = useComposable(define, emit);
+const { className, methods, styles, utils, refs } = useComposable(define, emit);
 const { switchChild, changeSort, changeRatio } = methods;
-const { disposeChild, disposeChildIcon } = states;
-const { classSortName, classRatioName, classBodyColumnName, classColumnChildName } = className;
+const { classSortName, classBodyName } = className;
 const { receiveRowStyle, receiveBodysStyle, receiveAlignStyle } = styles;
-const { BodysNode, TableNode, HeaderNode } = refs;
+const { childrens, BodysNode, TableNode, HeaderNode } = refs;
 
 //* resize observer声明
 let observer: ResizeObserver;

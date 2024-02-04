@@ -205,27 +205,6 @@ export const useComposable = (define: UiTableProps, emit: SetupContext<typeof Ui
         },
     };
 
-    //* 状态列表
-    const states = {
-        //* 获取嵌套表格状态
-        disposeChild: (data: any) => {
-            if (define.children && define.childrenIndex && refs.childrens.value.includes(data[define.childrenIndex])) {
-                return true;
-            } else {
-                return false;
-            }
-        },
-
-        //* 获取嵌套表格图标显示状态
-        disposeChildIcon: (data: any) => {
-            if (define.children && define.childrenIndex && data.key == define.childrenIndex) {
-                return true;
-            } else {
-                return false;
-            }
-        },
-    };
-
     //* 函数列表
     const methods = {
         //* 切换排序
@@ -288,28 +267,14 @@ export const useComposable = (define: UiTableProps, emit: SetupContext<typeof Ui
         },
 
         //* 获取单选状态类名
-        classRatioName: (data: any) => {
+        classBodyName: (data: any) => {
             if (define.ratio && define.ratioIndex && refs.ratioValue.value == data[define.ratioIndex]) {
                 return "ui-active";
-            } else {
-                return "";
+            } else if (define.children && define.childrenIndex && refs.childrens.value.includes(data[define.childrenIndex])) {
+                return "ui-active";
             }
-        },
-
-        //* 获取body下column类名
-        classBodyColumnName: (data: any) => {
-            const result: string[] = [];
-            if (states.disposeChildIcon(data)) result.push("ui-table-children-column");
-            if (data.className) result.push(data.className);
-
-            return result;
-        },
-
-        //* 获取body下column子集的类名
-        classColumnChildName: (data: any) => {
-            return { "ui-active": states.disposeChild(data) };
         },
     };
 
-    return { refs, utils, styles, states, methods, className };
+    return { refs, utils, styles, methods, className };
 };
