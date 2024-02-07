@@ -1,0 +1,157 @@
+@import "./src/variable.module.less";
+.ui-table2 {
+    width: 100%;
+    //* 表格第一个和最后一个column移除间距
+    .ui-table2-column {
+        &:last-child {
+            padding-right: 0 !important;
+        }
+
+        &:first-child {
+            padding-left: 0 !important;
+        }
+    }
+
+    .ui-table2-header {
+        background-color: var(--ui-table2-header-background);
+        padding: 0 var(--ui-table2-spacing);
+        border: 1px solid var(--ui-table2-header-background);
+        .ui-table2-row {
+            display: flex;
+            min-width: 100%;
+            min-height: var(--ui-table2-size);
+            align-items: center;
+            justify-content: flex-start;
+            //* 表格列样式
+            .ui-table2-column {
+                color: var(--ui-table2-header-color);
+                display: flex;
+                padding: 0 var(--ui-table2-column-spacing);
+                font-weight: bold;
+                align-items: center;
+            }
+
+            //* 表格排序控件
+            .ui-table2-sort {
+                cursor: pointer;
+                padding: 4px 6px;
+                //* 排序控件 - 三角形
+                .ui-table2-trigger {
+                    width: 0;
+                    height: 0;
+                    transition: all 0.3s;
+                    border-style: solid;
+                    border-width: 0 4px 5px 4px;
+                    border-color: transparent transparent var(--ui-table2-icon-color) transparent;
+                    &.ui-active {
+                        border-color: transparent transparent var(--ui-table2-icon-active-color) transparent;
+                    }
+
+                    &:last-child {
+                        margin-top: 2px;
+                        transform: rotate(180deg);
+                    }
+                }
+            }
+
+            //* 表格额外窗口控件与解释说明控件公共样式
+            .ui-table2-extra,
+            .ui-table2-explain {
+                color: var(--ui-table2-icon-color);
+                width: 20px;
+                height: 20px;
+                display: flex;
+                transition: all 0.3s;
+                user-select: none;
+                align-items: center;
+                justify-content: center;
+                .ui-icon {
+                    line-height: 1;
+                }
+            }
+
+            //* 表格额外窗口控件
+            .ui-table2-extra {
+                cursor: pointer;
+                &:hover,
+                &.ui-active {
+                    color: var(--ui-table2-icon-active-color);
+                }
+            }
+
+            //* 表格解释说明控件
+            .ui-table2-explain {
+                .ui-icon {
+                    opacity: 0.7;
+                    font-size: 16px;
+                    transition: all 0.3s;
+                }
+            }
+
+            //* 表格解释说明控件
+            .ui-table2-explain {
+                &:hover,
+                &.ui-active {
+                    .ui-icon {
+                        opacity: 1;
+                    }
+                }
+            }
+        }
+    }
+
+    .ui-table2-bodys {
+        .ui-table2-body {
+            background-color: var(--ui-table2-body-background);
+            transition: all 0.5s;
+            padding: 0 var(--ui-table2-spacing);
+            border: 1px solid var(--ui-table2-body-border);
+            margin: var(--ui-table2-row-spacing) 0 0;
+            .ui-table2-row {
+                justify-content: flex-start;
+                align-items: center;
+                transition: all 0.3s;
+                min-height: var(--ui-table2-size);
+                min-width: 100%;
+                display: flex;
+                .ui-table2-column {
+                    display: flex;
+                    padding: 8px var(--ui-table2-column-spacing);
+                    align-items: center;
+                    border-radius: 4px;
+                }
+            }
+
+            .ui-table2-children {
+                overflow: hidden;
+                border-top: 1px solid var(--ui-table2-body-active-border);
+            }
+        }
+
+        .ui-table2-body.ui-active {
+            background-color: var(--ui-table2-body-active-background);
+            border-color: var(--ui-table2-body-active-border);
+        }
+
+        .ui-table2-body.ui-table2-error {
+            background-color: var(--ui-table2-body-background) !important;
+            border-color: var(--ui-table2-body-border) !important;
+            cursor: auto !important;
+            .ui-table2-row {
+                justify-content: center;
+            }
+        }
+    }
+}
+
+.ui-table2.ui-table2-selector {
+    .ui-table2-bodys {
+        .ui-table2-body {
+            cursor: pointer;
+            &:hover {
+                background-color: var(--ui-table2-body-active-background);
+                border-color: var(--ui-table2-body-active-border);
+            }
+        }
+    }
+}

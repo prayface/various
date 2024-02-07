@@ -91,17 +91,19 @@ export const useComposable = (define: UiTooltipProps, emits: SetupContext<typeof
         }),
 
         container: {
+            //* 鼠标点击事件
+            click: () => define.trigger == "click" && methods.show(),
             //* 鼠标移入事件
             mouseenter: () => define.trigger == "hover" && methods.show(),
             //* 鼠标移出事件
-            mouseleave: () => define.trigger == "hover" && methods.hidden(),
+            mouseleave: () => (define.trigger == "hover" || define.trigger == "click") && methods.hidden(),
         },
 
         content: {
             //* 鼠标移入事件
-            mouseenter: () => define.trigger == "hover" && methods.show(),
+            mouseenter: () => (define.trigger == "hover" || define.trigger == "click") && methods.show(),
             //* 鼠标移出事件
-            mouseleave: () => define.trigger == "hover" && methods.hidden(),
+            mouseleave: () => (define.trigger == "hover" || define.trigger == "click") && methods.hidden(),
         },
     };
 

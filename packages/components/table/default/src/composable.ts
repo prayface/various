@@ -187,9 +187,9 @@ export const useComposable = (define: UiTableProps, emit: SetupContext<typeof Ui
         receiveBodysStyle: computed(() => {
             if (!define.height) return {};
             else if (utility.isNumber(define.height)) {
-                return { height: define.height + "px" };
+                return { "max-height": define.height + "px" };
             } else {
-                return { height: define.height };
+                return { "max-height": define.height };
             }
         }),
 
@@ -281,9 +281,12 @@ export const useComposable = (define: UiTableProps, emit: SetupContext<typeof Ui
 
     //* 侦听器
     const watchs = {
-        watch_stop: watch(define.data, () => {
-            refs.childrens.value = [];
-        }),
+        watch_stop: watch(
+            () => define.data,
+            () => {
+                refs.childrens.value = [];
+            }
+        ),
     };
 
     return { refs, utils, watchs, styles, methods, className };

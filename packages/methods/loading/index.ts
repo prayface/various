@@ -16,18 +16,21 @@ export type UiLoadingHandles = {
 
 //* 真实的Show函数
 const show = (config?: UiLoadingShowOption) => {
-    //* 获取body
-    const el = document.body as UiHTMLElement;
+    //* 数据初始化
+    const body = document.body as UiHTMLElement;
+    const size = innerWidth - document.documentElement.clientWidth;
 
     //* 调整body样式, 隐藏滚动条
-    el.style.overflow = "hidden";
-    el.style.paddingRight = "12px";
+    if (size) {
+        document.documentElement.style.overflow = "hidden";
+        document.documentElement.style.paddingRight = size + "px";
+    }
 
     //* 判断body是否已挂载Loading组件
-    if (el.instance) {
+    if (body.instance) {
         //* 属性变更
-        if (config?.icon) el.instance.$.props.icon = config.icon;
-        if (config?.message) el.instance.$.props.message = config.message;
+        if (config?.icon) body.instance.$.props.icon = config.icon;
+        if (config?.message) body.instance.$.props.message = config.message;
     } else {
         //* 组件挂载
         //* 创建新的Vue实例
@@ -35,16 +38,16 @@ const show = (config?: UiLoadingShowOption) => {
         const instance = app.mount(document.createElement("div"));
 
         //* 检测是否需要添加Position
-        if (el.style.position == "") el.classList.add("ui-relative");
+        if (body.style.position == "") body.classList.add("ui-relative");
 
         //* 缓存Loading并将Loading插入body中
-        el.app = app;
-        el.instance = instance;
-        el.appendChild(instance.$el);
+        body.app = app;
+        body.instance = instance;
+        body.appendChild(instance.$el);
     }
 
     //* 显示Loading
-    el.instance.$.props.visible = true;
+    body.instance.$.props.visible = true;
 };
 
 const $loading: UiLoadingHandles = {
@@ -72,24 +75,24 @@ const $loading: UiLoadingHandles = {
         this.timer && clearTimeout(this.timer);
 
         //* 获取body
-        const el = document.body as UiHTMLElement;
+        const body = document.body as UiHTMLElement;
 
         //* 检测是否需要延迟关闭
         if (this.delay) {
             this.delay = false;
             this.timer = setTimeout(() => {
-                //* 还原body样式
-                el.style.overflow = "";
-                el.style.paddingRight = "";
                 //* 隐藏Loading
-                if (el.instance) el.instance.$.props.visible = false;
-            }, 1000);
-        } else if (el.instance) {
+                if (body.instance) body.instance.$.props.visible = false;
+                //* 还原body样式
+                document.documentElement.style.overflow = "";
+                document.documentElement.style.paddingRight = "";
+            }, 500);
+        } else if (body.instance) {
             //* 还原body样式
-            el.style.overflow = "";
-            el.style.paddingRight = "";
+            document.documentElement.style.overflow = "";
+            document.documentElement.style.paddingRight = "";
             //* 隐藏Loading
-            el.instance.$.props.visible = false;
+            body.instance.$.props.visible = false;
         }
     },
 };

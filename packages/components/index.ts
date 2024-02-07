@@ -10,6 +10,7 @@ export * from "./pagination";
 export * from "./textarea";
 export * from "./modal";
 export * from "./table";
+export * from "./table2";
 export * from "./radio";
 export * from "./region-selector";
 export * from "./date-picker";
