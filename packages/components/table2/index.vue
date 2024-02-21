@@ -79,7 +79,6 @@
 import { onMounted, onBeforeUnmount } from "vue";
 //* 滚动条组件
 import simplebar from "simplebar-vue";
-import "simplebar-vue/dist/simplebar.min.css";
 //* 组件引入
 import UiIcon from "@various/components/icon";
 import { UiTooltip, UiTooltipFollow } from "@various/components/tooltip";
