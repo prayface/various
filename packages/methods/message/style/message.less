@@ -14,15 +14,19 @@
     padding: var(--uioption-message-spacing-y) var(--uioption-message-spacing-x);
     transition: all 0.3s;
     box-shadow: var(--uioption-message-box-shadow);
-    align-items: center;
+    align-items: flex-start;
     border-radius: var(--uioption-message-radius);
     background-color: var(--uioption-message-background-color);
     .ui-message-icon {
         color: #fff;
+        margin: 5px 8px 0 0;
         font-size: 20px;
-        margin-right: 8px;
         border-radius: 50%;
         background-color: var(--uioption-message-icon-color);
+    }
+
+    .ui-message-content {
+        flex: 1;
     }
 
     &.v-enter-from,

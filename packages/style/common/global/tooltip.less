@@ -22,7 +22,17 @@
         position: absolute;
         border-style: solid;
         border-width: 4px 0 4px 6px;
-        border-color: transparent transparent transparent var(--uioption-tooltip-background-color);
+        border-color: transparent transparent transparent var(--uicolor-font-4-03);
+        &::before {
+            top: 0;
+            left: -1px;
+            content: "";
+            position: absolute;
+            transform: translate(-100%, -50%);
+            border-style: solid;
+            border-width: 3px 0 3px 5px;
+            border-color: transparent transparent transparent var(--uioption-tooltip-background-color);
+        }
     }
 
     .ui-tooltip-content {
