@@ -84,7 +84,7 @@ export const useComposable = (define: UiTableProps2, emits: SetupContext<typeof 
         //* 初始化函数
         init: () => {
             //* 检测是否满足运行条件
-            if (!nodes.container.value || !nodes.main.value || !nodes.head.value || !nodes.bodys.value.length) return;
+            if (!nodes.container.value || !nodes.main.value || !nodes.head.value) return;
             else {
                 //* 属性更新
                 nodes.head.value.style.width = "";
@@ -170,7 +170,7 @@ export const useComposable = (define: UiTableProps2, emits: SetupContext<typeof 
                         //* 补充尺寸（平均分配）
                         const replenish = vars.replenish / data.length;
                         data.forEach((value) => {
-                            if (!value.max && value.width + replenish > value.max) {
+                            if (value.max && value.width + replenish > value.max) {
                                 vars.replenish -= value.max - value.width;
                                 value.width = value.max;
                             } else {
@@ -186,7 +186,7 @@ export const useComposable = (define: UiTableProps2, emits: SetupContext<typeof 
                             if (vars.replenish == 0) break;
                             if (data[i].width == max && data[i].width > data[i].min) {
                                 //* 当width与min之间的距离小于1时：特殊处理
-                                if (!data[i].min && data[i].width - 1 < data[i].min) {
+                                if (data[i].min && data[i].width - 1 < data[i].min) {
                                     vars.replenish += data[i].width - data[i].min;
                                     data[i].width = data[i].min;
                                 } else {

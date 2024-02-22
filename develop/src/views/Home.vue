@@ -9,6 +9,11 @@
             <div class="content">
                 <UiTable2 :option="option" :data="result" :height="400" @sort="onsort">
                     <template #children> 嵌套表格 </template>
+                    <template #organ="{ data }">
+                        <div class="organs">
+                            <img v-for="value in data.organ" class="organ" :src="value" />
+                        </div>
+                    </template>
                 </UiTable2>
             </div>
         </section>
@@ -28,6 +33,11 @@ const data = ref([
         descript: "wgqhdscrphwgddnbxxjwphvtcvvxmhrcxmrbjgqqtkyccwqidt",
         mobile: "13592811053",
         email: "q.ayuovt@krmjwc.gov.cn",
+        organ: [
+            "https://rdgta.cdn.cyagen.com/rddc/images/gene/compare1.png",
+            "https://rdgta.cdn.cyagen.com/rddc/images/gene/compare1.png",
+            "https://rdgta.cdn.cyagen.com/rddc/images/gene/compare1.png",
+        ],
     },
     {
         name: "姜霞",
@@ -37,6 +47,11 @@ const data = ref([
         descript: "dduhxjbvksbwnvqqmgswwjzulpjpypqufbmrdpjmmursgkwtuggubwfjlxxuqmfgxumlvwxepokbsrmmijvmterhyyvsttveklzr",
         mobile: "13550655821",
         email: "d.btuewquh@yyxmrfglu.sn",
+        organ: [
+            "https://rdgta.cdn.cyagen.com/rddc/images/gene/compare1.png",
+            "https://rdgta.cdn.cyagen.com/rddc/images/gene/compare1.png",
+            "https://rdgta.cdn.cyagen.com/rddc/images/gene/compare1.png",
+        ],
     },
     {
         name: "吕涛",
@@ -46,6 +61,11 @@ const data = ref([
         descript: "isoayyknpkqqictxbpumsduheblac",
         mobile: "18926182514",
         email: "s.ioylewvbig@pwoaptk.by",
+        organ: [
+            "https://rdgta.cdn.cyagen.com/rddc/images/gene/compare1.png",
+            "https://rdgta.cdn.cyagen.com/rddc/images/gene/compare1.png",
+            "https://rdgta.cdn.cyagen.com/rddc/images/gene/compare1.png",
+        ],
     },
     {
         name: "郭平",
@@ -55,6 +75,11 @@ const data = ref([
         descript: "撒旦哈萨克大家哈健康杀手肯定会撒旦哈萨克大家哈健康杀手肯定会撒旦哈萨克大家哈健康杀手肯定会撒旦哈萨克大家哈健康杀手肯定会",
         mobile: "13558153662",
         email: "k.dvfiymly@tyeksxgk.hk",
+        organ: [
+            "https://rdgta.cdn.cyagen.com/rddc/images/gene/compare1.png",
+            "https://rdgta.cdn.cyagen.com/rddc/images/gene/compare1.png",
+            "https://rdgta.cdn.cyagen.com/rddc/images/gene/compare1.png",
+        ],
     },
     {
         name: "陈桂英",
@@ -64,6 +89,11 @@ const data = ref([
         descript: "grkzju vuefqdfszqe vrvfvn vjtbbc nmfvdvegmlmx tzecdprromrgmn fmxaqo",
         mobile: "13536152821",
         email: "v.ckinmlmjw@njmsxpsj.aw",
+        organ: [
+            "https://rdgta.cdn.cyagen.com/rddc/images/gene/compare1.png",
+            "https://rdgta.cdn.cyagen.com/rddc/images/gene/compare1.png",
+            "https://rdgta.cdn.cyagen.com/rddc/images/gene/compare1.png",
+        ],
     },
     {
         name: "袁娟",
@@ -73,6 +103,11 @@ const data = ref([
         descript: "srgqumcqtbgbdcmiyiytoufyiy",
         mobile: "13212491985",
         email: "j.sjwsjzkb@vuej.ir",
+        organ: [
+            "https://rdgta.cdn.cyagen.com/rddc/images/gene/compare1.png",
+            "https://rdgta.cdn.cyagen.com/rddc/images/gene/compare1.png",
+            "https://rdgta.cdn.cyagen.com/rddc/images/gene/compare1.png",
+        ],
     },
     {
         name: "曹霞",
@@ -82,6 +117,11 @@ const data = ref([
         descript: "qhmgrvydaxrvfgreehsfokxckhpikrfjpvrla",
         mobile: "13222652042",
         email: "v.jpqbuntgo@pyqiq.az",
+        organ: [
+            "https://rdgta.cdn.cyagen.com/rddc/images/gene/compare1.png",
+            "https://rdgta.cdn.cyagen.com/rddc/images/gene/compare1.png",
+            "https://rdgta.cdn.cyagen.com/rddc/images/gene/compare1.png",
+        ],
     },
     {
         name: "邱勇",
@@ -91,6 +131,11 @@ const data = ref([
         descript: "buvzfnswhnpyvseztahijjyvuxdplcrkclhzujvhakbvqqxbjbbim",
         mobile: "13223176454",
         email: "w.mvdvqdss@zwk.hk",
+        organ: [
+            "https://rdgta.cdn.cyagen.com/rddc/images/gene/compare1.png",
+            "https://rdgta.cdn.cyagen.com/rddc/images/gene/compare1.png",
+            "https://rdgta.cdn.cyagen.com/rddc/images/gene/compare1.png",
+        ],
     },
     {
         name: "余敏",
@@ -100,6 +145,11 @@ const data = ref([
         descript: "hxhahicvkzwxiyibhfddnrzeidbxpigypeawporbolwxgqcbsqxpiqfswbwajdfmfocgpgwbkljqbekkybqmwxcxkrdd",
         mobile: "13508774706",
         email: "g.dgvooqpj@wnydsj.ma",
+        organ: [
+            "https://rdgta.cdn.cyagen.com/rddc/images/gene/compare1.png",
+            "https://rdgta.cdn.cyagen.com/rddc/images/gene/compare1.png",
+            "https://rdgta.cdn.cyagen.com/rddc/images/gene/compare1.png",
+        ],
     },
     {
         name: "钱秀英",
@@ -109,6 +159,11 @@ const data = ref([
         descript: "kszvvsuetqppjenobloairybymtcjyanulm",
         mobile: "13572164015",
         email: "v.mdxrcgnime@txklkbjbh.fj",
+        organ: [
+            "https://rdgta.cdn.cyagen.com/rddc/images/gene/compare1.png",
+            "https://rdgta.cdn.cyagen.com/rddc/images/gene/compare1.png",
+            "https://rdgta.cdn.cyagen.com/rddc/images/gene/compare1.png",
+        ],
     },
 ]);
 
