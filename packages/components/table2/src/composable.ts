@@ -247,30 +247,38 @@ export const useComposable = (define: UiTableProps2, emits: SetupContext<typeof 
         },
 
         //* 排序
-        sort: (data: UiTableOption2) => {
-            //* 排序算法
-            if (refs.sorts.key != data.key) {
-                refs.sorts.key = data.key;
-                refs.sorts.value = "asc";
+        sort: (data?: UiTableOption2) => {
+            if (!data) {
+                refs.sorts.key = "";
+                refs.sorts.value = "";
             } else {
-                if (refs.sorts.value == "asc") {
-                    refs.sorts.value = "desc";
+                //* 排序算法
+                if (refs.sorts.key != data.key) {
+                    refs.sorts.key = data.key;
+                    refs.sorts.value = "asc";
                 } else {
-                    refs.sorts.key = "";
-                    refs.sorts.value = "";
+                    if (refs.sorts.value == "asc") {
+                        refs.sorts.value = "desc";
+                    } else {
+                        refs.sorts.key = "";
+                        refs.sorts.value = "";
+                    }
                 }
-            }
 
-            //* 响应排序事件
-            emits("sort", refs.sorts);
+                //* 响应排序事件
+                emits("sort", refs.sorts);
+            }
         },
 
         //* 单选
-        radio: (index: number) => {
-            //* 数据更新
-            refs.selects.value = [index];
-            //* 事件响应
-            emits("radio", define.data[index]);
+        radio: (index?: number) => {
+            if (index == undefined) refs.selects.value = [];
+            else {
+                //* 数据更新
+                refs.selects.value = [index];
+                //* 事件响应
+                emits("radio", define.data[index]);
+            }
         },
 
         //* 选择
@@ -283,29 +291,35 @@ export const useComposable = (define: UiTableProps2, emits: SetupContext<typeof 
         },
 
         //* 多选
-        checkbox: (index: number) => {
-            //* 数据更新
-            const key = refs.selects.value.findIndex((value) => value == index);
-            if (key != -1) {
-                refs.selects.value.splice(key, 1);
-            } else {
-                refs.selects.value.push(index);
-            }
+        checkbox: (index?: number) => {
+            if (index == undefined) refs.selects.value = [];
+            else {
+                //* 数据更新
+                const key = refs.selects.value.findIndex((value) => value == index);
+                if (key != -1) {
+                    refs.selects.value.splice(key, 1);
+                } else {
+                    refs.selects.value.push(index);
+                }
 
-            //* 返回结果初始化
-            const result = refs.selects.value.map((index) => define.data[index]);
-            //* 事件响应
-            emits("checkbox", result);
+                //* 返回结果初始化
+                const result = refs.selects.value.map((index) => define.data[index]);
+                //* 事件响应
+                emits("checkbox", result);
+            }
         },
 
         //* 嵌套
-        children: (index: number) => {
-            //* 数据更新
-            const key = refs.childrens.value.findIndex((value) => value == index);
-            if (key != -1) {
-                refs.childrens.value.splice(key, 1);
-            } else {
-                refs.childrens.value.push(index);
+        children: (index?: number) => {
+            if (index == undefined) refs.childrens.value = [];
+            else {
+                //* 数据更新
+                const key = refs.childrens.value.findIndex((value) => value == index);
+                if (key != -1) {
+                    refs.childrens.value.splice(key, 1);
+                } else {
+                    refs.childrens.value.push(index);
+                }
             }
         },
     };
